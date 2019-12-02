@@ -11,6 +11,6 @@
 
 .layout-wrapper {
   display: block;
-  min-height: calc(100% - 80px);
+  min-height: calc(100% - 138px);
   height: auto !important;
 }
