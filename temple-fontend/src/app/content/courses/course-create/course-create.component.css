@@ -1,0 +1,9 @@
+.text-info {
+    font-weight: bold;
+    text-align: right;
+  }
+
+  .text-danger.text-invalid {
+    color: red !important;
+    text-align: right;
+}

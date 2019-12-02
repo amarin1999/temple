@@ -1,0 +1,99 @@
+<div class="ui-g">
+  <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+    <div style="text-align:center">
+      <h1>การเดินทาง</h1>
+    </div>
+    <div class="line"></div>
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+            <!-- <p-messages [(value)]="msgs"></p-messages> -->
+            <p-toast [style]="{marginTop: '80px'}"></p-toast>
+          </div>
+          <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+            <p-table [columns]="cols" [value]="filterData" [paginator]="true" [rows]="5" [responsive]="true">
+              <ng-template pTemplate="caption">
+                <div class="ui-g ui-fluid">
+                  <div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12">
+                    <div style="text-align:left">
+                      <button pButton type="button" (click)="showDialogToAdd()" label="เพิ่ม" class="ui-button-info"
+                        style="width: 40%"></button>
+                    </div>
+                  </div>
+                  <!-- <div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12">
+                    <div class="ui-inputgroup">
+                      <fa-icon [icon]="['fas', 'search']" class="ui-inputgroup-addon"></fa-icon>
+                      <input type="text" pInputText placeholder="ค้นหา" id="input"
+                        (keyup)="searchData($event.target.value)">
+                    </div>
+                  </div> -->
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th pSortableColumn="name">
+                    การเดินทาง
+                  </th>
+                  <th>
+
+                  </th>
+                </tr>
+              </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr>
+                    <td *ngFor="let col of columns;">
+                      <div *ngIf="rowData[col.field] === rowData['name']">
+                        {{rowData['name']}}
+                      </div>
+                      
+                    </td>
+                    <td>
+                      <div style="text-align:center">
+                        <button pButton type="button" label="แก้ไข" (click)="showEdit(rowData['id'])"
+                          class="ui-button-warning" style="width: 40%;"></button>
+                        <button pButton type="button" label="ลบ" (click)="delete(rowData['id'])"
+                          class="ui-button-danger" style="width: 40%;margin-left: 5mm"></button>
+                      </div>
+
+                    </td>
+                  </tr>
+                </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-dialog header="รายละเอียดการเดินทาง" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+  [modal]="true" [style]="{width: '300px'}" (onHide)="clear()" >
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label>การเดินทาง</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText  [(ngModel)]="newTransportation"/>
+      </div>
+
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" *ngIf="displayTransportation" pButton (click)="save()" style="background-color: #007ad9"  label="บันทึก"
+      [disabled] = "newTransportation === '' "></button>
+      <button class="ui-button-warning" type="button" *ngIf="!displayTransportation" pButton (click)="update()" label="แก้ไข"
+      [disabled] = "newTransportation === ''"></button>
+      <button class="ui-button-raised ui-button-secondary" type="button" pButton (click)="clear()" label="ยกเลิก" ></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '50vw'}" #cd header="Confirmation">
+    <p-footer>
+        <button type="button" pButton label="ยืนยัน" style="background-color: #007ad9" (click)="cd.accept()"></button>
+        <button type="button" pButton label="ยกเลิก" class="ui-button-raised ui-button-secondary" (click)="cd.reject()"></button>
+      </p-footer>
+</p-confirmDialog>
