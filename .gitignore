@@ -1,2 +1,6 @@
 /temple-fontend/node_modules/
-*.class
+temple-backend/target/
+temple-backend/.classpath
+temple-backend/.project
+temple-backend/.settings/
+temple-fontend/dist/
