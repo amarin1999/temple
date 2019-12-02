@@ -1,6 +1,6 @@
 {
     "/server":{
-        "target": "http://localhost:3999",
+        "target": "http://localhost:8080",
         "pathRewrite":{ 
             "^/server":""
         }
