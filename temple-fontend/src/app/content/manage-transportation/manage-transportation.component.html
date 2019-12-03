@@ -53,13 +53,14 @@
                       <div *ngIf="rowData[col.field] === rowData['name']">
                         {{rowData['name']}}
                       </div>
-                      
                     </td>
                     <td *ngFor="let col of columns;">
                       <div *ngIf="rowData[col.field] === rowData['name']">
                         {{rowData['name']}}
                       </div>
-                      
+                    </td>
+                    <td>
+
                     </td>
                     <td>
                       <div style="text-align:center">
@@ -68,7 +69,6 @@
                         <button pButton type="button" label="ลบ" (click)="delete(rowData['id'])"
                           class="ui-button-danger" style="width: 40%;margin-left: 5mm"></button>
                       </div>
-
                     </td>
                   </tr>
                 </ng-template>
@@ -80,7 +80,7 @@
   </div>
 </div>
 <p-dialog header="รายละเอียดการเดินทาง" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
-  [modal]="true" [style]="{width: '300px'}" (onHide)="clear()" >
+  [modal]="true" [style]="{width: '400px'}" (onHide)="clear()" >
   <div class="ui-g ui-fluid">
     <div class="ui-g-12">
       <div class="ui-g-4">
@@ -89,16 +89,22 @@
       <div class="ui-g-8">
         <input pInputText  [(ngModel)]="newTransportation"/>
       </div>
-
     </div>
     <div class="ui-g-12">
       <div class="ui-g-4">
-        <label>เวลา (รับ-ส่ง)</label>
+        <label>เวลา (รับ)</label>
       </div>
       <div class="ui-g-8">
-        <input pInputText  [(ngModel)]="newTime"/>
+        <p-calendar [(ngModel)]="newtime" [timeOnly]="true"></p-calendar>
       </div>
-
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label>เวลา (ส่ง)</label>
+      </div>
+      <div class="ui-g-8">
+        <p-calendar [(ngModel)]="newtime" [timeOnly]="true"></p-calendar>
+      </div>
     </div>
   </div>
   <p-footer>
