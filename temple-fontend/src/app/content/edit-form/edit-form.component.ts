@@ -205,9 +205,7 @@ export class EditFormComponent implements OnInit {
     this.settingCalendarTH();
     this.titleService.getTitleNames().subscribe(
       res => {
-        this.titleNames = [
-          res
-        ];
+        this.titleNames = res;
       },
       err => {
         console.log(err['error']['message']);
