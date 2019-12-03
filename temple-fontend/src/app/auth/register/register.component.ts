@@ -30,16 +30,16 @@ export class RegisterComponent implements OnInit {
   currentId = 0;
   profile: any;
   bloodGroup: SelectItem[] = [
-    {label: 'O', value: 'O'},
-    {label: 'A', value: 'A'},
-    {label: 'B', value: 'B'},
-    {label: 'AB', value: 'AB'},
+    { label: 'O', value: 'O' },
+    { label: 'A', value: 'A' },
+    { label: 'B', value: 'B' },
+    { label: 'AB', value: 'AB' },
   ];
   public titleNames: any[];
   public displaySystemMessage = false;
 
   registerForm = new FormGroup({
-    username: new FormControl( null, [Validators.required, Validators.minLength(6)]),
+    username: new FormControl(null, [Validators.required, Validators.minLength(6)]),
     password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
     repassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
     titleName: new FormControl('', [Validators.required]),
@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
     gender: new FormControl('3', [Validators.required]),
     address: new FormControl(null, [Validators.required]),
     phone: new FormControl(null, [Validators.required]),
-    email: new FormControl(null, [Validators.required, Validators.email]),
+    email: new FormControl(null, [Validators.email]),
     phoneEmergency: new FormControl(null, [Validators.required]),
     fnameEmergency: new FormControl(null, [Validators.required]),
     lnameEmergency: new FormControl(null, [Validators.required]),
@@ -233,7 +233,7 @@ export class RegisterComponent implements OnInit {
       accept: () => {
         this.actionAccept(type);
         //console.log(type);
-        
+
       },
       reject: () => {
       }
@@ -258,7 +258,7 @@ export class RegisterComponent implements OnInit {
         const dataUser = {
           username: this.registerForm.get('username').value,
           password: this.registerForm.get('password').value,
-       
+
           fname: this.registerForm.get('fname').value,
           lname: this.registerForm.get('lname').value,
           job: this.registerForm.get('job').value,
@@ -311,13 +311,13 @@ export class RegisterComponent implements OnInit {
 
   showMessage() {
     this.displaySystemMessage = true;
-   // this.showToast('systemMessage', this.detailWarning);
+    // this.showToast('systemMessage', this.detailWarning);
   }
 
   onReject() {
     if (this.registerSuccess) {
       this.router.navigateByUrl(this.urlback);
-    }   
+    }
     this.showCancelMessage = false;
   }
 
@@ -354,12 +354,12 @@ export class RegisterComponent implements OnInit {
     for (const field of Object.keys(this.formError)) {
       this.formError[field] = '';
       const control = this.registerForm.get(field);
-      
-      if ((field === 'repassword') ) {
-        if(control.value == ''){
+
+      if ((field === 'repassword')) {
+        if (control.value == '') {
           this.detailWarning[0] = 'กรุณากรอกยืนยันรหัสผ่าน';
-          
-        } else if(control.value !== this.registerForm.get('password').value){
+
+        } else if (control.value !== this.registerForm.get('password').value) {
           this.detailWarning[0] = 'กรุณากรอกรหัสผ่านให้ตรงกัน';
         } else {
           continue;
@@ -419,7 +419,7 @@ export class RegisterComponent implements OnInit {
 
   onGenderSelect(event: TitleName) {
     const gender = this.registerForm.get('titleName').value;
-   // const newObject = {...event};
+    // const newObject = {...event};
     //console.log('from typing ' + event);
   }
 
