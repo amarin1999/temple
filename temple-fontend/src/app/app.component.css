@@ -11,6 +11,14 @@
 
 .layout-wrapper {
   display: block;
-  min-height: calc(100% - 138px);
+  min-height: calc(100% - 142px);
   height: auto !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .layout-wrapper {
+    display: block;
+    min-height: calc(100% - 190px);
+   
+  }
 }
