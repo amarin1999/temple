@@ -34,15 +34,27 @@
               <ng-template pTemplate="header" let-columns>
                 <tr>
                   <th pSortableColumn="name">
-                    การเดินทาง
+                    ประเภท
+                  </th>
+                  <th pSortableColumn="name">
+                    เวลารับ
+                  </th>
+                  <th pSortableColumn="name">
+                    เวลาส่ง
                   </th>
                   <th>
-
+                    <!-- button edit and delete-->
                   </th>
                 </tr>
               </ng-template>
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                   <tr>
+                    <td *ngFor="let col of columns;">
+                      <div *ngIf="rowData[col.field] === rowData['name']">
+                        {{rowData['name']}}
+                      </div>
+                      
+                    </td>
                     <td *ngFor="let col of columns;">
                       <div *ngIf="rowData[col.field] === rowData['name']">
                         {{rowData['name']}}
@@ -72,10 +84,19 @@
   <div class="ui-g ui-fluid">
     <div class="ui-g-12">
       <div class="ui-g-4">
-        <label>การเดินทาง</label>
+        <label>ประเภท</label>
       </div>
       <div class="ui-g-8">
         <input pInputText  [(ngModel)]="newTransportation"/>
+      </div>
+
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label>เวลา (รับ-ส่ง)</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText  [(ngModel)]="newTime"/>
       </div>
 
     </div>
