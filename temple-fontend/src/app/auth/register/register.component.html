@@ -377,7 +377,6 @@
     <p-dialog header="ข้อความแจ้งเตือน" [(visible)]="displaySystemMessage" [style]="{width: '300px'}" [modal]="true">
         <div *ngFor="let item of detailWarning">{{item}}</div>
     </p-dialog>
-
     <!-- <p-toast position="center" key="systemMessage" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
         <ng-template let-message pTemplate="message">
             <div style="text-align: center">
