@@ -387,8 +387,6 @@
             </div>
         </ng-template>
     </p-toast>  -->
-
-
     <p-confirmDialog [style]="{width: '50vw'}" #cd>
         <p-footer>
             <button type="button" pButton label="ยืนยัน" (click)="cd.accept()"
@@ -397,7 +395,6 @@
                 class="ui-button-raised ui-button-secondary"></button>
         </p-footer>
     </p-confirmDialog>
-
     <p-toast position="center" key="alertMessage" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
         <ng-template let-message pTemplate="message">
             <div style="text-align: center">
