@@ -16,7 +16,6 @@ import com.cdgs.temple.dto.ResponseCountDto;
 import com.cdgs.temple.service.ForgetPassService;
 import com.cdgs.temple.util.ResponseDto;
 
-
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/forgetpass")

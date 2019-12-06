@@ -190,7 +190,7 @@ export class RegisterFormComponent implements OnInit {
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private breadCrumbService: BreadcrumbService,
-    private roleService:ManageRoleService
+    private roleService: ManageRoleService
   ) {
 
   }
