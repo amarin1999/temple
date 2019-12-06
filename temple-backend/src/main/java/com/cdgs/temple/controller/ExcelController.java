@@ -1,6 +1,7 @@
 package com.cdgs.temple.controller;
 
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -59,7 +60,8 @@ public class ExcelController {
 
 	}
 	private byte[] contentOf(String fileName) throws Exception {
-		return Files.readAllBytes(Paths.get("src/main/resources/"+fileName));
+
+		return Files.readAllBytes(Paths.get("D:\\templeFile/"+fileName));
 	}
 	
 	
@@ -80,7 +82,7 @@ public class ExcelController {
 		int index = 0;
 		int bodyStRow = 5;
 		int numberOfMember = 1;
-		String path = "src/main/resources/temple.xls"; //สร้างไฟล์ไว้ที่ไหน.
+		String path = "D:\\templeFile"; //สร้างไฟล์ไว้ที่ไหน.
         try {
         	List<MembersHasCourseDto> memberHasCourse = membersHasCourseService.getMembersByCourse(courseId);
         	CourseDto course = courseService.getCourse(courseId);
@@ -290,18 +292,18 @@ public class ExcelController {
             footer.setRight(HSSFHeader.font("TH SarabunPSK", "regular")+HSSFHeader.fontSize((short) 16)+
             		"วัดป่าโสมพนัส "+course.getLocationName());
             
-//            File dir = new File(path);
-//            if (!dir.exists()) {
-//        		dir.mkdirs();
-//        		dir.createNewFile();
-//        		System.out.println("Create newfile");
-//        	}
+            File dir = new File(path);
+            if (!dir.exists()) {
+            	dir.mkdirs();
+            	dir.createNewFile();
+        		System.out.println("Create newfile");
+            }
             
 //            File file = new File(path);
 //            file.getParentFile().mkdirs();
             
  
-            OutputStream out = new FileOutputStream(path);
+            OutputStream out = new FileOutputStream(path+"/temple.xls");
             workbook.write(out);
             out.close();
             workbook.close();
