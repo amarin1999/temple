@@ -7,6 +7,7 @@ import { AuthRoutingModule } from "./auth-routing.module";
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { RegisterComponent } from './register/register.component';
+import {CalendarModule} from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { RegisterComponent } from './register/register.component';
   ],
   imports: [
     SharedModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    CalendarModule
   ],
   exports:[
     AuthComponent
