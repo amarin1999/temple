@@ -108,7 +108,8 @@
                                                 label=" อัปโหลดรูปภาพ"></label>
                                             <input accept="image/*" type="file" name="img" id="profile"
                                                 (change)="profileSelect($event, 1)" />
-                                            <div style="color: #BABABA;">** ขนาดไฟล์รูปไม่เกิน 1MB. นามสกุลไฟล์ .jpg เท่านั้น</div>
+                                            <div style="color: #BABABA;">** ขนาดไฟล์รูปไม่เกิน 1MB. นามสกุลไฟล์ .jpg
+                                                เท่านั้น</div>
                                         </div>
                                     </div>
                                 </div>
@@ -217,7 +218,8 @@
                                         </div> -->
                                     </div>
                                     <div class="ui-g-12 ui-lg-3 ui-md-4">
-                                        <p-calendar  formControlName="ordinatioDay" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" ></p-calendar>
+                                        <p-calendar formControlName="ordinatioDay" [monthNavigator]="true"
+                                            [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
                                     </div>
                                 </div>
                             </div>
@@ -273,6 +275,7 @@
                             </div>
                             <div class="ui-g">
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
+                                    <!------- กรุ๊ปเลือด ------->
                                     <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                                         <div *ngIf="!formError.blood" class="text-right">
                                             <span>กรุ๊ปเลือด*</span>

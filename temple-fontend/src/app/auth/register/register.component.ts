@@ -28,9 +28,9 @@ export class RegisterComponent implements OnInit {
   public messageback: string;
   public filteredTitleName: any[];
   public filteredProvince: any[];
-  courseHisName = '';
-  courseHisLocation = '';
-  courseHisList: any[] = [];
+  public courseHisName = '';
+  public courseHisLocation = '';
+  public courseHisList: any[] = [];
   profileString: string;
   currentId = 0;
   profile: any;
@@ -350,7 +350,6 @@ export class RegisterComponent implements OnInit {
             }
           },
           err => {
-            // console.log('submit error');
             console.log(err);
           }
         );
@@ -514,9 +513,10 @@ export class RegisterComponent implements OnInit {
       }
     }
   }
-
+  // เปลี่ยนรูปภาพ
   handleInputChange(files) {
     const file = files;
+     // format รูป เป็นไฟล์อื่นจะผิด
     const pattern = /image-*/;
     const reader = new FileReader();
     if (!file.type.match(pattern)) {
