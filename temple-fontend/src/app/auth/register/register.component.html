@@ -207,6 +207,25 @@
                                         <input type="text" pInputText placeholder="อาชีพ" formControlName="job">
                                     </div>
                                 </div>
+                                <!------- เบอร์โทรศัพท์ ------->
+                                <div class="ui-g-12 ui-lg-6 ui-md-6">
+                                    <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
+                                        <div *ngIf="!formError.phone" class="text-right">
+                                            <span>เบอร์โทรศัพท์*</span>
+                                        </div>
+                                        <div *ngIf="formError.phone" class="text-danger text-invalid text-right">
+                                            {{formError.phone}}
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-8 ui-md-4">
+                                        <p-inputMask mask="999-999-9999" placeholder="099-999-9999"
+                                            formControlName="phone">
+                                        </p-inputMask>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-g">
+                                    <!-- วัน/เดือน/ปีบวช -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                                         <div class="text-right">
@@ -214,12 +233,17 @@
                                         </div>
                                         <!-- *ngIf="!formError.ordinatioDay" -->
                                         <!-- <div *ngIf="formError.ordinatioDay" class="text-danger text-invalid text-right">
-                                            {{formError.ordinatioDay}}
-                                        </div> -->
+                                                    {{formError.ordinatioDay}}
+                                                </div> -->
                                     </div>
                                     <div class="ui-g-12 ui-lg-3 ui-md-4">
                                         <p-calendar formControlName="ordinatioDay" [monthNavigator]="true"
                                             [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
+                                    </div>
+                                </div>
+                                <!-- จำนวนพรรษาบวช -->
+                                <div class="ui-g-12 ui-lg-6 ui-md-6">
+                                    <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                                     </div>
                                 </div>
                             </div>
