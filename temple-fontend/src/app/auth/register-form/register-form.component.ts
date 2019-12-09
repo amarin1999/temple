@@ -58,6 +58,7 @@ export class RegisterFormComponent implements OnInit {
     address: new FormControl(null, [Validators.required]),
     phone: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.email]),
+    ordinatioDay: new FormControl(null, [Validators.required]),
     phoneEmergency: new FormControl(null, [Validators.required]),
     fnameEmergency: new FormControl(null, [Validators.required]),
     lnameEmergency: new FormControl(null, [Validators.required]),
@@ -80,6 +81,7 @@ export class RegisterFormComponent implements OnInit {
     job: '',
     gender: '',
     address: '',
+    ordinatioDay: '',
     phone: '',
     email: '',
     phoneEmergency: '',
@@ -137,6 +139,10 @@ export class RegisterFormComponent implements OnInit {
       detail: 'กรุณากรอก เบอร์โทร',
       required: 'เบอร์โทร*'
     },
+    ordinatioDay: {
+      detail: 'กรุณากรอก วัน/เดือน/ปี/เกิดบวช',
+      required: 'วัน/เดือน/ปีบวช*'
+    },
     email: {
       detail: 'กรุณากรอก E-mail',
       required: 'E-mail*'
@@ -190,7 +196,7 @@ export class RegisterFormComponent implements OnInit {
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private breadCrumbService: BreadcrumbService,
-    private roleService:ManageRoleService
+    private roleService: ManageRoleService
   ) {
 
   }
@@ -198,11 +204,9 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit() {
     // const email = this.registerForm.get('email');
     // console.log(email.dirty);
-    
     //------------ Get Role ----------------------------
     this.showRole = this.roleService.getRoleStatus();
     this.roles = this.roleService.getRoles();
-
     this.breadCrumbService.setPath([
       { label: 'จัดการสมาชิก', routerLink: '/users' },
       { label: 'ลงทะเบียนสมาชิก', routerLink: '/users/create' },
