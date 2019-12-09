@@ -48,6 +48,57 @@ public class MemberDto implements Serializable {
 	private String emergencyRelationship;
 	private boolean enable = true;
 	
+	private String idCard;
+	private Number age;
+	private Number ordianNumber;
+	private LocalDateTime ordianDate;
+	private String postalCodel;
+	
+	private Long provinceId;
+	private String provinceName;
+	
+	public String getIdCard() {
+		return idCard;
+	}
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+	public Number getAge() {
+		return age;
+	}
+	public void setAge(Number age) {
+		this.age = age;
+	}
+	public Number getOrdianNumber() {
+		return ordianNumber;
+	}
+	public void setOrdianNumber(Number ordianNumber) {
+		this.ordianNumber = ordianNumber;
+	}
+	public LocalDateTime getOrdianDate() {
+		return ordianDate;
+	}
+	public void setOrdianDate(LocalDateTime ordianDate) {
+		this.ordianDate = ordianDate;
+	}
+	public String getPostalCodel() {
+		return postalCodel;
+	}
+	public void setPostalCodel(String postalCodel) {
+		this.postalCodel = postalCodel;
+	}
+	public Long getProvinceId() {
+		return provinceId;
+	}
+	public void setProvinceId(Long provinceId) {
+		this.provinceId = provinceId;
+	}
+	public String getProvinceName(String provinceName) {
+		return provinceName;
+	}
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
 	public String getRoleName() {
 		return roleName;
 	}

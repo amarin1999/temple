@@ -335,6 +335,8 @@ export class EditFormComponent implements OnInit {
         this.editForm.controls['drugsAllergy'].setValue(res['data']['allergyMedicine']);
         this.editForm.controls['underlyDisease'].setValue(res['data']['disease']);
         this.editForm.controls['blood'].patchValue(blood);
+        this.editForm.controls['idCard'].patchValue(res['data']['idCard']);
+        this.editForm.controls['age'].patchValue(res['data']['age']);
       },
         err => console.log(err['error']['message'])
       );

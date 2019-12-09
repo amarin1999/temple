@@ -83,7 +83,6 @@ public class MemberController {
 		ResponseDto<MemberDto> res = new ResponseDto<>();
 		MemberDto member = memberService.getCurrentMember();
 		MemberDto member2;
-
 		try {
 			if(member.getRoleName().equals("user")){
 				member2 = memberService.getMember(member.getId());
@@ -95,10 +94,8 @@ public class MemberController {
 			res.setData(dto);
 			res.setCode(200);
 		} catch (Exception e) {
-
 			res.setErrorMessage(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-
 			res.setCode(200);
 		}
 		return new ResponseEntity<>(res, HttpStatus.OK);

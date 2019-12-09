@@ -125,57 +125,6 @@
 
             </div>
         </div> 
-
-        <!-- <div class="container" *ngIf="showButtonBack('admin')">
-            <div class="ui-g">
-                <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-                    <div style="text-align:center">
-
-                        <h1>รายชื่อผู้เรียนคอร์ส {{(course) ? course.name : ''}}</h1>
-                    </div>
-                    <div class="line"></div>  
-
-                </div>
-                <div class="ui-g-12 ui-lg-12 ui-md-12" style="text-align: right">
-                    <button pButton type="button" label="พิมพ์รายชื่อ" (click)="handleClick($event)" 
-                            class="ui-button-success ui-button-raised" ></button>
-                </div>
-                <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-                    <p-table #dt [value]="memberList" [totalRecords]="totalMember" [paginator]="true" [rows]="5" [columns]="cols">
-                        <ng-template pTemplate="caption">
-                            <div class="ui-g ui-fluid">
-                                <div class="ui-g-12 ui-lg-3 ui-md-3 ui-sm-12" style="margin-left: auto;">
-                                    <div class="ui-inputgroup">
-                                        <fa-icon [icon]="['fas', 'search']" class="ui-inputgroup-addon"></fa-icon>
-                                        <input type="text" pInputText placeholder="ค้นหา"
-                                            (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="header" let-columns>
-                            <tr >
-                                <th pSortableColumn="name" >
-                                    ชื่อ-นามสกุล
-                                    <p-sortIcon field="fname" ariaLabel="Activate to sort"
-                                        ariaLabelDesc="Activate to sort in descending order"
-                                        ariaLabelAsc="Activate to sort in ascending order">
-                                    </p-sortIcon>
-                                </th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr>
-                                <td>
-                                    {{rowData.data.titleName}}{{rowData.data.fname}} {{rowData.data.lname}}
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-
-            </div>
-        </div> -->
     </div>
 
 <p-confirmDialog [style]="{width: '50vw'}" #cd>

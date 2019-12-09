@@ -99,6 +99,14 @@ public class MemberEntity implements Serializable {
 	@Column(name = "member_emer_relationship")
 	private String memberEmerRelationship;
 	
+	@Column(name = "member_province_id")
+	private Long memberProvinceId;
+	
+	@Column(name = "member_id_card")
+	private String memberIdCard;
+	
+	@Column(name = "member_age")
+	private Number memberAge;
 
 	@ManyToOne
 	@JoinColumn(name = "member_gender_id", insertable = false, updatable = false)
@@ -112,7 +120,48 @@ public class MemberEntity implements Serializable {
 	@JoinColumn(name = "member_title_id", insertable = false, updatable = false)
 	private TitleNamesEntity titleName;
 	
+	@ManyToOne
+	@JoinColumn(name = "member_province_id", insertable = false, updatable = false)
+	private ProvinceEntity province;
 	
+	
+	public Number getMemberAge() {
+		return memberAge;
+	}
+
+
+	public void setMemberAge(Number memberAge) {
+		this.memberAge = memberAge;
+	}
+
+	public Long getMemberProvinceId() {
+		return memberProvinceId;
+	}
+
+
+	public void setMemberProvinceId(Long memberProvinceId) {
+		this.memberProvinceId = memberProvinceId;
+	}
+
+
+	public String getMemberIdCard() {
+		return memberIdCard;
+	}
+
+
+	public void setMemberIdCard(String memberIdCard) {
+		this.memberIdCard = memberIdCard;
+	}
+	public ProvinceEntity getProvince() {
+		return province;
+	}
+
+
+	public void setProvince(ProvinceEntity province) {
+		this.province = province;
+	}
+
+
 	public Long getMemberId() {
 		return memberId;
 	}
@@ -346,7 +395,6 @@ public class MemberEntity implements Serializable {
 		return gender;
 	}
 
-
 	public void setGender(GenderEntity gender) {
 		this.gender = gender;
 	}
@@ -380,6 +428,7 @@ public class MemberEntity implements Serializable {
 				+ ", memberEmail=" + memberEmail + ", memberImg=" + memberImg + ", memberRegisterDate="
 				+ memberRegisterDate + ", memberLastUpdate=" + memberLastUpdate + ", memberGenderId=" + memberGenderId
 				+ ", memberRoleId=" + memberRoleId + ", memberTitleId=" + memberTitleId + ", gender=" + gender
+				+ ", province=" + province + ", memberIdCard=" + memberIdCard
 				+ ", role=" + role + ", titleName=" + titleName + "]";
 	}
 
