@@ -323,6 +323,8 @@ export class RegisterComponent implements OnInit {
           job: this.registerForm.get('job').value,
           address: this.registerForm.get('address').value,
           provinceId: parseInt(provinceCode.provinceId),
+          ordianDate: this.registerForm.get('ordianDate').value,
+          ordianNumber: this.registerForm.get('ordianNumber').value,
           tel: this.registerForm.get('phone').value,
           emergencyTel: this.registerForm.get('phoneEmergency').value,
           emergencyName: emerName,
