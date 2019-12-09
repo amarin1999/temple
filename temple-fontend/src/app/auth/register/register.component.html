@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="ui-g-12 ui-lg-8 ui-md-6 ">
                                     <input type="password" pPassword placeholder="รหัสผ่าน" formControlName="password"
-                                        autocomplete="off">
+                                        autocomplete="off" promptLabel="กรุณากรอกรหัสผ่าน">
                                 </div>
                                 <!-------- re password --------->
                                 <div class="ui-g-12 ui-lg-4 ui-md-6 ">
@@ -75,7 +75,7 @@
                                 <div class="ui-g-12 ui-lg-8 ui-md-6 ">
                                     <div>
                                         <input type="password" pPassword placeholder="ยืนยันรหัสผ่าน"
-                                            formControlName="repassword">
+                                            formControlName="repassword" promptLabel="กรุณายืนยันรหัสผ่าน">
                                         <p-message
                                             *ngIf="(registerForm.get('password').value != registerForm.get('repassword').value) && registerForm.get('repassword').touched"
                                             severity="error" text="รหัสผ่านไม่ตรงกัน"></p-message>
@@ -100,7 +100,6 @@
                                         <span>รูปประจำตัว</span>
                                     </div>
                                     <div class="ui-g-12 ui-lg-8 ui-md-9">
-                                        <!--<p-fileUpload name="myFile"  [showUploadButton]='true' accept="image/*" (onUpload)="profileSelect($event)"></p-fileUpload>-->
                                         <img [src]="previewImg ? previewImg: './assets/images/no-img.png'"
                                             class="img-info" />
                                         <div class="btn-upload" style="text-align: center">
@@ -109,7 +108,7 @@
                                                 label=" อัปโหลดรูปภาพ"></label>
                                             <input accept="image/*" type="file" name="img" id="profile"
                                                 (change)="profileSelect($event, 1)" />
-                                            <div style="color: #BABABA;">** ขนาดไฟล์รูปไม่เกิน 1MB. Type .jpg</div>
+                                            <div style="color: #BABABA;">** ขนาดไฟล์รูปไม่เกิน 1MB. นามสกุลไฟล์ .jpg เท่านั้น</div>
                                         </div>
                                     </div>
                                 </div>
@@ -164,7 +163,8 @@
                                             </div>
                                         </div>
                                         <div class="ui-g-12 ui-lg-8 ui-md-9">
-                                            <input type="number" pInputText formControlName="age">
+                                            <input type="number" pInputText formControlName="age" style="width: 55px;"
+                                                maxlength="3">
                                         </div>
                                     </div>
                                 </div>
@@ -329,12 +329,13 @@
                                         <div class="ui-g-12 ui-lg-6 ui-md-6">
                                             <span id="courseDis">คอร์ส*: </span>
                                             <input type="text" pInputText [(ngModel)]="courseHisName"
-                                                [ngModelOptions]="{standalone: true}" />
+                                                placeholder="คอร์ส" [ngModelOptions]="{standalone: true}" />
                                         </div>
                                         <div class="ui-g-12 ui-lg-6 ui-md-6">
                                             <span>สถานที่: </span>
                                             <input type="text" pInputText [disabled]="courseHisName == ''? true:false"
-                                                [(ngModel)]="courseHisLocation" [ngModelOptions]="{standalone: true}" />
+                                                placeholder="สถานที่" [(ngModel)]="courseHisLocation"
+                                                [ngModelOptions]="{standalone: true}" />
                                         </div>
                                         <div style="text-align: right;">
                                             <button type="button" pButton label="บันทึก"
