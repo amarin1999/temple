@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, SelectItem, MessageService, ConfirmationService } from 'primeng/api';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { TitleNameService } from 'src/app/shared/service/title-name.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageUserService } from 'src/app/shared/service/manage-user.service';
@@ -8,6 +8,7 @@ import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { TitleName } from 'src/app/shared/interfaces/title-name';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
+import { ProvinceService } from 'src/app/shared/service/province.service';
 
 @Component({
   selector: 'app-register',
@@ -26,6 +27,10 @@ export class RegisterComponent implements OnInit {
   public showRole: boolean;
   public messageback: string;
   public filteredTitleName: any[];
+  public filteredProvince: any[];
+  courseHisName = '';
+  courseHisLocation = '';
+  courseHisList: any[] = [];
   profileString: string;
   currentId = 0;
   profile: any;
@@ -35,6 +40,7 @@ export class RegisterComponent implements OnInit {
     { label: 'B', value: 'B' },
     { label: 'AB', value: 'AB' },
   ];
+  public provinces: any[];
   public titleNames: any[];
   public displaySystemMessage = false;
 
@@ -42,18 +48,23 @@ export class RegisterComponent implements OnInit {
     username: new FormControl(null, [Validators.required, Validators.minLength(6)]),
     password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
     repassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    idCard: new FormControl(null, [Validators.required]),
     titleName: new FormControl('', [Validators.required]),
     fname: new FormControl(null, [Validators.required]),
     lname: new FormControl(null, [Validators.required]),
     job: new FormControl(null),
     gender: new FormControl('3', [Validators.required]),
+    age: new FormControl(null, [Validators.required, Validators.min(0)]),
     address: new FormControl(null, [Validators.required]),
+    province: new FormControl(null, [Validators.required]),
+    postalCode: new FormControl(null, [Validators.required]),
     phone: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.email]),
     phoneEmergency: new FormControl(null, [Validators.required]),
     fnameEmergency: new FormControl(null, [Validators.required]),
     lnameEmergency: new FormControl(null, [Validators.required]),
     relationshipEmergency: new FormControl(null, [Validators.required]),
+    historyDharma: new FormControl(null),
     other: new FormControl(null),
     foodsAllergy: new FormControl(null),
     drugsAllergy: new FormControl(null),
@@ -63,13 +74,17 @@ export class RegisterComponent implements OnInit {
 
   public formError = {
     username: '',
+    idCard: '',
     password: '',
     repassword: '',
     titleName: '',
+    age: '',
     fname: '',
     lname: '',
     gender: '',
     address: '',
+    province: '',
+    postalCode: '',
     phone: '',
     email: '',
     phoneEmergency: '',
@@ -82,15 +97,23 @@ export class RegisterComponent implements OnInit {
   public validationMessage = {
     username: {
       // detail: 'กรุณากรอก Username',
-      required: 'Username*'
+      required: 'ชื่อผู้ใช้*'
     },
     password: {
       // detail: 'กรุณากรอก Password',
-      required: 'Password*'
+      required: 'รหัสผ่าน*'
     },
     repassword: {
       // detail: 'กรุณากรอก Re-password',
-      required: 'Re-password*'
+      required: 'ยืนยันรหัสผ่าน*'
+    },
+    idCard: {
+      // detail: 'กรุณากรอก เลขประจำตัวประชาชน',
+      required: 'เลขประจำตัวประชาชน*'
+    },
+    age: {
+      // detail: 'กรุณากรอก อายุ',
+      required: 'อายุ*'
     },
     titleName: {
       // detail: 'กรุณากรอก คำนำหน้า',
@@ -112,9 +135,17 @@ export class RegisterComponent implements OnInit {
       // detail: 'กรุณากรอก ที่อยู่',
       required: 'ที่อยู่*'
     },
+    province: {
+      // detail: 'กรุณากรอก จังหวัด',
+      required: 'จังหวัด*'
+    },
+    postalCode: {
+      // detail: 'กรุณากรอก รหัสไปรษณีย์',
+      required: 'รหัสไปรษณีย์*'
+    },
     phone: {
       // detail: 'กรุณากรอก เบอร์โทร',
-      required: 'เบอร์โทร*'
+      required: 'เบอร์โทรศัพท์*'
     },
     email: {
       // detail: 'กรุณากรอก E-mail',
@@ -142,7 +173,6 @@ export class RegisterComponent implements OnInit {
     },
   };
   previewImg: string | ArrayBuffer;
-
   constructor(
     private messageService: MessageService,
     private titleService: TitleNameService,
@@ -150,7 +180,8 @@ export class RegisterComponent implements OnInit {
     private manageUserService: ManageUserService,
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
-    private breadCrumbService: BreadcrumbService
+    private breadCrumbService: BreadcrumbService,
+    private provinceService: ProvinceService
   ) { }
 
   ngOnInit() {
@@ -161,12 +192,18 @@ export class RegisterComponent implements OnInit {
     this.setBack();
     // this.createForm();
     this.settingCalendarTH();
+    this.provinceService.getProvince().subscribe(
+      res => {
+        this.provinces = res.data;
+      },
+      err => {
+        console.log(err['error']['message']);
+      }
+    );
     this.titleService.getTitleNames().subscribe(
       res => {
         // this.titleNames = res;
-        this.titleNames = [
-          ...res
-        ];
+        this.titleNames = res;
       },
       err => {
         console.log(err['error']['message']);
@@ -177,6 +214,21 @@ export class RegisterComponent implements OnInit {
       { label: 'Login', url: 'auth/login' },
       { label: 'Register : สมัครสมาชิก' },
     ];
+  }
+
+  saveCourseHis() {
+    if (this.courseHisName !== null && this.courseHisName !== '') {
+      const his = {'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation};
+      this.courseHisList.push(his);
+      this.courseHisName = '';
+      this.courseHisLocation = '';
+    } else {
+      document.getElementById('courseDis').style.color = 'red';
+    }
+  }
+
+  delHisCourse(index){
+    this.courseHisList.splice(index, 1);
   }
 
   setBack() {
@@ -232,8 +284,7 @@ export class RegisterComponent implements OnInit {
       header: 'ข้อความแจ้งเตือน',
       accept: () => {
         this.actionAccept(type);
-        //console.log(type);
-
+        // console.log(type);
       },
       reject: () => {
       }
@@ -252,17 +303,20 @@ export class RegisterComponent implements OnInit {
       case 'submit': {
         //console.log('submit');
         // const dataUser = this.onSave(this.registerForm.getRawValue());
+        const provinceCode = this.registerForm.get('province').value;
         const titleCode = this.registerForm.get('titleName').value;
         const emerName = (this.registerForm.get('fnameEmergency').value) + ' ' + (this.registerForm.get('lnameEmergency').value);
         const bloodGroup = this.registerForm.get('blood').value;
         const dataUser = {
           username: this.registerForm.get('username').value,
           password: this.registerForm.get('password').value,
-
+          idCard: this.registerForm.get('idCard').value,
+          age: this.registerForm.get('age').value,
           fname: this.registerForm.get('fname').value,
           lname: this.registerForm.get('lname').value,
           job: this.registerForm.get('job').value,
           address: this.registerForm.get('address').value,
+          provinceId: parseInt(provinceCode.provinceId),
           tel: this.registerForm.get('phone').value,
           emergencyTel: this.registerForm.get('phoneEmergency').value,
           emergencyName: emerName,
@@ -273,19 +327,20 @@ export class RegisterComponent implements OnInit {
           lastUpdate: null,
           genderId: this.registerForm.get('gender').value,
           titleId: parseInt(titleCode.id),
+          historyDharma: this.courseHisList,
           other: this.registerForm.get('other').value,
           allergyFood: this.registerForm.get('foodsAllergy').value,
           allergyMedicine: this.registerForm.get('drugsAllergy').value,
           disease: this.registerForm.get('underlyDisease').value,
           blood: bloodGroup.value,
         };
-        //console.log(dataUser);
+        console.log(dataUser);
         this.manageUserService.createUser(dataUser).subscribe(
           res => {
             if (res['status'] === 'Success') {
-              this.showToast('alertMessage', 'สมัครสมาชิกสำเร็จ');
+              this.showToast('alertMessage', 'สมัครสมาชิกสำเร็จ', 'success');
             } else {
-              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ');
+              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
             }
           },
           err => {
@@ -293,7 +348,6 @@ export class RegisterComponent implements OnInit {
             console.log(err);
           }
         );
-
         break;
       }
       default: { break; }
@@ -354,11 +408,9 @@ export class RegisterComponent implements OnInit {
     for (const field of Object.keys(this.formError)) {
       this.formError[field] = '';
       const control = this.registerForm.get(field);
-
       if ((field === 'repassword')) {
-        if (control.value == '') {
+        if (control.value === '') {
           this.detailWarning[0] = 'กรุณากรอกยืนยันรหัสผ่าน';
-
         } else if (control.value !== this.registerForm.get('password').value) {
           this.detailWarning[0] = 'กรุณากรอกรหัสผ่านให้ตรงกัน';
         } else {
@@ -379,10 +431,11 @@ export class RegisterComponent implements OnInit {
    * @param key ;
    * @param detail ;
    */
-  showToast(key, detail) {
+  showToast(key, detail, severity) {
     this.messageService.clear();
     this.messageService.add(
       {
+        severity: severity,
         key: key,
         sticky: true,
         summary: 'ข้อความจากระบบ',
@@ -393,17 +446,25 @@ export class RegisterComponent implements OnInit {
 
   /**
    * รับค่าจากแป้นพิมพ์
-   * @param event 
+   * @param event
    */
   filterTitleNameMultiple(event) {
     const query = event.query;
     this.filteredTitleName = this.filterTitleName(query, this.titleNames);
   }
+  /**
+     * รับค่าจากแป้นพิมพ์
+     * @param event
+     */
+  filterProvinceMultiple(event) {
+    const query = event.query;
+    this.filteredProvince = this.filterProvince(query, this.provinces);
+  }
 
   /**
    * เปรียบเทียบค่าที่ได้จากแป้นพิมพ์ กับ ค่าที่ได้จากดาต้าเบส
-   * @param query 
-   * @param titleNames 
+   * @param query
+   * @param titleNames
    */
   filterTitleName(query, titleNames: any[]): any[] {
     const filtered: any[] = [];
@@ -412,6 +473,17 @@ export class RegisterComponent implements OnInit {
       if ((titleName.display).match(query)) {
         filtered.push(titleName);
         //console.log(titleName.display);
+      }
+    }
+    return filtered;
+  }
+
+  filterProvince(query, provinces: any[]): any[] {
+    const filtered: any[] = [];
+    for (let i = 0; i < provinces.length; i++) {
+      const province = provinces[i];
+      if ((province.provinceName).match(query)) {
+        filtered.push(province);
       }
     }
     return filtered;
@@ -432,10 +504,8 @@ export class RegisterComponent implements OnInit {
         this.profile = file;
         this.handleInputChange(this.profile); // turn into base64
       } else {
-        alert('ไฟล์เกินขนาด!');
+        this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์เกินขนาด!' });
       }
-    } else {
-      alert('ไฟล์ผิดประเภท!');
     }
   }
 
@@ -444,7 +514,7 @@ export class RegisterComponent implements OnInit {
     const pattern = /image-*/;
     const reader = new FileReader();
     if (!file.type.match(pattern)) {
-      alert('ไฟล์ผิดประเภท!');
+      this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์ผิดประเภท!' });
       return;
     }
     reader.onloadend = this._handleReaderLoaded.bind(this);

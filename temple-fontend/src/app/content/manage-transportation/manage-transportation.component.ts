@@ -17,7 +17,10 @@ export class ManageTransportationComponent implements OnInit {
   public cols: any[];
   public displayTransportation = false;
   public newTransportation = "";
+  public timePickUp = null;
+  public timeSend = null;
   public temp: string;
+  typeTrans: number = 1 ; //type 1 = temple
 
   constructor(
     private breadCrumbService: BreadcrumbService,
@@ -63,9 +66,13 @@ export class ManageTransportationComponent implements OnInit {
 
   public save() {
     this.transportation.name = this.newTransportation;
+    this.transportation.timePickUp = this.timePickUp;
+    this.transportation.timeSend = this.timeSend;
+    this.transportation.typeTrans = this.typeTrans;
     const checkArry = this.transport.filter(
       res => res.name === this.transportation.name
     );
+    console.log('checkArry', checkArry);
     if (checkArry.length !== 0) {
       this.messageService.add({
         severity: "error",
@@ -74,7 +81,6 @@ export class ManageTransportationComponent implements OnInit {
       });
       return;
     }
-    //console.log(this.transportation.name);
     this.transportationService
       .createTransportation(this.transportation)
       .subscribe(

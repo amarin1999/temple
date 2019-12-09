@@ -34,12 +34,12 @@
               <ng-template pTemplate="header" let-columns>
                 <tr>
                   <th pSortableColumn="name">
-                    ประเภท
+                    การเดินทาง
                   </th>
-                  <th pSortableColumn="name">
+                  <th pSortableColumn="timePickUp">
                     เวลารับ
                   </th>
-                  <th pSortableColumn="name">
+                  <th pSortableColumn="timeSend">
                     เวลาส่ง
                   </th>
                   <th>
@@ -55,12 +55,14 @@
                       </div>
                     </td>
                     <td *ngFor="let col of columns;">
-                      <div *ngIf="rowData[col.field] === rowData['name']">
-                        {{rowData['name']}}
+                      <div *ngIf="rowData[col.field] === rowData['timePickUp']">
+                        {{rowData['timePickUp']}}
                       </div>
                     </td>
-                    <td>
-
+                    <td *ngFor="let col of columns;">
+                      <div *ngIf="rowData[col.field] === rowData['timeSend']">
+                        {{rowData['timeSend']}}
+                      </div>
                     </td>
                     <td>
                       <div style="text-align:center">
@@ -80,11 +82,20 @@
   </div>
 </div>
 <p-dialog header="รายละเอียดการเดินทาง" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
-  [modal]="true" [style]="{width: '400px'}" (onHide)="clear()" >
+  [modal]="true" [style]="{'width': '400px'}" [contentStyle]="{'overflow':'visible'}" (onHide)="clear()" >
   <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <div class="ui-g-5">
+          <label>ประเภทการเดินทาง</label>
+        </div>
+        <div class="ui-g-7">
+          <div class="ui-g-12"> <p-radioButton name="typeTrans" value="1" label="การเดินทางของวัด" [(ngModel)]="typeTrans" inputId="temple" binary="true"></p-radioButton></div>
+          <div class="ui-g-12"><p-radioButton name="typeTrans" value="0" label="การเดินทางด้วยตัวเอง" [(ngModel)]="typeTrans" inputId="yourSelf" binary="true"></p-radioButton></div>
+        </div>
+        </div>
     <div class="ui-g-12">
       <div class="ui-g-4">
-        <label>ประเภท</label>
+        <label>การเดินทาง</label>
       </div>
       <div class="ui-g-8">
         <input pInputText  [(ngModel)]="newTransportation"/>
@@ -95,7 +106,7 @@
         <label>เวลา (รับ)</label>
       </div>
       <div class="ui-g-8">
-        <p-calendar [(ngModel)]="newtime" [timeOnly]="true"></p-calendar>
+        <p-calendar [(ngModel)]="timePickUp" [timeOnly]="true" showTime="true" hourFormat="24" [showIcon]="true" icon="pi pi-clock" [style]="{'width':'60%'}" [disabled]="typeTrans === '0' ? true:false"></p-calendar> 
       </div>
     </div>
     <div class="ui-g-12">
@@ -103,16 +114,16 @@
         <label>เวลา (ส่ง)</label>
       </div>
       <div class="ui-g-8">
-        <p-calendar [(ngModel)]="newtime" [timeOnly]="true"></p-calendar>
+        <p-calendar [(ngModel)]="timeSend" showTime="true"  [timeOnly]="true" hourFormat="24" [showIcon]="true" icon="pi pi-clock" [style]="{'width':'60%'}"  [disabled]="typeTrans === '0' ? true:false"></p-calendar>
       </div>
     </div>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
       <button type="button" *ngIf="displayTransportation" pButton (click)="save()" style="background-color: #007ad9"  label="บันทึก"
-      [disabled] = "newTransportation === '' "></button>
+      [disabled] = "typeTrans === '1' && (timePickUp === null || timeSend === null) || newTransportation === '' "></button>
       <button class="ui-button-warning" type="button" *ngIf="!displayTransportation" pButton (click)="update()" label="แก้ไข"
-      [disabled] = "newTransportation === ''"></button>
+      [disabled] = "typeTrans === '1' && (timePickUp === null || timeSend === null) || newTransportation === '' "></button>
       <button class="ui-button-raised ui-button-secondary" type="button" pButton (click)="clear()" label="ยกเลิก" ></button>
     </div>
   </p-footer>

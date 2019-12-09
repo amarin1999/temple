@@ -70,6 +70,22 @@ fieldset {
     background-color: #4e4e4e !important;
     border: #777676;
     border-radius: 5px;
+}
+
+:host>>>.del-btn{
+    background-color: red !important;
+    color: #fff;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: #e60101 !important;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+ :host>>>.del-btn:hover {
+    background-color: #ca0000 !important;
+    border: #e60101;
+    border-radius: 5px;
 }  
 
 .center {

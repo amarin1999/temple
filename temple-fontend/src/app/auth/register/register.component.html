@@ -1,3 +1,4 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
 <div class="border-card">
     <!-- {{registerForm.getRawValue() | json}} -->
     <div [formGroup]="registerForm">
@@ -12,7 +13,7 @@
                                 <!------- username ------->
                                 <div class="ui-g-12 ui-lg-4 ui-md-4 ">
                                     <div *ngIf="!formError.username" class="text-right">
-                                        <span>Username*</span>
+                                        <span>ชื่อผู้ใช้*</span>
                                     </div>
                                     <div *ngIf="formError.username" class="text-danger text-invalid text-right">
                                         {{formError.username}}
@@ -21,10 +22,24 @@
                                 <div class="ui-g-12 ui-lg-8 ui-md-8 ">
                                     <input type="text" pInputText placeholder="Username" formControlName="username">
                                 </div>
+                                <!------- ID Card ------->
+                                <div class="ui-g-12 ui-lg-4 ui-md-4  ">
+                                    <div *ngIf="!formError.idCard" class="text-right">
+                                        <span>เลขประจำตัวประชาชน*</span>
+                                    </div>
+                                    <div *ngIf="formError.idCard" class="text-danger text-invalid text-right">
+                                        {{formError.idCard}}
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-lg-8 ui-md-8 ">
+                                    <p-inputMask mask="9-9999-99999-99-9" placeholder="9-9999-99999-99-9"
+                                        formControlName="idCard">
+                                    </p-inputMask>
+                                </div>
                                 <!------- email ------->
                                 <div class="ui-g-12 ui-lg-4 ui-md-4  ">
                                     <div class="text-right">
-                                        <span>E-mail</span>
+                                        <span>อีเมล</span>
                                     </div>
                                     <div class="text-danger text-invalid text-right">
                                     </div>
@@ -38,20 +53,20 @@
                                 <!------- password ------->
                                 <div class="ui-g-12 ui-lg-4 ui-md-6 ">
                                     <div *ngIf="!formError.password" class="text-right">
-                                        <span>Password*</span>
+                                        <span>รหัสผ่าน*</span>
                                     </div>
                                     <div *ngIf="formError.password" class="text-danger text-invalid text-right">
                                         {{formError.password}}
                                     </div>
                                 </div>
                                 <div class="ui-g-12 ui-lg-8 ui-md-6 ">
-                                    <input type="password" pPassword placeholder="Password" formControlName="password"
+                                    <input type="password" pPassword placeholder="รหัสผ่าน" formControlName="password"
                                         autocomplete="off">
                                 </div>
                                 <!-------- re password --------->
                                 <div class="ui-g-12 ui-lg-4 ui-md-6 ">
                                     <div *ngIf="!formError.repassword" class="text-right">
-                                        <span>Re-password*</span>
+                                        <span>ยืนยันรหัสผ่าน*</span>
                                     </div>
                                     <div *ngIf="formError.repassword" class="text-danger text-invalid text-right">
                                         {{formError.repassword}}
@@ -59,8 +74,11 @@
                                 </div>
                                 <div class="ui-g-12 ui-lg-8 ui-md-6 ">
                                     <div>
-                                        <input type="password" pPassword placeholder="Re-password"
+                                        <input type="password" pPassword placeholder="ยืนยันรหัสผ่าน"
                                             formControlName="repassword">
+                                        <p-message
+                                            *ngIf="(registerForm.get('password').value != registerForm.get('repassword').value) && registerForm.get('repassword').touched"
+                                            severity="error" text="รหัสผ่านไม่ตรงกัน"></p-message>
                                     </div>
                                 </div>
                             </div>
@@ -91,27 +109,11 @@
                                                 label=" อัปโหลดรูปภาพ"></label>
                                             <input accept="image/*" type="file" name="img" id="profile"
                                                 (change)="profileSelect($event, 1)" />
+                                            <div style="color: #BABABA;">** Maximum 1MB. Type .jpg</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
-                                    <!------- สิทธิการใช้งาน (แสดงของแอดมิน) ------->
-                                    <!-- <div class="ui-g-12 ui-lg-12 ui-md-12" *ngIf="showRole ;else elseTemp">
-                                        <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
-                                            <div *ngIf="!formError.role" class="text-right">
-                                                สิทธิการใช้งาน*
-                                            </div>
-                                            <div *ngIf="formError.role" class="text-danger text-invalid text-right">
-                                                {{formError.role}}
-                                            </div>
-                                        </div>
-                                        <div class="ui-g-12 ui-lg-5 ui-md-5 "  >
-                                            <p-dropdown [options]="roles" optionLabel="roleName" value="roleId" [autoWidth]="false"
-                                                placeholder="กรุณาเลือกสิทธิการใช้งาน" [style]="{'width':'100%'}"
-                                                formControlName="role"></p-dropdown>
-                                        </div>
-                                    </div> -->
-                                    <!------- กรณีไม่ใช่แอดมิน ------->
                                     <ng-template #elseTemp>
                                         <div class="ui-g-12 ui-lg-12 ui-md-12"></div>
                                     </ng-template>
@@ -150,6 +152,19 @@
                                                 <p-radioButton checked name="gender" class="checkmark radio" value='3'
                                                     label="ไม่ระบุ" formControlName="gender"></p-radioButton>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-12 ui-md-12">
+                                        <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
+                                            <div *ngIf="!formError.age" class="text-right">
+                                                <span>อายุ*</span>
+                                            </div>
+                                            <div *ngIf="formError.age" class="text-danger text-invalid text-right">
+                                                {{formError.age}}
+                                            </div>
+                                        </div>
+                                        <div class="ui-g-12 ui-lg-8 ui-md-9">
+                                            <input type="number" pInputText formControlName="age">
                                         </div>
                                     </div>
                                 </div>
@@ -225,6 +240,39 @@
                             </div>
                             <div class="ui-g">
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
+                                    <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
+                                        <div *ngIf="!formError.province" class="text-right">
+                                            <span>จังหวัด*</span>
+                                        </div>
+                                        <div *ngIf="formError.province" class="text-danger text-invalid text-right">
+                                            {{formError.province}}
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-8 ui-md-9">
+                                        <p-autoComplete formControlName="province" placeholder="กรุณาเลือกจังหวัด"
+                                            [suggestions]="filteredProvince" value="id"
+                                            (completeMethod)="filterProvinceMultiple($event)" [minLength]="1"
+                                            field="provinceName" [dropdown]="true">
+                                        </p-autoComplete>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-lg-6 ui-md-6">
+                                    <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
+                                        <div *ngIf="!formError.postalCode" class="text-right">
+                                            <span>รหัสไปรษณีย์*</span>
+                                        </div>
+                                        <div *ngIf="formError.postalCode" class="text-danger text-invalid text-right">
+                                            {{formError.postalCode}}
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-4">
+                                        <input type="text" pInputText placeholder="รหัสไปรษณีย์"
+                                            formControlName="postalCode" maxlength="5">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                                         <div *ngIf="!formError.blood" class="text-right">
                                             <span>กรุ๊ปเลือด*</span>
@@ -273,11 +321,65 @@
                             <div class="ui-g">
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
+                                        <span>การปฏิบัติธรรมที่ผ่านมา</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-8 ui-md-4"
+                                        style="border-style: solid; border-width: thin; border-color: #BABABA;">
+                                        <div class="ui-g-12 ui-lg-6 ui-md-6">
+                                            <span id="courseDis">คอร์ส*: </span>
+                                            <input type="text" pInputText [(ngModel)]="courseHisName"
+                                                [ngModelOptions]="{standalone: true}" />
+                                        </div>
+                                        <div class="ui-g-12 ui-lg-6 ui-md-6">
+                                            <span>สถานที่: </span>
+                                            <input type="text" pInputText [disabled]="courseHisName == ''? true:false"
+                                                [(ngModel)]="courseHisLocation" [ngModelOptions]="{standalone: true}" />
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <button type="button" pButton label="บันทึก"
+                                                [disabled]="courseHisName == ''? true:false"
+                                                (click)="saveCourseHis()"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-lg-6 ui-md-6">
+                                    <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                                         <span>หมายเหตุ</span>
                                     </div>
                                     <div class="ui-g-12 ui-lg-3 ui-md-4">
-                                        <textarea [rows]="3" [cols]="50" pInputTextarea formControlName="other">
-                                        </textarea>
+                                        <textarea [rows]="3" [cols]="40" pInputTextarea
+                                            formControlName="other"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-g">
+                                <div class="ui-g-12" *ngIf="courseHisList.length != 0">
+                                    <div class="ui-g-3 ui-lg-2 ui-md-1 text-right">
+                                        <span>รายการการปฏิบัติธรรมที่ผ่านมา: </span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-8 ui-md-4"
+                                        style="border-style: solid; border-width: thin; border-color: #BABABA;">
+                                        <p-table [value]="courseHisList">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th style="width: 8%;">#</th>
+                                                    <th>คอร์ส</th>
+                                                    <th>สถานที่</th>
+                                                    <th style="width: 8%;"></th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-courses let-rowIndex="rowIndex">
+                                                <tr>
+                                                    <td>{{rowIndex+1}}</td>
+                                                    <td>{{courses?.courseName}}</td>
+                                                    <td>{{courses?.courseLocation}}</td>
+                                                    <td style="text-align: centers;">
+                                                        <button pButton icon="pi pi-trash"
+                                                            (click)="delHisCourse(rowIndex)" class="del-btn"></button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
                                     </div>
                                 </div>
                             </div>
@@ -344,7 +446,7 @@
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                                         <div *ngIf="!formError.phoneEmergency" class="text-right">
-                                            <span>เบอร์โทรศัพท์*</span>
+                                            <span>เบอร์ติดต่อฉุกเฉิน*</span>
                                         </div>
                                         <div *ngIf="formError.phoneEmergency"
                                             class="text-danger text-invalid text-right">
