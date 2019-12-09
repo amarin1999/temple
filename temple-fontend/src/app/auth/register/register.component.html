@@ -20,7 +20,7 @@
                                     </div>
                                 </div>
                                 <div class="ui-g-12 ui-lg-8 ui-md-8 ">
-                                    <input type="text" pInputText placeholder="Username" formControlName="username">
+                                    <input type="text" pInputText placeholder="ชื่อผู้ใช้" formControlName="username">
                                 </div>
                                 <!------- ID Card ------->
                                 <div class="ui-g-12 ui-lg-4 ui-md-4  ">
@@ -109,7 +109,7 @@
                                                 label=" อัปโหลดรูปภาพ"></label>
                                             <input accept="image/*" type="file" name="img" id="profile"
                                                 (change)="profileSelect($event, 1)" />
-                                            <div style="color: #BABABA;">** Maximum 1MB. Type .jpg</div>
+                                            <div style="color: #BABABA;">** ขนาดไฟล์รูปไม่เกิน 1MB. Type .jpg</div>
                                         </div>
                                     </div>
                                 </div>
@@ -208,16 +208,16 @@
                                 </div>
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
-                                        <div *ngIf="!formError.phone" class="text-right">
-                                            <span>เบอร์โทรศัพท์*</span>
+                                        <div class="text-right">
+                                            <span>วัน/เดือน/ปีบวช*</span>
                                         </div>
-                                        <div *ngIf="formError.phone" class="text-danger text-invalid text-right">
-                                            {{formError.phone}}
-                                        </div>
+                                        <!-- *ngIf="!formError.ordinatioDay" -->
+                                        <!-- <div *ngIf="formError.ordinatioDay" class="text-danger text-invalid text-right">
+                                            {{formError.ordinatioDay}}
+                                        </div> -->
                                     </div>
                                     <div class="ui-g-12 ui-lg-3 ui-md-4">
-                                        <p-inputMask mask="999-999-9999" placeholder="099-999-9999"
-                                            formControlName="phone"></p-inputMask>
+                                        <p-calendar  formControlName="ordinatioDay" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" ></p-calendar>
                                     </div>
                                 </div>
                             </div>
@@ -237,6 +237,7 @@
                                         </textarea>
                                     </div>
                                 </div>
+                                
                             </div>
                             <div class="ui-g">
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
