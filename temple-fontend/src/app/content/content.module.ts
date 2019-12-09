@@ -39,6 +39,7 @@ import { FormatTHdatePipe } from '../shared/pipe/formatTHdate.pipe';
 import { ManageTransportationComponent } from './manage-transportation/manage-transportation.component';
 import { from } from 'rxjs';
 import { CourseRegisterOutTimeComponent } from './courses/course-register-out-time/course-register-out-time.component';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 registerLocaleData(localeTh);
 
@@ -77,7 +78,8 @@ registerLocaleData(localeTh);
   imports: [
     CoreModule,
     SharedModule,
-    ContentRoutingModule
+    ContentRoutingModule,
+    RadioButtonModule
   ],
   exports: [
     ContentComponent
