@@ -59,7 +59,8 @@ export class RegisterComponent implements OnInit {
     province: new FormControl(null, [Validators.required]),
     postalCode: new FormControl(null, [Validators.required]),
     phone: new FormControl(null, [Validators.required]),
-    email: new FormControl(null, [Validators.email]),
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    ordinatioDay: new FormControl(null),
     phoneEmergency: new FormControl(null, [Validators.required]),
     fnameEmergency: new FormControl(null, [Validators.required]),
     lnameEmergency: new FormControl(null, [Validators.required]),
@@ -83,6 +84,7 @@ export class RegisterComponent implements OnInit {
     lname: '',
     gender: '',
     address: '',
+    ordinatioDay: '',
     province: '',
     postalCode: '',
     phone: '',
@@ -142,6 +144,10 @@ export class RegisterComponent implements OnInit {
     postalCode: {
       // detail: 'กรุณากรอก รหัสไปรษณีย์',
       required: 'รหัสไปรษณีย์*'
+    },
+    ordinatioDay: {
+      // detail: 'กรุณากรอก วัน/เดือน/ปี/เกิดบวช',
+      required: 'วัน/เดือน/ปีบวช*'
     },
     phone: {
       // detail: 'กรุณากรอก เบอร์โทร',
