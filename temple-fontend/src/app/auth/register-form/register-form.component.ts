@@ -49,6 +49,7 @@ export class RegisterFormComponent implements OnInit {
     username: new FormControl( null, [Validators.required, Validators.minLength(6)]),
     password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
     repassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    idCard: new FormControl(null, [Validators.required]),
     titleName: new FormControl('', [Validators.required]),
     fname: new FormControl(null, [Validators.required]),
     lname: new FormControl(null, [Validators.required]),
@@ -72,6 +73,7 @@ export class RegisterFormComponent implements OnInit {
 
   public formError = {
     username: '',
+    idCard: '',
     password: '',
     repassword: '',
     titleName: '',
@@ -110,6 +112,10 @@ export class RegisterFormComponent implements OnInit {
     repassword: {
       detail: 'กรุณากรอก Re-password',
       required: 'Re-password*'
+    },
+    idCard: {
+      // detail: 'กรุณากรอก เลขประจำตัวประชาชน',
+      required: 'เลขประจำตัวประชาชน*'
     },
     titleName: {
       detail: 'กรุณากรอก คำนำหน้า',
@@ -339,6 +345,7 @@ export class RegisterFormComponent implements OnInit {
         const dataUser = {
           username: this.registerForm.get('username').value,
           password: this.registerForm.get('password').value,
+          idCard: this.registerForm.get('idCard').value,
           roleId: this.registerForm.get('role').value.roleId,
           fname: this.registerForm.get('fname').value,
           lname: this.registerForm.get('lname').value,
@@ -513,10 +520,8 @@ export class RegisterFormComponent implements OnInit {
         this.profile = file;
         this.handleInputChange(this.profile); // turn into base64
       } else {
-        alert('ไฟล์เกินขนาด!');
+        this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์เกินขนาด!' });
       }
-    } else {
-      alert('ไฟล์ผิดประเภท!');
     }
   }
 
