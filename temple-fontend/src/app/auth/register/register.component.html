@@ -135,6 +135,7 @@
                                             </p-autoComplete>
                                         </div>
                                     </div>
+                                    <!-- เพศ -->
                                     <div class="ui-g-12 ui-lg-12 ui-md-12">
                                         <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                                             <span>เพศ</span>
@@ -154,6 +155,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- อายุ -->
                                     <div class="ui-g-12 ui-lg-12 ui-md-12">
                                         <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                                             <div *ngIf="!formError.age" class="text-right">
@@ -165,12 +167,13 @@
                                         </div>
                                         <div class="ui-g-12 ui-lg-8 ui-md-9">
                                             <input type="number" pInputText formControlName="age" style="width: 55px;"
-                                                maxlength="3">
+                                                maxlength="3" min="0">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="ui-g">
+                                <!-- ชื่อ -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                                         <div *ngIf="!formError.fname" class="text-right">
@@ -184,6 +187,7 @@
                                         <input type="text" pInputText placeholder="ชื่อ" formControlName="fname">
                                     </div>
                                 </div>
+                                <!-- นามสกุล -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                                         <div *ngIf="!formError.lname" class="text-right">
@@ -199,6 +203,7 @@
                                 </div>
                             </div>
                             <div class="ui-g">
+                                <!-- อาชีพ -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                                         <span>อาชีพ</span>
@@ -231,13 +236,13 @@
                                         <div class="text-right">
                                             <span>วัน/เดือน/ปีบวช*</span>
                                         </div>
-                                        <!-- *ngIf="!formError.ordinatioDay" -->
-                                        <!-- <div *ngIf="formError.ordinatioDay" class="text-danger text-invalid text-right">
-                                                    {{formError.ordinatioDay}}
+                                        <!-- *ngIf="!formError.ordianDate" -->
+                                        <!-- <div *ngIf="formError.ordianDate" class="text-danger text-invalid text-right">
+                                                    {{formError.ordianDate}}
                                                 </div> -->
                                     </div>
                                     <div class="ui-g-12 ui-lg-3 ui-md-4">
-                                        <p-calendar formControlName="ordinatioDay" [monthNavigator]="true"
+                                        <p-calendar formControlName="ordianDate" [monthNavigator]="true"
                                             [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
                                     </div>
                                 </div>
@@ -248,6 +253,7 @@
                                 </div>
                             </div>
                             <div class="ui-g">
+                                <!-- ที่อยู่ -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                                         <div *ngIf="!formError.address" class="text-right">
@@ -265,6 +271,7 @@
                                 </div>
                             </div>
                             <div class="ui-g">
+                                <!-- จังหวัด -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                                         <div *ngIf="!formError.province" class="text-right">
@@ -282,6 +289,7 @@
                                         </p-autoComplete>
                                     </div>
                                 </div>
+                                <!-- รหัสไปรษณีย์ -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                                         <div *ngIf="!formError.postalCode" class="text-right">
@@ -315,6 +323,7 @@
                                         </p-dropdown>
                                     </div>
                                 </div>
+                                <!-- โรคประจำตัว -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                                         <span>โรคประจำตัว</span>
@@ -326,6 +335,7 @@
                                 </div>
                             </div>
                             <div class="ui-g">
+                                <!-- ยาที่แพ้ -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                                         <span>ยาที่แพ้</span>
@@ -346,6 +356,7 @@
                                 </div>
                             </div>
                             <div class="ui-g">
+                                <!-- การปฏิบัติธรรมที่ผ่านมา -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                                         <span>การปฏิบัติธรรมที่ผ่านมา</span>
@@ -370,6 +381,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- หมายเหตุ -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                                         <span>หมายเหตุ</span>
@@ -381,6 +393,7 @@
                                 </div>
                             </div>
                             <div class="ui-g">
+                                <!-- รายการการปฏิบัติธรรมที่ผ่านมา -->
                                 <div class="ui-g-12" *ngIf="courseHisList.length != 0">
                                     <div class="ui-g-3 ui-lg-2 ui-md-1 text-right">
                                         <span>รายการการปฏิบัติธรรมที่ผ่านมา: </span>

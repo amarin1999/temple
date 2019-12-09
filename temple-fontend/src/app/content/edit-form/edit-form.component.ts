@@ -10,7 +10,8 @@ import { BreadcrumbService } from '../../shared/service/breadcrumb.service';
 import localeTh from '@angular/common/locales/th.js';
 import { ManageRoleService } from 'src/app/shared/service/manage-role.service';
 import { Role } from 'src/app/shared/interfaces/role';
-import {AuthService} from '../../shared/service/auth.service';
+import { AuthService } from '../../shared/service/auth.service';
+import { ProvinceService } from 'src/app/shared/service/province.service';
 
 
 @Component({
@@ -37,31 +38,42 @@ export class EditFormComponent implements OnInit {
   public messageback: string;
   public filteredTitleName: any[];
   public displaySystemMessage = false;
+  public filteredProvince: any[];
+  public courseHisName = '';
+  public courseHisLocation = '';
+  public courseHisList: any[] = [];
+  public provinces: any[];
   currentId = 0;
   profile: any;
   profileString: string;
   titleNames: any[];
   bloodGroup: SelectItem[] = [
-    {label: 'O', value: 'O'},
-    {label: 'A', value: 'A'},
-    {label: 'B', value: 'B'},
-    {label: 'AB', value: 'AB'},
+    { label: 'O', value: 'O' },
+    { label: 'A', value: 'A' },
+    { label: 'B', value: 'B' },
+    { label: 'AB', value: 'AB' },
   ];
 
- 
   editForm = new FormGroup({
+    idCard: new FormControl(null, [Validators.required]),
     titleName: new FormControl('', [Validators.required]),
     fname: new FormControl(null, [Validators.required]),
     lname: new FormControl(null, [Validators.required]),
     job: new FormControl(null),
     gender: new FormControl(null, [Validators.required]),
+    age: new FormControl(null, [Validators.required, Validators.min(0)]),
     address: new FormControl(null, [Validators.required]),
+    province: new FormControl(null, [Validators.required]),
+    postalCode: new FormControl(null, [Validators.required, Validators.pattern('[0-9]{5}')]),
+    ordianDate: new FormControl(null),
+    ordianNumber: new FormControl(null),
     phone: new FormControl(null, [Validators.required]),
-    email: new FormControl(null, [Validators.required, Validators.email]),
+    email: new FormControl(null, [Validators.email]),
     phoneEmergency: new FormControl(null, [Validators.required]),
     fnameEmergency: new FormControl(null, [Validators.required]),
     lnameEmergency: new FormControl(null, [Validators.required]),
     relationshipEmergency: new FormControl(null, [Validators.required]),
+    historyDharma: new FormControl(null),
     other: new FormControl(null),
     foodsAllergy: new FormControl(null),
     drugsAllergy: new FormControl(null),
@@ -75,12 +87,16 @@ export class EditFormComponent implements OnInit {
     username: '',
     password: '',
     repassword: '',
+    idCard: '',
     titleName: '',
+    age: '',
     fname: '',
     lname: '',
     job: '',
     gender: '',
     address: '',
+    province: '',
+    postalCode: '',
     phone: '',
     email: '',
     phoneEmergency: '',
@@ -108,6 +124,14 @@ export class EditFormComponent implements OnInit {
       detail: 'กรุณากรอก Re-password',
       required: 'Re-password*'
     },
+    idCard: {
+      detail: 'กรุณากรอก เลขประจำตัวประชาชน',
+      required: 'เลขประจำตัวประชาชน*'
+    },
+    age: {
+      detail: 'กรุณากรอก อายุ',
+      required: 'อายุ*'
+    },
     titleName: {
       detail: 'กรุณากรอก คำนำหน้า',
       required: 'คำนำหน้า*'
@@ -131,6 +155,14 @@ export class EditFormComponent implements OnInit {
     address: {
       detail: 'กรุณากรอก ที่อยู่',
       required: 'ที่อยู่*'
+    },
+    province: {
+      detail: 'กรุณากรอก จังหวัด',
+      required: 'จังหวัด*'
+    },
+    postalCode: {
+      detail: 'กรุณากรอก รหัสไปรษณีย์',
+      required: 'รหัสไปรษณีย์*'
     },
     phone: {
       detail: 'กรุณากรอก เบอร์โทร',
@@ -188,8 +220,9 @@ export class EditFormComponent implements OnInit {
     private route: ActivatedRoute,
     private breadCrumbService: BreadcrumbService,
     private confirmationService: ConfirmationService,
-    private roleService:ManageRoleService,
-    private authService:AuthService
+    private roleService: ManageRoleService,
+    private authService: AuthService,
+    private provinceService: ProvinceService
   ) {
   }
 
@@ -203,6 +236,14 @@ export class EditFormComponent implements OnInit {
     this.onEdit = false;
     this.settingForm();
     this.settingCalendarTH();
+    this.provinceService.getProvince().subscribe(
+      res => {
+        this.provinces = res.data;
+      },
+      err => {
+        console.log(err['error']['message']);
+      }
+    );
     this.titleService.getTitleNames().subscribe(
       res => {
         this.titleNames = res;
@@ -212,10 +253,10 @@ export class EditFormComponent implements OnInit {
 
       }
     );
-    
+
     if (this.authService.getRole().value === 'admin') {
       this.breadCrumbService.setPath([
-        {label: 'จัดการสมาชิก', routerLink: '/users'},
+        { label: 'จัดการสมาชิก', routerLink: '/users' },
         { label: 'แก้ไขข้อมูลส่วนตัว' },
       ]);
     } else {
@@ -227,16 +268,31 @@ export class EditFormComponent implements OnInit {
 
   }
 
-  setBack(){
-    const route = this.authService.getRole().value==='admin'?'':this.personalId;
-    this.urlback = this.route.snapshot.data.urlback+route;
+  saveCourseHis() {
+    if (this.courseHisName !== null && this.courseHisName !== '') {
+      const his = {'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation};
+      this.courseHisList.push(his);
+      this.courseHisName = '';
+      this.courseHisLocation = '';
+    } else {
+      document.getElementById('courseDis').style.color = 'red';
+    }
+  }
+
+  delHisCourse(index){
+    this.courseHisList.splice(index, 1);
+  }
+
+  setBack() {
+    const route = this.authService.getRole().value === 'admin' ? '' : this.personalId;
+    this.urlback = this.route.snapshot.data.urlback + route;
     this.messageback = this.route.snapshot.data.messageback;
   }
 
   settingForm() {
     this.manageUserService.getUser(this.personalId)
       .subscribe(res => {
-        console.log( res);
+        console.log(res);
         const titlename = {
           id: res['data']['titleId'],
           display: res['data']['titleDisplay'],
@@ -245,17 +301,17 @@ export class EditFormComponent implements OnInit {
         const role = {
           roleId: res['data']['roleId'],
           roleName: res['data']['roleName'],
-        };        
+        };
         const blood = {
           label: res['data']['blood'],
           value: res['data']['blood']
-        }
+        };
         let emerName = res['data']['emergencyName'];
         if (res['data']['emergencyName'] !== null) {
           emerName = emerName.split(' ', 2);
           this.editForm.controls['fnameEmergency'].setValue(emerName[0]);
           this.editForm.controls['lnameEmergency'].setValue(emerName[1]);
-        }else{
+        } else {
           this.editForm.controls['fnameEmergency'].setValue(null);
           this.editForm.controls['lnameEmergency'].setValue(null);
         }
@@ -271,7 +327,7 @@ export class EditFormComponent implements OnInit {
         this.editForm.controls['email'].setValue(res['data']['email']);
         this.editForm.controls['address'].setValue(res['data']['address']);
         this.editForm.controls['phoneEmergency'].setValue(res['data']['emergencyTel']);
-        
+
         this.editForm.controls['imgProfile'].setValue(res['data']['img']);
         this.editForm.controls['relationshipEmergency'].setValue(res['data']['emergencyRelationship']);
         this.editForm.controls['other'].setValue(res['data']['other']);
@@ -316,7 +372,7 @@ export class EditFormComponent implements OnInit {
 
   showMessageWrongValidate() {
     this.displaySystemMessage = true;
-   // this.showToast('systemMessage', this.detailWarning);
+    // this.showToast('systemMessage', this.detailWarning);
   }
 
 
@@ -344,9 +400,9 @@ export class EditFormComponent implements OnInit {
 
   showCancelConfirm() {
     let message;
-    if(this.authService.getRole().value ==='admin'){
+    if (this.authService.getRole().value === 'admin') {
       message = 'ยกเลิกการแก้ไขข้อมูลส่วนตัว และกลับสู่หน้าจัดการสมาชิก ?';
-    }else{
+    } else {
       message = 'ยกเลิกการแก้ไขข้อมูลส่วนตัว และกลับสู่หน้าข้อมูลส่วนตัว ?';
     }
     const type = 'cancle';
@@ -355,50 +411,48 @@ export class EditFormComponent implements OnInit {
   }
 
 
- // อัปโหลดรูปภาพ
- profileSelect(event, field) {
-  this.currentId = field;
-  const fileList: FileList = event.target.files;
-  if (fileList.length > 0) {
-    const file: File = fileList[0];
-    if (file.size < 512000) {
-      this.profile = file;
-      this.handleInputChange(this.profile); // turn into base64
-    } else {
-      alert('ไฟล์เกินขนาด!');
+  // อัปโหลดรูปภาพ
+  profileSelect(event, field) {
+    this.currentId = field;
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      if (file.size < 1000000) {
+        this.profile = file;
+        this.handleInputChange(this.profile); // turn into base64
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์เกินขนาด!' });
+      }
     }
-  } else {
-    alert('ไฟล์ผิดประเภท!');
   }
-}
-// เปลี่ยนรูปภาพ
-handleInputChange(files) {
-  const file = files;
-  // format รูป เป็นไฟล์อื่นจะผิด
-  const pattern = /image-*/;
-  const reader = new FileReader();
-  if (!file.type.match(pattern)) {
-    alert('ไฟล์ผิดประเภท!');
-    return;
+  // เปลี่ยนรูปภาพ
+  handleInputChange(files) {
+    const file = files;
+    // format รูป เป็นไฟล์อื่นจะผิด
+    const pattern = /image-*/;
+    const reader = new FileReader();
+    if (!file.type.match(pattern)) {
+      this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์ผิดประเภท!' });
+      return;
+    }
+    reader.onloadend = this._handleReaderLoaded.bind(this);
+    reader.onload = () => {
+      this.previewImg = reader.result;
+    };
+    reader.readAsDataURL(file);
   }
-  reader.onloadend = this._handleReaderLoaded.bind(this);
-  reader.onload = () => {
-    this.previewImg = reader.result;
-  };
-  reader.readAsDataURL(file);
-}
-// เปลี่ยนรูปจาก image เป็น base64 แล้ว post ลงฐานข้อมูล ในรูปแบบ String เป็น Type Blob
-_handleReaderLoaded(e) {
-  const reader = e.target;
-  const base64result = reader.result.substr(reader.result.indexOf(',') + 1);
-  // this.imageSrc = base64result;
-  const id = this.currentId;
-  if (id === 1) {
-    this.profileString = base64result;
-    this.editForm.controls['imgProfile'].setValue(this.profileString);
-    // console.log(this.profileString);
+  // เปลี่ยนรูปจาก image เป็น base64 แล้ว post ลงฐานข้อมูล ในรูปแบบ String เป็น Type Blob
+  _handleReaderLoaded(e) {
+    const reader = e.target;
+    const base64result = reader.result.substr(reader.result.indexOf(',') + 1);
+    // this.imageSrc = base64result;
+    const id = this.currentId;
+    if (id === 1) {
+      this.profileString = base64result;
+      this.editForm.controls['imgProfile'].setValue(this.profileString);
+      // console.log(this.profileString);
+    }
   }
-}
 
   subscribeInputMessageWaring() {
     this.editForm
@@ -425,13 +479,13 @@ _handleReaderLoaded(e) {
         this.detailWarning[1] = details;
         // this.detailWarning += this.validationMessage[field].detail + '\n';
         this.formError[field] = this.validationMessage[field].required;
-      } 
+      }
     }
   }
 
-  delPic(){
+  delPic() {
     console.log("delpicprofile");
-    
+
   }
 
   showClearConfirm() {
@@ -448,16 +502,6 @@ _handleReaderLoaded(e) {
         this.actionAccept(type);
       },
       reject: () => {
-        // switch (type) {
-        //   case 'clear':{
-        //     this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการคืนค่าข้อมูลส่วนตัว' });
-        //     break;
-        //   }
-        //   case 'cancle': {
-        //     this.messageService.add({ severity: 'warn', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการยืนยันแก้ไขข้อมูลส่วนตัว' });
-        //     break;
-        //   }
-        // }
       }
     });
   }
@@ -470,15 +514,16 @@ _handleReaderLoaded(e) {
         break;
       }
       case 'cancle': {
-        if( this.authService.getRole().value==='admin'){
+        if (this.authService.getRole().value === 'admin') {
           this.router.navigateByUrl(`/users`);
-        }else{
+        } else {
           this.router.navigateByUrl(`/profile/${this.personalId}`);
         }
-        
+
         break;
       }
       case 'submit': {
+        const provinceCode = this.editForm.get('province').value;
         const titleCode = this.editForm.get('titleName').value;
         const role = this.editForm.get('role').value;
         const emerName = (this.editForm.get('fnameEmergency').value) + ' ' + (this.editForm.get('lnameEmergency').value);
@@ -486,9 +531,14 @@ _handleReaderLoaded(e) {
         const dataUser = {
           fname: this.editForm.get('fname').value,
           lname: this.editForm.get('lname').value,
+          age: this.editForm.get('age').value,
+          idCard: this.editForm.get('idCard').value,
           job: this.editForm.get('job').value,
           address: this.editForm.get('address').value,
+          provinceId: parseInt(provinceCode.provinceId),
           tel: this.editForm.get('phone').value,
+          ordianDate: this.editForm.get('ordianDate').value,
+          ordianNumber: this.editForm.get('ordianNumber').value,
           emergencyTel: this.editForm.get('phoneEmergency').value,
           email: this.editForm.get('email').value,
           img: this.profileString,
@@ -497,6 +547,7 @@ _handleReaderLoaded(e) {
           genderId: this.editForm.get('gender').value,
           titleId: +(titleCode.id),
           roleId: +(role.roleId),
+          historyDharma: this.courseHisList,
           emergencyName: emerName,
           emergencyRelationship: this.editForm.get('relationshipEmergency').value,
           other: this.editForm.get('other').value,
@@ -504,15 +555,15 @@ _handleReaderLoaded(e) {
           allergyMedicine: this.editForm.get('drugsAllergy').value,
           disease: this.editForm.get('underlyDisease').value,
           blood: bloodGroup.value,
-
         };
-
+        console.log('dataUser', dataUser);
+        
         this.manageUserService.updateUser(this.personalId, dataUser).subscribe(
           res => {
             if (res['status'] === 'Success') {
-              this.showToast('alertMessage', 'แก้ไขข้อมูลสำเร็จ');
+              this.showToast('alertMessage', 'สมัครสมาชิกสำเร็จ', 'success');
             } else {
-              this.showToast('alertMessage', 'แก้ไขข้อมูลไม่สำเร็จ');
+              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
             }
           },
           err => {
@@ -525,10 +576,11 @@ _handleReaderLoaded(e) {
     }
   }
 
-  showToast(key, detail) {
-    // this.messageService.clear();
+  showToast(key, detail, severity) {
+    this.messageService.clear();
     this.messageService.add(
       {
+        severity: severity,
         key: key,
         sticky: true,
         summary: 'ข้อความจากระบบ',
@@ -545,6 +597,14 @@ _handleReaderLoaded(e) {
     const query = event.query;
     this.filteredTitleName = this.filterTitleName(query, this.titleNames);
   }
+  /**
+     * รับค่าจากแป้นพิมพ์
+     * @param event
+     */
+    filterProvinceMultiple(event) {
+      const query = event.query;
+      this.filteredProvince = this.filterProvince(query, this.provinces);
+    }
 
   /**
    * เปรียบเทียบค่าที่ได้จากแป้นพิมพ์ กับ ค่าที่ได้จากดาต้าเบส
@@ -562,5 +622,16 @@ _handleReaderLoaded(e) {
     }
     return filtered;
   }
-  
+
+  filterProvince(query, provinces: any[]): any[] {
+    const filtered: any[] = [];
+    for (let i = 0; i < provinces.length; i++) {
+      const province = provinces[i];
+      if ((province.provinceName).match(query)) {
+        filtered.push(province);
+      }
+    }
+    return filtered;
+  }
+
 }
