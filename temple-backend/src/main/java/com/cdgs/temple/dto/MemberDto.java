@@ -49,10 +49,10 @@ public class MemberDto implements Serializable {
 	private boolean enable = true;
 	
 	private String idCard;
-	private Number age;
-	private Number ordianNumber;
+	private Long age;
+	private Long ordianNumber;
 	private LocalDateTime ordianDate;
-	private String postalCodel;
+	private String postalCode;
 	
 	private Long provinceId;
 	private String provinceName;
@@ -63,16 +63,16 @@ public class MemberDto implements Serializable {
 	public void setIdCard(String idCard) {
 		this.idCard = idCard;
 	}
-	public Number getAge() {
+	public Long getAge() {
 		return age;
 	}
-	public void setAge(Number age) {
+	public void setAge(Long age) {
 		this.age = age;
 	}
-	public Number getOrdianNumber() {
+	public Long getOrdianNumber() {
 		return ordianNumber;
 	}
-	public void setOrdianNumber(Number ordianNumber) {
+	public void setOrdianNumber(Long ordianNumber) {
 		this.ordianNumber = ordianNumber;
 	}
 	public LocalDateTime getOrdianDate() {
@@ -81,11 +81,11 @@ public class MemberDto implements Serializable {
 	public void setOrdianDate(LocalDateTime ordianDate) {
 		this.ordianDate = ordianDate;
 	}
-	public String getPostalCodel() {
-		return postalCodel;
+	public String getPostalCode() {
+		return postalCode;
 	}
-	public void setPostalCodel(String postalCodel) {
-		this.postalCodel = postalCodel;
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
 	}
 	public Long getProvinceId() {
 		return provinceId;
@@ -93,7 +93,7 @@ public class MemberDto implements Serializable {
 	public void setProvinceId(Long provinceId) {
 		this.provinceId = provinceId;
 	}
-	public String getProvinceName(String provinceName) {
+	public String getProvinceName() {
 		return provinceName;
 	}
 	public void setProvinceName(String provinceName) {

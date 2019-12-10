@@ -141,6 +141,8 @@ public class MemberServiceImpl implements MemberService {
 		MemberEntity entity = new MemberEntity();
 		entity.setMemberGenderId(member.getGenderId());
 		entity.setMemberTitleId(member.getTitleId());
+		entity.setMemberProvinceId(member.getProvinceId());
+		entity.setMemberIdCard(member.getIdCard());
 		entity.setMemberRoleId(member.getRoleId());
 		entity.setMemberId(member.getId());		
 		entity.setMemberUsername(member.getUsername());
@@ -202,8 +204,9 @@ public class MemberServiceImpl implements MemberService {
 			dto.setDisease(entity.getMemberDisease());
 			dto.setEmergencyName(entity.getMemberEmerName());
 			dto.setEmergencyRelationship(entity.getMemberEmerRelationship());
-			
-			
+			dto.setIdCard(entity.getMemberIdCard());
+			dto.setAge(entity.getMemberAge());
+			dto.setPostalCode(entity.getMemberPostalCode());
 			
 			dto.setGenderId(entity.getMemberGenderId());
 			if(entity.getGender() != null)
@@ -219,6 +222,9 @@ public class MemberServiceImpl implements MemberService {
 			if(entity.getRole() != null)
 				dto.setRoleName(entity.getRole().getRoleName());
 			
+			dto.setProvinceId(entity.getMemberProvinceId());
+			if(entity.getProvince() != null)
+				dto.setProvinceName(entity.getProvince().getProvinceName());
 		}
 		return dto;
 	}

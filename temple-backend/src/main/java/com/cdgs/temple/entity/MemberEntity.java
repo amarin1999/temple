@@ -102,11 +102,14 @@ public class MemberEntity implements Serializable {
 	@Column(name = "member_province_id")
 	private Long memberProvinceId;
 	
+	@Column(name = "member_postal_code")
+	private String memberPostalCode;
+	
 	@Column(name = "member_id_card")
 	private String memberIdCard;
 	
 	@Column(name = "member_age")
-	private Number memberAge;
+	private Long memberAge;
 
 	@ManyToOne
 	@JoinColumn(name = "member_gender_id", insertable = false, updatable = false)
@@ -124,13 +127,22 @@ public class MemberEntity implements Serializable {
 	@JoinColumn(name = "member_province_id", insertable = false, updatable = false)
 	private ProvinceEntity province;
 	
-	
-	public Number getMemberAge() {
+
+	public String getMemberPostalCode() {
+		return memberPostalCode;
+	}
+
+
+	public void setMemberPostalCode(String memberPostalCode) {
+		this.memberPostalCode = memberPostalCode;
+	}
+
+	public Long getMemberAge() {
 		return memberAge;
 	}
 
 
-	public void setMemberAge(Number memberAge) {
+	public void setMemberAge(Long memberAge) {
 		this.memberAge = memberAge;
 	}
 

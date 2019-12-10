@@ -306,6 +306,10 @@ export class EditFormComponent implements OnInit {
           label: res['data']['blood'],
           value: res['data']['blood']
         };
+        const province = {
+          provinceId: res['data']['provinceId'],
+          provinceName: res['data']['provinceName']
+        };
         let emerName = res['data']['emergencyName'];
         if (res['data']['emergencyName'] !== null) {
           emerName = emerName.split(' ', 2);
@@ -337,6 +341,8 @@ export class EditFormComponent implements OnInit {
         this.editForm.controls['blood'].patchValue(blood);
         this.editForm.controls['idCard'].patchValue(res['data']['idCard']);
         this.editForm.controls['age'].patchValue(res['data']['age']);
+        this.editForm.controls['postalCode'].patchValue(res['data']['postalCode']);
+        this.editForm.controls['province'].patchValue(province);
       },
         err => console.log(err['error']['message'])
       );

@@ -23,5 +23,11 @@ public class ProvinceDto implements Serializable {
 	public void setProvinceName(String provinceName) {
 		this.provinceName = provinceName;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
 
 }
