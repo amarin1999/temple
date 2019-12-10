@@ -32,16 +32,21 @@ export class RegisterFormComponent implements OnInit {
   public showRole: boolean;
   public messageback: string;
   public filteredTitleName: any[];
+  public filteredProvince: any[];
   public roles: Role[];
   profileString: string;
   currentId = 0;
   profile: any;
+  courseHisName = '';
+  courseHisLocation = '';
+  courseHisList: any[] = [];
   bloodGroup: SelectItem[] = [
     {label: 'O', value: 'O'},
     {label: 'A', value: 'A'},
     {label: 'B', value: 'B'},
     {label: 'AB', value: 'AB'},
   ];
+  public provinces: any[];
   public titleNames: any[];
   public displaySystemMessage = false;
 
@@ -54,12 +59,14 @@ export class RegisterFormComponent implements OnInit {
     fname: new FormControl(null, [Validators.required]),
     lname: new FormControl(null, [Validators.required]),
     job: new FormControl(null),
-    role: new FormControl(null,[Validators.required]),
+    role: new FormControl(null, [Validators.required]),
     gender: new FormControl('3', [Validators.required]),
+    age: new FormControl(null, [Validators.required, Validators.min(0)]),
     address: new FormControl(null, [Validators.required]),
     phone: new FormControl(null, [Validators.required]),
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    ordinatioDay: new FormControl(null, [Validators.required]),
+    email: new FormControl(null, [Validators.email]),
+    ordianDate: new FormControl(null),
+    ordianDecs: new FormControl(null),
     phoneEmergency: new FormControl(null, [Validators.required]),
     fnameEmergency: new FormControl(null, [Validators.required]),
     lnameEmergency: new FormControl(null, [Validators.required]),
@@ -69,6 +76,8 @@ export class RegisterFormComponent implements OnInit {
     drugsAllergy: new FormControl(null),
     underlyDisease: new FormControl(null),
     blood: new FormControl('', [Validators.required]),
+    postalCode: new FormControl('', [Validators.required]),
+    province: new FormControl('',[Validators.required])
   });
 
   public formError = {
@@ -77,13 +86,14 @@ export class RegisterFormComponent implements OnInit {
     password: '',
     repassword: '',
     titleName: '',
+    age: '',
     fname: '',
     lname: '',
     role: '',
     job: '',
     gender: '',
     address: '',
-    ordinatioDay: '',
+    ordianDate: '',
     phone: '',
     email: '',
     phoneEmergency: '',
@@ -95,6 +105,8 @@ export class RegisterFormComponent implements OnInit {
     drugsAllergy: '',
     underlyDisease: '',
     blood: '',
+    postalCode: '',
+    province: ''
   };
 
   public validationMessage = {
@@ -106,7 +118,7 @@ export class RegisterFormComponent implements OnInit {
       // detail: 'กรุณากรอก Password',
       required: 'Password*'
     },
-    role:{
+    role: {
      required: '  สิทธิการเข้าใช้งาน*'
     },
     repassword: {
@@ -116,6 +128,10 @@ export class RegisterFormComponent implements OnInit {
     idCard: {
       // detail: 'กรุณากรอก เลขประจำตัวประชาชน',
       required: 'เลขประจำตัวประชาชน*'
+    },
+    age: {
+      // detail: 'กรุณากรอก อายุ',
+      required: 'อายุ*'
     },
     titleName: {
       detail: 'กรุณากรอก คำนำหน้า',
@@ -141,13 +157,17 @@ export class RegisterFormComponent implements OnInit {
       detail: 'กรุณากรอก ที่อยู่',
       required: 'ที่อยู่*'
     },
+    province: {
+      detail: 'กรุณาเลือก จังหวัด',
+      required: 'จังหวัด*'
+    },
+    postalCode: {
+      detail: 'กรุณากรอก รหัสไปรษณีย์',
+      required: 'รหัสไปรษณีย์*'
+    },
     phone: {
       detail: 'กรุณากรอก เบอร์โทร',
       required: 'เบอร์โทร*'
-    },
-    ordinatioDay: {
-      detail: 'กรุณากรอก วัน/เดือน/ปี/เกิดบวช',
-      required: 'วัน/เดือน/ปีบวช*'
     },
     email: {
       detail: 'กรุณากรอก E-mail',
@@ -188,7 +208,7 @@ export class RegisterFormComponent implements OnInit {
     blood: {
       detail: 'กรุณากรอก กรุ๊ปเลือด',
       required: 'กรุ๊ปเลือด*'
-    },
+    }
   };
   previewImg: string | ArrayBuffer;
 
@@ -240,6 +260,21 @@ export class RegisterFormComponent implements OnInit {
       { label: 'Login', url: 'auth/login' },
       { label: 'Register : สมัครสมาชิก' },
     ];
+  }
+
+  saveCourseHis() {
+    if (this.courseHisName !== null && this.courseHisName !== '') {
+      const his = {'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation};
+      this.courseHisList.push(his);
+      this.courseHisName = '';
+      this.courseHisLocation = '';
+    } else {
+      document.getElementById('courseDis').style.color = 'red';
+    }
+  }
+
+  delHisCourse(index){
+    this.courseHisList.splice(index, 1);
   }
 
   setBack() {
@@ -346,11 +381,14 @@ export class RegisterFormComponent implements OnInit {
           username: this.registerForm.get('username').value,
           password: this.registerForm.get('password').value,
           idCard: this.registerForm.get('idCard').value,
-          roleId: this.registerForm.get('role').value.roleId,
+          age: this.registerForm.get('age').value,
           fname: this.registerForm.get('fname').value,
           lname: this.registerForm.get('lname').value,
           job: this.registerForm.get('job').value,
           address: this.registerForm.get('address').value,
+          postalCode: this.registerForm.get('postalCode'),
+          provinceName: this.registerForm.get('province'),
+          ordianDate: this.registerForm.get('ordianDate').value,
           tel: this.registerForm.get('phone').value,
           emergencyTel: this.registerForm.get('phoneEmergency').value,
           emergencyName: emerName,
@@ -481,13 +519,20 @@ export class RegisterFormComponent implements OnInit {
 
   /**
    * รับค่าจากแป้นพิมพ์
-   * @param event 
+   * @param event
    */
   filterTitleNameMultiple(event) {
     const query = event.query;
     this.filteredTitleName = this.filterTitleName(query, this.titleNames);
   }
-
+  /**
+     * รับค่าจากแป้นพิมพ์
+     * @param event
+     */
+    filterProvinceMultiple(event) {
+      const query = event.query;
+      this.filteredProvince = this.filterProvince(query, this.provinces);
+    }
   /**
    * เปรียบเทียบค่าที่ได้จากแป้นพิมพ์ กับ ค่าที่ได้จากดาต้าเบส
    * @param query 
@@ -505,6 +550,17 @@ export class RegisterFormComponent implements OnInit {
     return filtered;
   }
 
+  filterProvince(query, provinces: any[]): any[] {
+    const filtered: any[] = [];
+    for (let i = 0; i < provinces.length; i++) {
+      const province = provinces[i];
+      if ((province.provinceName).match(query)) {
+        filtered.push(province);
+      }
+    }
+    return filtered;
+  }
+  
   onGenderSelect(event: TitleName) {
     const gender = this.registerForm.get('titleName').value;
    // const newObject = {...event};
