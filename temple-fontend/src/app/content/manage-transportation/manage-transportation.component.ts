@@ -3,6 +3,7 @@ import { TransportService } from "src/app/shared/service/transport.service";
 import { ConfirmationService, Message, MessageService } from "primeng/api";
 import { BreadcrumbService } from "src/app/shared/service/breadcrumb.service";
 import { Transportation } from "src/app/shared/interfaces/transportation";
+import { TransportationTemple } from "src/app/shared/interfaces/transportation-temple";
 
 @Component({
   selector: "app-manage-transportation",
@@ -12,15 +13,16 @@ import { Transportation } from "src/app/shared/interfaces/transportation";
 export class ManageTransportationComponent implements OnInit {
   public displayDialog = false;
   public filterData: any[];
-  public transport: Transportation[];
+  public transport: Transportation[]; // to diaplay data on table
   public transportation: Transportation;
+  public transportationTemple: TransportationTemple;
   public cols: any[];
   public displayTransportation = false;
   public newTransportation = "";
   public timePickUp = null;
   public timeSend = null;
   public temp: string;
-  typeTrans = '1';
+  typeTrans = "1";
 
   constructor(
     private breadCrumbService: BreadcrumbService,
@@ -31,13 +33,12 @@ export class ManageTransportationComponent implements OnInit {
 
   ngOnInit() {
     this.breadCrumbService.setPath([
-      { label: 'จัดการการเดินทางทั้งหมด', routerLink: '/transportation' }
+      { label: "จัดการการเดินทางทั้งหมด", routerLink: "/transportation" }
     ]);
     this.cols = [
-      { field: 'name', header: 'การเดินทาง' },
-      { field: 'timePickUp', header: 'เวลารับ' },
-      { field: 'timeSend', header: 'เวลาส่ง' }
-
+      { field: "name", header: "การเดินทาง" },
+      { field: "timePickUp", header: "เวลารับ" },
+      { field: "timeSend", header: "เวลาส่ง" }
     ];
     this.getTransportation();
     this.initTransportation();
@@ -50,12 +51,18 @@ export class ManageTransportationComponent implements OnInit {
   }
 
   getTransportation() {
+    this.transport = [];
+    this.filterData = [];
     this.transportationService.getTranSportToEdit().subscribe(res => {
-      console.log(res["data"]);
-      
-      if (res["status"] === "Success") {
-        this.transport = res["data"];
-        this.filterData = res["data"];
+      if (res['status'] === 'Success') {
+        this.transport = res['data'];
+        this.filterData= res['data'];
+      }
+    });
+
+    this.transportationService.getTranSportTempleToEdit().subscribe(item => {
+      if (item['status'] === 'Success') {
+        this.transport.push(...item['data']);
       }
     });
   }
@@ -71,12 +78,13 @@ export class ManageTransportationComponent implements OnInit {
   //   }
   // }
 
-  public save() {
+  public save(typeTrans) {
     this.transportation.name = this.newTransportation;
+    this.transportation.timePickUp = this.timePickUp;
+    this.transportation.timeSend = this.timeSend;
     const checkArry = this.transport.filter(
       res => res.name === this.transportation.name
     );
-    console.log('checkArry', checkArry);
     if (checkArry.length !== 0) {
       this.messageService.add({
         severity: "error",
@@ -85,32 +93,62 @@ export class ManageTransportationComponent implements OnInit {
       });
       return;
     }
-    this.transportationService
-      .createTransportation(this.transportation)
-      .subscribe(
-        res => {
-          if (res["status"] === "Success") {
-            // console.log(res);
+    if (typeTrans === "1") {
+      this.transportationService
+        .createTransportationTemple(this.transportation)
+        .subscribe(
+          res => {
+            if (res["status"] === "Success") {
+              console.log("Success");
+
+              this.messageService.add({
+                severity: "success",
+                summary: "ข้อความจากระบบ",
+                detail:
+                  "ดำเนินการเพิ่มการเดินทาง: " + res["data"]["name"] + " สำเร็จ"
+              });
+              this.getTransportation();
+              this.initTransportation();
+            }
+          },
+          e => {
+            console.log(e);
+            // this.messageService.clear;
             this.messageService.add({
-              severity: "success",
+              severity: "error",
               summary: "ข้อความจากระบบ",
-              detail:
-                "ดำเนินการเพิ่มการเดินทาง: " + res["data"]["name"] + " สำเร็จ"
+              detail: "ดำเนินการไม่สำเร็จ"
             });
-            this.getTransportation();
-            this.initTransportation();
           }
-        },
-        e => {
-          // console.log(e['error']['message'])
-          // this.messageService.clear;
-          this.messageService.add({
-            severity: "error",
-            summary: "ข้อความจากระบบ",
-            detail: "ดำเนินการไม่สำเร็จ"
-          });
-        }
-      );
+        );
+    } else {
+      this.transportationService
+        .createTransportation(this.transportation)
+        .subscribe(
+          res => {
+            if (res["status"] === "Success") {
+              // console.log(res);
+              this.messageService.add({
+                severity: "success",
+                summary: "ข้อความจากระบบ",
+                detail:
+                  "ดำเนินการเพิ่มการเดินทาง: " + res["data"]["name"] + " สำเร็จ"
+              });
+              this.getTransportation();
+              this.initTransportation();
+            }
+          },
+          e => {
+            // console.log(e['error']['message'])
+            // this.messageService.clear;
+            this.messageService.add({
+              severity: "error",
+              summary: "ข้อความจากระบบ",
+              detail: "ดำเนินการไม่สำเร็จ"
+            });
+          }
+        );
+    }
     this.clear();
   }
 
@@ -203,15 +241,17 @@ export class ManageTransportationComponent implements OnInit {
 
   clear() {
     this.initTransportation();
-    this.newTransportation = '';
+    this.newTransportation = "";
     this.messageService.clear();
   }
   private initTransportation() {
     this.displayDialog = false;
     this.transportation = {
       id: null,
-      name: '',
-      status: null
+      name: "",
+      status: null,
+      timePickUp: null,
+      timeSend: null
     };
   }
 }

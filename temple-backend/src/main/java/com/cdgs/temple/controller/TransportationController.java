@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cdgs.temple.dto.SensationDto;
 import com.cdgs.temple.dto.TitleNameDto;
 import com.cdgs.temple.dto.TransportationDto;
+import com.cdgs.temple.dto.TransportationTempleDto;
 import com.cdgs.temple.service.TransportationService;
+import com.cdgs.temple.service.TransportationTempleService;
 import com.cdgs.temple.util.ResponseDto;
 
 @RestController
@@ -35,6 +37,9 @@ public class TransportationController {
 	
 	@Autowired
 	TransportationService transporatationService;
+	
+	@Autowired
+	TransportationTempleService transportationTempleService;
 	
 	 /*
      * getTransportation 
@@ -59,6 +64,8 @@ public class TransportationController {
 		}
 		return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 	}
+	
+	
 	
 	/*
      * postTransporatation 
@@ -90,7 +97,8 @@ public class TransportationController {
 		}
 		return  new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 	}
-
+	
+	
 	/*
      * updateTransportation 
      * Description : this controller update data of transportation.
@@ -120,6 +128,7 @@ public class TransportationController {
 		return  new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 	}
 	
+	
 	/*
      * deleteTransportation 
      * Description : this controller update status of transportation from 1 to 0.
@@ -146,5 +155,128 @@ public class TransportationController {
 		
 		return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 	}
+	
+	
+	/********************************************************************************************************************************
+	 * -------------------------------------Manage Data Transportation of Temple ---------------------------------------------------
+	 * */
+	
+	/*
+	 * getTransportationTemple()
+	 * This function for get transportation of temple 
+	 * 
+	 	*/
+	@GetMapping(path = "/temple")
+	public ResponseEntity<ResponseDto<TransportationTempleDto>> getTransportationTemple(){
+		List<TransportationTempleDto> templeDto = new ArrayList<>();
+		ResponseDto<TransportationTempleDto> res = new ResponseDto<TransportationTempleDto>();
+		try {
+			templeDto = transportationTempleService.getTransportationTempleName();
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(templeDto);
+			res.setCode(200);
+		}catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+		}
+		return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
+	}
+	
+	
+	/*
+	 * insertTransportationTemple()
+	 * This function for insert transportation of temple
+	 * 
+	 	*/
+	
+	@PostMapping(path = "/temple")
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<ResponseDto<TransportationTempleDto>> insertTransportationTemple (@Valid @RequestBody TransportationTempleDto body){
+		List<TransportationTempleDto> templeDto = new ArrayList<>();
+		TransportationTempleDto transportationTemple = new TransportationTempleDto();
+		ResponseDto<TransportationTempleDto> res = new ResponseDto<TransportationTempleDto>();
+		try {
+			body.setStatus(true);
+			transportationTemple = transportationTempleService.createTransportationTemple(body);
+			if(transportationTemple != null) {
+				templeDto.add(transportationTemple);
+			}
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(templeDto);
+			res.setCode(200);
+		}catch (Exception e){
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(406);
+		}
+		return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
+	}
+	
+	
+	/*
+	 * updateTransportationTemple()
+	 * This function for update transportation of temple
+	 * params: id,  body: TransportationTempleDto
+	 * 
+	 	*/
+	
+	@PutMapping(path = "/temple/{id}")
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<ResponseDto<TransportationTempleDto>> updateTransportationTemple(@PathVariable("id") Long id,@Valid @RequestBody TransportationTempleDto body){
+		List<TransportationTempleDto> templeDto = new ArrayList<>();
+		ResponseDto<TransportationTempleDto> res = new ResponseDto<TransportationTempleDto>();
+		TransportationTempleDto transportationTemple = new TransportationTempleDto();
+		try {
+			transportationTemple = transportationTempleService.updateTransportationTemple(id, body);
+			if(transportationTemple != null) {
+				templeDto.add(transportationTemple);
+			}
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(templeDto);
+			res.setCode(200);
+		}catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+		}
+		
+		return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res,HttpStatus.OK);
+	}
+	
+	
+	/*
+	 * deleteTransportationTemple()
+	 * This function for delete transportation of temple
+	 * params: id,  body: TransportationTempleDto
+	 * 
+	 	*/
+	
+	@PutMapping(path= "/temple/delete/{id}")
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<ResponseDto<TransportationTempleDto>> deleteTransportationTemple(@PathVariable("id") Long id,@Valid @RequestBody TransportationTempleDto body){
+		List<TransportationTempleDto> templeDto = new ArrayList<>();
+		ResponseDto<TransportationTempleDto> res = new ResponseDto<TransportationTempleDto>();
+		TransportationTempleDto transportationTemple = new TransportationTempleDto();
+		try {
+			transportationTemple = transportationTempleService.deleteTransportationTemple(id, body);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setCode(200);
+			
+		}catch (Exception e){
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+		}
+		
+		return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
+		
+	}
+	
+	
+	
+
+	
+	
 	
 }
