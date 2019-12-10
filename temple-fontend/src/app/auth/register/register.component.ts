@@ -193,6 +193,25 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    //---------- CalenderTH -----------------------
+    this.th = {
+      firstDayOfWeek: 1,
+      dayNames: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
+      dayNamesShort: ['อาทิต', 'จัน', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์'],
+      dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
+      monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน',
+        'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม',
+        'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
+      monthNamesShort: ['มกรา', 'กุมภา', 'มีนา', 'เมษา',
+        'พฤษภา', 'มิถุนา', 'กรกฎา', 'สิงหา',
+        'กันยา', 'ตุลา', 'พฤศจิกา', 'ธันวา'],
+      monthNamesMin: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.',
+        'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.',
+        'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+      today: 'Today',
+      clear: 'Clear',
+    };
+    //----------------------------------------------
     // const email = this.registerForm.get('email');
     // console.log(email.dirty);
     this.registerSuccess = false;
@@ -318,7 +337,7 @@ export class RegisterComponent implements OnInit {
         const dataUser = {
           username: this.registerForm.get('username').value,
           password: this.registerForm.get('password').value,
-          idCard: this.registerForm.get('idCard').value,
+          idCard: this.registerForm.get(null).value,
           age: this.registerForm.get('age').value,
           fname: this.registerForm.get('fname').value,
           lname: this.registerForm.get('lname').value,
