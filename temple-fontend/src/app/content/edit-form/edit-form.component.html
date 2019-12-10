@@ -206,10 +206,6 @@
                                     <div class="text-right">
                                         <span>วัน/เดือน/ปีบวช</span>
                                     </div>
-                                    <!-- *ngIf="!formError.ordianDate" -->
-                                    <!-- <div *ngIf="formError.ordianDate" class="text-danger text-invalid text-right">
-                                                {{formError.ordianDate}}
-                                            </div> -->
                                 </div>
                                 <div class="ui-g-12 ui-lg-3 ui-md-4">
                                     <p-calendar formControlName="ordianDate" [monthNavigator]="true"
@@ -219,6 +215,13 @@
                             <!-- จำนวนพรรษาบวช -->
                             <div class="ui-g-12 ui-lg-6 ui-md-6">
                                 <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
+                                    <div class="text-right">
+                                        <span>จําพรรษา</span>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-lg-2 ui-md-1">
+                                    <input type="number" pInputText formControlName="ordianNumber" style="width: 55px;"
+                                        maxlength="3" />
                                 </div>
                             </div>
                         </div>
@@ -324,6 +327,19 @@
                             </div>
                         </div>
                         <div class="ui-g">
+                            <!------- หมายเหตุ ------->
+                            <div class="ui-g-12 ui-lg-6 ui-md-6">
+                                <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
+                                    <span>หมายเหตุ</span>
+                                </div>
+                                <div class="ui-g-12 ui-lg-8 ui-md-4">
+                                    <textarea [rows]="2" [cols]="30" class="fixtextarea" pInputTextarea
+                                        formControlName="other">
+                                        </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g">
                             <!------- การปฏิบัติธรรมที่ผ่านมา ------->
                             <div class="ui-g-12 ui-lg-6 ui-md-6">
                                 <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
@@ -351,47 +367,34 @@
                             </div>
                         </div>
                         <div class="ui-g">
-                            <!------- หมายเหตุ ------->
-                            <div class="ui-g-12 ui-lg-6 ui-md-6">
-                                <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
-                                    <span>หมายเหตุ</span>
+                            <!-- รายการการปฏิบัติธรรมที่ผ่านมา -->
+                            <div class="ui-g-12" *ngIf="courseHisList.length != 0">
+                                <div class="ui-g-3 ui-lg-2 ui-md-1 text-right">
+                                    <span>รายการการปฏิบัติธรรมที่ผ่านมา: </span>
                                 </div>
-                                <div class="ui-g-12 ui-lg-8 ui-md-4">
-                                    <textarea [rows]="2" [cols]="30" class="fixtextarea" pInputTextarea
-                                        formControlName="other">
-                                    </textarea>
-                                </div>
-                            </div>
-                            <div class="ui-g">
-                                <!-- รายการการปฏิบัติธรรมที่ผ่านมา -->
-                                <div class="ui-g-12" *ngIf="courseHisList.length != 0">
-                                    <div class="ui-g-3 ui-lg-2 ui-md-1 text-right">
-                                        <span>รายการการปฏิบัติธรรมที่ผ่านมา: </span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-8 ui-md-4"
-                                        style="border-style: solid; border-width: thin; border-color: #BABABA;">
-                                        <p-table [value]="courseHisList">
-                                            <ng-template pTemplate="header">
-                                                <tr>
-                                                    <th style="width: 8%;">#</th>
-                                                    <th>คอร์ส</th>
-                                                    <th>สถานที่</th>
-                                                    <th style="width: 8%;"></th>
-                                                </tr>
-                                            </ng-template>
-                                            <ng-template pTemplate="body" let-courses let-rowIndex="rowIndex">
-                                                <tr>
-                                                    <td>{{rowIndex+1}}</td>
-                                                    <td>{{courses?.courseName}}</td>
-                                                    <td>{{courses?.courseLocation}}</td>
-                                                    <td style="text-align: centers;">
-                                                        <button pButton icon="pi pi-trash"
-                                                            (click)="delHisCourse(rowIndex)" class="del-btn"></button>
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                        </p-table>
-                                    </div>
+                                <div class="ui-g-12 ui-lg-8 ui-md-4"
+                                    style="border-style: solid; border-width: thin; border-color: #BABABA;">
+                                    <p-table [value]="courseHisList">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th style="width: 8%;">#</th>
+                                                <th>คอร์ส</th>
+                                                <th>สถานที่</th>
+                                                <th style="width: 8%;"></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-courses let-rowIndex="rowIndex">
+                                            <tr>
+                                                <td>{{rowIndex+1}}</td>
+                                                <td>{{courses?.courseName}}</td>
+                                                <td>{{courses?.courseLocation}}</td>
+                                                <td style="text-align: centers;">
+                                                    <button pButton icon="pi pi-trash" (click)="delHisCourse(rowIndex)"
+                                                        class="del-btn"></button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
                                 </div>
                             </div>
                         </div>
