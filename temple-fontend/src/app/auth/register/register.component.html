@@ -236,10 +236,6 @@
                                         <div class="text-right">
                                             <span>วัน/เดือน/ปีบวช*</span>
                                         </div>
-                                        <!-- *ngIf="!formError.ordianDate" -->
-                                        <!-- <div *ngIf="formError.ordianDate" class="text-danger text-invalid text-right">
-                                                    {{formError.ordianDate}}
-                                                </div> -->
                                     </div>
                                     <div class="ui-g-12 ui-lg-3 ui-md-4">
                                         <p-calendar formControlName="ordianDate" [monthNavigator]="true"
@@ -249,6 +245,13 @@
                                 <!-- จำนวนพรรษาบวช -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
+                                        <div class="text-right">
+                                            <span>จําพรรษา</span>
+                                        </div>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-2 ui-md-1">
+                                        <input type="number" pInputText formControlName="ordianNumber"
+                                            style="width: 55px;" maxlength="3" />
                                     </div>
                                 </div>
                             </div>
@@ -356,6 +359,18 @@
                                 </div>
                             </div>
                             <div class="ui-g">
+                                <!-- หมายเหตุ -->
+                                <div class="ui-g-12 ui-lg-6 ui-md-6">
+                                    <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
+                                        <span>หมายเหตุ</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-4">
+                                        <textarea [rows]="3" [cols]="40" pInputTextarea
+                                            formControlName="other"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-g">
                                 <!-- การปฏิบัติธรรมที่ผ่านมา -->
                                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                                     <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
@@ -379,16 +394,6 @@
                                                 [disabled]="courseHisName == ''? true:false"
                                                 (click)="saveCourseHis()"></button>
                                         </div>
-                                    </div>
-                                </div>
-                                <!-- หมายเหตุ -->
-                                <div class="ui-g-12 ui-lg-6 ui-md-6">
-                                    <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
-                                        <span>หมายเหตุ</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-4">
-                                        <textarea [rows]="3" [cols]="40" pInputTextarea
-                                            formControlName="other"></textarea>
                                     </div>
                                 </div>
                             </div>
