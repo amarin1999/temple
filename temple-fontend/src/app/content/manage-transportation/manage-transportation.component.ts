@@ -20,7 +20,7 @@ export class ManageTransportationComponent implements OnInit {
   public timePickUp = null;
   public timeSend = null;
   public temp: string;
-  typeTrans: number = 1 ; //type 1 = temple
+  typeTrans = '1';
 
   constructor(
     private breadCrumbService: BreadcrumbService,
@@ -31,9 +31,14 @@ export class ManageTransportationComponent implements OnInit {
 
   ngOnInit() {
     this.breadCrumbService.setPath([
-      { label: "จัดการการเดินทางทั้งหมด", routerLink: "/manageTransportation" }
+      { label: 'จัดการการเดินทางทั้งหมด', routerLink: '/transportation' }
     ]);
-    this.cols = [{ field: "name", header: "การเดินทาง" }];
+    this.cols = [
+      { field: 'name', header: 'การเดินทาง' },
+      { field: 'timePickUp', header: 'เวลารับ' },
+      { field: 'timeSend', header: 'เวลาส่ง' }
+
+    ];
     this.getTransportation();
     this.initTransportation();
   }
@@ -46,6 +51,8 @@ export class ManageTransportationComponent implements OnInit {
 
   getTransportation() {
     this.transportationService.getTranSportToEdit().subscribe(res => {
+      console.log(res["data"]);
+      
       if (res["status"] === "Success") {
         this.transport = res["data"];
         this.filterData = res["data"];
@@ -66,9 +73,6 @@ export class ManageTransportationComponent implements OnInit {
 
   public save() {
     this.transportation.name = this.newTransportation;
-    this.transportation.timePickUp = this.timePickUp;
-    this.transportation.timeSend = this.timeSend;
-    this.transportation.typeTrans = this.typeTrans;
     const checkArry = this.transport.filter(
       res => res.name === this.transportation.name
     );
@@ -199,14 +203,14 @@ export class ManageTransportationComponent implements OnInit {
 
   clear() {
     this.initTransportation();
-    this.newTransportation = "";
+    this.newTransportation = '';
     this.messageService.clear();
   }
   private initTransportation() {
     this.displayDialog = false;
     this.transportation = {
       id: null,
-      name: "",
+      name: '',
       status: null
     };
   }

@@ -33,14 +33,8 @@
               </ng-template>
               <ng-template pTemplate="header" let-columns>
                 <tr>
-                  <th pSortableColumn="name">
-                    การเดินทาง
-                  </th>
-                  <th pSortableColumn="timePickUp">
-                    เวลารับ
-                  </th>
-                  <th pSortableColumn="timeSend">
-                    เวลาส่ง
+                  <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                      {{col.header}}
                   </th>
                   <th>
                     <!-- button edit and delete-->
@@ -49,29 +43,17 @@
               </ng-template>
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                   <tr>
-                    <td *ngFor="let col of columns;">
-                      <div *ngIf="rowData[col.field] === rowData['name']">
-                        {{rowData['name']}}
-                      </div>
-                    </td>
-                    <td *ngFor="let col of columns;">
-                      <div *ngIf="rowData[col.field] === rowData['timePickUp']">
-                        {{rowData['timePickUp']}}
-                      </div>
-                    </td>
-                    <td *ngFor="let col of columns;">
-                      <div *ngIf="rowData[col.field] === rowData['timeSend']">
-                        {{rowData['timeSend']}}
-                      </div>
-                    </td>
-                    <td>
-                      <div style="text-align:center">
-                        <button pButton type="button" label="แก้ไข" (click)="showEdit(rowData['id'])"
-                          class="ui-button-warning" style="width: 40%;"></button>
-                        <button pButton type="button" label="ลบ" (click)="delete(rowData['id'])"
-                          class="ui-button-danger" style="width: 40%;margin-left: 5mm"></button>
-                      </div>
-                    </td>
+                      <td *ngFor="let col of columns;">
+                         {{rowData[col.field]}}
+                      </td>
+                      <td>
+                        <div style="text-align:center">
+                          <button pButton type="button" label="แก้ไข" (click)="showEdit(rowData['id'])"
+                            class="ui-button-warning" style="width: 40%;"></button>
+                          <button pButton type="button" label="ลบ" (click)="delete(rowData['id'])"
+                            class="ui-button-danger" style="width: 40%;margin-left: 5mm"></button>
+                        </div>
+                      </td>
                   </tr>
                 </ng-template>
             </p-table>
