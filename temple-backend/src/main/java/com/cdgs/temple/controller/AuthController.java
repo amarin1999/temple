@@ -74,7 +74,7 @@ public class AuthController {
             member = memberService.createMember(body);
             //System.out.println("Course Passed = "+body.getMemberCoursePassed());
            // System.out.println("member Job = "+body.getJob());
-           
+           System.out.print(members);
 
             if (!(member == null)) {
                 members.add(member);

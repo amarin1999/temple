@@ -110,6 +110,12 @@ public class MemberEntity implements Serializable {
 	
 	@Column(name = "member_age")
 	private Long memberAge;
+	
+	@Column(name = "member_ordian_number")
+	private Long ordianNumber;
+	
+	@Column(name = "member_ordian_date")
+	private LocalDateTime ordianDate;
 
 	@ManyToOne
 	@JoinColumn(name = "member_gender_id", insertable = false, updatable = false)
@@ -127,6 +133,24 @@ public class MemberEntity implements Serializable {
 	@JoinColumn(name = "member_province_id", insertable = false, updatable = false)
 	private ProvinceEntity province;
 	
+
+	public LocalDateTime getOrdianDate() {
+		return ordianDate;
+	}
+
+
+	public void setOrdianDate(LocalDateTime ordianDate) {
+		this.ordianDate = ordianDate;
+	}
+	
+	public Long getOrdianNumber() {
+		return ordianNumber;
+	}
+
+
+	public void setOrdianNumber(Long ordianNumber) {
+		this.ordianNumber = ordianNumber;
+	}
 
 	public String getMemberPostalCode() {
 		return memberPostalCode;
@@ -440,7 +464,7 @@ public class MemberEntity implements Serializable {
 				+ ", memberEmail=" + memberEmail + ", memberImg=" + memberImg + ", memberRegisterDate="
 				+ memberRegisterDate + ", memberLastUpdate=" + memberLastUpdate + ", memberGenderId=" + memberGenderId
 				+ ", memberRoleId=" + memberRoleId + ", memberTitleId=" + memberTitleId + ", gender=" + gender
-				+ ", province=" + province + ", memberIdCard=" + memberIdCard
+				+ ", province=" + province + ", memberIdCard=" + memberIdCard + ", ordianNumber=" + ordianNumber
 				+ ", role=" + role + ", titleName=" + titleName + "]";
 	}
 
