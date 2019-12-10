@@ -39,7 +39,8 @@ import { FormatTHdatePipe } from '../shared/pipe/formatTHdate.pipe';
 import { ManageTransportationComponent } from './manage-transportation/manage-transportation.component';
 import { from } from 'rxjs';
 import { CourseRegisterOutTimeComponent } from './courses/course-register-out-time/course-register-out-time.component';
-import {RadioButtonModule} from 'primeng/radiobutton';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { TableModule } from 'primeng/table';
 
 registerLocaleData(localeTh);
 
@@ -73,13 +74,14 @@ registerLocaleData(localeTh);
     ManageCourseForMonkComponent,
     FormatTHdatePipe,
     ManageTransportationComponent,
-    CourseRegisterOutTimeComponent
+    CourseRegisterOutTimeComponent,
   ],
   imports: [
     CoreModule,
     SharedModule,
     ContentRoutingModule,
-    RadioButtonModule
+    RadioButtonModule,
+    TableModule
   ],
   exports: [
     ContentComponent

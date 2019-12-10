@@ -140,8 +140,8 @@ public class MemberServiceImpl implements MemberService {
 	private MemberEntity mapDtoToEntity(MemberDto member) {
 		MemberEntity entity = new MemberEntity();
 		entity.setMemberGenderId(member.getGenderId());
-		entity.setMemberTitleId(member.getTitleId());
 		entity.setMemberProvinceId(member.getProvinceId());
+		entity.setMemberTitleId(member.getTitleId());
 		entity.setMemberIdCard(member.getIdCard());
 		entity.setMemberRoleId(member.getRoleId());
 		entity.setMemberId(member.getId());		
@@ -151,6 +151,10 @@ public class MemberServiceImpl implements MemberService {
 		entity.setMemberLname(member.getLname());
 		entity.setMemberAddress(member.getAddress());
 		entity.setMemberTel(member.getTel());   
+		entity.setMemberAge(member.getAge());
+		entity.setMemberPostalCode(member.getPostalCode());
+		entity.setOrdianNumber(member.getOrdianNumber());
+		entity.setOrdianDate(member.getOrdianDate());
 		
 		entity.setMemberEmail(member.getEmail());
 		if (member.getImg() != null) {

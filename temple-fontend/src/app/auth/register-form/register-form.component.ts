@@ -22,7 +22,7 @@ interface Transportation {
   styleUrls: ['./register-form.component.css']
 })
 export class RegisterFormComponent implements OnInit {
-  myDate = new Date();          
+  myDate = new Date();
   public menu: MenuItem[];
   public titleName: any[];
   public th: any;
@@ -43,17 +43,17 @@ export class RegisterFormComponent implements OnInit {
   courseHisLocation = '';
   courseHisList: any[] = [];
   bloodGroup: SelectItem[] = [
-    {label: 'O', value: 'O'},
-    {label: 'A', value: 'A'},
-    {label: 'B', value: 'B'},
-    {label: 'AB', value: 'AB'},
+    { label: 'O', value: 'O' },
+    { label: 'A', value: 'A' },
+    { label: 'B', value: 'B' },
+    { label: 'AB', value: 'AB' },
   ];
   public provinces: any[];
   public titleNames: any[];
   public displaySystemMessage = false;
 
   registerForm = new FormGroup({
-    username: new FormControl( null, [Validators.required, Validators.minLength(6)]),
+    username: new FormControl(null, [Validators.required, Validators.minLength(6)]),
     password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
     repassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
     idCard: new FormControl(null, [Validators.required]),
@@ -79,7 +79,7 @@ export class RegisterFormComponent implements OnInit {
     underlyDisease: new FormControl(null),
     blood: new FormControl('', [Validators.required]),
     postalCode: new FormControl('', [Validators.required]),
-    province: new FormControl('',[Validators.required])
+    province: new FormControl('', [Validators.required])
   });
 
   public formError = {
@@ -121,7 +121,7 @@ export class RegisterFormComponent implements OnInit {
       required: 'Password*'
     },
     role: {
-     required: '  สิทธิการเข้าใช้งาน*'
+      required: '  สิทธิการเข้าใช้งาน*'
     },
     repassword: {
       detail: 'กรุณากรอก Re-password',
@@ -276,10 +276,7 @@ export class RegisterFormComponent implements OnInit {
     this.settingCalendarTH();
     this.titleService.getTitleNames().subscribe(
       res => {
-        // this.titleNames = res;
-        this.titleNames = [
-          ...res
-        ];
+        this.titleNames = res;
       },
       err => {
         console.log(err['error']['message']);
@@ -294,7 +291,7 @@ export class RegisterFormComponent implements OnInit {
 
   saveCourseHis() {
     if (this.courseHisName !== null && this.courseHisName !== '') {
-      const his = {'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation};
+      const his = { 'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation };
       this.courseHisList.push(his);
       this.courseHisName = '';
       this.courseHisLocation = '';
@@ -303,7 +300,7 @@ export class RegisterFormComponent implements OnInit {
     }
   }
 
-  delHisCourse(index){
+  delHisCourse(index) {
     this.courseHisList.splice(index, 1);
   }
 
@@ -441,7 +438,7 @@ export class RegisterFormComponent implements OnInit {
         this.manageUserService.createUser(dataUser).subscribe(
           res => {
             // console.log(res);
-            
+
             if (res['status'] === 'Success') {
               this.showToast('alertMessage', 'สมัครสมาชิกสำเร็จ');
             } else {
@@ -471,13 +468,13 @@ export class RegisterFormComponent implements OnInit {
 
   showMessage() {
     this.displaySystemMessage = true;
-   // this.showToast('systemMessage', this.detailWarning);
+    // this.showToast('systemMessage', this.detailWarning);
   }
 
   onReject() {
     if (this.registerSuccess) {
       this.router.navigateByUrl(this.urlback);
-    }   
+    }
     this.showCancelMessage = false;
   }
 
@@ -514,10 +511,10 @@ export class RegisterFormComponent implements OnInit {
     for (const field of Object.keys(this.formError)) {
       this.formError[field] = '';
       const control = this.registerForm.get(field);
-      if ((field === 'repassword') ) {
-        if(control.value == ''){
+      if ((field === 'repassword')) {
+        if (control.value == '') {
           this.detailWarning[0] = 'กรุณากรอกยืนยันรหัสผ่าน';
-        } else if(control.value !== this.registerForm.get('password').value){
+        } else if (control.value !== this.registerForm.get('password').value) {
           this.detailWarning[0] = 'กรุณากรอกรหัสผ่านให้ตรงกัน';
         } else {
           continue;
@@ -561,10 +558,10 @@ export class RegisterFormComponent implements OnInit {
      * รับค่าจากแป้นพิมพ์
      * @param event
      */
-    filterProvinceMultiple(event) {
-      const query = event.query;
-      this.filteredProvince = this.filterProvince(query, this.provinces);
-    }
+  filterProvinceMultiple(event) {
+    const query = event.query;
+    this.filteredProvince = this.filterProvince(query, this.provinces);
+  }
   /**
    * เปรียบเทียบค่าที่ได้จากแป้นพิมพ์ กับ ค่าที่ได้จากดาต้าเบส
    * @param query 
@@ -592,10 +589,10 @@ export class RegisterFormComponent implements OnInit {
     }
     return filtered;
   }
-  
+
   onGenderSelect(event: TitleName) {
     const gender = this.registerForm.get('titleName').value;
-   // const newObject = {...event};
+    // const newObject = {...event};
     // console.log('from typing ' + event);
   }
 

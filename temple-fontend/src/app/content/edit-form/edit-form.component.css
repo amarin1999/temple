@@ -2,6 +2,28 @@
     margin: 20px
 }
 
+:host>>>.del-btn{
+    background-color: red !important;
+    color: #fff;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: #e60101 !important;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+ :host>>>.del-btn:hover {
+    background-color: #ca0000 !important;
+    border: #e60101;
+    border-radius: 5px;
+}  
+
+:host>>>button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only {
+    background-color: #b8860b;
+    border: #b8860b;
+    border-radius: 3px;
+}
+
 .layout-content {
     background-color: #fff;
     border-radius: 1em;
