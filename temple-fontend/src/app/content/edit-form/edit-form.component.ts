@@ -12,6 +12,7 @@ import { ManageRoleService } from 'src/app/shared/service/manage-role.service';
 import { Role } from 'src/app/shared/interfaces/role';
 import { AuthService } from '../../shared/service/auth.service';
 import { ProvinceService } from 'src/app/shared/service/province.service';
+import { toDate } from '@angular/common/src/i18n/format_date';
 
 
 @Component({
@@ -270,7 +271,7 @@ export class EditFormComponent implements OnInit {
 
   saveCourseHis() {
     if (this.courseHisName !== null && this.courseHisName !== '') {
-      const his = {'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation};
+      const his = { 'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation };
       this.courseHisList.push(his);
       this.courseHisName = '';
       this.courseHisLocation = '';
@@ -279,7 +280,7 @@ export class EditFormComponent implements OnInit {
     }
   }
 
-  delHisCourse(index){
+  delHisCourse(index) {
     this.courseHisList.splice(index, 1);
   }
 
@@ -318,6 +319,18 @@ export class EditFormComponent implements OnInit {
         } else {
           this.editForm.controls['fnameEmergency'].setValue(null);
           this.editForm.controls['lnameEmergency'].setValue(null);
+        }
+        let ordianDate = res['data']['ordianDate'];
+        if (res['data']['ordianDate'] !== null) {
+          ordianDate = new Date(ordianDate);
+          this.editForm.controls['ordianDate'].patchValue(ordianDate);
+        } else {
+          this.editForm.controls['ordianDate'].patchValue(null);
+        }
+        if (res['data']['ordianNumber'] !== null) {
+          this.editForm.controls['ordianNumber'].patchValue(res['data']['ordianNumber']);
+        } else {
+          this.editForm.controls['ordianNumber'].patchValue(null);
         }
 
         this.editForm.get('role').patchValue(role);
@@ -544,6 +557,7 @@ export class EditFormComponent implements OnInit {
           job: this.editForm.get('job').value,
           address: this.editForm.get('address').value,
           provinceId: parseInt(provinceCode.provinceId),
+          postalCode: this.editForm.get('postalCode').value,
           tel: this.editForm.get('phone').value,
           ordianDate: this.editForm.get('ordianDate').value,
           ordianNumber: this.editForm.get('ordianNumber').value,
@@ -565,7 +579,7 @@ export class EditFormComponent implements OnInit {
           blood: bloodGroup.value,
         };
         console.log('dataUser', dataUser);
-        
+
         this.manageUserService.updateUser(this.personalId, dataUser).subscribe(
           res => {
             if (res['status'] === 'Success') {
@@ -609,10 +623,10 @@ export class EditFormComponent implements OnInit {
      * รับค่าจากแป้นพิมพ์
      * @param event
      */
-    filterProvinceMultiple(event) {
-      const query = event.query;
-      this.filteredProvince = this.filterProvince(query, this.provinces);
-    }
+  filterProvinceMultiple(event) {
+    const query = event.query;
+    this.filteredProvince = this.filterProvince(query, this.provinces);
+  }
 
   /**
    * เปรียบเทียบค่าที่ได้จากแป้นพิมพ์ กับ ค่าที่ได้จากดาต้าเบส

@@ -207,6 +207,8 @@ public class MemberServiceImpl implements MemberService {
 			dto.setIdCard(entity.getMemberIdCard());
 			dto.setAge(entity.getMemberAge());
 			dto.setPostalCode(entity.getMemberPostalCode());
+			dto.setOrdianNumber(entity.getOrdianNumber());
+			dto.setOrdianDate(entity.getOrdianDate());
 			
 			dto.setGenderId(entity.getMemberGenderId());
 			if(entity.getGender() != null)
