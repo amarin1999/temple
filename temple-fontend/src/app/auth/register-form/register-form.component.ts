@@ -12,6 +12,7 @@ import { SelectItem } from 'primeng/api';
 import { TitleName } from 'src/app/shared/interfaces/title-name';
 import { Role } from 'src/app/shared/interfaces/role';
 import { ManageRoleService } from 'src/app/shared/service/manage-role.service';
+import { ProvinceService } from 'src/app/shared/service/province.service';
 interface Transportation {
   memberTransportation: string;
 }
@@ -21,6 +22,7 @@ interface Transportation {
   styleUrls: ['./register-form.component.css']
 })
 export class RegisterFormComponent implements OnInit {
+  myDate = new Date();          
   public menu: MenuItem[];
   public titleName: any[];
   public th: any;
@@ -66,7 +68,7 @@ export class RegisterFormComponent implements OnInit {
     phone: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.email]),
     ordianDate: new FormControl(null),
-    ordianDecs: new FormControl(null),
+    ordianNumber: new FormControl(null),
     phoneEmergency: new FormControl(null, [Validators.required]),
     fnameEmergency: new FormControl(null, [Validators.required]),
     lnameEmergency: new FormControl(null, [Validators.required]),
@@ -222,14 +224,42 @@ export class RegisterFormComponent implements OnInit {
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private breadCrumbService: BreadcrumbService,
-    private roleService: ManageRoleService
+    private roleService: ManageRoleService,
+    private provinceService: ProvinceService
   ) {
 
   }
 
   ngOnInit() {
+    //---------- CalenderTH -----------------------
+    this.th = {
+      firstDayOfWeek: 1,
+      dayNames: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
+      dayNamesShort: ['อาทิต', 'จัน', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์'],
+      dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
+      monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน',
+        'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม',
+        'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
+      monthNamesShort: ['มกรา', 'กุมภา', 'มีนา', 'เมษา',
+        'พฤษภา', 'มิถุนา', 'กรกฎา', 'สิงหา',
+        'กันยา', 'ตุลา', 'พฤศจิกา', 'ธันวา'],
+      monthNamesMin: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.',
+        'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.',
+        'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+      today: 'Today',
+      clear: 'Clear',
+    };
+    //----------------------------------------------
     // const email = this.registerForm.get('email');
     // console.log(email.dirty);
+    this.provinceService.getProvince().subscribe(
+      res => {
+        this.provinces = res.data;
+      },
+      err => {
+        console.log(err['error']['message']);
+      }
+    );
     //------------ Get Role ----------------------------
     this.showRole = this.roleService.getRoleStatus();
     this.roles = this.roleService.getRoles();
@@ -321,6 +351,7 @@ export class RegisterFormComponent implements OnInit {
     const currentYear = formatDate(new Date(), 'yyyy', 'en');
     const startYear = parseInt(currentYear) - 100;
     this.yearRange = startYear + ':' + currentYear;
+
   }
 
   onSubmit(e) {
@@ -380,7 +411,7 @@ export class RegisterFormComponent implements OnInit {
         const dataUser = {
           username: this.registerForm.get('username').value,
           password: this.registerForm.get('password').value,
-          idCard: this.registerForm.get('idCard').value,
+          idCard: this.registerForm.get(null),
           age: this.registerForm.get('age').value,
           fname: this.registerForm.get('fname').value,
           lname: this.registerForm.get('lname').value,
@@ -389,6 +420,7 @@ export class RegisterFormComponent implements OnInit {
           postalCode: this.registerForm.get('postalCode'),
           provinceName: this.registerForm.get('province'),
           ordianDate: this.registerForm.get('ordianDate').value,
+          ordaianNumber: this.registerForm.get('ordianNumber').value,
           tel: this.registerForm.get('phone').value,
           emergencyTel: this.registerForm.get('phoneEmergency').value,
           emergencyName: emerName,
