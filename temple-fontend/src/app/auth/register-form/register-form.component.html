@@ -1,3 +1,4 @@
+<p-toast [style]="{ marginTop: '80px' }"></p-toast>
 <!-- {{registerForm.getRawValue() | json}} -->
 <div [formGroup]="registerForm">
   <!--Register Information-->
@@ -55,12 +56,12 @@
                 </div>
               </div>
               <div class="ui-g-12 ui-lg-8 ui-md-6 ">
-                <input type="password" pPassword placeholder="Password" formControlName="password" autocomplete="off" />
+                <input type="password" pPassword placeholder="Password" formControlName="password" autocomplete="off" promptLabel="กรุณายืนยันรหัสผ่าน"/>
               </div>
               <!-------- re password --------->
               <div class="ui-g-12 ui-lg-4 ui-md-6 ">
                 <div *ngIf="!formError.repassword" class="text-right">
-                  <span>Re-password*</span>
+                  <span>ยืนยันรหัสผ่าน*</span>
                 </div>
                 <div *ngIf="formError.repassword" class="text-danger text-invalid text-right">
                   {{ formError.repassword }}
@@ -68,7 +69,12 @@
               </div>
               <div class="ui-g-12 ui-lg-8 ui-md-6 ">
                 <div>
-                  <input type="password" pPassword placeholder="Re-password" formControlName="repassword" />
+                  <input type="password" pPassword placeholder="ยืนยันรหัสผ่าน*" formControlName="repassword" promptLabel="กรุณายืนยันรหัสผ่าน"/>
+                  <p-message *ngIf="
+                        registerForm.get('password').value !=
+                          registerForm.get('repassword').value &&
+                        registerForm.get('repassword').touched
+                      " severity="error" text="รหัสผ่านไม่ตรงกัน"></p-message>
                 </div>
               </div>
             </div>
