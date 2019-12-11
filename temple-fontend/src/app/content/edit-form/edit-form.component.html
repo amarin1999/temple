@@ -353,7 +353,7 @@
                                     <p-table [value]="courseHisList">
                                         <ng-template pTemplate="header">
                                             <tr>
-                                                <th>#</th>
+                                                <th style="width:8em">#</th>
                                                 <th>คอร์ส</th>
                                                 <th>สถานที่</th>
                                                 <th style="width:8em">
@@ -371,7 +371,8 @@
                                                     <p-cellEditor>
                                                         <ng-template pTemplate="input">
                                                             <input pInputText type="text"
-                                                                [(ngModel)]="rowData.courseHisName">
+                                                                [(ngModel)]="rowData.courseHisName" required
+                                                                [ngModelOptions]="{standalone: true}">
                                                         </ng-template>
                                                         <ng-template pTemplate="output">
                                                             {{rowData.courseHisName}}
@@ -382,7 +383,8 @@
                                                     <p-cellEditor>
                                                         <ng-template pTemplate="input">
                                                             <input pInputText type="text"
-                                                                [(ngModel)]="rowData.courseHisLocation" required>
+                                                                [(ngModel)]="rowData.courseHisLocation"
+                                                                [ngModelOptions]="{standalone: true}">
                                                         </ng-template>
                                                         <ng-template pTemplate="output">
                                                             {{rowData.courseHisLocation}}
