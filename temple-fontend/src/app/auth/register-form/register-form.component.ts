@@ -114,18 +114,18 @@ export class RegisterFormComponent implements OnInit {
   public validationMessage = {
     username: {
       // detail: 'กรุณากรอก Username',
-      required: 'Username*'
+      required: 'ชื่อผู้ใช้*'
     },
     password: {
-      // detail: 'กรุณากรอก Password',
-      required: 'Password*'
+      // detail: 'กรุณากรอก รหัสผ่าน',
+      required: 'รหัสผ่าน*'
     },
     role: {
       required: '  สิทธิการเข้าใช้งาน*'
     },
     repassword: {
-      detail: 'กรุณากรอก Re-password',
-      required: 'Re-password*'
+      //detail: 'กรุณากรอก Re-password',
+      required: 'ยืนยันรหัสผ่าน*'
     },
     idCard: {
       // detail: 'กรุณากรอก เลขประจำตัวประชาชน',
@@ -136,86 +136,83 @@ export class RegisterFormComponent implements OnInit {
       required: 'อายุ*'
     },
     titleName: {
-      detail: 'กรุณากรอก คำนำหน้า',
+      //detail: 'กรุณากรอก คำนำหน้า',
       required: 'คำนำหน้า*'
     },
     fname: {
-      detail: 'กรุณากรอก ชื่อ',
+      // detail: 'กรุณากรอก ชื่อ',
       required: 'ชื่อ*'
     },
     lname: {
-      detail: 'กรุณากรอก นามสกุล',
+      // detail: 'กรุณากรอก นามสกุล',
       required: 'นามสกุล*'
     },
     job: {
-      detail: 'กรุณากรอก อาชีพ',
+      // detail: 'กรุณากรอก อาชีพ',
       required: 'อาชีพ*'
     },
     gender: {
-      detail: 'กรุณากรอก เพศ',
+    // detail: 'กรุณากรอก เพศ',
       required: 'เพศ*'
     },
     address: {
-      detail: 'กรุณากรอก ที่อยู่',
+      // detail: 'กรุณากรอก ที่อยู่',
       required: 'ที่อยู่*'
     },
     province: {
-      detail: 'กรุณาเลือก จังหวัด',
+      // detail: 'กรุณาเลือก จังหวัด',
       required: 'จังหวัด*'
     },
     postalCode: {
-      detail: 'กรุณากรอก รหัสไปรษณีย์',
+      // detail: 'กรุณากรอก รหัสไปรษณีย์',
       required: 'รหัสไปรษณีย์*'
     },
     phone: {
-      detail: 'กรุณากรอก เบอร์โทร',
+      // detail: 'กรุณากรอก เบอร์โทร',
       required: 'เบอร์โทร*'
     },
     email: {
-      detail: 'กรุณากรอก E-mail',
+      // detail: 'กรุณากรอก E-mail',
       required: 'E-mail*'
     },
     phoneEmergency: {
-      detail: 'กรุณากรอก เบอร์ติดต่อฉุกเฉิน',
+      // detail: 'กรุณากรอก เบอร์ติดต่อฉุกเฉิน',
       required: 'เบอร์ติดต่อฉุกเฉิน*'
     },
     fnameEmergency: {
-      detail: 'กรุณากรอก ชื่อผู้ติดต่อฉุกเฉิน',
+      // detail: 'กรุณากรอก ชื่อผู้ติดต่อฉุกเฉิน',
       required: 'ชื่อผู้ติดต่อฉุกเฉิน*'
     },
     lnameEmergency: {
-      detail: 'กรุณากรอก นามสกุลผู้ติดต่อฉุกเฉิน',
+      // detail: 'กรุณากรอก นามสกุลผู้ติดต่อฉุกเฉิน',
       required: 'นามสกุลผู้ติดต่อฉุกเฉิน*'
     },
     relationshipEmergency: {
-      detail: 'กรุณากรอก ความสัมพันธ์กับผู้ติดต่อฉุกเฉิน',
+      // detail: 'กรุณากรอก ความสัมพันธ์กับผู้ติดต่อฉุกเฉิน',
       required: 'ความสัมพันธ์*'
     },
     other: {
-      detail: 'กรุณากรอก หมายเหตุ',
+      // detail: 'กรุณากรอก หมายเหตุ',
       required: 'หมายเหตุ*'
     },
     foodsAllergy: {
-      detail: 'กรุณากรอก อาหารที่แพ้',
+      // detail: 'กรุณากรอก อาหารที่แพ้',
       required: 'อาหารที่แพ้*'
     },
     drugsAllergy: {
-      detail: 'กรุณากรอก ยาที่แพ้',
+      // detail: 'กรุณากรอก ยาที่แพ้',
       required: 'ยาที่แพ้*'
     },
     underlyDisease: {
-      detail: 'กรุณากรอก โรคประจำตัว',
+      // detail: 'กรุณากรอก โรคประจำตัว',
       required: 'โรคประจำตัว*'
     },
     blood: {
-      detail: 'กรุณากรอก กรุ๊ปเลือด',
+      // detail: 'กรุณากรอก กรุ๊ปเลือด',
       required: 'กรุ๊ปเลือด*'
     }
   };
   previewImg: string | ArrayBuffer;
-
-
-
   constructor(
     private messageService: MessageService,
     private titleService: TitleNameService,
@@ -273,7 +270,6 @@ export class RegisterFormComponent implements OnInit {
     this.showCancelMessage = false;
     this.setBack();
     // this.createForm();
-    this.settingCalendarTH();
     this.titleService.getTitleNames().subscribe(
       res => {
         this.titleNames = res;
@@ -333,24 +329,6 @@ export class RegisterFormComponent implements OnInit {
       }
     );
   } */
-
-  settingCalendarTH() {
-    this.th = {
-      firstDayOfWeek: 1,
-      dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
-      monthNames: ['มกราคม ', 'กุมภาพันธ์ ', 'มีนาคม ', 'เมษายน ',
-        'พฤษภาคม  ', 'มิถุนายน ', 'กรกฎาคม ', 'สิงหาคม ',
-        'กันยายน ', 'ตุลาคม ', 'พฤศจิกายน ', 'ธันวาคม '],
-      today: 'Today',
-      clear: 'Clear',
-    };
-
-    const currentYear = formatDate(new Date(), 'yyyy', 'en');
-    const startYear = parseInt(currentYear) - 100;
-    this.yearRange = startYear + ':' + currentYear;
-
-  }
-
   onSubmit(e) {
     if (!this.registerForm.valid) {
       this.subscribeInputMessageWaring();
@@ -402,20 +380,21 @@ export class RegisterFormComponent implements OnInit {
       case 'submit': {
         //console.log('submit');
         // const dataUser = this.onSave(this.registerForm.getRawValue());
+        const provinceCode = this.registerForm.get('province').value;
         const titleCode = this.registerForm.get('titleName').value;
         const emerName = (this.registerForm.get('fnameEmergency').value) + ' ' + (this.registerForm.get('lnameEmergency').value);
         const bloodGroup = this.registerForm.get('blood').value;
         const dataUser = {
           username: this.registerForm.get('username').value,
           password: this.registerForm.get('password').value,
-          idCard: this.registerForm.get(null),
+          idCard: this.registerForm.get('idCard').value,
           age: this.registerForm.get('age').value,
           fname: this.registerForm.get('fname').value,
           lname: this.registerForm.get('lname').value,
           job: this.registerForm.get('job').value,
           address: this.registerForm.get('address').value,
-          postalCode: this.registerForm.get('postalCode'),
-          provinceName: this.registerForm.get('province'),
+          postalCode: this.registerForm.get('postalCode').value,
+          provinceId: parseInt(provinceCode.provinceId),
           ordianDate: this.registerForm.get('ordianDate').value,
           ordaianNumber: this.registerForm.get('ordianNumber').value,
           tel: this.registerForm.get('phone').value,
@@ -434,7 +413,7 @@ export class RegisterFormComponent implements OnInit {
           disease: this.registerForm.get('underlyDisease').value,
           blood: bloodGroup.value,
         };
-        // console.log(dataUser);
+        console.log(dataUser);
         this.manageUserService.createUser(dataUser).subscribe(
           res => {
             // console.log(res);
