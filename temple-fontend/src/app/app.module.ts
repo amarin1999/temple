@@ -11,9 +11,12 @@ import { AuthService } from './shared/service/auth.service';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
   import { from } from 'rxjs';
 
+
+
+
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     AuthModule,

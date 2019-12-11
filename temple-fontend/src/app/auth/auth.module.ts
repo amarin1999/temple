@@ -8,7 +8,7 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { RegisterComponent } from './register/register.component';
 import {CalendarModule} from 'primeng/calendar';
-import { ThaiCalendarDirective } from './thai-calendar.directive';
+import { ThaiCalendarModule } from '../shared/directive/thai-calendar/thai-calendar.module';
 
 @NgModule({
   declarations: [
@@ -16,13 +16,13 @@ import { ThaiCalendarDirective } from './thai-calendar.directive';
     LoginComponent,
     ForgetPasswordComponent,
     RegisterFormComponent,
-    RegisterComponent,
-    ThaiCalendarDirective
+    RegisterComponent
   ],
   imports: [
     SharedModule,
     AuthRoutingModule,
-    CalendarModule
+    CalendarModule,
+    ThaiCalendarModule
   ],
   exports: [
     AuthComponent

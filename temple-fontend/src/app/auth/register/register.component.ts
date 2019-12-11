@@ -237,18 +237,17 @@ export class RegisterComponent implements OnInit {
     ];
   }
 
-  saveCourseHis() {
-    if (this.courseHisName !== null && this.courseHisName !== '') {
-      const his = {'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation};
-      this.courseHisList.push(his);
-      this.courseHisName = '';
-      this.courseHisLocation = '';
-    } else {
-      document.getElementById('courseDis').style.color = 'red';
-    }
+  addCourseHis() {
+    this.courseHisName = '';
+    this.courseHisLocation = '';
+    const his = { 'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation };
+    this.courseHisList.push(his);
+    // } else {
+    //   document.getElementById('courseDis').style.color = 'red';
+    // }
   }
 
-  delHisCourse(index){
+  delHisCourse(index) {
     this.courseHisList.splice(index, 1);
   }
 
@@ -533,7 +532,7 @@ export class RegisterComponent implements OnInit {
   // เปลี่ยนรูปภาพ
   handleInputChange(files) {
     const file = files;
-     // format รูป เป็นไฟล์อื่นจะผิด
+    // format รูป เป็นไฟล์อื่นจะผิด
     const pattern = /image-*/;
     const reader = new FileReader();
     if (!file.type.match(pattern)) {

@@ -40,7 +40,7 @@ import { ManageTransportationComponent } from "./manage-transportation/manage-tr
 import { from } from "rxjs";
 import { CourseRegisterOutTimeComponent } from "./courses/course-register-out-time/course-register-out-time.component";
 import { RadioButtonModule } from "primeng/radiobutton";
-import { ThaiCalendarDirective } from './thai-calendar.directive';
+import { ThaiCalendarModule } from '../shared/directive/thai-calendar/thai-calendar.module';
 
 registerLocaleData(localeTh);
 
@@ -74,10 +74,9 @@ registerLocaleData(localeTh);
     ManageCourseForMonkComponent,
     FormatTHdatePipe,
     ManageTransportationComponent,
-    CourseRegisterOutTimeComponent,
-    ThaiCalendarDirective
+    CourseRegisterOutTimeComponent
   ],
-  imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule],
+  imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule , ThaiCalendarModule],
   exports: [ContentComponent],
   providers: [
     ConfirmationService,
