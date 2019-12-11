@@ -13,7 +13,7 @@
             <p-toast [style]="{marginTop: '80px'}"></p-toast>
           </div>
           <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-            <p-table [columns]="cols" [value]="filterData" [paginator]="true" [rows]="5" [responsive]="true">
+            <p-table [columns]="cols" [value]="transport" [paginator]="true" [rows]="5" [responsive]="true">
               <ng-template pTemplate="caption">
                 <div class="ui-g ui-fluid">
                   <div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12">
@@ -102,7 +102,7 @@
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" *ngIf="displayTransportation" pButton (click)="save()" style="background-color: #007ad9"  label="บันทึก"
+      <button type="button" *ngIf="displayTransportation" pButton (click)="save(typeTrans)" style="background-color: #007ad9"  label="บันทึก"
       [disabled] = "typeTrans === '1' && (timePickUp === null || timeSend === null) || newTransportation === '' "></button>
       <button class="ui-button-warning" type="button" *ngIf="!displayTransportation" pButton (click)="update()" label="แก้ไข"
       [disabled] = "typeTrans === '1' && (timePickUp === null || timeSend === null) || newTransportation === '' "></button>

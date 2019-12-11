@@ -12,8 +12,6 @@ import { ManageRoleService } from 'src/app/shared/service/manage-role.service';
 import { Role } from 'src/app/shared/interfaces/role';
 import { AuthService } from '../../shared/service/auth.service';
 import { ProvinceService } from 'src/app/shared/service/province.service';
-import { toDate } from '@angular/common/src/i18n/format_date';
-
 
 @Component({
   selector: 'app-edit-form',
@@ -42,7 +40,10 @@ export class EditFormComponent implements OnInit {
   public filteredProvince: any[];
   public courseHisName = '';
   public courseHisLocation = '';
-  public courseHisList: any[] = [];
+  public courseHisList: any[] = [{
+    courseHisName: 'วิ่งจงกรม',
+    courseHisLocation: 'CDGs'
+  }];
   public provinces: any[];
   currentId = 0;
   profile: any;
@@ -228,6 +229,7 @@ export class EditFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.settingCalendarTH();
     this.showRole = this.roleService.getRoleStatus();
     this.roles = this.roleService.getRoles();
     this.personalId = this.route.snapshot.paramMap.get('id');
@@ -236,7 +238,6 @@ export class EditFormComponent implements OnInit {
     this.showCancelMessage = false;
     this.onEdit = false;
     this.settingForm();
-    this.settingCalendarTH();
     this.provinceService.getProvince().subscribe(
       res => {
         this.provinces = res.data;
@@ -269,15 +270,11 @@ export class EditFormComponent implements OnInit {
 
   }
 
-  saveCourseHis() {
-    if (this.courseHisName !== null && this.courseHisName !== '') {
+  addCourseHis() {
+    this.courseHisName = '';
+      this.courseHisLocation = '';
       const his = { 'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation };
       this.courseHisList.push(his);
-      this.courseHisName = '';
-      this.courseHisLocation = '';
-    } else {
-      document.getElementById('courseDis').style.color = 'red';
-    }
   }
 
   delHisCourse(index) {
@@ -364,20 +361,37 @@ export class EditFormComponent implements OnInit {
   settingCalendarTH() {
     this.th = {
       firstDayOfWeek: 1,
+      dayNames: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
+      dayNamesShort: ['อาทิต', 'จัน', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์'],
       dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
-      monthNames: ['มกราคม ', 'กุมภาพันธ์ ', 'มีนาคม ', 'เมษายน ',
-        'พฤษภาคม  ', 'มิถุนายน ', 'กรกฎาคม ', 'สิงหาคม ',
-        'กันยายน ', 'ตุลาคม ', 'พฤศจิกายน ', 'ธันวาคม '],
+      monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน',
+        'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม',
+        'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
+      monthNamesShort: ['มกรา', 'กุมภา', 'มีนา', 'เมษา',
+        'พฤษภา', 'มิถุนา', 'กรกฎา', 'สิงหา',
+        'กันยา', 'ตุลา', 'พฤศจิกา', 'ธันวา'],
+      monthNamesMin: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.',
+        'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.',
+        'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
       today: 'Today',
       clear: 'Clear',
     };
+      this.th = {
+        firstDayOfWeek: 1,
+        dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
+        monthNames: ['มกราคม ', 'กุมภาพันธ์ ', 'มีนาคม ', 'เมษายน ',
+          'พฤษภาคม  ', 'มิถุนายน ', 'กรกฎาคม ', 'สิงหาคม ',
+          'กันยายน ', 'ตุลาคม ', 'พฤศจิกายน ', 'ธันวาคม '],
+        today: 'Today',
+        clear: 'Clear',
+      };
 
-    // const currentYear = new Date().toLocaleString('en-Us',{timeZone:'Asia/Bangkok'})
-    // const aestTime = new Date(currentYear)
-    //const currentYear = parseInt(formatDate(Date.now(),'yyyy','th'))
-    const currentYear = this.pipe.transform(Date.now(), 'yyyy');
-    const startYear = parseInt(currentYear) - 100;
-    this.yearRange = startYear + ':' + currentYear;
+      // const currentYear = new Date().toLocaleString('en-Us',{timeZone:'Asia/Bangkok'})
+      // const aestTime = new Date(currentYear)
+      //const currentYear = parseInt(formatDate(Date.now(),'yyyy','th'))
+      const currentYear = this.pipe.transform(Date.now(), 'yyyy', 'th');
+      const startYear = parseInt(currentYear) - 100;
+      this.yearRange = startYear + ':' + currentYear;
 
   }
 
@@ -438,7 +452,7 @@ export class EditFormComponent implements OnInit {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       const file: File = fileList[0];
-      if (file.size < 1000000) {
+      if (file.size < 768000) {
         this.profile = file;
         this.handleInputChange(this.profile); // turn into base64
       } else {
