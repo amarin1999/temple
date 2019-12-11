@@ -22,7 +22,6 @@
                     {{ formError.username }}
                   </div>
                 </div>
-                <<<<<<< HEAD
                 <div class="ui-g-12 ui-lg-8 ui-md-8 ">
                   <input
                     type="text"
@@ -353,13 +352,16 @@
                   </div>
                   <div class="ui-g-12 ui-lg-5 ui-md-4">
                     <p-calendar
+                      cdgsThaiCalendar
+                      [showOnFocus]="false"
+                      [showIcon]="true"
                       formControlName="ordianDate"
+                      showButtonBar="true"
                       [monthNavigator]="true"
                       [yearNavigator]="true"
                       yearRange="2000:2030"
-                      [showIcon]="true"
-                      [locale]="th"
-                    ></p-calendar>
+                    >
+                    </p-calendar>
                   </div>
                 </div>
                 <!-- จำนวนพรรษาบวช -->

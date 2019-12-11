@@ -331,7 +331,7 @@ export class RegisterComponent implements OnInit {
         const dataUser = {
           username: this.registerForm.get('username').value,
           password: this.registerForm.get('password').value,
-          idCard: this.registerForm.get(null).value,
+          idCard: this.registerForm.get('idCard').value,
           age: this.registerForm.get('age').value,
           fname: this.registerForm.get('fname').value,
           lname: this.registerForm.get('lname').value,
