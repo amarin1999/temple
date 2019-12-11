@@ -187,25 +187,6 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //---------- CalenderTH -----------------------
-    this.th = {
-      firstDayOfWeek: 1,
-      dayNames: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
-      dayNamesShort: ['อาทิต', 'จัน', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์'],
-      dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
-      monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน',
-        'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม',
-        'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
-      monthNamesShort: ['มกรา', 'กุมภา', 'มีนา', 'เมษา',
-        'พฤษภา', 'มิถุนา', 'กรกฎา', 'สิงหา',
-        'กันยา', 'ตุลา', 'พฤศจิกา', 'ธันวา'],
-      monthNamesMin: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.',
-        'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.',
-        'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
-      today: 'Today',
-      clear: 'Clear',
-    };
-    //----------------------------------------------
     // const email = this.registerForm.get('email');
     // console.log(email.dirty);
     this.registerSuccess = false;
@@ -257,6 +238,24 @@ export class RegisterComponent implements OnInit {
   }
 
   settingCalendarTH() {
+    // ---------- CalenderTH -----------------------
+    this.th = {
+      firstDayOfWeek: 1,
+      dayNames: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
+      dayNamesShort: ['อาทิต', 'จัน', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์'],
+      dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
+      monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน',
+        'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม',
+        'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
+      monthNamesShort: ['มกรา', 'กุมภา', 'มีนา', 'เมษา',
+        'พฤษภา', 'มิถุนา', 'กรกฎา', 'สิงหา',
+        'กันยา', 'ตุลา', 'พฤศจิกา', 'ธันวา'],
+      monthNamesMin: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.',
+        'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.',
+        'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+      today: 'Today',
+      clear: 'Clear',
+    };
     this.th = {
       firstDayOfWeek: 1,
       dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
@@ -279,7 +278,7 @@ export class RegisterComponent implements OnInit {
     } else {
       this.submitMessage(e);
     }
-    //console.log('test');
+    // console.log('test');
 
   }
 
@@ -321,7 +320,7 @@ export class RegisterComponent implements OnInit {
         break;
       }
       case 'submit': {
-        //console.log('submit');
+        // console.log('submit');
         // const dataUser = this.onSave(this.registerForm.getRawValue());
         const provinceCode = this.registerForm.get('province').value;
         const titleCode = this.registerForm.get('titleName').value;
