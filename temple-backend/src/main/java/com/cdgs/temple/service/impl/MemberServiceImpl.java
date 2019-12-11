@@ -155,7 +155,6 @@ public class MemberServiceImpl implements MemberService {
 		entity.setMemberPostalCode(member.getPostalCode());
 		entity.setOrdianNumber(member.getOrdianNumber());
 		entity.setOrdianDate(member.getOrdianDate());
-		
 		entity.setMemberEmail(member.getEmail());
 		if (member.getImg() != null) {
 			entity.setMemberImg(Base64.getDecoder().decode(member.getImg()));
