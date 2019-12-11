@@ -37,14 +37,12 @@ export class ManageTransportationComponent implements OnInit {
       { label: "จัดการการเดินทางทั้งหมด", routerLink: "/transportation" }
     ]);
     this.getTransportation();
-    // console.log(this.transport);
-    
+    this.initTransportation();
     this.cols = [
       { field: 'name', header: 'การเดินทาง' },
       { field: 'timePickUp', header: 'เวลารับ' },
       { field: 'timeSend', header: 'เวลาส่ง' }
-    ];
-    this.initTransportation();
+    ]; 
   }
 
   showDialogToAdd() {
