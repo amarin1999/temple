@@ -388,37 +388,44 @@
                           <td pEditableColumn>
                             <p-cellEditor>
                               <ng-template pTemplate="input">
+                                  <div class="ui-g"></div>
                                 <input pInputText type="text" [(ngModel)]="rowData.courseHisName" required
                                   [ngModelOptions]="{standalone: true}">
                               </ng-template>
                               <ng-template pTemplate="output">
-                                {{rowData.courseHisName}}
+                                <div class="ui-g">
+                                  <div class="ui-g-12 ui-lg-10 ui-md-10">
+                                    {{rowData.courseHisName}}
+                                  </div>
+                                  <div style="text-align: right;" class="ui-g-12 ui-lg-2 ui-md-2">
+                                    <button pButton icon="pi pi-pencil"></button>
+                                  </div>
+                                </div>
                               </ng-template>
                             </p-cellEditor>
                           </td>
                           <td pEditableColumn>
-                            <p-cellEditor>
-                              <ng-template pTemplate="input">
-                                <input pInputText type="text" [(ngModel)]="rowData.courseHisLocation"
-                                  [ngModelOptions]="{standalone: true}">
-                              </ng-template>
-                              <ng-template pTemplate="output">
-                                {{rowData.courseHisLocation}}
-                              </ng-template>
-                            </p-cellEditor>
-                          </td>
+                              <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <div class="ui-g"></div>
+                                  <input pInputText type="text" [(ngModel)]="rowData.courseHisLocation" required
+                                    [ngModelOptions]="{standalone: true}">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                  <div class="ui-g">
+                                    <div class="ui-g-12 ui-lg-10 ui-md-10">
+                                      {{rowData.courseHisLocation}}
+                                    </div>
+                                    <div style="text-align: right;" class="ui-g-12 ui-lg-2 ui-md-2">
+                                      <button pButton icon="pi pi-pencil"></button>
+                                    </div>
+                                  </div>
+                                </ng-template>
+                              </p-cellEditor>
+                            </td>
                           <td style="text-align: center;">
                             <button pButton icon="pi pi-trash" (click)="delHisCourse(rowIndex)"
                               class="del-btn"></button>
-                            <!-- <p-cellEditor>
-                                              <ng-template pTemplate="input">
-                                              <p-dropdown [options]="brands" [(ngModel)]="rowData.brand"
-                                                  [style]="{'width':'100%'}"></p-dropdown>
-                                          </ng-template>
-                                          <ng-template pTemplate="output">
-                                              {{rowData.brand}}
-                                          </ng-template>
-                                      </p-cellEditor>-->
                           </td>
                         </tr>
                       </ng-template>
