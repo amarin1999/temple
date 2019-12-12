@@ -57,12 +57,13 @@ public class TransportationController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 		}catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(201);
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 		}
-		return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 	}
 	
 	
@@ -90,12 +91,13 @@ public class TransportationController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return  new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 		}catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(201);
+			res.setCode(400);
+			return  new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 		}
-		return  new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 	}
 	
 	
@@ -120,12 +122,13 @@ public class TransportationController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return  new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 		}catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(201);
+			res.setCode(400);
+			return  new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-		return  new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 	}
 	
 	
@@ -146,14 +149,13 @@ public class TransportationController {
 			transportation = transporatationService.deleteTransportation(id, body);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setCode(200);
-			
+			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 		}catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(201);
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-		
-		return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 	}
 	
 	
@@ -175,12 +177,13 @@ public class TransportationController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(templeDto);
 			res.setCode(200);
+			return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
 		}catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
+			return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
 	}
 	
 	
@@ -205,12 +208,13 @@ public class TransportationController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(templeDto);
 			res.setCode(200);
+			return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
 		}catch (Exception e){
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(406);
+			return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.NOT_ACCEPTABLE);
 		}
-		return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
 	}
 	
 	
@@ -235,13 +239,13 @@ public class TransportationController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(templeDto);
 			res.setCode(200);
+			return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res,HttpStatus.OK);
 		}catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
+			return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res,HttpStatus.BAD_REQUEST);
 		}
-		
-		return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res,HttpStatus.OK);
 	}
 	
 	
@@ -262,15 +266,13 @@ public class TransportationController {
 			transportationTemple = transportationTempleService.deleteTransportationTemple(id, body);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setCode(200);
-			
+			return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
 		}catch (Exception e){
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
-		}
-		
-		return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
-		
+			return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.BAD_REQUEST);
+		}		
 	}
 	
 	
