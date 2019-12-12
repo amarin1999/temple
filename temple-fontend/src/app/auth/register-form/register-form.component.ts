@@ -65,6 +65,8 @@ export class RegisterFormComponent implements OnInit {
     gender: new FormControl('3', [Validators.required]),
     age: new FormControl(null, [Validators.required, Validators.min(0)]),
     address: new FormControl(null, [Validators.required]),
+    province: new FormControl(null, [Validators.required]),
+    postalCode: new FormControl(null, [Validators.required, Validators.pattern('[0-9]{5}')]),
     phone: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.email]),
     ordianDate: new FormControl(null),
@@ -78,8 +80,6 @@ export class RegisterFormComponent implements OnInit {
     drugsAllergy: new FormControl(null),
     underlyDisease: new FormControl(null),
     blood: new FormControl('', [Validators.required]),
-    postalCode: new FormControl('', [Validators.required]),
-    province: new FormControl('', [Validators.required])
   });
 
   public formError = {
@@ -97,7 +97,6 @@ export class RegisterFormComponent implements OnInit {
     address: '',
     ordianDate: '',
     phone: '',
-    email: '',
     phoneEmergency: '',
     fnameEmergency: '',
     lnameEmergency: '',
@@ -124,7 +123,7 @@ export class RegisterFormComponent implements OnInit {
       required: '  สิทธิการเข้าใช้งาน*'
     },
     repassword: {
-      //detail: 'กรุณากรอก Re-password',
+      // detail: 'กรุณากรอก Re-password',
       required: 'ยืนยันรหัสผ่าน*'
     },
     idCard: {
@@ -136,7 +135,7 @@ export class RegisterFormComponent implements OnInit {
       required: 'อายุ*'
     },
     titleName: {
-      //detail: 'กรุณากรอก คำนำหน้า',
+      // detail: 'กรุณากรอก คำนำหน้า',
       required: 'คำนำหน้า*'
     },
     fname: {
@@ -152,7 +151,7 @@ export class RegisterFormComponent implements OnInit {
       required: 'อาชีพ*'
     },
     gender: {
-    // detail: 'กรุณากรอก เพศ',
+      // detail: 'กรุณากรอก เพศ',
       required: 'เพศ*'
     },
     address: {
@@ -170,10 +169,6 @@ export class RegisterFormComponent implements OnInit {
     phone: {
       // detail: 'กรุณากรอก เบอร์โทร',
       required: 'เบอร์โทร*'
-    },
-    email: {
-      // detail: 'กรุณากรอก E-mail',
-      required: 'E-mail*'
     },
     phoneEmergency: {
       // detail: 'กรุณากรอก เบอร์ติดต่อฉุกเฉิน',
@@ -228,25 +223,7 @@ export class RegisterFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    //---------- CalenderTH -----------------------
-    this.th = {
-      firstDayOfWeek: 1,
-      dayNames: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
-      dayNamesShort: ['อาทิต', 'จัน', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์'],
-      dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
-      monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน',
-        'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม',
-        'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
-      monthNamesShort: ['มกรา', 'กุมภา', 'มีนา', 'เมษา',
-        'พฤษภา', 'มิถุนา', 'กรกฎา', 'สิงหา',
-        'กันยา', 'ตุลา', 'พฤศจิกา', 'ธันวา'],
-      monthNamesMin: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.',
-        'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.',
-        'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
-      today: 'Today',
-      clear: 'Clear',
-    };
-    //----------------------------------------------
+    // ----------------------------------------------
     // const email = this.registerForm.get('email');
     // console.log(email.dirty);
     this.provinceService.getProvince().subscribe(
@@ -257,7 +234,7 @@ export class RegisterFormComponent implements OnInit {
         console.log(err['error']['message']);
       }
     );
-    //------------ Get Role ----------------------------
+    // ------------ Get Role ----------------------------
     this.showRole = this.roleService.getRoleStatus();
     this.roles = this.roleService.getRoles();
     this.breadCrumbService.setPath([
@@ -285,15 +262,11 @@ export class RegisterFormComponent implements OnInit {
     ];
   }
 
-  saveCourseHis() {
-    if (this.courseHisName !== null && this.courseHisName !== '') {
-      const his = { 'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation };
-      this.courseHisList.push(his);
-      this.courseHisName = '';
-      this.courseHisLocation = '';
-    } else {
-      document.getElementById('courseDis').style.color = 'red';
-    }
+  addCourseHis() {
+    this.courseHisName = '';
+    this.courseHisLocation = '';
+    const his = { 'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation };
+    this.courseHisList.push(his);
   }
 
   delHisCourse(index) {
@@ -336,7 +309,7 @@ export class RegisterFormComponent implements OnInit {
     } else {
       this.submitMessage(e);
     }
-    //console.log('test');
+    // console.log('test');
 
   }
 
@@ -378,7 +351,7 @@ export class RegisterFormComponent implements OnInit {
         break;
       }
       case 'submit': {
-        //console.log('submit');
+        // console.log('submit');
         // const dataUser = this.onSave(this.registerForm.getRawValue());
         const provinceCode = this.registerForm.get('province').value;
         const titleCode = this.registerForm.get('titleName').value;
@@ -552,7 +525,7 @@ export class RegisterFormComponent implements OnInit {
       const titleName = titleNames[i];
       if ((titleName.display).match(query)) {
         filtered.push(titleName);
-        //console.log(titleName.display);
+        // console.log(titleName.display);
       }
     }
     return filtered;
