@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ManageUserService} from 'src/app/shared/service/manage-user.service';
+import { Component, OnInit } from '@angular/core';
+import { ManageUserService } from 'src/app/shared/service/manage-user.service';
 import { MenuItem, MessageService } from 'primeng/api';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
@@ -15,7 +15,6 @@ export class ManageUserComponent implements OnInit {
   public personal: any[];
   public menu: MenuItem[];
   cols: { field: string; header: string; }[];
-  
 
   constructor(
     private manageUser: ManageUserService,
@@ -25,10 +24,10 @@ export class ManageUserComponent implements OnInit {
 
   ngOnInit() {
     this.breadCrumbService.setPath([
-      {label: 'จัดการสมาชิก', routerLink: '/users'},
+      { label: 'จัดการสมาชิก', routerLink: '/users' },
     ]);
 
-    this.manageUser.getAllUsers().subscribe(res => {
+    this.manageUser.getAllUsersWithOutImg().subscribe(res => {
       if (res['status'] === 'Success') {
         this.personal = res.data;
       }
@@ -36,15 +35,15 @@ export class ManageUserComponent implements OnInit {
       (e) => console.log(e['error']['message'])
     );
     this.menu = [
-      { label: '', icon: 'pi pi-home', routerLink: '/'},
+      { label: '', icon: 'pi pi-home', routerLink: '/' },
       { label: 'Manange Locations : จัดการสถานที่' },
     ];
 
     this.cols = [
       { field: 'name', header: 'name' },
       { field: 'rolename', header: 'rolename' },
-      { field: 'contact', header: 'contact'}
-  ];
+      { field: 'contact', header: 'contact' }
+    ];
   }
 
   deleteUser(id) {
