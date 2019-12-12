@@ -1,9 +1,11 @@
 package com.cdgs.temple.controller;
 
 import com.cdgs.temple.dto.AuthDto;
+import com.cdgs.temple.dto.HistoryDharmaDto;
 import com.cdgs.temple.dto.MemberDto;
 import com.cdgs.temple.security.JwtTokenUtil;
 import com.cdgs.temple.security.JwtUser;
+import com.cdgs.temple.service.HistoryDharmaService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.util.ResponseDto;
 import com.cdgs.temple.util.ResponseTokenDto;
@@ -31,15 +33,18 @@ public class AuthController {
     private String tokenHeader;
 
     private final MemberService memberService;
+    
+    private final HistoryDharmaService historyDhamaService;
 
     private final AuthenticationManager authenticationManager;
 
     private final JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public AuthController(MemberService memberService, AuthenticationManager authenticationManager,
+    public AuthController(MemberService memberService, AuthenticationManager authenticationManager, HistoryDharmaService historyDhamaService ,
             JwtTokenUtil jwtTokenUtil) {
-        this.memberService = memberService;
+        this.historyDhamaService = historyDhamaService;
+		this.memberService = memberService;
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
     }
@@ -68,14 +73,27 @@ public class AuthController {
     public ResponseEntity<ResponseDto<MemberDto>> register(@Valid @RequestBody MemberDto body) {
         ResponseDto<MemberDto> res = new ResponseDto<>();
         List<MemberDto> members = new ArrayList<>();
+        List<HistoryDharmaDto> historyDharma = new ArrayList<>();
         MemberDto member;
-        try {  
+        try {
+        	System.out.println(body.toString());
         	//System.out.println("member Role = "+body.getRoleId());
             member = memberService.createMember(body);
             //System.out.println("Course Passed = "+body.getMemberCoursePassed());
            // System.out.println("member Job = "+body.getJob());
-           System.out.print(members);
-
+           System.out.println(members);
+           System.out.println(member.getId());
+           historyDharma = body.getHistoryDharma();
+           historyDharma.forEach(action -> {
+        	   action.setMemberId(member.getId());
+        	   try {
+				historyDhamaService.createHistoryDharma(action);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+           });
+           
             if (!(member == null)) {
                 members.add(member);
             }
@@ -86,8 +104,8 @@ public class AuthController {
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
-            return new ResponseEntity<>(res, HttpStatus.OK);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
     }
 
