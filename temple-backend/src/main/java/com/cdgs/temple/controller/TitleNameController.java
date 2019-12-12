@@ -46,12 +46,13 @@ public class TitleNameController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(201);
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 
 	}
 	
@@ -68,13 +69,13 @@ public class TitleNameController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(201);
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
-
 	}
 	
 	@PostMapping(path = "")
@@ -102,13 +103,13 @@ public class TitleNameController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(201);
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
-
 	}
 	
 	@PutMapping(path = "/{id}")
@@ -127,13 +128,13 @@ public class TitleNameController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(201);
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		}
-		return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
-
 	}
 	
 	@DeleteMapping(path = "/{id}")
@@ -152,13 +153,13 @@ public class TitleNameController {
 				throw new Exception ("titleName is using");
 				
 			}
+			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(201);
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
-
 	}
 	
 	
