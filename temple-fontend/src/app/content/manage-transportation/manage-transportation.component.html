@@ -56,9 +56,9 @@
                               </td>
                               <td>
                                 <div style="text-align:center">
-                                  <button pButton type="button" label="แก้ไข" (click)="showEdit(rowData['id'],typeTrans)"
+                                  <button pButton type="button" label="แก้ไข" (click)="showEdit(rowData['id'])"
                                     class="ui-button-warning" style="width: 40%;"></button>
-                                  <button pButton type="button" label="ลบ" (click)="delete(rowData['id'],typeTrans)"
+                                  <button pButton type="button" label="ลบ" (click)="delete(rowData['id'])"
                                     class="ui-button-danger" style="width: 40%;margin-left: 5mm"></button>
                                 </div>
                               </td>
@@ -121,9 +121,9 @@
                           </td>
                           <td>
                             <div style="text-align:center">
-                              <button pButton type="button" label="แก้ไข" (click)="showEdit(rowData['id'],typeTrans)"
+                              <button pButton type="button" label="แก้ไข" (click)="showEdit(rowData['id'])"
                                 class="ui-button-warning" style="width: 40%;"></button>
-                              <button pButton type="button" label="ลบ" (click)="delete(rowData['id'],typeTrans)"
+                              <button pButton type="button" label="ลบ" (click)="delete(rowData['id'])"
                                 class="ui-button-danger" style="width: 40%;margin-left: 5mm"></button>
                             </div>
                           </td>
@@ -177,7 +177,7 @@
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" *ngIf="displayTransportation" pButton (click)="save(typeTrans)" style="background-color: #007ad9"  label="บันทึก"
+      <button type="button" *ngIf="displayTransportation" pButton (click)="save()" style="background-color: #007ad9"  label="บันทึก"
       [disabled] = "tabIndex === 0 && (timePickUp === null || timeSend === null) || newTransportation === '' "></button>
       <button class="ui-button-warning" type="button" *ngIf="!displayTransportation" pButton (click)="update()" label="แก้ไข"
       [disabled] = "tabIndex === 0 && (timePickUp === null || timeSend === null) || newTransportation === '' "></button>

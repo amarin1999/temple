@@ -25,7 +25,7 @@ export class ManageTransportationComponent implements OnInit {
   public timeSend = null;
   public temp: string;
   public tabIndex: number = 0;
-  typeTrans = '1'; // 1 = typeTransTemple, 0 = typeTrans
+  public typeTran: Transportation[];
 
   constructor(
     private breadCrumbService: BreadcrumbService,
@@ -81,7 +81,7 @@ export class ManageTransportationComponent implements OnInit {
       res => {
         this.transportTemple = res['data'];
         this.transportTemple = this.transportTemple.map( data => {
-          return { name: data.name , timePickUp : data.timePickUp , timeSend: data.timeSend }
+          return { id : data.id ,name: data.name , timePickUp : data.timePickUp , timeSend: data.timeSend }
         });
     });
   }
@@ -97,7 +97,7 @@ export class ManageTransportationComponent implements OnInit {
   //   }
   // }
 
-  public save(typeTrans) {
+  public save() {
     this.transportation.name = this.newTransportation;
     this.transportation.timePickUp = this.timePickUp;
     this.transportation.timeSend = this.timeSend;
@@ -112,7 +112,7 @@ export class ManageTransportationComponent implements OnInit {
       });
       return;
     }
-    if (typeTrans === '1') {
+    if (this.tabIndex === 0) {
       this.transportationService
         .createTransportationTemple(this.transportation)
         .subscribe(
@@ -170,14 +170,21 @@ export class ManageTransportationComponent implements OnInit {
   }
 
   update() {
+    if(this.tabIndex === 0) {
+      this.typeTran = this.transportTemple;
+    } else {
+      this.typeTran = this.transport;
+    }
     // this.transportation.name = this.newTransportation;
     // console.log(this.transportation)
     if (
-      this.transport.findIndex(res => res.name === this.newTransportation) <
+      this.typeTran.findIndex(res => res.name === this.newTransportation) <
         0 ||
       this.transportation.name === this.newTransportation
     ) {
       this.transportation.name = this.newTransportation;
+      this.transportation.timePickUp = this.timePickUp;
+      this.transportation.timeSend = this.timeSend;
       this.transportationService
         .updateTransportation(this.transportation)
         .subscribe(
@@ -215,14 +222,19 @@ export class ManageTransportationComponent implements OnInit {
     }
   }
 
-  delete(id, typeTrans) {
+  delete(id) {
+    if(this.tabIndex === 0) {
+      this.typeTran = this.transportTemple;
+    } else {
+      this.typeTran = this.transport;
+    }
     this.confirmationService.confirm({
       message:
         'ยืนยันการลบข้อมูล : ' +
-        this.transport.filter(res => res.id === id)[0].name,
+        this.typeTran.filter(res => res.id === id)[0].name,
       header: 'ข้อความจากระบบ',
       accept: () => {
-        if (typeTrans === '1') {
+        if (this.tabIndex === 0) {
           this.transportationService.deleteTransportationTemple(id).subscribe(
             res => {
               if (res['status'] === 'Success') {
@@ -271,13 +283,16 @@ export class ManageTransportationComponent implements OnInit {
   showEdit(id) {
     this.displayDialog = true;
     this.displayTransportation = false;
-    this.transportation = this.transport.filter(e => e.id === id)[0];
-    // console.log(this.filterData.filter(e => e.id === id))
-    this.typeTrans = '0';
+    if(this.tabIndex === 0) {
+      this.typeTran = this.transportTemple;
+    } else {
+      this.typeTran = this.transport;
+    }
+    this.transportation = this.typeTran.filter(e => e.id === id)[0];
     this.newTransportation = this.transportation.name;
+    this.timePickUp = new Date(this.transportation.timePickUp);
+    this.timeSend = new Date(this.transportation.timeSend);
     this.temp = this.transportation.name;
-    console.log('transportation', this.transportation);
-    console.log('newTransportation',this.newTransportation);
   }
 
   clear() {
