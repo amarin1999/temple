@@ -48,15 +48,12 @@ public class MapController {
 			res.setResult("test status");
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<ResponseDto<MapDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(200);
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<MapDto>>(res, HttpStatus.OK);
 		}
-		return new ResponseEntity<ResponseDto<MapDto>>(res, HttpStatus.OK);
-
 	}
-	
-	
-
 }
