@@ -25,6 +25,7 @@ export class ManageUserService {
         map(res => {
           return {
             status: res['result'],
+            errorMessage: res['errorMessage']
           };
         }
         )
