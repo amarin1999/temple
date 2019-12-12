@@ -37,12 +37,12 @@ public class GenderController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(genders);
             res.setCode(200);
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
-
 }
