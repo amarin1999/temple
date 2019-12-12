@@ -74,12 +74,13 @@ public class CourseController {
             
             res.setData(memberHasCourse);
             res.setCode(200);
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping(path = "/user")
@@ -100,13 +101,13 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(dto);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(201);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
     @GetMapping(path = "")
@@ -126,14 +127,14 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(dto);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
         	System.out.println("catch");
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(201);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping(value = "/count")
@@ -169,13 +170,13 @@ public class CourseController {
 	            res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 	            res.setData(listDto);
 	            res.setCode(201);
-
+	            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping(value = "/approve")
@@ -194,13 +195,13 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(dto);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
     @GetMapping(value = "/approve/outTime")
@@ -219,13 +220,13 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(dto);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping(value = "/approve/count")
@@ -243,13 +244,13 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(listDto);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping(value = "/approve/outTime/count")
@@ -267,13 +268,13 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(listDto);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
     @GetMapping(path = "/{id}")
@@ -291,22 +292,20 @@ public class CourseController {
             } else {
                 dto.add(courseService.getCourse(id));
                 System.out.println(id);
-
                 System.out.println(member.getRoleName());
-
 
             }
 
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(dto);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
             res.setCode(200);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
     @GetMapping(path = "/outTime")
     @PreAuthorize("hasRole('user')")
@@ -330,13 +329,13 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(listCourseDto);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
             res.setCode(200);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping(path = "/getPassCourse/{id}")
@@ -378,7 +377,6 @@ public class CourseController {
             	}
             }
             
-
             courseTeacher.setCourseId(course.getId());
             for (Long tId : body.getTeacher()) {
                 courseTeacher.setMemberId(tId);
@@ -390,13 +388,13 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(courses);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(201);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping(value = "/outTime")
@@ -433,13 +431,13 @@ public class CourseController {
 	        res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 	        res.setData(listDto);
 	        res.setCode(200);
-	
+		    return new ResponseEntity<>(res, HttpStatus.OK);
 	    } catch (Exception e) {
 	        res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 	        res.setErrorMessage(e.getMessage());
-	        res.setCode(200);
+	        res.setCode(400);
+		    return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 	    }
-	    return new ResponseEntity<>(res, HttpStatus.OK);
 	}
     
     @PutMapping(path = "/{id}")
@@ -483,12 +481,13 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(courses);
             res.setCode(200);
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")
@@ -498,11 +497,12 @@ public class CourseController {
         if (courseService.deleteCourse(id)) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setCode(204);
+            return new ResponseEntity<>(res, HttpStatus.NO_CONTENT);
         } else {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setCode(200);
+            return new ResponseEntity<>(res, HttpStatus.OK);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping(path = "/register")
@@ -541,13 +541,14 @@ public class CourseController {
                 res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
                 res.setErrorMessage("Duplicate register");
                 res.setCode(200);
+                return new ResponseEntity<>(res, HttpStatus.OK);
             }
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
             res.setCode(201);
+            return new ResponseEntity<>(res, HttpStatus.OK);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping(path = "/schedule")
@@ -563,13 +564,13 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(courseSchedules);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400	);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping(path = "/schedule")
@@ -584,12 +585,13 @@ public class CourseController {
             res.setData(dto);
             res.setCode(200);
             System.out.println(dto.toString());
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping(path = "/teacher_schedule")
@@ -603,13 +605,13 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(dto);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PutMapping(path = "/deleteCourse/{id}")
@@ -620,17 +622,19 @@ public class CourseController {
             if (courseService.deleteCourse(id)) {
             	res.setResult("Success");
             	res.setCode(200);
+                return new ResponseEntity<>(res, HttpStatus.OK);
             } else {
             	res.setResult("Fail");
-                res.setCode(201);
+                res.setCode(400);
+                return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
             }
                 
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(201);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping(value = "/history/{id}")
@@ -652,13 +656,13 @@ public class CourseController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(dto);
             res.setCode(200);
-
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
 
