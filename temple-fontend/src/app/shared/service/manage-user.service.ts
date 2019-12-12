@@ -49,6 +49,33 @@ export class ManageUserService {
     );
   }
 
+  getAllUsersWithOutImg() {
+    return this.http.get(ApiConstants.baseURl + '/members/getAllUsersWithOutImg', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access-token')}`
+      }
+    }).pipe(
+      map((res) => {
+        const data = res['data']
+          .map(member => {
+            return {
+              id: member['id'],
+              titleName: member['titleName'],
+              fname: member['fname'],
+              lname: member['lname'],
+              rolename: member['roleName'],
+              email: member['email'],
+              tel: member['tel']
+            };
+          });
+        return {
+          status: res['result'],
+          data: data
+        };
+      })
+    );
+  }
+
   getAllUsers() {
     return this.http.get(ApiConstants.baseURl + '/members', {
       headers: {

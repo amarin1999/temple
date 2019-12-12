@@ -40,6 +40,17 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return mapListEntityToDto(memberEntities);
 	}
+	
+	@Override
+	public List<MemberDto> getAllUsersWithOutImg() {
+		List<MemberEntity> memberEntities = new ArrayList<>();
+		try {
+			memberEntities = memberRepository.findAll();
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return mapListEntityToDto(memberEntities);
+	}
 
 	@Override
 	public List<MemberDto> getTeacher() {
@@ -54,7 +65,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDto getMember(Long id) {
-
 		MemberEntity entity = memberRepository.findById(id).get();
 		return mapEntityToDto(entity);
 	}

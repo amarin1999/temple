@@ -40,10 +40,7 @@ export class EditFormComponent implements OnInit {
   public filteredProvince: any[];
   public courseHisName = '';
   public courseHisLocation = '';
-  public courseHisList: any[] = [{
-    courseHisName: 'วิ่งจงกรม',
-    courseHisLocation: 'CDGs'
-  }];
+  public courseHisList: any[] = [];
   public provinces: any[];
   currentId = 0;
   profile: any;
@@ -100,7 +97,6 @@ export class EditFormComponent implements OnInit {
     province: '',
     postalCode: '',
     phone: '',
-    email: '',
     phoneEmergency: '',
     fnameEmergency: '',
     lnameEmergency: '',
@@ -169,10 +165,6 @@ export class EditFormComponent implements OnInit {
     phone: {
       detail: 'กรุณากรอก เบอร์โทร',
       required: 'เบอร์โทร*'
-    },
-    email: {
-      detail: 'กรุณากรอก E-mail',
-      required: 'E-mail*'
     },
     phoneEmergency: {
       detail: 'กรุณากรอก เบอร์ติดต่อฉุกเฉิน',
@@ -272,9 +264,9 @@ export class EditFormComponent implements OnInit {
 
   addCourseHis() {
     this.courseHisName = '';
-      this.courseHisLocation = '';
-      const his = { 'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation };
-      this.courseHisList.push(his);
+    this.courseHisLocation = '';
+    const his = { 'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation };
+    this.courseHisList.push(his);
   }
 
   delHisCourse(index) {
@@ -376,22 +368,22 @@ export class EditFormComponent implements OnInit {
       today: 'Today',
       clear: 'Clear',
     };
-      this.th = {
-        firstDayOfWeek: 1,
-        dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
-        monthNames: ['มกราคม ', 'กุมภาพันธ์ ', 'มีนาคม ', 'เมษายน ',
-          'พฤษภาคม  ', 'มิถุนายน ', 'กรกฎาคม ', 'สิงหาคม ',
-          'กันยายน ', 'ตุลาคม ', 'พฤศจิกายน ', 'ธันวาคม '],
-        today: 'Today',
-        clear: 'Clear',
-      };
+    this.th = {
+      firstDayOfWeek: 1,
+      dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
+      monthNames: ['มกราคม ', 'กุมภาพันธ์ ', 'มีนาคม ', 'เมษายน ',
+        'พฤษภาคม  ', 'มิถุนายน ', 'กรกฎาคม ', 'สิงหาคม ',
+        'กันยายน ', 'ตุลาคม ', 'พฤศจิกายน ', 'ธันวาคม '],
+      today: 'Today',
+      clear: 'Clear',
+    };
 
-      // const currentYear = new Date().toLocaleString('en-Us',{timeZone:'Asia/Bangkok'})
-      // const aestTime = new Date(currentYear)
-      //const currentYear = parseInt(formatDate(Date.now(),'yyyy','th'))
-      const currentYear = this.pipe.transform(Date.now(), 'yyyy', 'th');
-      const startYear = parseInt(currentYear) - 100;
-      this.yearRange = startYear + ':' + currentYear;
+    // const currentYear = new Date().toLocaleString('en-Us',{timeZone:'Asia/Bangkok'})
+    // const aestTime = new Date(currentYear)
+    //const currentYear = parseInt(formatDate(Date.now(),'yyyy','th'))
+    const currentYear = this.pipe.transform(Date.now(), 'yyyy', 'th');
+    const startYear = parseInt(currentYear) - 100;
+    this.yearRange = startYear + ':' + currentYear;
 
   }
 
@@ -413,7 +405,7 @@ export class EditFormComponent implements OnInit {
 
   submitMessage(e) {
     const message = 'ยืนยันการแก้ไขข้อมูลส่วนตัว ?';
-    const type = 'submit'
+    const type = 'submit';
     this.showDialog(message, type);
   }
   onEditprofile() {
@@ -597,9 +589,9 @@ export class EditFormComponent implements OnInit {
         this.manageUserService.updateUser(this.personalId, dataUser).subscribe(
           res => {
             if (res['status'] === 'Success') {
-              this.showToast('alertMessage', 'สมัครสมาชิกสำเร็จ', 'success');
+              this.showToast('alertMessage', 'แก้ไขข้อมูลส่วนตัวสำเร็จ', 'success');
             } else {
-              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
+              this.showToast('alertMessage', 'แก้ไขข้อมูลส่วนตัวไม่สำเร็จ', 'error');
             }
           },
           err => {
