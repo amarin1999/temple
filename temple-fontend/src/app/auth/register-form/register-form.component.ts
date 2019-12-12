@@ -369,17 +369,18 @@ export class RegisterFormComponent implements OnInit {
           postalCode: this.registerForm.get('postalCode').value,
           provinceId: parseInt(provinceCode.provinceId),
           ordianDate: this.registerForm.get('ordianDate').value,
-          ordaianNumber: this.registerForm.get('ordianNumber').value,
+          ordianNumber: this.registerForm.get('ordianNumber').value,
           tel: this.registerForm.get('phone').value,
           emergencyTel: this.registerForm.get('phoneEmergency').value,
           emergencyName: emerName,
           emergencyRelationship: this.registerForm.get('relationshipEmergency').value,
           email: this.registerForm.get('email').value,
           img: this.profileString,
-          registerDate: null,
+          registerDate: new Date(),
           lastUpdate: null,
           genderId: this.registerForm.get('gender').value,
           titleId: parseInt(titleCode.id),
+          historyDharma: this.courseHisList,
           other: this.registerForm.get('other').value,
           allergyFood: this.registerForm.get('foodsAllergy').value,
           allergyMedicine: this.registerForm.get('drugsAllergy').value,
@@ -389,16 +390,20 @@ export class RegisterFormComponent implements OnInit {
         console.log(dataUser);
         this.manageUserService.createUser(dataUser).subscribe(
           res => {
-            // console.log(res);
-
+            console.log(res);
             if (res['status'] === 'Success') {
-              this.showToast('alertMessage', 'สมัครสมาชิกสำเร็จ');
+              this.showToast('alertMessage', 'สมัครสมาชิกสำเร็จ', 'success');
             } else {
-              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ');
+              if ((res['errorMessage']).includes('member_username_UNIQUE')) {
+                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากชื่อผู้ใช้ซ้ำ', 'error');
+              } else if ((res['errorMessage']).includes('member_id_card_UNIQUE')) {
+                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากเลขที่บัตรประชาชนซ้ำ', 'error');
+              } else {
+                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
+              }
             }
           },
           err => {
-            // console.log('submit error');
             console.log(err);
           }
         );
@@ -486,10 +491,11 @@ export class RegisterFormComponent implements OnInit {
    * @param key ;
    * @param detail ;
    */
-  showToast(key, detail) {
+  showToast(key, detail, severity) {
     this.messageService.clear();
     this.messageService.add(
       {
+        severity: severity,
         key: key,
         sticky: true,
         summary: 'ข้อความจากระบบ',
