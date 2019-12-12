@@ -3,6 +3,7 @@ package com.cdgs.temple.dto;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 public class MemberDto implements Serializable {
@@ -56,7 +57,16 @@ public class MemberDto implements Serializable {
 	
 	private Long provinceId;
 	private String provinceName;
+	private List<HistoryDharmaDto> historyDharma;
 	
+	
+	
+	public List<HistoryDharmaDto> getHistoryDharma() {
+		return historyDharma;
+	}
+	public void setHistoryDharma(List<HistoryDharmaDto> historyDharma) {
+		this.historyDharma = historyDharma;
+	}
 	public String getIdCard() {
 		return idCard;
 	}

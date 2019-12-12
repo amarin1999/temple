@@ -524,8 +524,7 @@ public class CourseController {
             	tempSensation.setExperience(body.getExperience());
             	tempSensation.setTransportationId(body.getTransportationId());
             	sensation = sensationService.createSensation(tempSensation);
-            	
-            	
+
             	body.setMemberId(member.getId());
             	body.setSenseId(sensation.getId());
                 body.setStatus('2'); 

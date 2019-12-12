@@ -38,7 +38,7 @@ private final SensationRepository sensationRepository;
 				dto.setId(entity.getSenseId());
 				dto.setExpected(entity.getSenseExpected());
 				dto.setExperience(entity.getSenseExprience());
-				dto.setTransportationId(entity.getTransportationId());
+//				dto.setTransportationId(entity.getTransportationId());
 			}
 			return dto;
 		} catch (Exception e) {
@@ -54,7 +54,7 @@ private final SensationRepository sensationRepository;
 				entity.setSenseId(sense.getId());
 				entity.setSenseExpected(sense.getExpected());
 				entity.setSenseExprience(sense.getExperience());
-				entity.setTransportationId(sense.getTransportationId());
+//				entity.setTransportationId(sense.getTransportationId());
 			}
 			return entity;
 		}catch (Exception e) {

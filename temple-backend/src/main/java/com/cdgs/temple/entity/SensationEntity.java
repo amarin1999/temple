@@ -29,8 +29,11 @@ public class SensationEntity implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long senseId;
 
-    @Column(name = "tran_id")
-    private long TransportationId;
+	/**
+	 * ไม่ได้ใช้งาน Transportation แล้ว เนื่องจากย้ายไปเชื่อมกับตาราง Course หรือ Member Has Course โดยตรง
+	 */
+//    @Column(name = "tran_id")
+//    private long TransportationId;
 
     @Column(name = "sense_expected")
     private String senseExpected;
@@ -64,26 +67,26 @@ public class SensationEntity implements Serializable{
 	}
 	
 
-	public long getTransportationId() {
-		return TransportationId;
-	}
-
-	public void setTransportationId(long transportationId) {
-		this.TransportationId = transportationId;
-	}
-
-
-
-	@ManyToOne
-    @JoinColumn(name = "tran_id", insertable = false, updatable = false)
-    private TransportationEntity transportation;
-
-	public TransportationEntity getTransportation() {
-		return transportation;
-	}
-
-	public void setTransportation(TransportationEntity transportation) {
-		this.transportation = transportation;
-	}
+//	public long getTransportationId() {
+//		return TransportationId;
+//	}
+//
+//	public void setTransportationId(long transportationId) {
+//		this.TransportationId = transportationId;
+//	}
+//
+//
+//
+//	@ManyToOne
+//    @JoinColumn(name = "tran_id", insertable = false, updatable = false)
+//    private TransportationEntity transportation;
+//
+//	public TransportationEntity getTransportation() {
+//		return transportation;
+//	}
+//
+//	public void setTransportation(TransportationEntity transportation) {
+//		this.transportation = transportation;
+//	}
 	
 }
