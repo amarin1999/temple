@@ -54,12 +54,13 @@ public class SpecialApproveController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(200);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
 	@GetMapping(path = "outTime/{courseId}")
@@ -73,12 +74,13 @@ public class SpecialApproveController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(200);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/outTime")
@@ -95,13 +97,13 @@ public class SpecialApproveController {
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listDto);
-			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(200);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
 	@PostMapping(path = "")
@@ -128,13 +130,13 @@ public class SpecialApproveController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(specialApproves);
 			res.setCode(200);
-
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(201);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@PutMapping(path = "")
@@ -182,13 +184,13 @@ public class SpecialApproveController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listDto);
 			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(201);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-
-		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
 	@PutMapping(path = "/outTime")
@@ -207,13 +209,13 @@ public class SpecialApproveController {
                 res.setResult("Fail");
 			
 			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(200);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
 
 	@DeleteMapping(path = "/{courseId}")
 	@PreAuthorize("hasRole('user')")
@@ -226,13 +228,13 @@ public class SpecialApproveController {
 		try {
 			dto = specialApproveService.delete(courseId, member.getId());
 			ResSuccess(res, specialApproves, dto);
-
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(200);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	private void ResSuccess(ResponseDto<SpecialApproveDto> res, List<SpecialApproveDto> specialApproves,
