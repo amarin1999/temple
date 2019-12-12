@@ -6,6 +6,7 @@ import com.cdgs.temple.dto.MemberDto;
 
 public interface MemberService {
 	List<MemberDto> getMembers();
+	List<MemberDto> getAllUsersWithOutImg();
 	MemberDto getMember(Long id);
 	MemberDto createMember(MemberDto body);
 	MemberDto updateMember(Long id,MemberDto body);
