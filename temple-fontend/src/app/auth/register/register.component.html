@@ -94,6 +94,7 @@
             <legend class="font-show">ข้อมูลส่วนตัว</legend>
             <div class="ui-g-12 ui-lg-12 ui-md-12">
               <div class="ui-g">
+                <!-- รูปประจำตัว -->
                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                   <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                     <span>รูปประจำตัว</span>
@@ -117,6 +118,7 @@
                     <div class="ui-g-12 ui-lg-12 ui-md-12"></div>
                   </ng-template>
                   <div class="ui-g-12 ui-lg-12 ui-md-12">
+                    <!-- คำนำหน้า -->
                     <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                       <div *ngIf="!formError.titleName" class="text-right">
                         <span>คำนำหน้า*</span>
@@ -226,22 +228,28 @@
                 </div>
               </div>
               <div class="ui-g">
-                <!-- วัน/เดือน/ปีบวช -->
+                <!-- วันออกบวช -->
                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                   <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                     <div class="text-right">
-                      <span>วัน/เดือน/ปีบวช*</span>
+                      <span>วัน/เดือน/ปีบวช</span>
                     </div>
                   </div>
-                  <div class="ui-g-12 ui-lg-5 ui-md-4">
-                    <p-calendar cdgsThaiCalendar [showOnFocus]="false" [showIcon]="true" formControlName="ordianDate"
-                      showButtonBar="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030">
-                    </p-calendar>
+                  <div class="ui-g-12 ui-lg-6 ui-md-4">
+                    <p-calendar cdgsThaiCalendar formControlName="ordianDate" [monthNavigator]="true"
+                      [yearNavigator]="true" yearRange="2000:2030" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
                   </div>
                 </div>
                 <!-- จำนวนพรรษาบวช -->
                 <div class="ui-g-12 ui-lg-6 ui-md-6">
-                  <div class="ui-g-12 ui-lg-4 ui-md-4 text-right"></div>
+                  <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
+                    <div class="text-right">
+                      <span>จําพรรษา</span>
+                    </div>
+                  </div>
+                  <div class="ui-g-12 ui-lg-2 ui-md-1">
+                    <input type="number" pInputText formControlName="ordianNumber" style="width: 55px;" maxlength="3" />
+                  </div>
                 </div>
               </div>
               <div class="ui-g">
@@ -380,37 +388,44 @@
                           <td pEditableColumn>
                             <p-cellEditor>
                               <ng-template pTemplate="input">
+                                  <div class="ui-g"></div>
                                 <input pInputText type="text" [(ngModel)]="rowData.courseHisName" required
                                   [ngModelOptions]="{standalone: true}">
                               </ng-template>
                               <ng-template pTemplate="output">
-                                {{rowData.courseHisName}}
+                                <div class="ui-g">
+                                  <div class="ui-g-12 ui-lg-10 ui-md-10">
+                                    {{rowData.courseHisName}}
+                                  </div>
+                                  <div style="text-align: right;" class="ui-g-12 ui-lg-2 ui-md-2">
+                                    <button pButton icon="pi pi-pencil"></button>
+                                  </div>
+                                </div>
                               </ng-template>
                             </p-cellEditor>
                           </td>
                           <td pEditableColumn>
-                            <p-cellEditor>
-                              <ng-template pTemplate="input">
-                                <input pInputText type="text" [(ngModel)]="rowData.courseHisLocation"
-                                  [ngModelOptions]="{standalone: true}">
-                              </ng-template>
-                              <ng-template pTemplate="output">
-                                {{rowData.courseHisLocation}}
-                              </ng-template>
-                            </p-cellEditor>
-                          </td>
+                              <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <div class="ui-g"></div>
+                                  <input pInputText type="text" [(ngModel)]="rowData.courseHisLocation" required
+                                    [ngModelOptions]="{standalone: true}">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                  <div class="ui-g">
+                                    <div class="ui-g-12 ui-lg-10 ui-md-10">
+                                      {{rowData.courseHisLocation}}
+                                    </div>
+                                    <div style="text-align: right;" class="ui-g-12 ui-lg-2 ui-md-2">
+                                      <button pButton icon="pi pi-pencil"></button>
+                                    </div>
+                                  </div>
+                                </ng-template>
+                              </p-cellEditor>
+                            </td>
                           <td style="text-align: center;">
                             <button pButton icon="pi pi-trash" (click)="delHisCourse(rowIndex)"
                               class="del-btn"></button>
-                            <!-- <p-cellEditor>
-                                              <ng-template pTemplate="input">
-                                              <p-dropdown [options]="brands" [(ngModel)]="rowData.brand"
-                                                  [style]="{'width':'100%'}"></p-dropdown>
-                                          </ng-template>
-                                          <ng-template pTemplate="output">
-                                              {{rowData.brand}}
-                                          </ng-template>
-                                      </p-cellEditor>-->
                           </td>
                         </tr>
                       </ng-template>
