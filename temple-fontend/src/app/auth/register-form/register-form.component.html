@@ -56,7 +56,8 @@
                 </div>
               </div>
               <div class="ui-g-12 ui-lg-8 ui-md-6 ">
-                <input type="password" pPassword placeholder="Password" formControlName="password" autocomplete="off" promptLabel="กรุณายืนยันรหัสผ่าน"/>
+                <input type="password" pPassword placeholder="Password" formControlName="password" autocomplete="off"
+                  promptLabel="กรุณายืนยันรหัสผ่าน" />
               </div>
               <!-------- re password --------->
               <div class="ui-g-12 ui-lg-4 ui-md-6 ">
@@ -69,7 +70,8 @@
               </div>
               <div class="ui-g-12 ui-lg-8 ui-md-6 ">
                 <div>
-                  <input type="password" pPassword placeholder="ยืนยันรหัสผ่าน*" formControlName="repassword" promptLabel="กรุณายืนยันรหัสผ่าน"/>
+                  <input type="password" pPassword placeholder="ยืนยันรหัสผ่าน*" formControlName="repassword"
+                    promptLabel="กรุณายืนยันรหัสผ่าน" />
                   <p-message *ngIf="
                         registerForm.get('password').value !=
                           registerForm.get('repassword').value &&
