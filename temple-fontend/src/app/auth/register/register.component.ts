@@ -357,7 +357,13 @@ export class RegisterComponent implements OnInit {
             if (res['status'] === 'Success') {
               this.showToast('alertMessage', 'สมัครสมาชิกสำเร็จ', 'success');
             } else {
-              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
+              if ((res['errorMessage']).includes('member_username_UNIQUE')) {
+                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากชื่อผู้ใช้ซ้ำ', 'error');
+              } else if ((res['errorMessage']).includes('member_id_card_UNIQUE')) {
+                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากเลขที่บัตรประชาชนซ้ำ', 'error');
+              } else {
+                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
+              }
             }
           },
           err => {
