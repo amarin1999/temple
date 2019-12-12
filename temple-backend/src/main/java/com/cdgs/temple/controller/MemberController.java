@@ -34,11 +34,32 @@ public class MemberController {
 	public MemberController(MemberService memberService) {
 		this.memberService = memberService;
 	}
-
-
+	
 	@GetMapping(path = "")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') ")
 	public ResponseEntity<ResponseDto<MemberDto>> getMembers() {
+		System.out.println("getAllUsers");
+		List<MemberDto> dto ;
+		ResponseDto<MemberDto> res = new ResponseDto<>();
+		try {
+			dto = memberService.getMembers();
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(200);
+		} catch (Exception e) {
+
+			res.setErrorMessage(e.getMessage());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+
+			res.setCode(200);
+		}
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/getAllUsersWithOutImg")
+	@PreAuthorize("hasRole('admin') or hasRole('monk') ")
+	public ResponseEntity<ResponseDto<MemberDto>> getAllUsersWithOutImg() {
+		System.out.println("getAllUsersWithOutImg");
 		List<MemberDto> dto ;
 		ResponseDto<MemberDto> res = new ResponseDto<>();
 		try {
