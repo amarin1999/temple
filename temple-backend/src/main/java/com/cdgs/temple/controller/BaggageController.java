@@ -55,12 +55,13 @@ public class BaggageController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(dto);
             res.setCode(200);
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping(path = "")
@@ -77,12 +78,13 @@ public class BaggageController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(baggage);
             res.setCode(200);
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
     @PutMapping(path = "/{id}")
@@ -103,12 +105,13 @@ public class BaggageController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(baggage);
             res.setCode(200);
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
 
