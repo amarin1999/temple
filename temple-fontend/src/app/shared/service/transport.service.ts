@@ -38,6 +38,8 @@ export class TransportService {
             return {
               id: data['id'],
               name: data['name'],
+              timePickUp: data['timePickUp'],
+              timeSend: data['timeSend'],
               status: data['status']
             }
           })

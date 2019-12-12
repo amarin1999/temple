@@ -4,6 +4,7 @@ import { ConfirmationService, Message, MessageService } from "primeng/api";
 import { BreadcrumbService } from "src/app/shared/service/breadcrumb.service";
 import { Transportation } from "src/app/shared/interfaces/transportation";
 import { TransportationTemple } from "src/app/shared/interfaces/transportation-temple";
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: "app-manage-transportation",
@@ -12,17 +13,17 @@ import { TransportationTemple } from "src/app/shared/interfaces/transportation-t
 })
 export class ManageTransportationComponent implements OnInit {
   public displayDialog = false;
-  public filterData: any[];
+  // public filterData: any[];
   public transport: Transportation[]; // to diaplay data on table
   public transportation: Transportation;
   public transportationTemple: TransportationTemple;
   public cols: any[];
   public displayTransportation = false;
-  public newTransportation = "";
+  public newTransportation = '';
   public timePickUp = null;
   public timeSend = null;
   public temp: string;
-  typeTrans = "1";
+  typeTrans = '1';
 
   constructor(
     private breadCrumbService: BreadcrumbService,
@@ -35,36 +36,32 @@ export class ManageTransportationComponent implements OnInit {
     this.breadCrumbService.setPath([
       { label: "จัดการการเดินทางทั้งหมด", routerLink: "/transportation" }
     ]);
-    this.cols = [
-      { field: "name", header: "การเดินทาง" },
-      { field: "timePickUp", header: "เวลารับ" },
-      { field: "timeSend", header: "เวลาส่ง" }
-    ];
     this.getTransportation();
     this.initTransportation();
+    this.cols = [
+      { field: 'name', header: 'การเดินทาง' },
+      { field: 'timePickUp', header: 'เวลารับ' },
+      { field: 'timeSend', header: 'เวลาส่ง' }
+    ]; 
   }
 
   showDialogToAdd() {
     this.displayTransportation = true;
     this.displayDialog = true;
-    this.newTransportation = "";
+    this.newTransportation = '';
   }
 
   getTransportation() {
-    this.transport = [];
-    this.filterData = [];
-    this.transportationService.getTranSportToEdit().subscribe(res => {
-      if (res['status'] === 'Success') {
-        this.transport = res['data'];
-        this.filterData= res['data'];
-      }
-    });
 
-    this.transportationService.getTranSportTempleToEdit().subscribe(item => {
-      if (item['status'] === 'Success') {
-        this.transport.push(...item['data']);
+    // combineLatest for process 2 service before subscribe
+    combineLatest(
+      this.transportationService.getTranSportToEdit(),
+      this.transportationService.getTranSportTempleToEdit()
+    ).subscribe(
+      ([tranSport , tranSportTemple]) => {
+        this.transport = [...tranSport.data , ...tranSportTemple.data];
       }
-    });
+    );
   }
 
   // public searchData(event) {
@@ -99,13 +96,11 @@ export class ManageTransportationComponent implements OnInit {
         .subscribe(
           res => {
             if (res["status"] === "Success") {
-              console.log("Success");
-
               this.messageService.add({
                 severity: "success",
                 summary: "ข้อความจากระบบ",
                 detail:
-                  "ดำเนินการเพิ่มการเดินทาง: " + res["data"]["name"] + " สำเร็จ"
+                  "ดำเนินการเพิ่มการเดินทาง:  " + res['data'][0].name + "  สำเร็จ"
               });
               this.getTransportation();
               this.initTransportation();
@@ -156,7 +151,7 @@ export class ManageTransportationComponent implements OnInit {
     // this.transportation.name = this.newTransportation;
     // console.log(this.transportation)
     if (
-      this.filterData.findIndex(res => res.name === this.newTransportation) <
+      this.transport.findIndex(res => res.name === this.newTransportation) <
         0 ||
       this.transportation.name === this.newTransportation
     ) {
@@ -176,7 +171,7 @@ export class ManageTransportationComponent implements OnInit {
               );
 
               this.transport[index] = res["data"];
-              this.filterData[index] = res["data"];
+              // this.filterData[index] = res["data"];
             }
           },
           e => {
@@ -202,26 +197,40 @@ export class ManageTransportationComponent implements OnInit {
     this.confirmationService.confirm({
       message:
         "ยืนยันการลบข้อมูล : " +
-        this.filterData.filter(res => res.id === id)[0].name,
+        this.transport.filter(res => res.id === id)[0].name,
       header: "ข้อความจากระบบ",
       accept: () => {
         this.transportationService.deleteTransportation(id).subscribe(
           res => {
-            if (res["status"] === "Success") {
+            if (res['status'] === 'Success') {
               this.messageService.add({
-                severity: "success",
-                summary: "ข้อความจากระบบ",
-                detail: "ดำเนินการลบสำเร็จ"
+                severity: 'success',
+                summary: 'ข้อความจากระบบ',
+                detail: 'ดำเนินการลบสำเร็จ'
               });
               this.getTransportation();
             }
+            console.log(res);
+            
           },
           e => {
-            // console.log(e['error']['message']);
             this.messageService.add({
-              severity: "error",
-              summary: "ข้อความจากระบบ",
-              detail: "ดำเนินการลบไม่สำเร็จ"
+              severity: 'error',
+              summary: 'ข้อความจากระบบ',
+              detail: 'ดำเนินการลบไม่สำเร็จ'
+            });
+          }
+        );
+
+        this.transportationService.deleteTransportationTemple(id).subscribe(
+          res => {
+              this.getTransportation();
+          },
+          e => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'ข้อความจากระบบ',
+              detail: 'ดำเนินการลบไม่สำเร็จ'
             });
           }
         );
@@ -233,7 +242,7 @@ export class ManageTransportationComponent implements OnInit {
   showEdit(id) {
     this.displayDialog = true;
     this.displayTransportation = false;
-    this.transportation = this.filterData.filter(e => e.id === id)[0];
+    this.transportation = this.transport.filter(e => e.id === id)[0];
     // console.log(this.filterData.filter(e => e.id === id))
     this.newTransportation = this.transportation.name;
     this.temp = this.transportation.name;
