@@ -5,10 +5,10 @@ import java.util.List;
 import com.cdgs.temple.dto.HistoryDharmaDto;
 
 public interface HistoryDharmaService {
-	HistoryDharmaDto createHistoryDhama(HistoryDharmaDto body);
 	
-	List<HistoryDharmaDto> getAll();
-	List<HistoryDharmaDto> getHistoryDhamaByMemberId();
+	List<HistoryDharmaDto> getAll() throws Exception;
 	
 	HistoryDharmaDto createHistoryDharma(HistoryDharmaDto body) throws Exception;
+
+	List<HistoryDharmaDto> getHistoryDhamaByMemberId(Long memberId) throws Exception;
 }
