@@ -1,7 +1,10 @@
 package com.cdgs.temple.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,24 +15,13 @@ import com.cdgs.temple.service.HistoryDharmaService;
 
 @Service
 public class HistoryDharmaServiceImpl implements HistoryDharmaService {
+	private static final Logger log = LoggerFactory.getLogger(HistoryDharmaServiceImpl.class);
 	
-	@Autowired(required = true)
-	private final HistoryDharmaRepository historyDhamaRepository;
+	private final HistoryDharmaRepository historyDharmaRepository;
 	
+	@Autowired
 	public HistoryDharmaServiceImpl(HistoryDharmaRepository historyDharmaRepository) {
-		this.historyDhamaRepository = historyDharmaRepository;
-	}
-	
-	@Override
-	public List<HistoryDharmaDto> getAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<HistoryDharmaDto> getHistoryDhamaByMemberId() {
-		// TODO Auto-generated method stub
-		return null;
+		this.historyDharmaRepository = historyDharmaRepository;
 	}
 
 	@Override
@@ -37,7 +29,7 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 		HistoryDharmaEntity entity = new HistoryDharmaEntity();
 		try {
 			if (body != null) {
-				entity = historyDhamaRepository.save(mapDtoToEntity(body));
+				entity = historyDharmaRepository.save(mapDtoToEntity(body));
 			}
 			return mapEntityToDto(entity);
 		} catch (Exception e) {
@@ -46,6 +38,25 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 		}
 	}
 
+	@Override
+	public List<HistoryDharmaDto> getHistoryDhamaByMemberId(Long memberId) throws Exception {
+		List<HistoryDharmaEntity> HistoryDharmaEntity = new ArrayList<>();
+		try {
+			HistoryDharmaEntity = historyDharmaRepository.getHistoryDhamaByMemberId(memberId);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return mapListEntityToDto(HistoryDharmaEntity);
+	}
+	
+	@Override
+	public List<HistoryDharmaDto> getAll() throws Exception {
+		List<HistoryDharmaEntity> historyDharmaEntities = new ArrayList<>();
+		
+		historyDharmaEntities = historyDharmaRepository.findAll();
+		System.out.println(historyDharmaEntities.toString());
+		return mapListEntityToDto(historyDharmaEntities);
+	}
 	
 	private HistoryDharmaDto mapEntityToDto(HistoryDharmaEntity entity) throws Exception {
 		HistoryDharmaDto dto = new HistoryDharmaDto();
@@ -63,6 +74,20 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 		}
 	}
 	
+	private List<HistoryDharmaDto> mapListEntityToDto(List<HistoryDharmaEntity> entities) throws Exception {
+		List<HistoryDharmaDto> dtoList = new ArrayList<>();
+		try {
+			for (HistoryDharmaEntity entity : entities) {
+				dtoList.add(mapEntityToDto(entity));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e.getMessage());
+		}
+		return dtoList;
+	}
+	
 	private HistoryDharmaEntity mapDtoToEntity(HistoryDharmaDto dto) throws Exception {
 		HistoryDharmaEntity entity = new HistoryDharmaEntity();
 		System.out.println(dto.toString());
@@ -76,12 +101,6 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 			e.printStackTrace();
 			throw new Exception(e.getMessage());
 		}
-	}
-
-	@Override
-	public HistoryDharmaDto createHistoryDhama(HistoryDharmaDto body) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
