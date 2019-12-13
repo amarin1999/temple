@@ -42,8 +42,8 @@ export class RegisterFormComponent implements OnInit {
   profileString: string;
   currentId = 0;
   profile: any;
-  courseHisName = '';
-  courseHisLocation = '';
+  courseName = '';
+  location = '';
   courseHisList: any[] = [];
   bloodGroup: SelectItem[] = [
     { label: 'O', value: 'O' },
@@ -268,10 +268,10 @@ export class RegisterFormComponent implements OnInit {
   }
 
   addCourseHis() {
-    this.courseHisName = '';
-    this.courseHisLocation = '';
-    const his = { 'courseName': this.courseHisName, 'courseLocation': this.courseHisLocation };
-    this.courseHisList.push(his);
+    // this.courseName = '';
+    // this.courseLocation = '';
+    // const his = { 'courseName': this.courseName, 'courseLocation': this.courseLocation };
+    this.courseHisList.push({});
   }
 
   delHisCourse(index) {

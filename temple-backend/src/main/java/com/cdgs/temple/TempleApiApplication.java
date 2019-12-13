@@ -34,18 +34,5 @@ public class TempleApiApplication implements CommandLineRunner {
 		HikariDataSource dataSoxe = (HikariDataSource)dataSource;
 		System.out.println("Datasource"+ dataSoxe.getMaximumPoolSize());
 	}
-	
-	
-	
-//	@Bean
-//	CorsConfigurationSource corsConfigurationSource() {
-//		CorsConfiguration configuration = new CorsConfiguration();
-//		configuration.setAllowCredentials(true);
-//		configuration.addAllowedOrigin("*");
-//		configuration.addAllowedHeader("*");
-//		configuration.addAllowedMethod("*");
-//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//		source.registerCorsConfiguration("/**", configuration);
-//		return source;
-//	}
+
 }

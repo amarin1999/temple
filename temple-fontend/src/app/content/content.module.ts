@@ -41,6 +41,8 @@ import { from } from "rxjs";
 import { CourseRegisterOutTimeComponent } from "./courses/course-register-out-time/course-register-out-time.component";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { ThaiCalendarModule } from '../shared/directive/thai-calendar/thai-calendar.module';
+import {TabMenuModule} from 'primeng/tabmenu';
+
 
 registerLocaleData(localeTh);
 
@@ -76,7 +78,7 @@ registerLocaleData(localeTh);
     ManageTransportationComponent,
     CourseRegisterOutTimeComponent
   ],
-  imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule , ThaiCalendarModule],
+  imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule , ThaiCalendarModule, TabMenuModule],
   exports: [ContentComponent],
   providers: [
     ConfirmationService,

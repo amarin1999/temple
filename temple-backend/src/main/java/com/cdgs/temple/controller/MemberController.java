@@ -46,14 +46,15 @@ public class MemberController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 
 			res.setErrorMessage(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 
-			res.setCode(200);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
 	@GetMapping(path = "/getAllUsersWithOutImg")
@@ -67,14 +68,13 @@ public class MemberController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-
 			res.setErrorMessage(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-
-			res.setCode(200);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/monk")
@@ -87,14 +87,15 @@ public class MemberController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 
 			res.setErrorMessage(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 
-			res.setCode(200);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/{id}")
@@ -114,12 +115,13 @@ public class MemberController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setErrorMessage(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-			res.setCode(200);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 
@@ -142,12 +144,13 @@ public class MemberController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(members);
 			res.setCode(201);
+			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(200);
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	// end member
 	
@@ -169,8 +172,8 @@ public class MemberController {
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
-            return new ResponseEntity<>(res, HttpStatus.OK);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
     }
     
@@ -192,8 +195,8 @@ public class MemberController {
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
-            return new ResponseEntity<>(res, HttpStatus.OK);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
     }
 }
