@@ -537,6 +537,8 @@ public class CourseController {
                 courses.add(memberHasCourse);
                 res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
                 res.setData(courses);
+                res.setCode(200);
+                return new ResponseEntity<>(res, HttpStatus.OK);
             } else {
                 res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
                 res.setErrorMessage("Duplicate register");
@@ -546,8 +548,8 @@ public class CourseController {
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(201);
-            return new ResponseEntity<>(res, HttpStatus.OK);
+            res.setCode(400);
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
     }
 
