@@ -1,0 +1,71 @@
+package com.cdgs.temple.controller;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.cdgs.temple.dto.HistoryDharmaDto;
+import com.cdgs.temple.service.HistoryDharmaService;
+import com.cdgs.temple.util.ResponseDto;
+
+@RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping("/v1/historydharma")
+public class HistoryDharmaController {
+	
+	private final HistoryDharmaService historyDharmaService;
+	
+	@Autowired
+	public HistoryDharmaController(HistoryDharmaService historyDharmaService) {
+		this.historyDharmaService = historyDharmaService;
+	}
+	
+	@GetMapping(path = "")
+	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
+	public ResponseEntity<ResponseDto<HistoryDharmaDto>> getHistoryDharma() {
+		List<HistoryDharmaDto> dto;
+		ResponseDto<HistoryDharmaDto> res = new ResponseDto<>();
+		try {
+			dto = historyDharmaService.getAll();
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setErrorMessage(e.getMessage());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping(path = "/getByMemberId")
+	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
+	public ResponseEntity<ResponseDto<HistoryDharmaDto>> getHistoryDhamaByMemberId(@Valid @RequestBody HistoryDharmaDto body) {
+		List<HistoryDharmaDto> dto;
+		ResponseDto<HistoryDharmaDto> res = new ResponseDto<>();
+		try {
+			dto = historyDharmaService.getHistoryDhamaByMemberId(body.getMemberId());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setErrorMessage(e.getMessage());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+}
