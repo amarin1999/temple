@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
     this.cols = [
       {field: 'stDate', header: 'วันที่สำเร็จการอบรม'},
       {field: 'name', header: 'ชื่อคอร์ส'}
-    ];    
+    ];        
   }
 
   getData() {
