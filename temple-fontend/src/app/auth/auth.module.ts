@@ -9,6 +9,8 @@ import { RegisterFormComponent } from './register-form/register-form.component';
 import { RegisterComponent } from './register/register.component';
 import {CalendarModule} from 'primeng/calendar';
 import { ThaiCalendarModule } from '../shared/directive/thai-calendar/thai-calendar.module';
+import { Ng2ImgMaxModule } from 'ng2-img-max';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ThaiCalendarModule } from '../shared/directive/thai-calendar/thai-calen
     SharedModule,
     AuthRoutingModule,
     CalendarModule,
-    ThaiCalendarModule
+    ThaiCalendarModule,
+    Ng2ImgMaxModule,
+    ProgressSpinnerModule
   ],
   exports: [
     AuthComponent

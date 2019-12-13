@@ -13,6 +13,9 @@ import { TitleName } from 'src/app/shared/interfaces/title-name';
 import { Role } from 'src/app/shared/interfaces/role';
 import { ManageRoleService } from 'src/app/shared/service/manage-role.service';
 import { ProvinceService } from 'src/app/shared/service/province.service';
+import { Ng2ImgMaxService } from 'ng2-img-max';
+import { DomSanitizer } from '@angular/platform-browser';
+
 interface Transportation {
   memberTransportation: string;
 }
@@ -217,7 +220,9 @@ export class RegisterFormComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private breadCrumbService: BreadcrumbService,
     private roleService: ManageRoleService,
-    private provinceService: ProvinceService
+    private provinceService: ProvinceService,
+    private ng2ImgMax: Ng2ImgMaxService,
+    public sanitizer: DomSanitizer
   ) {
 
   }
@@ -560,9 +565,20 @@ export class RegisterFormComponent implements OnInit {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       const file: File = fileList[0];
-      if (file.size < 1000000) {
-        this.profile = file;
-        this.handleInputChange(this.profile); // turn into base64
+      var size = file.size;
+      console.log(size);
+      // -------------- Resize รูปที่ user อัพโหลดมา Start. ----------
+      if (file.size < ((2.5 * 1024) * 1024)) {
+        this.ng2ImgMax.resizeImage(file, 400, 300).subscribe(
+          result => {
+            this.profile = result;
+            var size2 = this.profile.size;
+            console.log(this.profile);
+            // this.profile = new File([result], result.name);
+            this.handleInputChange(this.profile); // turn into base64
+          }
+        )
+      // -------------- Resize รูปที่ user อัพโหลดมา End. ------------
       } else {
         this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์เกินขนาด!' });
       }
