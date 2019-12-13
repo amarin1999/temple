@@ -7,11 +7,11 @@ import { TitleNameService } from 'src/app/shared/service/title-name.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ManageUserService } from 'src/app/shared/service/manage-user.service';
 import { BreadcrumbService } from '../../shared/service/breadcrumb.service';
-import localeTh from '@angular/common/locales/th.js';
 import { ManageRoleService } from 'src/app/shared/service/manage-role.service';
 import { Role } from 'src/app/shared/interfaces/role';
 import { AuthService } from '../../shared/service/auth.service';
 import { ProvinceService } from 'src/app/shared/service/province.service';
+import { HistoryDharmaService } from 'src/app/shared/service/history-dharma.service';
 
 @Component({
   selector: 'app-edit-form',
@@ -216,7 +216,8 @@ export class EditFormComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private roleService: ManageRoleService,
     private authService: AuthService,
-    private provinceService: ProvinceService
+    private provinceService: ProvinceService,
+    private historyDharmaService: HistoryDharmaService
   ) {
   }
 
@@ -230,6 +231,20 @@ export class EditFormComponent implements OnInit {
     this.showCancelMessage = false;
     this.onEdit = false;
     this.settingForm();
+    this.historyDharmaService.getHistoryDharmaByMemberId(this.personalId).subscribe(
+      res => {
+        if (res.status === 'Success') {
+          this.courseHisList = res.data;
+          console.log('historyDharma', res.data);
+          
+        } else {
+          console.log('getHistoryDharmaByMemberId Fail');
+        }
+      },
+      err => {
+        console.log(err['error']['message']);
+      }
+    );
     this.provinceService.getProvince().subscribe(
       res => {
         this.provinces = res.data;
@@ -584,7 +599,7 @@ export class EditFormComponent implements OnInit {
           disease: this.editForm.get('underlyDisease').value,
           blood: bloodGroup.value,
         };
-        console.log('dataUser', dataUser);
+        console.log('dataUser23', dataUser);
 
         this.manageUserService.updateUser(this.personalId, dataUser).subscribe(
           res => {
