@@ -216,6 +216,7 @@ public class SpecialApproveController {
 			res.setCode(400);
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
+	}
 
 	@DeleteMapping(path = "/{courseId}")
 	@PreAuthorize("hasRole('user')")
