@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cdgs.temple.dto.HistoryDharmaDto;
 import com.cdgs.temple.dto.MemberDto;
+import com.cdgs.temple.service.HistoryDharmaService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.util.ResponseDto;
 
@@ -29,9 +31,12 @@ public class MemberController {
 	
 	// start member
 	private	final MemberService memberService;
+	
+    private final HistoryDharmaService historyDharmaService;
 
 	@Autowired
-	public MemberController(MemberService memberService) {
+	public MemberController(MemberService memberService, HistoryDharmaService historyDharmaService) {
+		this.historyDharmaService = historyDharmaService;
 		this.memberService = memberService;
 	}
 	
@@ -130,9 +135,11 @@ public class MemberController {
 	public ResponseEntity<ResponseDto<MemberDto>> putMembers(@PathVariable("id") Long id,@Valid @RequestBody MemberDto body) {
 		ResponseDto<MemberDto> res = new ResponseDto<>();
 		List<MemberDto> members = new ArrayList<>();
+        List<HistoryDharmaDto> historyDharma = new ArrayList<>();
 		MemberDto member1 = memberService.getCurrentMember();
 		MemberDto member ;
 		try {
+			historyDharma = body.getHistoryDharma();
 			if(member1.getRoleName().equals("admin")){
 				member = memberService.updateMember(id,body);
 			}else{
@@ -140,6 +147,18 @@ public class MemberController {
 			}
 			if (member != null) {
 				members.add(member);
+                historyDharma.forEach(historyDharmaData -> {
+                	historyDharmaData.setMemberId(member.getId());
+                	if ((historyDharmaData.getId()) == null) {
+                		try {
+                			System.out.println("Insert historyDharmaData");
+                			historyDharmaService.createHistoryDharma(historyDharmaData);
+                		} catch (Exception e) {
+                			// TODO Auto-generated catch block
+                			e.printStackTrace();
+                		}
+                	}
+                });
 			} 
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(members);
@@ -182,11 +201,25 @@ public class MemberController {
     public ResponseEntity<ResponseDto<MemberDto>> updateByAdmin(@PathVariable("id") Long id,@Valid @RequestBody MemberDto body) {
         ResponseDto<MemberDto> res = new ResponseDto<>();
         List<MemberDto> members = new ArrayList<>();
+        List<HistoryDharmaDto> historyDharma = new ArrayList<>();
         MemberDto member;
         try {
             member = memberService.updateMemberByAdmin(id, body);
+            historyDharma = body.getHistoryDharma();
             if (!(member == null)) {
                 members.add(member);
+                historyDharma.forEach(historyDharmaData -> {
+                	historyDharmaData.setMemberId(member.getId());
+                	if ((historyDharmaData.getId()) == null) {
+                		try {
+                			System.out.println("Insert historyDharmaData");
+                			historyDharmaService.createHistoryDharma(historyDharmaData);
+                		} catch (Exception e) {
+                			// TODO Auto-generated catch block
+                			e.printStackTrace();
+                		}
+                	}
+                });
             }
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(members);
