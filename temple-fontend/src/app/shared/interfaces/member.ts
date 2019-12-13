@@ -9,11 +9,19 @@ export interface Member {
   emergencyTel?: String;
   email?: String;
   img?: String;
+  age?: Number;
   roleId?: Number;
   roleName?: String;
   titleId?: Number;
   titleDisplay?: String;
   titleName?: String;
+  ordianNumber?: Number;
+  ordianDate?: Date;
+  privice?: {
+    provinceId?: Number,
+    provinceName?: String
+  };
+  postalCode?: String;
   genderId?: Number;
   genderName?: String;
   job?: String;
