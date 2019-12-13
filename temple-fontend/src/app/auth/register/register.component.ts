@@ -9,6 +9,8 @@ import { TitleName } from 'src/app/shared/interfaces/title-name';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
 import { ProvinceService } from 'src/app/shared/service/province.service';
+import { Ng2ImgMaxService } from 'ng2-img-max';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -31,6 +33,8 @@ export class RegisterComponent implements OnInit {
   public courseHisName = '';
   public courseHisLocation = '';
   public courseHisList: any[] = [];
+  showNoProfile: boolean = false;
+  showLoadingPicture: boolean = true;
   profileString: string;
   currentId = 0;
   profile: any;
@@ -178,7 +182,9 @@ export class RegisterComponent implements OnInit {
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private breadCrumbService: BreadcrumbService,
-    private provinceService: ProvinceService
+    private provinceService: ProvinceService,
+    private ng2ImgMax: Ng2ImgMaxService,
+    public sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -517,43 +523,62 @@ export class RegisterComponent implements OnInit {
     //console.log('from typing ' + event);
   }
 
-  profileSelect(event, field) {
+   // ---------------- Profile Picture Fuction => Start. --------------
+   profileSelect(event, field) {
+    this.showNoProfile = true;
+    this.showLoadingPicture = false;
     this.currentId = field;
     const fileList: FileList = event.target.files;
+    const pattern = /image-*/;
     if (fileList.length > 0) {
       const file: File = fileList[0];
-      if (file.size < 1000000) {
-        this.profile = file;
-        this.handleInputChange(this.profile); // turn into base64
+    // ------------------- Type File Check => Start. -----------------
+      if (!file.type.match(pattern)) {
+        this.showNoProfile = false;
+        this.showLoadingPicture = true;
+        this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์ผิดประเภท!' });
+        return;
+      }
+      // -------------------------------------------------------------
+      // --------- Check size and Resize to Image => Start. ----------
+      else if (file.size < ((2.5 * 1024) * 1024)) {
+        this.ng2ImgMax.resizeImage(file, 400, 300).subscribe(
+          result => {
+            this.profile = result;
+            this.handleInputChange(this.profile); // turn into base64
+          }
+        )
       } else {
+        this.showNoProfile = false;
+        this.showLoadingPicture = true;
         this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์เกินขนาด!' });
       }
+      // ---------------------------------------------------------------
     }
   }
-  // เปลี่ยนรูปภาพ
+  // -------------------------------------------------------------------
+  // ----------- Upload Profile to Display Function => Start. ----------
   handleInputChange(files) {
     const file = files;
-    // format รูป เป็นไฟล์อื่นจะผิด
-    const pattern = /image-*/;
     const reader = new FileReader();
-    if (!file.type.match(pattern)) {
-      this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์ผิดประเภท!' });
-      return;
-    }
     reader.onloadend = this._handleReaderLoaded.bind(this);
     reader.onload = () => {
+      this.showNoProfile = false;
+      this.showLoadingPicture = true;
       this.previewImg = reader.result;
     };
     reader.readAsDataURL(file);
   }
+  // --------------------------------------------------------------------
+
+  // - Put data img Profile to Variable "profileString" for Sent to database Function => Start. -
   _handleReaderLoaded(e) {
     const reader = e.target;
     const base64result = reader.result.substr(reader.result.indexOf(',') + 1);
-    // this.imageSrc = base64result;
     const id = this.currentId;
     if (id === 1) {
       this.profileString = base64result;
-      //console.log(this.profileString);
     }
   }
+  // --------------------------------------------------------------------
 }
