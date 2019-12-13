@@ -65,7 +65,7 @@ public class AuthController {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage("Username หรือ Password ไม่ถูกต้อง ");
             res.setCode(401);
-            return new ResponseEntity<ResponseDto>(res, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(res, HttpStatus.UNAUTHORIZED);
         }
     }
    
@@ -84,18 +84,17 @@ public class AuthController {
            System.out.println(members);
            System.out.println(member.getId());
            historyDharma = body.getHistoryDharma();
-           historyDharma.forEach(action -> {
-        	   action.setMemberId(member.getId());
-        	   try {
-				historyDhamaService.createHistoryDharma(action);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-           });
-           
             if (!(member == null)) {
                 members.add(member);
+                historyDharma.forEach(action -> {
+                	action.setMemberId(member.getId());
+                	try {
+                		historyDhamaService.createHistoryDharma(action);
+                	} catch (Exception e) {
+                		// TODO Auto-generated catch block
+                		e.printStackTrace();
+                	}
+                });
             }
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(members);
