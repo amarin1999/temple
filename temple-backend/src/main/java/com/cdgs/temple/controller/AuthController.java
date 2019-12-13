@@ -34,16 +34,16 @@ public class AuthController {
 
     private final MemberService memberService;
     
-    private final HistoryDharmaService historyDhamaService;
+    private final HistoryDharmaService historyDharmaService;
 
     private final AuthenticationManager authenticationManager;
 
     private final JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public AuthController(MemberService memberService, AuthenticationManager authenticationManager, HistoryDharmaService historyDhamaService ,
+    public AuthController(MemberService memberService, AuthenticationManager authenticationManager, HistoryDharmaService historyDharmaService ,
             JwtTokenUtil jwtTokenUtil) {
-        this.historyDhamaService = historyDhamaService;
+        this.historyDharmaService = historyDharmaService;
 		this.memberService = memberService;
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
@@ -86,10 +86,10 @@ public class AuthController {
            historyDharma = body.getHistoryDharma();
             if (!(member == null)) {
                 members.add(member);
-                historyDharma.forEach(action -> {
-                	action.setMemberId(member.getId());
+                historyDharma.forEach(historyDharmaData -> {
+                	historyDharmaData.setMemberId(member.getId());
                 	try {
-                		historyDhamaService.createHistoryDharma(action);
+                		historyDharmaService.createHistoryDharma(historyDharmaData);
                 	} catch (Exception e) {
                 		// TODO Auto-generated catch block
                 		e.printStackTrace();
