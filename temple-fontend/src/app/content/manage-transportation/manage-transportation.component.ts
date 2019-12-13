@@ -42,7 +42,7 @@ export class ManageTransportationComponent implements OnInit {
     this.getTransportationTemple();
     this.initTransportation();
     this.cols = [
-      { field: 'name', header: 'การเดินทาง' },
+      { field: 'name', header: 'ประเภทการเดินทาง' },
     ];
     this.colsTemple = [
       { field: 'name', header: 'ประเภทการเดินทาง' },
@@ -298,7 +298,7 @@ export class ManageTransportationComponent implements OnInit {
   clear() {
     this.initTransportation();
     this.newTransportation = '';
-    this.messageService.clear();
+    // this.messageService.clear();
   }
   private initTransportation() {
     this.displayDialog = false;
