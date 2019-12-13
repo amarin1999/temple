@@ -376,6 +376,7 @@ export class RegisterFormComponent implements OnInit {
           ordianDate: this.registerForm.get('ordianDate').value,
           ordianNumber: this.registerForm.get('ordianNumber').value,
           tel: this.registerForm.get('phone').value,
+          roleId: (this.registerForm.get('role').value).roleId,
           emergencyTel: this.registerForm.get('phoneEmergency').value,
           emergencyName: emerName,
           emergencyRelationship: this.registerForm.get('relationshipEmergency').value,
