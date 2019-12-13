@@ -12,9 +12,11 @@ import com.cdgs.temple.entity.HistoryDharmaEntity;
 @Repository
 public interface HistoryDharmaRepository extends  CrudRepository<HistoryDharmaEntity, Long>{
 	
+	List<HistoryDharmaEntity> findAll();
+	
 	@Query(value = "SELECT * "
 			+ "FROM history_dharma "
-			+ "WHERE history_dharma_member_id =: memberId", nativeQuery = true)
-	List<HistoryDharmaEntity> getHistoryDhamaByMemberId(@Param("memberId") String memberId);
+			+ "WHERE history_dharma_member_id = :memberId", nativeQuery = true)
+	List<HistoryDharmaEntity> getHistoryDhamaByMemberId(@Param("memberId") Long memberId);
 
 }
