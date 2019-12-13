@@ -102,11 +102,12 @@
                   <!--<p-fileUpload name="myFile"  [showUploadButton]='true' accept="image/*" (onUpload)="profileSelect($event)"></p-fileUpload>-->
                   <img [src]="
                       previewImg ? previewImg : './assets/images/no-img.png'
-                    " class="img-info" />
+                    " class="img-info" *ngIf="showLoadingPicture" />
+                  <img src="./assets/images/spinner.gif" class="img-info" *ngIf="showNoProfile"/>
                   <div class="btn-upload" style="text-align: center">
                     <label for="profile" pButton style="background-color:#b8860b;border:#b8860b;"
-                      label=" อัปโหลดรูปภาพ"></label>
-                    <input accept="image/*" type="file" name="img" id="profile" (change)="profileSelect($event, 1)" />
+                      label=" อัปโหลดรูปภาพ" disabled=false ></label>
+                    <input accept="image/*" type="file" name="img" id="profile" (change)="profileSelect($event, 1)"  />
                     <div style="color: #BABABA;">
                       ** ขนาดไฟล์รูปไม่เกิน 2MB. นามสกุลไฟล์ .jpg เท่านั้น
                     </div>
