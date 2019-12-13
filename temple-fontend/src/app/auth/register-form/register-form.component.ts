@@ -39,6 +39,8 @@ export class RegisterFormComponent implements OnInit {
   public filteredTitleName: any[];
   public filteredProvince: any[];
   public roles: Role[];
+  showNoProfile: boolean = false;
+  showLoadingPicture: boolean = true;
   profileString: string;
   currentId = 0;
   profile: any;
@@ -560,54 +562,64 @@ export class RegisterFormComponent implements OnInit {
     // console.log('from typing ' + event);
   }
 
+  // ---------------- Profile Picture Fuction => Start. --------------
   profileSelect(event, field) {
+    this.showNoProfile = true;
+    this.showLoadingPicture = false;
     this.currentId = field;
     const fileList: FileList = event.target.files;
+    const pattern = /image-*/;
     if (fileList.length > 0) {
       const file: File = fileList[0];
-      var size = file.size;
-      console.log(size);
-      // -------------- Resize รูปที่ user อัพโหลดมา Start. ----------
-      if (file.size < ((2.5 * 1024) * 1024)) {
+    // ------------------- Type File Check => Start. -----------------
+      if (!file.type.match(pattern)) {
+        this.showNoProfile = false;
+        this.showLoadingPicture = true;
+        this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์ผิดประเภท!' });
+        return;
+      }
+      // -------------------------------------------------------------
+      // --------- Check size and Resize to Image => Start. ----------
+      else if (file.size < ((2.5 * 1024) * 1024)) {
         this.ng2ImgMax.resizeImage(file, 400, 300).subscribe(
           result => {
             this.profile = result;
-            var size2 = this.profile.size;
-            console.log(size2);
-            // this.profile = new File([result], result.name);
             this.handleInputChange(this.profile); // turn into base64
           }
         )
-      // -------------- Resize รูปที่ user อัพโหลดมา End. ------------
       } else {
+        this.showNoProfile = false;
+        this.showLoadingPicture = true;
         this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์เกินขนาด!' });
       }
+      // ---------------------------------------------------------------
     }
   }
+  // -------------------------------------------------------------------
 
+  // ----------- Upload Profile to Display Function => Start. ----------
   handleInputChange(files) {
     const file = files;
-    const pattern = /image-*/;
     const reader = new FileReader();
-    if (!file.type.match(pattern)) {
-      alert('ไฟล์ผิดประเภท!');
-      return;
-    }
     reader.onloadend = this._handleReaderLoaded.bind(this);
     reader.onload = () => {
+      this.showNoProfile = false;
+      this.showLoadingPicture = true;
       this.previewImg = reader.result;
     };
     reader.readAsDataURL(file);
   }
+  // --------------------------------------------------------------------
+
+  // - Put data img Profile to Variable "profileString" for Sent to database Function => Start. -
   _handleReaderLoaded(e) {
     const reader = e.target;
     const base64result = reader.result.substr(reader.result.indexOf(',') + 1);
-    // this.imageSrc = base64result;
     const id = this.currentId;
     if (id === 1) {
       this.profileString = base64result;
-      // console.log(this.profileString);
     }
   }
+  // --------------------------------------------------------------------
 
 }
