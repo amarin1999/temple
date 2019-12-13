@@ -572,7 +572,7 @@ export class RegisterFormComponent implements OnInit {
           result => {
             this.profile = result;
             var size2 = this.profile.size;
-            console.log(this.profile);
+            console.log(size2);
             // this.profile = new File([result], result.name);
             this.handleInputChange(this.profile); // turn into base64
           }
