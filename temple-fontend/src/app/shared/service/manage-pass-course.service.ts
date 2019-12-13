@@ -16,45 +16,45 @@ export class ManagePassCourseService {
     return this.http.get(ApiConstants.baseURl + `/graduated/${courseId}`)
       .pipe(
         map((res) => {
-          const data = res['data'].map( (member) => {
-            var checked = member.status === '1' ? true : false;
+          const data = res['data'].map((member) => {
+            const checked = member.status === '1' ? true : false;
             return {
               ...member,
-              checked:checked
-            }
-          })
+              checked: checked
+            };
+          });
           return {
-            status:res['result'],
+            status: res['result'],
             data: data
-          }
+          };
         })
-      )
+      );
   }
 
-  updateMemberPassCourse(data){
-    return this.http.put(ApiConstants.baseURl+'/graduated',data)
-    .pipe(
-      map((res) =>{
-        return {
-          status:res['result']
-        }
-      })
-    )
+  updateMemberPassCourse(data) {
+    return this.http.put(ApiConstants.baseURl + '/graduated', data)
+      .pipe(
+        map((res) => {
+          return {
+            status: res['result']
+          };
+        })
+      );
   }
 
-  getAllCourse(offset=0,limit=5,query=''){
-    return this.http.get(ApiConstants.baseURl+`/graduated?query=${query}&limit=${limit}&offset=${offset}`)
-    .pipe(
-      map( res=>{
-        return {
-          status:res['result'],
-          data:res['data']
-        }
-      })
-    )
+  getAllCourse(offset = 0, limit = 5, query = '') {
+    return this.http.get(ApiConstants.baseURl + `/graduated?query=${query}&limit=${limit}&offset=${offset}`)
+      .pipe(
+        map(res => {
+          return {
+            status: res['result'],
+            data: res['data']
+          };
+        })
+      );
   }
 
-  getTotalRecord(){
+  getTotalRecord() {
     return this.http.get(`${ApiConstants.baseURl}/graduated/count`).pipe(
       map(res => ({
         status: res['result'],
@@ -65,14 +65,14 @@ export class ManagePassCourseService {
   }
   getNumberOfPassCourse(id) {
     return this.http.get(ApiConstants.baseURl + `/courses/getPassCourse/${id}`)
-    .pipe(
-      map(res => {
-        return {
-          status: res['result'],
-          data: res['data']
-        };
-      })
-    );
+      .pipe(
+        map(res => {
+          return {
+            status: res['result'],
+            data: res['data']
+          };
+        })
+      );
   }
 }
 
