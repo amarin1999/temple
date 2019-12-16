@@ -210,15 +210,6 @@
   (onHide)="clear()"
 >
   <div class="ui-g ui-fluid">
-    <!-- <div class="ui-g-12">
-        <div class="ui-g-5">
-          <label>ประเภทการเดินทาง</label>
-        </div>
-        <div class="ui-g-7">
-          <div class="ui-g-12"> <p-radioButton name="typeTrans" value="1" label="การเดินทางของวัด" [(ngModel)]="typeTrans" inputId="temple" binary="true"></p-radioButton></div>
-          <div class="ui-g-12"><p-radioButton name="typeTrans" value="0" label="การเดินทางด้วยตัวเอง" [(ngModel)]="typeTrans" inputId="yourSelf" binary="true"></p-radioButton></div>
-        </div>
-        </div> -->
     <div class="ui-g-12">
       <div class="ui-g-4">
         <label>ประเภทการเดินทาง</label>
@@ -240,7 +231,6 @@
           [showIcon]="true"
           icon="pi pi-clock"
           [style]="{ width: '60%' }"
-          [disabled]="typeTrans === '0' ? true : false"
         ></p-calendar>
       </div>
     </div>
@@ -257,7 +247,6 @@
           [showIcon]="true"
           icon="pi pi-clock"
           [style]="{ width: '60%' }"
-          [disabled]="typeTrans === '0' ? true : false"
         ></p-calendar>
       </div>
     </div>

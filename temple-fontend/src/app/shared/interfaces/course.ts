@@ -1,3 +1,5 @@
+import { TransportationTemple } from './transportation-temple';
+
 export interface Course {
   id?: number;
   no?: number;
@@ -11,6 +13,7 @@ export interface Course {
   memberLname?: string;
   locationId?: number;
   locationName?: string;
+  transportTemple?: TransportationTemple;
   status?: string;
   saStatus?: string;
   mhcStatus?: string;
