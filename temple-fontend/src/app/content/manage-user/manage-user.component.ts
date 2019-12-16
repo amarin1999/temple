@@ -4,6 +4,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-manage-user',
@@ -20,9 +21,11 @@ export class ManageUserComponent implements OnInit {
     private manageUser: ManageUserService,
     private breadCrumbService: BreadcrumbService,
     private router: Router,
+    public spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.breadCrumbService.setPath([
       { label: 'จัดการสมาชิก', routerLink: '/users' },
     ]);
@@ -44,6 +47,7 @@ export class ManageUserComponent implements OnInit {
       { field: 'rolename', header: 'rolename' },
       { field: 'contact', header: 'contact' }
     ];
+    this.spinner.hide();
   }
 
   deleteUser(id) {
