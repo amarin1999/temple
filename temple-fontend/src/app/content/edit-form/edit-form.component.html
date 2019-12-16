@@ -18,7 +18,14 @@
                   <ng-container *ngIf="editForm.controls.imgProfile.value; else elseNoImage">
                     <img src="data:image/jpg;base64,{{
                         editForm.controls.imgProfile.value
-                      }}" class="img-info" />
+                      }}" class="img-info" 
+                      *ngIf="showLoadingPicture"
+                    />
+                      <img
+                      src="./assets/images/spinner.gif"
+                      class="img-info"
+                      *ngIf="showNoProfile"
+                    />
                   </ng-container>
                   <ng-template #elseNoImage>
                     <img src="./assets/images/no-img.png" class="img-info" />
@@ -29,7 +36,7 @@
                     <input type="file" id="profile" (change)="profileSelect($event, 1)" accept="image/*" />
                     &nbsp;
                     <div style="color: #BABABA;">
-                      ** ขนาดไฟล์รูปไม่เกิน 500KB. นามสกุลไฟล์ .jpg เท่านั้น
+                      ** ขนาดไฟล์รูปไม่เกิน 2MB. นามสกุลไฟล์ .jpg เท่านั้น
                     </div>
                   </div>
                 </div>
@@ -131,9 +138,6 @@
                   <div class="text-right">
                     <span>อีเมล</span>
                   </div>
-                  <!-- <div *ngIf="formError.email" class="text-danger text-invalid text-right">
-                    {{ formError.email }}
-                  </div> -->
                 </div>
                 <div class="ui-g-12 ui-lg-8 ui-md-4 ">
                   <div>
