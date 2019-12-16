@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService, ConfirmationService } from 'primeng/api';
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  FormControl
+} from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { TitleNameService } from 'src/app/shared/service/title-name.service';
@@ -51,16 +56,25 @@ export class RegisterFormComponent implements OnInit {
     { label: 'O', value: 'O' },
     { label: 'A', value: 'A' },
     { label: 'B', value: 'B' },
-    { label: 'AB', value: 'AB' },
+    { label: 'AB', value: 'AB' }
   ];
   public provinces: any[];
   public titleNames: any[];
   public displaySystemMessage = false;
 
   registerForm = new FormGroup({
-    username: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-    password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-    repassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    username: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(6)
+    ]),
+    password: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(6)
+    ]),
+    repassword: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6)
+    ]),
     idCard: new FormControl(null, [Validators.required]),
     titleName: new FormControl('', [Validators.required]),
     fname: new FormControl(null, [Validators.required]),
@@ -71,7 +85,10 @@ export class RegisterFormComponent implements OnInit {
     age: new FormControl(null, [Validators.required, Validators.min(0)]),
     address: new FormControl(null, [Validators.required]),
     province: new FormControl(null, [Validators.required]),
-    postalCode: new FormControl(null, [Validators.required, Validators.pattern('[0-9]{5}')]),
+    postalCode: new FormControl(null, [
+      Validators.required,
+      Validators.pattern('[0-9]{5}')
+    ]),
     phone: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.email]),
     ordianDate: new FormControl(null),
@@ -84,7 +101,7 @@ export class RegisterFormComponent implements OnInit {
     foodsAllergy: new FormControl(null),
     drugsAllergy: new FormControl(null),
     underlyDisease: new FormControl(null),
-    blood: new FormControl('', [Validators.required]),
+    blood: new FormControl('', [Validators.required])
   });
 
   public formError = {
@@ -225,9 +242,7 @@ export class RegisterFormComponent implements OnInit {
     private provinceService: ProvinceService,
     private ng2ImgMax: Ng2ImgMaxService,
     public sanitizer: DomSanitizer
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     // ----------------------------------------------
@@ -246,7 +261,7 @@ export class RegisterFormComponent implements OnInit {
     this.roles = this.roleService.getRoles();
     this.breadCrumbService.setPath([
       { label: 'จัดการสมาชิก', routerLink: '/users' },
-      { label: 'ลงทะเบียนสมาชิก', routerLink: '/users/create' },
+      { label: 'ลงทะเบียนสมาชิก', routerLink: '/users/create' }
     ]);
     this.urlback = this.route.snapshot.data.urlback;
     // console.log(this.urlback);
@@ -265,7 +280,7 @@ export class RegisterFormComponent implements OnInit {
 
     this.menu = [
       { label: 'Login', url: 'auth/login' },
-      { label: 'Register : สมัครสมาชิก' },
+      { label: 'Register : สมัครสมาชิก' }
     ];
   }
 
@@ -317,7 +332,6 @@ export class RegisterFormComponent implements OnInit {
       this.submitMessage(e);
     }
     // console.log('test');
-
   }
 
   /**
@@ -343,8 +357,7 @@ export class RegisterFormComponent implements OnInit {
         this.actionAccept(type);
         // console.log(type);
       },
-      reject: () => {
-      }
+      reject: () => {}
     });
   }
 
@@ -362,7 +375,10 @@ export class RegisterFormComponent implements OnInit {
         // const dataUser = this.onSave(this.registerForm.getRawValue());
         const provinceCode = this.registerForm.get('province').value;
         const titleCode = this.registerForm.get('titleName').value;
-        const emerName = (this.registerForm.get('fnameEmergency').value) + ' ' + (this.registerForm.get('lnameEmergency').value);
+        const emerName =
+          this.registerForm.get('fnameEmergency').value +
+          ' ' +
+          this.registerForm.get('lnameEmergency').value;
         const bloodGroup = this.registerForm.get('blood').value;
         const dataUser = {
           username: this.registerForm.get('username').value,
@@ -378,10 +394,11 @@ export class RegisterFormComponent implements OnInit {
           ordianDate: this.registerForm.get('ordianDate').value,
           ordianNumber: this.registerForm.get('ordianNumber').value,
           tel: this.registerForm.get('phone').value,
-          roleId: (this.registerForm.get('role').value).roleId,
+          roleId: this.registerForm.get('role').value.roleId,
           emergencyTel: this.registerForm.get('phoneEmergency').value,
           emergencyName: emerName,
-          emergencyRelationship: this.registerForm.get('relationshipEmergency').value,
+          emergencyRelationship: this.registerForm.get('relationshipEmergency')
+            .value,
           email: this.registerForm.get('email').value,
           img: this.profileString,
           registerDate: new Date(),
@@ -393,7 +410,7 @@ export class RegisterFormComponent implements OnInit {
           allergyFood: this.registerForm.get('foodsAllergy').value,
           allergyMedicine: this.registerForm.get('drugsAllergy').value,
           disease: this.registerForm.get('underlyDisease').value,
-          blood: bloodGroup.value,
+          blood: bloodGroup.value
         };
         console.log(dataUser);
         this.manageUserService.createUser(dataUser).subscribe(
@@ -402,10 +419,20 @@ export class RegisterFormComponent implements OnInit {
             if (res['status'] === 'Success') {
               this.showToast('alertMessage', 'สมัครสมาชิกสำเร็จ', 'success');
             } else {
-              if ((res['errorMessage']).includes('member_username_UNIQUE')) {
-                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากชื่อผู้ใช้ซ้ำ', 'error');
-              } else if ((res['errorMessage']).includes('member_id_card_UNIQUE')) {
-                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากเลขที่บัตรประชาชนซ้ำ', 'error');
+              if (res['errorMessage'].includes('member_username_UNIQUE')) {
+                this.showToast(
+                  'alertMessage',
+                  'สมัครสมาชิกไม่สำเร็จเนื่องจากชื่อผู้ใช้ซ้ำ',
+                  'error'
+                );
+              } else if (
+                res['errorMessage'].includes('member_id_card_UNIQUE')
+              ) {
+                this.showToast(
+                  'alertMessage',
+                  'สมัครสมาชิกไม่สำเร็จเนื่องจากเลขที่บัตรประชาชนซ้ำ',
+                  'error'
+                );
               } else {
                 this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
               }
@@ -418,7 +445,9 @@ export class RegisterFormComponent implements OnInit {
 
         break;
       }
-      default: { break; }
+      default: {
+        break;
+      }
     }
   }
 
@@ -454,12 +483,8 @@ export class RegisterFormComponent implements OnInit {
    * ตรวจสอบค่าที่รับเข้ามาใหม่ในกรณีกรอกข้อมูลไม่ครบถ้วน
    */
   subscribeInputMessageWaring() {
-    this.registerForm
-      .valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged()
-      )
+    this.registerForm.valueChanges
+      .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe(() => this.waringMessage());
     this.waringMessage();
   }
@@ -476,7 +501,7 @@ export class RegisterFormComponent implements OnInit {
     for (const field of Object.keys(this.formError)) {
       this.formError[field] = '';
       const control = this.registerForm.get(field);
-      if ((field === 'repassword')) {
+      if (field === 'repassword') {
         if (control.value == '') {
           this.detailWarning[0] = 'กรุณากรอกยืนยันรหัสผ่าน';
         } else if (control.value !== this.registerForm.get('password').value) {
@@ -485,7 +510,11 @@ export class RegisterFormComponent implements OnInit {
           continue;
         }
         this.formError[field] = this.validationMessage[field].required;
-      } else if (control && !control.valid && this.validationMessage[field].required) {
+      } else if (
+        control &&
+        !control.valid &&
+        this.validationMessage[field].required
+      ) {
         details = 'กรุณากรอกข้อมูลให้ครบถ้วน';
         this.detailWarning[1] = details;
         // this.detailWarning += this.validationMessage[field].detail + '\n';
@@ -501,15 +530,13 @@ export class RegisterFormComponent implements OnInit {
    */
   showToast(key, detail, severity) {
     this.messageService.clear();
-    this.messageService.add(
-      {
-        severity: severity,
-        key: key,
-        sticky: true,
-        summary: 'ข้อความจากระบบ',
-        detail: detail
-      }
-    );
+    this.messageService.add({
+      severity: severity,
+      key: key,
+      sticky: true,
+      summary: 'ข้อความจากระบบ',
+      detail: detail
+    });
   }
 
   /**
@@ -521,23 +548,23 @@ export class RegisterFormComponent implements OnInit {
     this.filteredTitleName = this.filterTitleName(query, this.titleNames);
   }
   /**
-     * รับค่าจากแป้นพิมพ์
-     * @param event
-     */
+   * รับค่าจากแป้นพิมพ์
+   * @param event
+   */
   filterProvinceMultiple(event) {
     const query = event.query;
     this.filteredProvince = this.filterProvince(query, this.provinces);
   }
   /**
    * เปรียบเทียบค่าที่ได้จากแป้นพิมพ์ กับ ค่าที่ได้จากดาต้าเบส
-   * @param query 
-   * @param titleNames 
+   * @param query
+   * @param titleNames
    */
   filterTitleName(query, titleNames: any[]): any[] {
     const filtered: any[] = [];
     for (let i = 0; i < titleNames.length; i++) {
       const titleName = titleNames[i];
-      if ((titleName.display).match(query)) {
+      if (titleName.display.match(query)) {
         filtered.push(titleName);
         // console.log(titleName.display);
       }
@@ -549,7 +576,7 @@ export class RegisterFormComponent implements OnInit {
     const filtered: any[] = [];
     for (let i = 0; i < provinces.length; i++) {
       const province = provinces[i];
-      if ((province.provinceName).match(query)) {
+      if (province.provinceName.match(query)) {
         filtered.push(province);
       }
     }
@@ -571,26 +598,32 @@ export class RegisterFormComponent implements OnInit {
     const pattern = /image-*/;
     if (fileList.length > 0) {
       const file: File = fileList[0];
-    // ------------------- Type File Check => Start. -----------------
+      // ------------------- Type File Check => Start. -----------------
       if (!file.type.match(pattern)) {
         this.showNoProfile = false;
         this.showLoadingPicture = true;
-        this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์ผิดประเภท!' });
+        this.messageService.add({
+          severity: 'error',
+          summary: 'ข้อความจากระบบ',
+          detail: 'ไฟล์ผิดประเภท!'
+        });
         return;
       }
       // -------------------------------------------------------------
       // --------- Check size and Resize to Image => Start. ----------
-      else if (file.size < ((2.5 * 1024) * 1024)) {
-        this.ng2ImgMax.resizeImage(file, 400, 300).subscribe(
-          result => {
-            this.profile = result;
-            this.handleInputChange(this.profile); // turn into base64
-          }
-        )
+      else if (file.size < 2.5 * 1024 * 1024) {
+        this.ng2ImgMax.resizeImage(file, 400, 300).subscribe(result => {
+          this.profile = result;
+          this.handleInputChange(this.profile); // turn into base64
+        });
       } else {
         this.showNoProfile = false;
         this.showLoadingPicture = true;
-        this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ไฟล์เกินขนาด!' });
+        this.messageService.add({
+          severity: 'error',
+          summary: 'ข้อความจากระบบ',
+          detail: 'ไฟล์เกินขนาด!'
+        });
       }
       // ---------------------------------------------------------------
     }
@@ -611,7 +644,7 @@ export class RegisterFormComponent implements OnInit {
   }
   // --------------------------------------------------------------------
 
-  // - Put data img Profile to Variable "profileString" for Sent to database Function => Start. -
+  // - Put data img Profile to Variable 'profileString' for Sent to database Function => Start. -
   _handleReaderLoaded(e) {
     const reader = e.target;
     const base64result = reader.result.substr(reader.result.indexOf(',') + 1);
@@ -621,5 +654,4 @@ export class RegisterFormComponent implements OnInit {
     }
   }
   // --------------------------------------------------------------------
-
 }
