@@ -21,6 +21,7 @@ import { formatDate } from '@angular/common';
 import { ProvinceService } from 'src/app/shared/service/province.service';
 import { Ng2ImgMaxService } from 'ng2-img-max';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-register',
@@ -206,7 +207,8 @@ export class RegisterComponent implements OnInit {
     private breadCrumbService: BreadcrumbService,
     private provinceService: ProvinceService,
     private ng2ImgMax: Ng2ImgMaxService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    public spinner: NgxSpinnerService
   ) {}
 
   ngOnInit() {
@@ -309,6 +311,7 @@ export class RegisterComponent implements OnInit {
         break;
       }
       case 'submit': {
+        this.spinner.show();
         // console.log('submit');
         // const dataUser = this.onSave(this.registerForm.getRawValue());
         const provinceCode = this.registerForm.get('province').value;
@@ -376,11 +379,30 @@ export class RegisterComponent implements OnInit {
           },
           err => {
             console.log(err);
+            if (err['error']['errorMessage'].includes('member_username_UNIQUE')) {
+              this.showToast(
+                'alertMessage',
+                'สมัครสมาชิกไม่สำเร็จเนื่องจากชื่อผู้ใช้ซ้ำ',
+                'error'
+              );
+            } else if (
+              err['error']['errorMessage'].includes('member_id_card_UNIQUE')
+            ) {
+              this.showToast(
+                'alertMessage',
+                'สมัครสมาชิกไม่สำเร็จเนื่องจากเลขที่บัตรประชาชนซ้ำ',
+                'error'
+              );
+            } else {
+              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
+            }
           }
         );
+        this.spinner.hide();
         break;
       }
       default: {
+        this.spinner.hide();
         break;
       }
     }
