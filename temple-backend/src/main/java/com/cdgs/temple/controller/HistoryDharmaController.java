@@ -1,5 +1,6 @@
 package com.cdgs.temple.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,6 +60,34 @@ public class HistoryDharmaController {
 			dto = historyDharmaService.getHistoryDhamaByMemberId(body.getMemberId());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setErrorMessage(e.getMessage());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PutMapping(path = "")
+	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
+	public ResponseEntity<ResponseDto<HistoryDharmaDto>> delHistoryDhamaByMemberId(@Valid @RequestBody List<HistoryDharmaDto> body) {
+		ResponseDto<HistoryDharmaDto> res = new ResponseDto<>();
+		try {
+			if (body != null) {
+				body.forEach(data -> {
+					Long delId = data.getId();
+					if (delId != null) {
+						try {
+							historyDharmaService.delHistoryDhamaByMemberId(delId);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
