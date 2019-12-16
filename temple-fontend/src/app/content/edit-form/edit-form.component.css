@@ -70,7 +70,7 @@
     background-color: #bd0f1e !important;
     border: #e91224;
     border-radius: 5px;
-} 
+}
 
 :host>>>.cancel-temple-btn .ui-button {
     background-color: #777676 !important;
@@ -229,6 +229,9 @@ legend {
     color: #fff;
 }
 
+.star{
+    color: red;
+}
 
 
 

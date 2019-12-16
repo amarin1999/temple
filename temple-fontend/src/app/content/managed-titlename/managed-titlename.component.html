@@ -68,8 +68,8 @@
             <div [formGroup] = "titlesForm" >
                 <div *ngIf="duplicateTitle" class="text-danger text-invalid" style="color: red">คำนำหน้าชื่อมีอยู่แล้ว</div>
                 <div class="ui-g-12">
-                    <div class="ui-g-4 " *ngIf="!formError.titleName">
-                        <label for="titleName">คำนำหน้า</label>
+                    <div class="ui-g-4 " *ngIf="!formError.titleName" style="text-align: right;">
+                        <label for="titleName">คำนำหน้า<span class="star">*</span></label>
                     </div>
                     <div class="ui-g-4 text-danger text-invalid" *ngIf="formError.titleName" >
                             <label for="titleName" >{{formError.titleName}}</label>
@@ -80,8 +80,8 @@
                             <label>{{formLengthError.titleName}}</label>
                         </div>
                     </div>
-                    <div class="ui-g-4 " *ngIf="!formError.titleNameDisplay">
-                        <label for="titleNameDisplay">คำย่อ</label>
+                    <div class="ui-g-4 " *ngIf="!formError.titleNameDisplay" style="text-align: right;">
+                        <label for="titleNameDisplay">คำย่อ<span class="star">*</span></label>
                     </div>
                     <div class="ui-g-4 text-danger text-invalid" *ngIf="formError.titleNameDisplay">
                             <label for="titleNameDisplay">{{formError.titleNameDisplay}}</label>
@@ -97,7 +97,7 @@
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-                <button *ngIf="newtitleName" type="button" pButton (click)="save()" label="บันทึก"></button>
+                <button *ngIf="newtitleName" type="button" pButton (click)="save()" label="บันทึก" [disabled]="titleName !== null && titleName !== ''"></button>
                 <button *ngIf="!newtitleName" type="button" class="ui-button-warning ui-button-raised" pButton (click)="update()" label="แก้ไข"></button>
                 <button type="button" pButton (click)="clear()" label="ยกเลิก" class="ui-button-secondary ui-button-raised"></button>
             </div>

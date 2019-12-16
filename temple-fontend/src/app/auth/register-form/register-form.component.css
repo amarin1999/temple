@@ -264,3 +264,11 @@ hr{
     border-radius: 2px;
     /* box-shadow: 5px 5px 1px #353434; */
 }
+
+.star{
+    color: red;
+}
+.text-info {
+    text-align: right;
+    color: #000000 !important;
+ }

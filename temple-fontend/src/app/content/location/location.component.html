@@ -73,8 +73,8 @@
       showEffect="fade" [modal]="true" [style]="{width: '300px'}">
       <div class="ui-g ui-fluid" *ngIf="location">
         <div class="ui-g-12">
-          <div class="ui-g-4">
-            <label for="name">ชื่อสถานที่</label>
+          <div class="ui-g-4" style="text-align: right;">
+            <label for="name">ชื่อสถานที่<span class="star">*</span></label>
           </div>
           <div class="ui-g-8">
             <input pInputText id="name" [(ngModel)]="locationNameEdit" />

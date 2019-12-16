@@ -13,7 +13,7 @@
               <!------- username ------->
               <div class="ui-g-12 ui-lg-4 ui-md-4 ">
                 <div *ngIf="!formError.username" class="text-right">
-                  <span>ชื่อผู้ใช้*</span>
+                  <span >ชื่อผู้ใช้<span class="star">*</span></span>
                 </div>
                 <div *ngIf="formError.username" class="text-danger text-invalid text-right">
                   {{ formError.username }}
@@ -25,7 +25,7 @@
               <!------- ID Card ------->
               <div class="ui-g-12 ui-lg-4 ui-md-4  ">
                 <div *ngIf="!formError.idCard" class="text-right">
-                  <span>เลขประจำตัวประชาชน*</span>
+                  <span>เลขประจำตัวประชาชน<span class="star">*</span></span>
                 </div>
                 <div *ngIf="formError.idCard" class="text-danger text-invalid text-right">
                   {{ formError.idCard }}
@@ -50,7 +50,7 @@
               <!------- password ------->
               <div class="ui-g-12 ui-lg-4 ui-md-6 ">
                 <div *ngIf="!formError.password" class="text-right">
-                  <span>รหัสผ่าน*</span>
+                  <span>รหัสผ่าน<span class="star">*</span></span>
                 </div>
                 <div *ngIf="formError.password" class="text-danger text-invalid text-right">
                   {{ formError.password }}
@@ -63,7 +63,7 @@
               <!-------- re password --------->
               <div class="ui-g-12 ui-lg-4 ui-md-6 ">
                 <div *ngIf="!formError.repassword" class="text-right">
-                  <span>ยืนยันรหัสผ่าน*</span>
+                  <span>ยืนยันรหัสผ่าน<span class="star">*</span></span>
                 </div>
                 <div *ngIf="formError.repassword" class="text-danger text-invalid text-right">
                   {{ formError.repassword }}
@@ -120,7 +120,7 @@
                 <div class="ui-g-12 ui-lg-12 ui-md-12" *ngIf="showRole; else elseTemp">
                   <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                     <div *ngIf="!formError.role" class="text-right">
-                      สิทธิการใช้งาน*
+                      สิทธิการใช้งาน<span class="star">*</span>
                     </div>
                     <div *ngIf="formError.role" class="text-danger text-invalid text-right">
                       {{ formError.role }}
@@ -140,7 +140,7 @@
                   <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                     <!-- คำนำหน้า -->
                     <div *ngIf="!formError.titleName" class="text-right">
-                      <span>คำนำหน้า*</span>
+                      <span>คำนำหน้า<span class="star">*</span></span>
                     </div>
                     <div *ngIf="formError.titleName" class="text-danger text-invalid text-right">
                       {{ formError.titleName }}
@@ -177,7 +177,7 @@
                   <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                     <!-- อายุ -->
                     <div *ngIf="!formError.age" class="text-right">
-                      <span>อายุ*</span>
+                      <span>อายุ<span class="star">*</span></span>
                     </div>
                     <div *ngIf="formError.age" class="text-danger text-invalid text-right">
                       {{ formError.age }}
@@ -194,7 +194,7 @@
                 <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                   <!-- ชื่อ -->
                   <div *ngIf="!formError.fname" class="text-right">
-                    <span>ชื่อ*</span>
+                    <span>ชื่อ<span class="star">*</span></span>
                   </div>
                   <div *ngIf="formError.fname" class="text-danger text-invalid text-right">
                     {{ formError.fname }}
@@ -208,7 +208,7 @@
                 <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                   <!-- นามสกุล -->
                   <div *ngIf="!formError.lname" class="text-right">
-                    <span>นามสกุล*</span>
+                    <span>นามสกุล<span class="star">*</span></span>
                   </div>
                   <div *ngIf="formError.lname" class="text-danger text-invalid text-right">
                     {{ formError.lname }}
@@ -233,7 +233,7 @@
               <div class="ui-g-12 ui-lg-6 ui-md-6">
                 <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                   <div *ngIf="!formError.phone" class="text-right">
-                    <span>เบอร์โทรศัพท์*</span>
+                    <span>เบอร์โทรศัพท์<span class="star">*</span></span>
                   </div>
                   <div *ngIf="formError.phone" class="text-danger text-invalid text-right">
                     {{ formError.phone }}
@@ -274,7 +274,7 @@
               <div class="ui-g-12 ui-lg-6 ui-md-6">
                 <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                   <div *ngIf="!formError.address" class="text-right">
-                    <span>ที่อยู่*</span>
+                    <span>ที่อยู่<span class="star">*</span></span>
                   </div>
                   <div *ngIf="formError.address" class="text-danger text-invalid text-right">
                     {{ formError.address }}
@@ -291,7 +291,7 @@
               <div class="ui-g-12 ui-lg-6 ui-md-6">
                 <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                   <div *ngIf="!formError.province" class="text-right">
-                    <span>จังหวัด*</span>
+                    <span>จังหวัด<span class="star">*</span></span>
                   </div>
                   <div *ngIf="formError.province" class="text-danger text-invalid text-right">
                     {{formError.province}}
@@ -308,7 +308,7 @@
               <div class="ui-g-12 ui-lg-6 ui-md-6">
                 <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                   <div *ngIf="!formError.postalCode" class="text-right">
-                    <span>รหัสไปรษณีย์*</span>
+                    <span>รหัสไปรษณีย์<span class="star">*</span></span>
                   </div>
                   <div *ngIf="formError.postalCode" class="text-danger text-invalid text-right">
                     {{formError.postalCode}}
@@ -324,7 +324,7 @@
                 <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                   <!-- กรุ๊ปเลือด -->
                   <div *ngIf="!formError.blood" class="text-right">
-                    <span>กรุ๊ปเลือด*</span>
+                    <span>กรุ๊ปเลือด<span class="star">*</span></span>
                   </div>
                   <div *ngIf="formError.blood" class="text-danger text-invalid text-right">
                     {{ formError.blood }}
@@ -465,7 +465,7 @@
               <div class="ui-g-12 ui-lg-6 ui-md-6">
                 <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                   <div *ngIf="!formError.fnameEmergency" class="text-right">
-                    <span>ชื่อ*</span>
+                    <span>ชื่อ<span class="star">*</span></span>
                   </div>
                   <div *ngIf="formError.fnameEmergency" class="text-danger text-invalid text-right">
                     {{ formError.fnameEmergency }}
@@ -478,7 +478,7 @@
               <div class="ui-g-12 ui-lg-6 ui-md-6">
                 <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                   <div *ngIf="!formError.lnameEmergency" class="text-right">
-                    <span>นามสกุล*</span>
+                    <span>นามสกุล<span class="star">*</span></span>
                   </div>
                   <div *ngIf="formError.lnameEmergency" class="text-danger text-invalid text-right">
                     {{ formError.lnameEmergency }}
@@ -494,7 +494,7 @@
               <div class="ui-g-12 ui-lg-6 ui-md-6">
                 <div class="ui-g-12 ui-lg-4 ui-md-3 text-right">
                   <div *ngIf="!formError.relationshipEmergency" class="text-right">
-                    <span>ความสัมพันธ์*</span>
+                    <span>ความสัมพันธ์<span class="star">*</span></span>
                   </div>
                   <div *ngIf="formError.relationshipEmergency" class="text-danger text-invalid text-right">
                     {{ formError.relationshipEmergency }}
@@ -508,7 +508,7 @@
               <div class="ui-g-12 ui-lg-6 ui-md-6">
                 <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                   <div *ngIf="!formError.phoneEmergency" class="text-right">
-                    <span>เบอร์โทรศัพท์*</span>
+                    <span>เบอร์โทรศัพท์<span class="star">*</span></span>
                   </div>
                   <div *ngIf="formError.phoneEmergency" class="text-danger text-invalid text-right">
                     {{ formError.phoneEmergency }}
