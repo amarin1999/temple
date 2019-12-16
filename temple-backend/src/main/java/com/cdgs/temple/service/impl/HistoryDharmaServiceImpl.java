@@ -71,6 +71,12 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 		}
 	}
 	
+	@Override
+	public Integer updateHistoryDhama(HistoryDharmaDto body) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	private HistoryDharmaDto mapEntityToDto(HistoryDharmaEntity entity) throws Exception {
 		HistoryDharmaDto dto = new HistoryDharmaDto();
 		try {
