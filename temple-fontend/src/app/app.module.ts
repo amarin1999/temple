@@ -9,10 +9,6 @@ import { ContentModule } from './content/content.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthService } from './shared/service/auth.service';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-  import { from } from 'rxjs';
-
-
-
 
 @NgModule({
   declarations: [
