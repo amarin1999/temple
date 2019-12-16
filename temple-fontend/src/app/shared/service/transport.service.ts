@@ -31,18 +31,13 @@ export class TransportService {
   }
 
   getTranSportTemple(){
-    return this.http.get(ApiConstants.baseURl + '/transportations/temple')
+    return this.http.get(ApiConstants.baseURl + `/transportations/temple`)
       .pipe(
         map((res: any[]) => {
-          return res['data'].map(data => {
             return {
-              id: data['id'],
-              name: data['name'],
-              timePickUp: data['timePickUp'],
-              timeSend: data['timeSend'],
-              status: data['status']
-            }
-          })
+              status: res['result'],
+              data: res['data']
+            };
         })
       );
   }
@@ -59,7 +54,7 @@ export class TransportService {
       );
   }
 
-  getTranSportTempleToEdit(){
+  getTranSportTempleToEdit() {
     return this.http.get(ApiConstants.baseURl + '/transportations/temple')
       .pipe(
         map((res) => {
@@ -83,7 +78,7 @@ export class TransportService {
       )
   }
 
-  createTransportationTemple(transportTemple: TransportationTemple){
+  createTransportationTemple(transportTemple: TransportationTemple) {
     return this.http.post(ApiConstants.baseURl + '/transportations/temple', transportTemple)
       .pipe(
         map(res => {

@@ -14,13 +14,13 @@
                     [totalRecords]="totalRecords" >
                         <ng-template pTemplate="caption">
                             <div class="ui-g ui-fluid">
-                                <div class="ui-g-12 ui-lg-3 ui-md-3 ui-sm-12" style="text-align:left;width:15%">
+                                <div class="ui-g-6 ui-lg-2 ui-md-4 ui-sm-4" style="text-align:left;">
                                     <button pButton type="button" (click)="displayCreateDialog=true" label="สร้างคอร์ส" class="ui-button-info ui-button-raised" ></button>
                                 </div>
-                                <div class="ui-g-12 ui-lg-3 ui-md-3 ui-sm-12" style="margin-left: auto;">
+                                <div class="ui-g-6 ui-lg-3 ui-md-3 ui-sm-12" style="margin-left: auto;">
                                     <div class="ui-inputgroup">
                                         <fa-icon [icon]="['fas', 'search']" class="ui-inputgroup-addon"></fa-icon>
-                                        <input type="text" pInputText placeholder="ค้นหา" (input)="dt.filterGlobal($event.target.value, 'contains')">
+                                        <input type="text" pInputText placeholder="ค้นหาชื่อคอร์ส" (input)="dt.filterGlobal($event.target.value, 'contains')">
                                     </div>
                                 </div>
                             </div>
@@ -47,6 +47,11 @@
                                     <p-sortIcon field="locationName" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
                                     </p-sortIcon>
                                 </th>
+                                <th pSortableColumn="transportTemple" class="ui-p-5">
+                                    การเดินทางของวัด
+                                    <p-sortIcon field="transportTemple" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+                                    </p-sortIcon>
+                                </th>
                                 <th pSortableColumn="conditionMin" class="ui-p-6">
                                     หมายเหตุ
                                     <p-sortIcon field="conditionMin" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
@@ -64,8 +69,9 @@
                                     <div *ngIf="rowData[col.field] == rowData['lastUpdate'] && col.field == 'lastUpdate'" style="text-align: center">{{rowData['lastUpdate'] | formatTHdate}}</div>
                                     <div *ngIf="rowData[col.field] == rowData['name']">{{rowData['name']}}</div>
                                     <div *ngIf="rowData[col.field] == rowData['locationName']" style="text-align: center">{{rowData['locationName']}}</div>
+                                    <div *ngIf="rowData[col.field] == rowData['transportTemple']" style="text-align: center">{{rowData['transportTemple']}}</div>
                                     <div *ngIf="rowData[col.field] == rowData['conditionMin']" style="text-align: center">ต้องผ่านอย่างน้อย {{rowData['conditionMin']}} คอร์ส</div>
-                            </td>
+                                </td>
                                 <td>
                                     <div class="ui-g" style="text-align: center">
                                         <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">

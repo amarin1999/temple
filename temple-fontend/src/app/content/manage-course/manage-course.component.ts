@@ -40,16 +40,16 @@ export class ManageCourseComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     this.status = '';
     this.getData();
     this.getTotalRecord();
-    
+
     this.cols = [
       {field: 'createDate', header: 'วันที่สร้าง'},
       {field: 'lastUpdate', header: 'วันที่แก้ไขล่าสุด'},
       {field: 'name', header: 'ชื่อคอร์ส'},
       {field: 'locationName', header: 'สถานที่'},
+      {field: 'transportTemple', header: 'การเดินทางของวัด'},
       {field: 'conditionMin', header: 'หมายเหตุ'},
     ];
 
@@ -58,8 +58,6 @@ export class ManageCourseComponent implements OnInit {
     ]);
     this.loading = true;
   }
-
- 
 
   editCourse(id) {
     this.CourseEdit.settingForm(id);

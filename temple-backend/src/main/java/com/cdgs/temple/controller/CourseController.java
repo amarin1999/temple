@@ -351,6 +351,12 @@ public class CourseController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
+    /*
+     * createCourse
+     * this function is create new course by admin
+     * 
+     * */
+    
     @PostMapping(path = "")
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<ResponseDto<CourseDto>> createCourse(@Valid @RequestBody CourseDto body) {

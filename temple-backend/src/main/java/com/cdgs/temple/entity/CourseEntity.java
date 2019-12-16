@@ -70,6 +70,10 @@ public class CourseEntity implements Serializable {
     @JoinColumn(name = "course_location_id", insertable = false, updatable = false)
     private LocationEntity locationId;
     
+    @ManyToOne
+    @JoinColumn(name = "course_transportation_temple_id", insertable= false , updatable = false)
+    private TransportationTempleEntity transportTempleId;
+    
     @OneToMany
     @JoinColumn(name = "course_id",insertable = false, updatable = false)
     private List<CourseScheduleEntity> courseSchdule;
@@ -77,6 +81,7 @@ public class CourseEntity implements Serializable {
     @OneToMany
     @JoinColumn(name = "course_id",insertable = false, updatable = false)
     private List<CourseTeacherEntity> courseTeacher;
+    
     
     public Long getCourseId() {
         return courseId;
@@ -214,6 +219,14 @@ public class CourseEntity implements Serializable {
 		this.courseStatus = courseStatus;
 	}
 
+	public TransportationTempleEntity getTransportTempleId() {
+		return transportTempleId;
+	}
+
+	public void setTransportTempleId(TransportationTempleEntity transportTempleId) {
+		this.transportTempleId = transportTempleId;
+	}
+	
 
 	
 

@@ -8,6 +8,8 @@ import { CourseService } from '../shared/course.service';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { TransportService } from 'src/app/shared/service/transport.service';
+import { TransportationTemple } from 'src/app/shared/interfaces/transportation-temple';
 // import { Teacher } from 'src/app/shared/interfaces/teacher';
 
 @Component({
@@ -20,13 +22,17 @@ export class CourseCreateComponent implements OnInit {
   public msgs: any;
   public courses: Course[];
   public locations: Location[];
+  public transport: TransportationTemple[];
   public noticearr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
   public notice: Array<any> = [];
   public filteredTeacher: any[];
   public teachers: any[];
   public teacher: any;
+  public transportTemple: any[];
   public pipe = new DatePipe('th-TH');
   public yearRange: string;
+  public timePickUp: any;
+
   @Input() displayCreateDialog = false;
   @Output() closeDisplayCreateDialog = new EventEmitter();
 
@@ -38,6 +44,7 @@ export class CourseCreateComponent implements OnInit {
         date: new FormControl('', Validators.required),
         conditionMin: new FormControl('', Validators.required),
         teachers: new FormControl('', Validators.required),
+        transportTemple: new FormControl('')
       }
     )
 
@@ -85,6 +92,7 @@ export class CourseCreateComponent implements OnInit {
     private breadCrumbService: BreadcrumbService,
     private formBuilder: FormBuilder,
     private locationService: LocationService,
+    private transportTempleService: TransportService,
     private courseService: CourseService,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -115,10 +123,12 @@ export class CourseCreateComponent implements OnInit {
       }
     );
 
+    // ----------- Get List of Location -------------
     this.locationService.getLocation().subscribe(
-      res => {
+      res => { 
         if (res.status === 'Success') {
           this.locations = res.data;
+
         }
       },
       error => {
@@ -126,6 +136,22 @@ export class CourseCreateComponent implements OnInit {
 
       }
     );
+
+    // ------------ Get List of Transportation Temple ------------
+    this.transportTempleService.getTranSportTemple().subscribe(
+      res => {
+        this.transport = res['data'].map( data => {
+          return {  id: data.id ,
+                    name: data.name + 'เวลา :' + new Date(data.timePickUp).toLocaleTimeString('th-TH') +
+                     ' - ' + new Date(data.timeSend).toLocaleTimeString('th-TH')
+          }
+        });
+      },
+      error => {
+        console.log(error['error']['message']);
+      }
+    );
+
     const currentYear = this.pipe.transform(Date.now(), 'yyyy');
     const startYear = parseInt(currentYear) - 100;
     this.yearRange = startYear + ':' + currentYear;
@@ -216,6 +242,7 @@ export class CourseCreateComponent implements OnInit {
             name: this.courseForm.get('courseName').value,
             detail: this.courseForm.get('detail').value,
             locationId: this.courseForm.get('location').value.id,
+            transportTemple: this.courseForm.get('transportTemple').value.id,
             conditionMin: this.courseForm.get('conditionMin').value.id,
             date: datesort,
             stDate: stDate,

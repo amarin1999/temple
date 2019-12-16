@@ -38,6 +38,7 @@ public class CourseDto implements Serializable {
     private List<MemberDto> teacherList;
     private List<CourseScheduleDto> dateList;
     private List<LocalDate> date;
+    private List<TransportationTempleDto> transportList;
 
     public Long getId() {
         return id;
@@ -214,7 +215,15 @@ public class CourseDto implements Serializable {
 	public void setTeacherList(List<MemberDto> teacherList) {
 		this.teacherList = teacherList;
 	}
+	
 
+	public List<TransportationTempleDto> getTransportList() {
+		return transportList;
+	}
+
+	public void setTransportList(List<TransportationTempleDto> transportList) {
+		this.transportList = transportList;
+	}
 
 	@Override
 	public String toString() {
@@ -223,8 +232,8 @@ public class CourseDto implements Serializable {
 				+ lastUpdate + ", memberId=" + memberId + ", memberFname=" + memberFname + ", memberLname="
 				+ memberLname + ", locationId=" + locationId + ", locationName=" + locationName + ", mhcStatus="
 				+ mhcStatus + ", saStatus=" + saStatus + ", status=" + status + ", canRegister=" + canRegister
-				+ ", teacher=" + teacher + ", teacherList=" + teacherList + ", dateList=" + dateList + ", date=" + date
-				+ "]";
+				+ ", teacher=" + teacher + ", teacherList=" + teacherList + ", dateList=" + dateList + ", date=" + date 
+				+ ", transportTemple ="+ transportList + "]";
 	}
 	
 	

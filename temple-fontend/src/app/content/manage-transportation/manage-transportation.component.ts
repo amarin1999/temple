@@ -3,7 +3,6 @@ import { TransportService } from 'src/app/shared/service/transport.service';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { Transportation } from 'src/app/shared/interfaces/transportation';
-import { TransportationTemple } from 'src/app/shared/interfaces/transportation-temple';
 import { combineLatest } from 'rxjs';
 
 @Component({
@@ -81,7 +80,7 @@ export class ManageTransportationComponent implements OnInit {
       res => {
         this.transportTemple = res['data'];
         this.transportTemple = this.transportTemple.map( data => {
-          return { id : data.id ,name: data.name , timePickUp : data.timePickUp , timeSend: data.timeSend }
+          return { id : data.id , name: data.name , timePickUp : data.timePickUp , timeSend: data.timeSend }
         });
     });
   }
