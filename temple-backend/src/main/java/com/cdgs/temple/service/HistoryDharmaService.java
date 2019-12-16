@@ -11,4 +11,6 @@ public interface HistoryDharmaService {
 	HistoryDharmaDto createHistoryDharma(HistoryDharmaDto body) throws Exception;
 
 	List<HistoryDharmaDto> getHistoryDhamaByMemberId(Long memberId) throws Exception;
+	
+	Integer delHistoryDhamaByMemberId(Long delId) throws Exception;
 }
