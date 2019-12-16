@@ -32,6 +32,7 @@ export class CourseCreateComponent implements OnInit {
   public pipe = new DatePipe('th-TH');
   public yearRange: string;
   public timePickUp: any;
+  public optionTime: any; 
 
   @Input() displayCreateDialog = false;
   @Output() closeDisplayCreateDialog = new EventEmitter();
@@ -138,12 +139,13 @@ export class CourseCreateComponent implements OnInit {
     );
 
     // ------------ Get List of Transportation Temple ------------
+    this.optionTime = {hour: '2-digit', minute: '2-digit'};
     this.transportTempleService.getTranSportTemple().subscribe(
       res => {
         this.transport = res['data'].map( data => {
           return {  id: data.id ,
-                    name: data.name + 'เวลา :' + new Date(data.timePickUp).toLocaleTimeString('th-TH') +
-                     ' - ' + new Date(data.timeSend).toLocaleTimeString('th-TH')
+                    name: data.name + 'เวลา :' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
+                     ' - ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
           }
         });
       },
@@ -201,7 +203,7 @@ export class CourseCreateComponent implements OnInit {
                 this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
               }
             }
-          }else{
+          } else {
             this.formLengthError[field] = '';
           }
         }
