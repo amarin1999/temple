@@ -58,6 +58,19 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 		return mapListEntityToDto(historyDharmaEntities);
 	}
 	
+	@Override
+	public Integer delHistoryDhamaByMemberId(Long delId) throws Exception {
+		Integer numberOfDelete;
+		try {
+			numberOfDelete = historyDharmaRepository.delHistoryDhamaByMemberId(delId);
+			System.out.println("Delete " + numberOfDelete + " Row.");
+			return numberOfDelete;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e.getMessage());
+		}
+	}
+	
 	private HistoryDharmaDto mapEntityToDto(HistoryDharmaEntity entity) throws Exception {
 		HistoryDharmaDto dto = new HistoryDharmaDto();
 		try {
