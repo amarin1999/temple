@@ -1,3 +1,4 @@
+<ngx-spinner></ngx-spinner>
 <div class="ui-g">
     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
         <div style="text-align:center">
@@ -51,7 +52,8 @@
                                         <div *ngIf="rowData[col.field] == rowData['rolename'] && col.field == 'rolename'"
                                             style="text-align: center">{{rowData.rolename}}</div>
                                         <div *ngIf="rowData[col.field] == rowData['contact'] && col.field == 'contact'">
-                                            <span *ngIf="rowData?.email"><i class="pi pi-envelope"></i> {{rowData.email}}</span>
+                                            <span *ngIf="rowData?.email"><i class="pi pi-envelope"></i>
+                                                {{rowData.email}}</span>
                                         </div>
                                         <div *ngIf="rowData[col.field] == rowData['contact'] && col.field == 'contact'">
                                             <i class="pi pi-mobile"></i> {{rowData.tel}}</div>

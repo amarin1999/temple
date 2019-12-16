@@ -56,6 +56,7 @@ export class EditFormComponent implements OnInit {
   public courseHisLocation = '';
   public courseHisList: any[] = [];
   public provinces: any[];
+  public courseHisDelList: any[] = [];
   showNoProfile = false;
   showLoadingPicture = true;
   currentId = 0;
@@ -311,8 +312,9 @@ export class EditFormComponent implements OnInit {
     this.courseHisList.push(his);
   }
 
-  delHisCourse(index) {
+  delHisCourse(index, id) {
     this.courseHisList.splice(index, 1);
+    this.courseHisDelList.push({'id': id});
   }
 
   setBack() {
@@ -323,6 +325,21 @@ export class EditFormComponent implements OnInit {
   }
 
   settingForm() {
+    this.spinner.show();
+    this.courseHisDelList = [];
+    this.historyDharmaService.getHistoryDharmaByMemberId(this.personalId).subscribe(
+      res => {
+        if (res.status === 'Success') {
+          this.courseHisList = res.data;
+          console.log('historyDharma', res.data);
+        } else {
+          console.log('getHistoryDharmaByMemberId Fail');
+        }
+      },
+      err => {
+        console.log(err['error']['message']);
+      }
+    );
     this.manageUserService.getUser(this.personalId).subscribe(
       res => {
         console.log(res);
@@ -405,6 +422,7 @@ export class EditFormComponent implements OnInit {
       },
       err => console.log(err['error']['message'])
     );
+    this.spinner.hide();
   }
 
   settingCalendarTH() {
@@ -689,6 +707,14 @@ export class EditFormComponent implements OnInit {
       }
       case 'submit': {
         this.spinner.show();
+        /**
+         * process delete data course history
+         */
+        this.historyDharmaService.delHistoryDharmaById(this.courseHisDelList).subscribe();
+
+        /**
+         * Deconstruct Data
+         */
         const provinceCode = this.editForm.get('province').value;
         const titleCode = this.editForm.get('titleName').value;
         const role = this.editForm.get('role').value;
