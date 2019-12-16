@@ -1,35 +1,36 @@
-import { Component, OnInit } from "@angular/core";
-import { debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { DatePipe } from "@angular/common";
+import { Component, OnInit } from '@angular/core';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 import {
   Validators,
   FormBuilder,
   FormGroup,
   FormControl
-} from "@angular/forms";
+} from '@angular/forms';
 import {
   MessageService,
   MenuItem,
   ConfirmationService,
   Message,
   SelectItem
-} from "primeng/api";
-import { TitleNameService } from "src/app/shared/service/title-name.service";
-import { Router, ActivatedRoute } from "@angular/router";
-import { ManageUserService } from "src/app/shared/service/manage-user.service";
-import { BreadcrumbService } from "../../shared/service/breadcrumb.service";
-import { ManageRoleService } from "src/app/shared/service/manage-role.service";
-import { Role } from "src/app/shared/interfaces/role";
-import { AuthService } from "../../shared/service/auth.service";
-import { ProvinceService } from "src/app/shared/service/province.service";
-import { HistoryDharmaService } from "src/app/shared/service/history-dharma.service";
-import { Ng2ImgMaxService } from "ng2-img-max";
-import { DomSanitizer } from "@angular/platform-browser";
+} from 'primeng/api';
+import { TitleNameService } from 'src/app/shared/service/title-name.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ManageUserService } from 'src/app/shared/service/manage-user.service';
+import { BreadcrumbService } from '../../shared/service/breadcrumb.service';
+import { ManageRoleService } from 'src/app/shared/service/manage-role.service';
+import { Role } from 'src/app/shared/interfaces/role';
+import { AuthService } from '../../shared/service/auth.service';
+import { ProvinceService } from 'src/app/shared/service/province.service';
+import { HistoryDharmaService } from 'src/app/shared/service/history-dharma.service';
+import { Ng2ImgMaxService } from 'ng2-img-max';
+import { DomSanitizer } from '@angular/platform-browser';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: "app-edit-form",
-  templateUrl: "./edit-form.component.html",
-  styleUrls: ["./edit-form.component.css"]
+  selector: 'app-edit-form',
+  templateUrl: './edit-form.component.html',
+  styleUrls: ['./edit-form.component.css']
 })
 export class EditFormComponent implements OnInit {
   public menu: MenuItem[];
@@ -42,7 +43,7 @@ export class EditFormComponent implements OnInit {
   public personalId: string;
   public previewImg: any;
   public onEdit: boolean;
-  public pipe = new DatePipe("th-TH");
+  public pipe = new DatePipe('th-TH');
   public showRole: boolean;
   public roles: Role[];
   public msgs: Message[] = [];
@@ -51,26 +52,26 @@ export class EditFormComponent implements OnInit {
   public filteredTitleName: any[];
   public displaySystemMessage = false;
   public filteredProvince: any[];
-  public courseHisName = "";
-  public courseHisLocation = "";
+  public courseHisName = '';
+  public courseHisLocation = '';
   public courseHisList: any[] = [];
   public provinces: any[];
-  showNoProfile: boolean = false;
-  showLoadingPicture: boolean = true;
+  showNoProfile = false;
+  showLoadingPicture = true;
   currentId = 0;
   profile: any;
   profileString: string;
   titleNames: any[];
   bloodGroup: SelectItem[] = [
-    { label: "O", value: "O" },
-    { label: "A", value: "A" },
-    { label: "B", value: "B" },
-    { label: "AB", value: "AB" }
+    { label: 'O', value: 'O' },
+    { label: 'A', value: 'A' },
+    { label: 'B', value: 'B' },
+    { label: 'AB', value: 'AB' }
   ];
 
   editForm = new FormGroup({
     idCard: new FormControl(null, [Validators.required]),
-    titleName: new FormControl("", [Validators.required]),
+    titleName: new FormControl('', [Validators.required]),
     fname: new FormControl(null, [Validators.required]),
     lname: new FormControl(null, [Validators.required]),
     job: new FormControl(null),
@@ -80,7 +81,7 @@ export class EditFormComponent implements OnInit {
     province: new FormControl(null, [Validators.required]),
     postalCode: new FormControl(null, [
       Validators.required,
-      Validators.pattern("[0-9]{5}")
+      Validators.pattern('[0-9]{5}')
     ]),
     ordianDate: new FormControl(null),
     ordianNumber: new FormControl(null),
@@ -95,36 +96,36 @@ export class EditFormComponent implements OnInit {
     foodsAllergy: new FormControl(null),
     drugsAllergy: new FormControl(null),
     underlyDisease: new FormControl(null),
-    blood: new FormControl("", [Validators.required]),
+    blood: new FormControl('', [Validators.required]),
     role: new FormControl(null),
     imgProfile: new FormControl(null)
   });
 
   public formError = {
-    username: "",
-    password: "",
-    repassword: "",
-    idCard: "",
-    titleName: "",
-    age: "",
-    fname: "",
-    lname: "",
-    job: "",
-    gender: "",
-    address: "",
-    province: "",
-    postalCode: "",
-    phone: "",
-    phoneEmergency: "",
-    fnameEmergency: "",
-    lnameEmergency: "",
-    relationshipEmergency: "",
-    other: "",
-    foodsAllergy: "",
-    drugsAllergy: "",
-    underlyDisease: "",
-    blood: "",
-    role: ""
+    username: '',
+    password: '',
+    repassword: '',
+    idCard: '',
+    titleName: '',
+    age: '',
+    fname: '',
+    lname: '',
+    job: '',
+    gender: '',
+    address: '',
+    province: '',
+    postalCode: '',
+    phone: '',
+    phoneEmergency: '',
+    fnameEmergency: '',
+    lnameEmergency: '',
+    relationshipEmergency: '',
+    other: '',
+    foodsAllergy: '',
+    drugsAllergy: '',
+    underlyDisease: '',
+    blood: '',
+    role: ''
   };
 
   public validationMessage = {
@@ -236,10 +237,12 @@ export class EditFormComponent implements OnInit {
     private provinceService: ProvinceService,
     private historyDharmaService: HistoryDharmaService,
     private ng2ImgMax: Ng2ImgMaxService,
-    public sanitizer: DomSanitizer
-  ) {}
+    public sanitizer: DomSanitizer,
+    public spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.settingCalendarTH();
     this.showRole = this.roleService.getRoleStatus();
     this.roles = this.roleService.getRoles();
@@ -295,6 +298,7 @@ export class EditFormComponent implements OnInit {
         { label: "แก้ไขข้อมูลส่วนตัว" }
       ]);
     }
+    this.spinner.hide();
   }
 
   addCourseHis() {
@@ -656,31 +660,35 @@ export class EditFormComponent implements OnInit {
       accept: () => {
         this.actionAccept(type);
       },
-      reject: () => {}
+      reject: () => { }
     });
   }
 
   actionAccept(type) {
     switch (type) {
       case "clear": {
+        this.spinner.show();
         this.settingForm();
         this.messageService.add({
           severity: "success",
           summary: "ข้อความจากระบบ",
           detail: "ดำเนินการคืนค่าข้อมูลส่วนตัวสำเร็จ"
         });
+        this.spinner.hide();
         break;
       }
       case "cancle": {
+        this.spinner.show();
         if (this.authService.getRole().value === "admin") {
           this.router.navigateByUrl(`/users`);
         } else {
           this.router.navigateByUrl(`/profile/${this.personalId}`);
         }
-
+        this.spinner.hide();
         break;
       }
       case "submit": {
+        this.spinner.show();
         const provinceCode = this.editForm.get("province").value;
         const titleCode = this.editForm.get("titleName").value;
         const role = this.editForm.get("role").value;
@@ -741,9 +749,11 @@ export class EditFormComponent implements OnInit {
             console.log(err);
           }
         );
+        this.spinner.hide();
         break;
       }
       default: {
+        this.spinner.hide();
         break;
       }
     }
