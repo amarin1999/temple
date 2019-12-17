@@ -34,7 +34,7 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 			}
 			return mapEntityToDto(entity);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			throw new Exception(e.getMessage());
 		}
 	}
@@ -67,7 +67,7 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 			System.out.println("Delete " + numberOfDelete + " Row.");
 			return numberOfDelete;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			throw new Exception(e.getMessage());
 		}
 	}
@@ -89,7 +89,7 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 			return mapEntityToDto(entity);
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			log.error(e.getMessage());
 			throw new Exception(e.getMessage());
 		}
 	}
@@ -105,7 +105,7 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 			}
 			return dto;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			throw new Exception(e.getMessage());
 		}
 	}
@@ -118,7 +118,7 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			throw new Exception(e.getMessage());
 		}
 		return dtoList;
@@ -134,7 +134,7 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 				entity.setHistoryDharmaMemberId(dto.getMemberId());
 			return entity;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			throw new Exception(e.getMessage());
 		}
 	}

@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cdgs.temple.dto.SensationDto;
-import com.cdgs.temple.dto.TitleNameDto;
 import com.cdgs.temple.dto.TransportationDto;
 import com.cdgs.temple.dto.TransportationTempleDto;
 import com.cdgs.temple.service.TransportationService;
@@ -62,6 +60,7 @@ public class TransportationController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
+			log.error(e.getMessage());
 			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 		}
 	}

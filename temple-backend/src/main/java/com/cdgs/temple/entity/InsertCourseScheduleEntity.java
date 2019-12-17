@@ -3,8 +3,6 @@ package com.cdgs.temple.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
-
 
 @Entity
 @Table(name = "courses_schedule")

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +24,15 @@ import com.cdgs.temple.dto.HistoryDharmaDto;
 import com.cdgs.temple.dto.MemberDto;
 import com.cdgs.temple.service.HistoryDharmaService;
 import com.cdgs.temple.service.MemberService;
+import com.cdgs.temple.service.impl.ProvinceServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/members")
 public class MemberController {
+	
+	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 	
 	// start member
 	private	final MemberService memberService;
@@ -155,7 +160,7 @@ public class MemberController {
                 			historyDharmaService.createHistoryDharma(historyDharmaData);
                 		} catch (Exception e) {
                 			// TODO Auto-generated catch block
-                			e.printStackTrace();
+                			log.error(e.getMessage());
                 		}
                 	} else {
                 		try {
@@ -163,7 +168,7 @@ public class MemberController {
                 			historyDharmaService.updateHistoryDhama(historyDharmaData.getId(), historyDharmaData);
                 		} catch (Exception e) {
 							// TODO: handle exception.
-                			e.printStackTrace();
+                			log.error(e.getMessage());
 						}
                 	}
                 });
@@ -224,7 +229,7 @@ public class MemberController {
                 			historyDharmaService.createHistoryDharma(historyDharmaData);
                 		} catch (Exception e) {
                 			// TODO Auto-generated catch block
-                			e.printStackTrace();
+                			log.error(e.getMessage());
                 		}
                 	} else {
                 		try {
@@ -232,7 +237,7 @@ public class MemberController {
                 			historyDharmaService.updateHistoryDhama(historyDharmaData.getId(), historyDharmaData);
                 		} catch (Exception e) {
 							// TODO: handle exception.
-                			e.printStackTrace();
+                			log.error(e.getMessage());
 						}
                 	}
                 });

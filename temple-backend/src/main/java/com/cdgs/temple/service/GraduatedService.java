@@ -1,7 +1,6 @@
 package com.cdgs.temple.service;
 
 import com.cdgs.temple.dto.GraduatedDto;
-import com.cdgs.temple.dto.SpecialApproveDto;
 
 import java.util.List;
 

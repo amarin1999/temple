@@ -3,7 +3,6 @@ package com.cdgs.temple.controller;
 import com.cdgs.temple.dto.CourseDto;
 import com.cdgs.temple.dto.CourseScheduleDto;
 import com.cdgs.temple.dto.MemberDto;
-import com.cdgs.temple.dto.SensationDto;
 import com.cdgs.temple.dto.SpecialApproveDto;
 import com.cdgs.temple.service.CourseScheduleService;
 import com.cdgs.temple.service.CourseService;

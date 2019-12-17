@@ -121,7 +121,6 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
         return dto;
     }
 
-
     private CourseScheduleEntity mapDtoToEntity(CourseScheduleDto dto) {
         CourseScheduleEntity entity = new CourseScheduleEntity();
         entity.setCourseId(dto.getCourseId());

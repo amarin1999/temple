@@ -3,8 +3,6 @@ package com.cdgs.temple.service;
 import java.util.List;
 
 import com.cdgs.temple.dto.LocationDto;
-import com.cdgs.temple.dto.TransportationDto;
-
 
 public interface LocationService {
 	public List<LocationDto> getLocations();

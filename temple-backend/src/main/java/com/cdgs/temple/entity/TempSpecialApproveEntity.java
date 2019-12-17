@@ -1,8 +1,6 @@
 package com.cdgs.temple.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -6,11 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cdgs.temple.dto.CourseScheduleDto;
 import com.cdgs.temple.dto.CourseTeacherDto;
-import com.cdgs.temple.dto.MemberDto;
-import com.cdgs.temple.entity.CourseEntity;
-import com.cdgs.temple.entity.CourseScheduleEntity;
 import com.cdgs.temple.entity.CourseTeacherEntity;
 import com.cdgs.temple.repository.CourseTeacherRepository;
 import com.cdgs.temple.service.CourseTeacherService;

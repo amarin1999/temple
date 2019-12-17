@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdgs.temple.dto.LocationDto;
-import com.cdgs.temple.dto.TransportationDto;
 import com.cdgs.temple.entity.LocationEntity;
-import com.cdgs.temple.entity.TransportationEntity;
 import com.cdgs.temple.repository.LocationRepository;
 import com.cdgs.temple.repository.TransportationRepository;
 import com.cdgs.temple.service.LocationService;

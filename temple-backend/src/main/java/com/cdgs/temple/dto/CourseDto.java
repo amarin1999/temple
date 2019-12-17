@@ -6,9 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.cdgs.temple.entity.LocationEntity;
-import com.cdgs.temple.entity.MemberEntity;
-
 public class CourseDto implements Serializable {
 
     /**

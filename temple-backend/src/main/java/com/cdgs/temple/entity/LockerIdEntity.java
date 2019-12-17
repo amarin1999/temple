@@ -1,7 +1,6 @@
 package com.cdgs.temple.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class LockerIdEntity implements Serializable {

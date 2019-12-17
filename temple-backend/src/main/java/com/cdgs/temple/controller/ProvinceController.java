@@ -42,6 +42,7 @@ public class ProvinceController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
+			log.error(e.getMessage());
 			return new ResponseEntity<ResponseDto<ProvinceDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 	}

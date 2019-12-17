@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.cdgs.temple.dto.HistoryDharmaDto;
 import com.cdgs.temple.service.HistoryDharmaService;
+import com.cdgs.temple.service.impl.ProvinceServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/historydharma")
 public class HistoryDharmaController {
+	private static final Logger log = LoggerFactory.getLogger(HistoryDharmaController.class);
 	
 	private final HistoryDharmaService historyDharmaService;
 	
@@ -81,7 +85,7 @@ public class HistoryDharmaController {
 						try {
 							historyDharmaService.delHistoryDhamaById(delId);
 						} catch (Exception e) {
-							e.printStackTrace();
+							log.error(e.getMessage());
 						}
 					}
 				});

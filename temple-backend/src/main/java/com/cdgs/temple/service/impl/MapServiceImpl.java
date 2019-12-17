@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdgs.temple.dto.MapDto;
-import com.cdgs.temple.dto.MapDto;
-import com.cdgs.temple.entity.MapEntity;
 import com.cdgs.temple.entity.MapEntity;
 import com.cdgs.temple.repository.MapRepository;
 import com.cdgs.temple.service.MapService;

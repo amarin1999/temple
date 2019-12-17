@@ -5,7 +5,6 @@ import com.cdgs.temple.dto.GraduatedDto;
 import com.cdgs.temple.dto.MemberDto;
 import com.cdgs.temple.dto.MemberHasCourseStatus;
 import com.cdgs.temple.dto.ResponseCountDto;
-import com.cdgs.temple.dto.GraduatedDto;
 import com.cdgs.temple.service.GraduatedCourseService;
 import com.cdgs.temple.service.GraduatedService;
 import com.cdgs.temple.service.MemberService;

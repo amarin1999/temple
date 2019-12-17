@@ -7,8 +7,12 @@ import com.cdgs.temple.security.JwtTokenUtil;
 import com.cdgs.temple.security.JwtUser;
 import com.cdgs.temple.service.HistoryDharmaService;
 import com.cdgs.temple.service.MemberService;
+import com.cdgs.temple.service.impl.ProvinceServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
 import com.cdgs.temple.util.ResponseTokenDto;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -28,6 +32,8 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/auth")
 public class AuthController {
+	
+	private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
     @Value("${jwt.header}")
     private String tokenHeader;
@@ -92,7 +98,7 @@ public class AuthController {
                 		historyDharmaService.createHistoryDharma(historyDharmaData);
                 	} catch (Exception e) {
                 		// TODO Auto-generated catch block
-                		e.printStackTrace();
+                		log.error(e.getMessage());
                 	}
                 });
             }

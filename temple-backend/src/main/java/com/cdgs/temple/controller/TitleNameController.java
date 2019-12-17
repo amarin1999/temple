@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.cdgs.temple.dto.MapDto;
 import com.cdgs.temple.dto.TitleNameDto;
 import com.cdgs.temple.service.TitleNameService;
 import com.cdgs.temple.util.ResponseDto;

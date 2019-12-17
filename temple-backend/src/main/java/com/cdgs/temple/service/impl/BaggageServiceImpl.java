@@ -2,11 +2,8 @@ package com.cdgs.temple.service.impl;
 
 import com.cdgs.temple.dto.BaggageDto;
 import com.cdgs.temple.entity.BaggageEntity;
-import com.cdgs.temple.entity.LocationEntity;
 import com.cdgs.temple.entity.LockerEntity;
-import com.cdgs.temple.entity.MemberEntity;
 import com.cdgs.temple.repository.BaggageRepository;
-import com.cdgs.temple.repository.LocationRepository;
 import com.cdgs.temple.repository.LockerRepository;
 import com.cdgs.temple.repository.MemberRepository;
 import com.cdgs.temple.service.BaggageService;
