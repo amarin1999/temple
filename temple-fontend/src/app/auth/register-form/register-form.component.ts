@@ -647,6 +647,9 @@ export class RegisterFormComponent implements OnInit {
         });
       }
       // ---------------------------------------------------------------
+    } else if (fileList.length === 0) {
+      this.showNoProfile = false;
+      this.showLoadingPicture = true;
     }
   }
   // -------------------------------------------------------------------
