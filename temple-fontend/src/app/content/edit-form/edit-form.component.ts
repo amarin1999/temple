@@ -314,7 +314,7 @@ export class EditFormComponent implements OnInit {
 
   delHisCourse(index, id) {
     this.courseHisList.splice(index, 1);
-    this.courseHisDelList.push({'id': id});
+    this.courseHisDelList.push({ 'id': id });
   }
 
   setBack() {
@@ -710,8 +710,8 @@ export class EditFormComponent implements OnInit {
         /**
          * process delete data course history
          */
+        /*** Delete ***/
         this.historyDharmaService.delHistoryDharmaById(this.courseHisDelList).subscribe();
-
         /**
          * Deconstruct Data
          */

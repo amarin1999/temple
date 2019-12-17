@@ -26,6 +26,6 @@ public interface HistoryDharmaRepository extends  CrudRepository<HistoryDharmaEn
 	@Transactional
 	@Query(value = "DELETE FROM history_dharma "
 			+ "WHERE history_dharma_id = :delId", nativeQuery = true)
-	Integer delHistoryDhamaByMemberId(@Param("delId") Long delId);
+	Integer delHistoryDhamaById(@Param("delId") Long delId);
 
 }

@@ -157,6 +157,14 @@ public class MemberController {
                 			// TODO Auto-generated catch block
                 			e.printStackTrace();
                 		}
+                	} else {
+                		try {
+                			System.out.println("Update historyDharmaData");
+                			historyDharmaService.updateHistoryDhama(historyDharmaData.getId(), historyDharmaData);
+                		} catch (Exception e) {
+							// TODO: handle exception.
+                			e.printStackTrace();
+						}
                 	}
                 });
 			} 
@@ -218,6 +226,14 @@ public class MemberController {
                 			// TODO Auto-generated catch block
                 			e.printStackTrace();
                 		}
+                	} else {
+                		try {
+                			System.out.println("Update historyDharmaData");
+                			historyDharmaService.updateHistoryDhama(historyDharmaData.getId(), historyDharmaData);
+                		} catch (Exception e) {
+							// TODO: handle exception.
+                			e.printStackTrace();
+						}
                 	}
                 });
             }

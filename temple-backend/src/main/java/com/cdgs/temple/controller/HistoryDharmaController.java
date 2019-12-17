@@ -1,6 +1,5 @@
 package com.cdgs.temple.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -34,7 +33,7 @@ public class HistoryDharmaController {
 	
 	@GetMapping(path = "")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
-	public ResponseEntity<ResponseDto<HistoryDharmaDto>> getHistoryDharma() {
+	public ResponseEntity<ResponseDto<HistoryDharmaDto>> getAllHistoryDharma() {
 		List<HistoryDharmaDto> dto;
 		ResponseDto<HistoryDharmaDto> res = new ResponseDto<>();
 		try {
@@ -72,7 +71,7 @@ public class HistoryDharmaController {
 	
 	@PutMapping(path = "")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
-	public ResponseEntity<ResponseDto<HistoryDharmaDto>> delHistoryDhamaByMemberId(@Valid @RequestBody List<HistoryDharmaDto> body) {
+	public ResponseEntity<ResponseDto<HistoryDharmaDto>> delHistoryDhamaById(@Valid @RequestBody List<HistoryDharmaDto> body) {
 		ResponseDto<HistoryDharmaDto> res = new ResponseDto<>();
 		try {
 			if (body != null) {
@@ -80,7 +79,7 @@ public class HistoryDharmaController {
 					Long delId = data.getId();
 					if (delId != null) {
 						try {
-							historyDharmaService.delHistoryDhamaByMemberId(delId);
+							historyDharmaService.delHistoryDhamaById(delId);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
