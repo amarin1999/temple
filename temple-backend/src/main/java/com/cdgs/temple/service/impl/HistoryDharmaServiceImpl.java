@@ -59,10 +59,10 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 	}
 	
 	@Override
-	public Integer delHistoryDhamaByMemberId(Long delId) throws Exception {
+	public Integer delHistoryDhamaById(Long delId) throws Exception {
 		Integer numberOfDelete;
 		try {
-			numberOfDelete = historyDharmaRepository.delHistoryDhamaByMemberId(delId);
+			numberOfDelete = historyDharmaRepository.delHistoryDhamaById(delId);
 			System.out.println("Delete " + numberOfDelete + " Row.");
 			return numberOfDelete;
 		} catch (Exception e) {
