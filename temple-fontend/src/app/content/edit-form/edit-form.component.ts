@@ -605,6 +605,9 @@ export class EditFormComponent implements OnInit {
           detail: 'ไฟล์เกินขนาด!'
         });
       }
+    } else if (fileList.length === 0) {
+      this.showNoProfile = false;
+      this.showLoadingPicture = true;
     }
     // ---------------------------------------------------------------
   }
