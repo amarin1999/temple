@@ -2,6 +2,7 @@ package com.cdgs.temple.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,9 +73,25 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 	}
 	
 	@Override
-	public Integer updateHistoryDhama(HistoryDharmaDto body) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public HistoryDharmaDto updateHistoryDhama(Long id, HistoryDharmaDto body) throws Exception {
+		HistoryDharmaEntity historyDharmaConvert = mapDtoToEntity(body);
+		HistoryDharmaEntity entity = new HistoryDharmaEntity();
+		try {
+			System.out.println(body.toString());
+			
+			Optional<HistoryDharmaEntity> historyDharmaEntity = historyDharmaRepository.findById(id);
+			if (!historyDharmaEntity.isPresent()) {
+				return mapEntityToDto(historyDharmaEntity.get());
+			}
+			historyDharmaConvert.setHistoryDharmaId(id);
+			historyDharmaConvert.setHistoryDharmaMemberId(historyDharmaEntity.get().getHistoryDharmaMemberId());
+			entity = historyDharmaRepository.save(historyDharmaConvert);
+			return mapEntityToDto(entity);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			throw new Exception(e.getMessage());
+		}
 	}
 	
 	private HistoryDharmaDto mapEntityToDto(HistoryDharmaEntity entity) throws Exception {
