@@ -32,7 +32,7 @@ export class CourseCreateComponent implements OnInit {
   public pipe = new DatePipe('th-TH');
   public yearRange: string;
   public timePickUp: any;
-  public optionTime: any; 
+  public optionTime: any;
 
   @Input() displayCreateDialog = false;
   @Output() closeDisplayCreateDialog = new EventEmitter();

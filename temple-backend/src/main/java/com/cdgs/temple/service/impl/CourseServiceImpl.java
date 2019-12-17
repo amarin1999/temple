@@ -349,11 +349,11 @@ public class CourseServiceImpl implements CourseService {
 					dto.setLocationId(entity.getLocationId().getLocationId());
 					dto.setLocationName(entity.getLocationId().getLocationName());
 				}
-				if (entity.getTransportTempleId() != null) {
-					dto.setTransportTempleId(entity.getTransportTempleId().getTransportationTempleId());
-					dto.setTransportTempleName(entity.getTransportTempleId().getTransportationTempleName());
-					dto.setTransportTempleTimePickUp(entity.getTransportTempleId().getTransportationTempleTimePickup());
-					dto.setTransportTempleTimeSend(entity.getTransportTempleId().getTransportationTempleTimeSend());
+				if (entity.getTransportTempleEntity() != null) {
+					dto.setTransportTempleId(entity.getTransportTempleEntity().getTransportationTempleId());
+					dto.setTransportTempleName(entity.getTransportTempleEntity().getTransportationTempleName());
+					dto.setTransportTempleTimePickUp(entity.getTransportTempleEntity().getTransportationTempleTimePickup());
+					dto.setTransportTempleTimeSend(entity.getTransportTempleEntity().getTransportationTempleTimeSend());
 				}
 				if (entity.getCreateBy() != null) {
 					dto.setMemberId(entity.getCreateBy().getMemberId());
@@ -592,6 +592,10 @@ public class CourseServiceImpl implements CourseService {
 				dto.setLastUpdate(entity.getCourseLastUpdate());
 				dto.setLocationId(entity.getLocationId().getLocationId());
 				dto.setLocationName(entity.getLocationId().getLocationName());
+				dto.setTransportTempleId(entity.getTransportTempleEntity().getTransportationTempleId());
+				dto.setTransportTempleName(entity.getTransportTempleEntity().getTransportationTempleName());
+				dto.setTransportTempleTimePickUp(entity.getTransportTempleEntity().getTransportationTempleTimePickup());
+				dto.setTransportTempleTimeSend(entity.getTransportTempleEntity().getTransportationTempleTimeSend());
 				dto.setMemberId(entity.getCreateBy().getMemberId());
 				dto.setMemberFname(entity.getCreateBy().getMemberFname());
 				dto.setMemberLname(entity.getCreateBy().getMemberLname());

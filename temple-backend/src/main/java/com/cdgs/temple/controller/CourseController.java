@@ -277,6 +277,11 @@ public class CourseController {
         }
     }
     
+    /**
+     * getCoursesById
+     * this function for get courses by ID 
+     * params: id of row
+     * */
     @GetMapping(path = "/{id}")
     @PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
     public ResponseEntity<ResponseDto<CourseDto>> getCoursesById(@PathVariable("id") Long id) {
@@ -445,6 +450,11 @@ public class CourseController {
 	    }
 	}
     
+    /*
+     * putCourse
+     * this function for update course by admin.
+     * params: id of row and body: CourseDto
+     * */
     @PutMapping(path = "/{id}")
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<ResponseDto<CourseDto>> putCourse(@PathVariable("id") Long id,

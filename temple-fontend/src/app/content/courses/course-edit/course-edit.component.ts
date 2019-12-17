@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '../../location/location.service';
 import { ConfirmationService , MessageService} from 'primeng/api';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { TransportService } from 'src/app/shared/service/transport.service';
+import { TransportationTemple } from 'src/app/shared/interfaces/transportation-temple';
 
 @Component({
   selector: 'app-course-edit',
@@ -19,6 +21,8 @@ export class CourseEditComponent implements OnInit {
   public noticearr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
   public notice: Array<any> = [];
   public locations: Location[];
+  public transport: TransportationTemple[];
+  public transportTemple: any[];
   public filteredTeacher: any[];
   public teachers: any[];
   public teacher: any;
@@ -26,6 +30,8 @@ export class CourseEditComponent implements OnInit {
   public obj = [];
   public pipe = new DatePipe('th-TH');
   public yearRange: string;
+  public optionTime: any;
+
   @Input() displayEditDialog = false;
   @Input() courseId: number;
   @Output() closeDisplayEditDialog = new EventEmitter();
@@ -38,8 +44,9 @@ export class CourseEditComponent implements OnInit {
       date: new FormControl('', Validators.required),
       conditionMin: new FormControl('', Validators.required),
       teachers: new FormControl('', Validators.required),
+      transportTemple: new FormControl('')
     }
-  )
+  );
 
 public formError = {
   courseName: '',
@@ -87,6 +94,7 @@ public validationMessage = {
     private courseService: CourseService,
     private route: ActivatedRoute,
     private locationService: LocationService,
+    private transportTempleService: TransportService,
     private router: Router,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
@@ -100,7 +108,7 @@ public validationMessage = {
 
     this.courseService.getTeachers().subscribe(
       res => {
-        if (res.status == 'Success') {
+        if (res.status === 'Success') {
           this.teachers = res['data'].map(res => {
             return {
               id: res.id,
@@ -119,7 +127,7 @@ public validationMessage = {
 
     this.locationService.getLocation().subscribe(
       res => {
-        if (res.status == 'Success') {
+        if (res.status === 'Success') {
           this.locations = res.data;
         }
       },
@@ -127,7 +135,24 @@ public validationMessage = {
         console.log(error['error']['message']);
 
       }
-    )
+    );
+
+       // ------------ Get List of Transportation Temple ------------
+    this.optionTime = {hour: '2-digit', minute: '2-digit'};
+    this.transportTempleService.getTranSportTemple().subscribe(
+      res => {
+        this.transport = res['data'].map( data => {
+          return {  id: data.id ,
+                    name: data.name + ' เวลารับ : ' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
+                     ' เวลาส่ง : ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
+          }
+        });
+      },
+      error => {
+        console.log(error['error']['message']);
+      }
+    );
+
     const currentYear = this.pipe.transform(Date.now(), 'yyyy');
     const startYear = parseInt(currentYear) - 100;
     this.yearRange = startYear + ':' + currentYear;
@@ -145,7 +170,7 @@ public validationMessage = {
       .subscribe(res => {
         /*var result = [];
         var teacherLength;*/
-        // console.log(res);
+        console.log('res', res);
         const teachers = res['data']['teacherList'].map(res => {
           return {
             id: res['id'],
@@ -179,13 +204,22 @@ public validationMessage = {
           id: res['data']['locationId'],
           name: res['data']['locationName']
         };
+
+        const transportTemple = {
+          id: res['data']['transportTempleId'],
+          name: res['data']['transportTempleName']
+          + ' เวลารับ : ' + new Date(res['data']['transportTempleTimePickUp']).toLocaleTimeString('th-TH', this.optionTime)
+          + ' เวลาส่ง : ' + new Date(res['data']['transportTempleTimeSend']).toLocaleTimeString('th-TH', this.optionTime)
+        };
+
         this.formEdit.controls['courseName'].setValue(res['data']['name']);
         this.formEdit.controls['detail'].setValue(res['data']['detail']);
         this.formEdit.controls['location'].setValue(location);
         this.formEdit.controls['teachers'].patchValue(teachers);
         this.formEdit.controls['date'].patchValue(date);
         this.formEdit.controls['conditionMin'].setValue({ id: '' + (res['data']['conditionMin']) });
-
+        this.formEdit.controls['transportTemple'].setValue(transportTemple);
+        
       },
         err => console.log(err['error']['message'])
       );
