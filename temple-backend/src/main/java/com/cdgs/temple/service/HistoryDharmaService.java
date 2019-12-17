@@ -12,7 +12,7 @@ public interface HistoryDharmaService {
 
 	List<HistoryDharmaDto> getHistoryDhamaByMemberId(Long memberId) throws Exception;
 	
-	Integer delHistoryDhamaByMemberId(Long delId) throws Exception;
+	Integer delHistoryDhamaById(Long delId) throws Exception;
 	
 	Integer updateHistoryDhama(HistoryDharmaDto body) throws Exception;
 }
