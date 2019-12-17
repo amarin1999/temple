@@ -14,5 +14,5 @@ public interface HistoryDharmaService {
 	
 	Integer delHistoryDhamaById(Long delId) throws Exception;
 	
-	Integer updateHistoryDhama(HistoryDharmaDto body) throws Exception;
+	HistoryDharmaDto updateHistoryDhama(Long id, HistoryDharmaDto body) throws Exception;
 }
