@@ -1,7 +1,7 @@
 package com.cdgs.temple.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -33,10 +33,10 @@ public class TransportationTempleEntity implements Serializable{
 	private boolean transportationTempleStatus = true;
 	
 	@Column(name = "transportation_temple_time_pickup")
-	private Date transportationTempleTimePickup;
+	private LocalDateTime transportationTempleTimePickup;
 	
 	@Column(name = "transportation_temple_time_send")
-	private Date transportationTempleTimeSend;
+	private LocalDateTime transportationTempleTimeSend;
 
 	public Long getTransportationTempleId() {
 		return transportationTempleId;
@@ -62,19 +62,19 @@ public class TransportationTempleEntity implements Serializable{
 		this.transportationTempleStatus = transportationTempleStatus;
 	}
 
-	public Date getTransportationTempleTimePickup() {
+	public LocalDateTime getTransportationTempleTimePickup() {
 		return transportationTempleTimePickup;
 	}
 
-	public void setTransportationTempleTimePickup(Date transportationTempleTimePickup) {
+	public void setTransportationTempleTimePickup(LocalDateTime transportationTempleTimePickup) {
 		this.transportationTempleTimePickup = transportationTempleTimePickup;
 	}
 
-	public Date getTransportationTempleTimeSend() {
+	public LocalDateTime getTransportationTempleTimeSend() {
 		return transportationTempleTimeSend;
 	}
 
-	public void setTransportationTempleTimeSend(Date transportationTempleTimeSend) {
+	public void setTransportationTempleTimeSend(LocalDateTime transportationTempleTimeSend) {
 		this.transportationTempleTimeSend = transportationTempleTimeSend;
 	}
 	

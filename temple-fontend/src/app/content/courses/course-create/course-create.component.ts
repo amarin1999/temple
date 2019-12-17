@@ -144,8 +144,8 @@ export class CourseCreateComponent implements OnInit {
       res => {
         this.transport = res['data'].map( data => {
           return {  id: data.id ,
-                    name: data.name + 'เวลา :' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
-                     ' - ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
+                    name: data.name + ' เวลารับ : ' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
+                     ' เวลาส่ง : ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
           }
         });
       },
@@ -239,12 +239,13 @@ export class CourseCreateComponent implements OnInit {
           // console.log('endDate =' + endDate);
           // console.log('datesort =' + datesort);
           // console.log('TEACHERS =' + this.courseForm.get('teachers').value.map(res => res.id));
+
           const course = {
             no: 0,
             name: this.courseForm.get('courseName').value,
             detail: this.courseForm.get('detail').value,
             locationId: this.courseForm.get('location').value.id,
-            transportTemple: this.courseForm.get('transportTemple').value.id,
+            transportTempleId: this.courseForm.get('transportTemple').value.id,
             conditionMin: this.courseForm.get('conditionMin').value.id,
             date: datesort,
             stDate: stDate,
@@ -253,7 +254,6 @@ export class CourseCreateComponent implements OnInit {
             teacher: this.courseForm.get('teachers').value.map(res => res.id)
           };
           // console.log(course);
-  
           this.courseService.createCourse(course).subscribe(res => {
             if (res['result'] === 'Success') {
               /* const index = this.courses.findIndex(course => course.id === this.courseId);
@@ -278,7 +278,7 @@ export class CourseCreateComponent implements OnInit {
           this.msgs = [{severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการสร้างคอร์ส'}];
           this.onCancle(this.msgs);
         }
-      });  
+      });
     }
   }
 

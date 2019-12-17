@@ -1,7 +1,7 @@
 package com.cdgs.temple.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class TransportationTempleDto implements Serializable {
 
@@ -13,8 +13,8 @@ public class TransportationTempleDto implements Serializable {
 	private Long id;
 	private String name;
 	private boolean status;
-	private Date timePickUp;
-	private Date timeSend;
+	private LocalDateTime timePickUp;
+	private LocalDateTime timeSend;
 	
 	public Long getId() {
 		return id;
@@ -34,16 +34,16 @@ public class TransportationTempleDto implements Serializable {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public Date getTimePickUp() {
+	public LocalDateTime getTimePickUp() {
 		return timePickUp;
 	}
-	public void setTimePickUp(Date timePickUp) {
+	public void setTimePickUp(LocalDateTime timePickUp) {
 		this.timePickUp = timePickUp;
 	}
-	public Date getTimeSend() {
+	public LocalDateTime getTimeSend() {
 		return timeSend;
 	}
-	public void setTimeSend(Date timeSend) {
+	public void setTimeSend(LocalDateTime timeSend) {
 		this.timeSend = timeSend;
 	}
 	

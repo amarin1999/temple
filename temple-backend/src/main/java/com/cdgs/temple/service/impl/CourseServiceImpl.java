@@ -121,6 +121,10 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 
+	/*
+	 * createCourse
+	 * this function for create course by admin.
+	 * */
 	@Override
 	public CourseDto createCourse(CourseDto body) {
 		MemberDto member = memberService.getCurrentMember();
@@ -130,7 +134,8 @@ public class CourseServiceImpl implements CourseService {
 			entity = courseRepository.save(convDtoToEntity(body));
 			return mapEntityToDto(entity);
 		} catch (Exception e) {
-			return null;
+			e.printStackTrace();
+		return null;
 		}
 	}
 
@@ -344,6 +349,12 @@ public class CourseServiceImpl implements CourseService {
 					dto.setLocationId(entity.getLocationId().getLocationId());
 					dto.setLocationName(entity.getLocationId().getLocationName());
 				}
+				if (entity.getTransportTempleId() != null) {
+					dto.setTransportTempleId(entity.getTransportTempleId().getTransportationTempleId());
+					dto.setTransportTempleName(entity.getTransportTempleId().getTransportationTempleName());
+					dto.setTransportTempleTimePickUp(entity.getTransportTempleId().getTransportationTempleTimePickup());
+					dto.setTransportTempleTimeSend(entity.getTransportTempleId().getTransportationTempleTimeSend());
+				}
 				if (entity.getCreateBy() != null) {
 					dto.setMemberId(entity.getCreateBy().getMemberId());
 					dto.setMemberFname(entity.getCreateBy().getMemberFname());
@@ -517,6 +528,7 @@ public class CourseServiceImpl implements CourseService {
 		entity.setCourseLastUpdate(course.getLastUpdate());
 		entity.setCourseLocationId(course.getLocationId());
 		entity.setCourseCreateBy(course.getMemberId());
+		entity.setCourseTransportTempleId(course.getTransportTempleId());
 		return entity;
 	}
 

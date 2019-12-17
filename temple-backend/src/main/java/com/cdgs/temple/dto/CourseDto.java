@@ -38,7 +38,10 @@ public class CourseDto implements Serializable {
     private List<MemberDto> teacherList;
     private List<CourseScheduleDto> dateList;
     private List<LocalDate> date;
-    private List<TransportationTempleDto> transportList;
+    private Long transportTempleId;
+    private String transportTempleName;
+    private LocalDateTime transportTempleTimePickUp;
+    private LocalDateTime transportTempleTimeSend;
 
     public Long getId() {
         return id;
@@ -215,14 +218,37 @@ public class CourseDto implements Serializable {
 	public void setTeacherList(List<MemberDto> teacherList) {
 		this.teacherList = teacherList;
 	}
-	
 
-	public List<TransportationTempleDto> getTransportList() {
-		return transportList;
+	public Long getTransportTempleId() {
+		return transportTempleId;
 	}
 
-	public void setTransportList(List<TransportationTempleDto> transportList) {
-		this.transportList = transportList;
+	public void setTransportTempleId(Long transportTempleId) {
+		this.transportTempleId = transportTempleId;
+	}
+	
+	public String getTransportTempleName() {
+		return transportTempleName;
+	}
+
+	public void setTransportTempleName(String transportTempleName) {
+		this.transportTempleName = transportTempleName;
+	}
+
+	public LocalDateTime getTransportTempleTimePickUp() {
+		return transportTempleTimePickUp;
+	}
+
+	public void setTransportTempleTimePickUp(LocalDateTime transportTempleTimePickUp) {
+		this.transportTempleTimePickUp = transportTempleTimePickUp;
+	}
+
+	public LocalDateTime getTransportTempleTimeSend() {
+		return transportTempleTimeSend;
+	}
+
+	public void setTransportTempleTimeSend(LocalDateTime transportTempleTimeSend) {
+		this.transportTempleTimeSend = transportTempleTimeSend;
 	}
 
 	@Override
@@ -233,7 +259,9 @@ public class CourseDto implements Serializable {
 				+ memberLname + ", locationId=" + locationId + ", locationName=" + locationName + ", mhcStatus="
 				+ mhcStatus + ", saStatus=" + saStatus + ", status=" + status + ", canRegister=" + canRegister
 				+ ", teacher=" + teacher + ", teacherList=" + teacherList + ", dateList=" + dateList + ", date=" + date 
-				+ ", transportTemple ="+ transportList + "]";
+				+ ", transportTempleId ="+ transportTempleId + ", transportTempleName =" + transportTempleName 
+				+ ", transportTempleTimePickUp =" + transportTempleTimePickUp + ", transportTempleTimeSend ="
+				+ transportTempleTimeSend + "]";
 	}
 	
 	

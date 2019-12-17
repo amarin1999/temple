@@ -82,11 +82,12 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 	List<CourseEntity> findCoursesMonk(@Param("memberId") Long memberId);
 	
 	
-	@Query(value = "SELECT * FROM courses c  "
-			+ "WHERE 1=1 "
-			+ "AND c.course_enable = '1' "
+	@Query(value = "SELECT * FROM courses c "
+			+ "JOIN transportation_temple t "
+			+ "ON c.course_transportation_temple_id = t.transportation_temple_id "
+			+ "WHERE 1=1 AND c.course_enable = '1' "
 			+ "GROUP BY c.course_id "
-			+ "ORDER BY c.course_create_date " 
+			+ "ORDER BY c.course_create_date"
 			, nativeQuery = true)
 	List<CourseEntity> selectAll();
 	

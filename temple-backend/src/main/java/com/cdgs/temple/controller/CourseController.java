@@ -356,7 +356,6 @@ public class CourseController {
      * this function is create new course by admin
      * 
      * */
-    
     @PostMapping(path = "")
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<ResponseDto<CourseDto>> createCourse(@Valid @RequestBody CourseDto body) {
@@ -367,7 +366,7 @@ public class CourseController {
         CourseTeacherDto courseTeacher = new CourseTeacherDto();
         LocalDate dateSt = body.getDate().get(0);
     	LocalDate dateEnd = body.getDate().get(1);
-        System.out.println("Date" + body.getDate());
+//        System.out.println("Date" + body.getDate());
         try {
             course = courseService.createCourse(body);
             courseSchedule.setCourseId(course.getId());

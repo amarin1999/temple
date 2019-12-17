@@ -69,7 +69,8 @@
                                     <div *ngIf="rowData[col.field] == rowData['lastUpdate'] && col.field == 'lastUpdate'" style="text-align: center">{{rowData['lastUpdate'] | formatTHdate}}</div>
                                     <div *ngIf="rowData[col.field] == rowData['name']">{{rowData['name']}}</div>
                                     <div *ngIf="rowData[col.field] == rowData['locationName']" style="text-align: center">{{rowData['locationName']}}</div>
-                                    <div *ngIf="rowData[col.field] == rowData['transportTemple']" style="text-align: center">{{rowData['transportTemple']}}</div>
+                                    <div *ngIf="rowData[col.field] == rowData['transportTemple']" style="text-align: center">{{rowData['transportTempleName']}} <br>
+                                        เวลารับ : {{rowData['transportTempleTimePickUp'] | date: "HH:mm"}} <br> เวลาส่ง : {{rowData['transportTempleTimeSend'] | date: "HH:mm"}}</div>
                                     <div *ngIf="rowData[col.field] == rowData['conditionMin']" style="text-align: center">ต้องผ่านอย่างน้อย {{rowData['conditionMin']}} คอร์ส</div>
                                 </td>
                                 <td>

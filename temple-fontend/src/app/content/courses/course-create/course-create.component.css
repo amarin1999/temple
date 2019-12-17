@@ -1,6 +1,6 @@
 .text-info {
-    font-weight: bold;
     text-align: right;
+    color: #000000 !important;
   }
 
   .text-danger.text-invalid {

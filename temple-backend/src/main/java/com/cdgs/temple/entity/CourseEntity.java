@@ -44,6 +44,9 @@ public class CourseEntity implements Serializable {
 
     @Column(name = "course_location_id")
     private Long courseLocationId;
+    
+    @Column(name = "course_transportation_temple_id")
+    private Long courseTransportTempleId;
 
     @Column(name = "course_create_by")
     private Long courseCreateBy;
@@ -71,8 +74,17 @@ public class CourseEntity implements Serializable {
     private LocationEntity locationId;
     
     @ManyToOne
-    @JoinColumn(name = "course_transportation_temple_id", insertable= false , updatable = false)
+    @JoinColumn(name = "course_transportation_temple_id", insertable = false, updatable = false)
     private TransportationTempleEntity transportTempleId;
+    
+//    @Column(name = "transportation_temple_name")
+//    private String transportTempleName;
+//    
+//    @Column(name = "transportation_temple_time_pickup")
+//    private LocalDateTime transportTempleTimePickUp; 
+//    
+//    @Column(name = "transportation_temple_time_send")
+//    private LocalDateTime transportTempleTimeSend;
     
     @OneToMany
     @JoinColumn(name = "course_id",insertable = false, updatable = false)
@@ -219,6 +231,14 @@ public class CourseEntity implements Serializable {
 		this.courseStatus = courseStatus;
 	}
 
+	public Long getCourseTransportTempleId() {
+		return courseTransportTempleId;
+	}
+
+	public void setCourseTransportTempleId(Long courseTransportTempleId) {
+		this.courseTransportTempleId = courseTransportTempleId;
+	}
+
 	public TransportationTempleEntity getTransportTempleId() {
 		return transportTempleId;
 	}
@@ -226,14 +246,12 @@ public class CourseEntity implements Serializable {
 	public void setTransportTempleId(TransportationTempleEntity transportTempleId) {
 		this.transportTempleId = transportTempleId;
 	}
-	
-
-	
-
-
 
 	
 	
 
+	
+	
 
+	
 }
