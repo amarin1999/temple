@@ -5,13 +5,15 @@ import java.util.List;
 public class ResponseDto<T> {
 
     private String result;
+    private String stringData;
     private List<T> data;
     private String errorMessage;
     private int code;
     public ResponseDto() {
     }
-    public ResponseDto(String result, List<T> data, String errorMessage, int code) {
+    public ResponseDto(String result, String stringData, List<T> data, String errorMessage, int code) {
         this.result = result;
+        this.stringData = stringData;
         this.data = data;
         this.errorMessage = errorMessage;
         this.code = code;
@@ -29,8 +31,6 @@ public class ResponseDto<T> {
             return this.res;
         }
     }
-
-    ;
 
 
     public List<T> getData() {
@@ -64,6 +64,11 @@ public class ResponseDto<T> {
     public void setCode(int code) {
         this.code = code;
     }
-
+	public String getStringData() {
+		return stringData;
+	}
+	public void setStringData(String stringData) {
+		this.stringData = stringData;
+	}
 
 }
