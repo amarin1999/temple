@@ -3,7 +3,7 @@ package com.cdgs.temple.dto;
 import com.cdgs.temple.entity.CourseEntity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 public class CourseScheduleDto implements Serializable {
 
@@ -13,7 +13,7 @@ public class CourseScheduleDto implements Serializable {
     private static final long serialVersionUID = 2152388262292088237L;
 
     private Long courseId;
-    private LocalDate courseScheduleDate;
+    private Date courseScheduleDate;
     private CourseEntity course;
     private int student;
 
@@ -25,11 +25,11 @@ public class CourseScheduleDto implements Serializable {
         this.courseId = courseId;
     }
 
-    public LocalDate getCourseScheduleDate() {
+    public Date getCourseScheduleDate() {
         return courseScheduleDate;
     }
 
-    public void setCourseScheduleDate(LocalDate courseScheduleDate) {
+    public void setCourseScheduleDate(Date courseScheduleDate) {
         this.courseScheduleDate = courseScheduleDate;
     }
 

@@ -169,9 +169,9 @@ public class SpecialApproveController {
 						courseDto = courseService.getCourse(specialApprovesDto.getCourseId());
 						courseSchedule.setCourseId(specialApprovesDto.getCourseId());
 						
-		                courseSchedule.setCourseScheduleDate(courseDto.getStDate().toLocalDate());
+		                courseSchedule.setCourseScheduleDate(courseDto.getStDate());
 		                courseScheduleService.createCourseSchedule(courseSchedule);
-		                courseSchedule.setCourseScheduleDate(courseDto.getEndDate().toLocalDate());
+		                courseSchedule.setCourseScheduleDate(courseDto.getEndDate());
 		                courseScheduleService.createCourseSchedule(courseSchedule);
 					}
 					
