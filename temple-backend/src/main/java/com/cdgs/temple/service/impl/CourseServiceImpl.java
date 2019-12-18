@@ -422,7 +422,7 @@ public class CourseServiceImpl implements CourseService {
 		try {
 			System.out.println("st1 = " + courseNew.getStDate());
 
-			// set update name, detail, locaiton
+			// set update name, detail, location
 			courseOld.setCourseName(courseNew.getName());
 			System.out.println("name = " + courseNew.getName());
 

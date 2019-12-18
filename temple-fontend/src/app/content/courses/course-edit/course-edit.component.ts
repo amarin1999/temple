@@ -170,7 +170,7 @@ public validationMessage = {
       .subscribe(res => {
         /*var result = [];
         var teacherLength;*/
-        console.log('res', res);
+        // console.log('res', res);
         const teachers = res['data']['teacherList'].map(res => {
           return {
             id: res['id'],
@@ -212,6 +212,7 @@ public validationMessage = {
           + ' เวลาส่ง : ' + new Date(res['data']['transportTempleTimeSend']).toLocaleTimeString('th-TH', this.optionTime)
         };
 
+        console.log(transportTemple);
         this.formEdit.controls['courseName'].setValue(res['data']['name']);
         this.formEdit.controls['detail'].setValue(res['data']['detail']);
         this.formEdit.controls['location'].setValue(location);
