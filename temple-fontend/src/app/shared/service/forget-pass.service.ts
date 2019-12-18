@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ApiConstants } from '../constants/ApiConstants';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,21 @@ export class ForgetPassService {
     private http: HttpClient
   ) { }
 
-  getUserForgetInfo(email, username) {
+  getUserForgetInfo(idCard, username, phoneNumber) {
     const body = {
-      email, username
+      idCard, username, phoneNumber
     };
     return this.http.post(ApiConstants.baseURl + '/forgetpass/', body);
+    // .pipe(
+    //   map((res) => {
+    //     return {
+    //       status: res['result'],
+    //       data: res['data'],
+    //       stringData: res['stringData'],
+    //       errorMessage: res['errorMessage'],
+    //       code: res['code']
+    //     };
+    //   })
+    // );
   }
 }
