@@ -11,6 +11,7 @@ import {CalendarModule} from 'primeng/calendar';
 import { ThaiCalendarModule } from '../shared/directive/thai-calendar/thai-calendar.module';
 import { Ng2ImgMaxModule } from 'ng2-img-max';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { RePasswordComponent } from './re-password/re-password.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     LoginComponent,
     ForgetPasswordComponent,
     RegisterFormComponent,
-    RegisterComponent
+    RegisterComponent,
+    RePasswordComponent
   ],
   imports: [
     SharedModule,
