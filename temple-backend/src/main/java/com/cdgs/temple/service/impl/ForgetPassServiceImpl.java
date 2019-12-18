@@ -19,9 +19,8 @@ public class ForgetPassServiceImpl implements ForgetPassService{
 	}
 	
 	@Override
-	public Integer countUser(String email, String userName){
-//		System.out.println("In Service Imp :"+email+" | "+userName);
-		Integer count = forgetpassRepository.countUser(email, userName);
+	public Integer countUser(String userName, String idCard, String phoneNumber){
+		Integer count = forgetpassRepository.countUser(userName, idCard, phoneNumber);
 		return count;
 	}
 
