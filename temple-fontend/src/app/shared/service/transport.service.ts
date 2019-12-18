@@ -79,6 +79,8 @@ export class TransportService {
   }
 
   createTransportationTemple(transportTemple: TransportationTemple) {
+    // console.log("transportTemple",transportTemple);
+    // console.log("tranfers",new Date(transportTemple.timePickUp));
     return this.http.post(ApiConstants.baseURl + '/transportations/temple', transportTemple)
       .pipe(
         map(res => {
@@ -93,7 +95,7 @@ export class TransportService {
   updateTransportation(transportation: Transportation){
     return this.http.put(`${ApiConstants.baseURl}/transportations/${transportation.id}`,transportation)
       .pipe(
-        map(res =>{
+        map(res => {
           return {
             status: res['result'],
             data: res['data'][0]
@@ -114,7 +116,7 @@ export class TransportService {
       );
   }
 
-  deleteTransportation(id:number){
+  deleteTransportation(id: number){
     return this.http.put(`${ApiConstants.baseURl}/transportations/delete/${id}`,{id: id})
       .pipe(
         map(res=>{

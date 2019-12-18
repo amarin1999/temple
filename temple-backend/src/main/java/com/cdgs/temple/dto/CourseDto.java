@@ -37,8 +37,8 @@ public class CourseDto implements Serializable {
     private List<LocalDate> date;
     private Long transportTempleId;
     private String transportTempleName;
-    private LocalDateTime transportTempleTimePickUp;
-    private LocalDateTime transportTempleTimeSend;
+    private Date transportTempleTimePickUp;
+    private Date transportTempleTimeSend;
 
     public Long getId() {
         return id;
@@ -232,19 +232,19 @@ public class CourseDto implements Serializable {
 		this.transportTempleName = transportTempleName;
 	}
 
-	public LocalDateTime getTransportTempleTimePickUp() {
+	public Date getTransportTempleTimePickUp() {
 		return transportTempleTimePickUp;
 	}
 
-	public void setTransportTempleTimePickUp(LocalDateTime transportTempleTimePickUp) {
+	public void setTransportTempleTimePickUp(Date transportTempleTimePickUp) {
 		this.transportTempleTimePickUp = transportTempleTimePickUp;
 	}
 
-	public LocalDateTime getTransportTempleTimeSend() {
+	public Date getTransportTempleTimeSend() {
 		return transportTempleTimeSend;
 	}
 
-	public void setTransportTempleTimeSend(LocalDateTime transportTempleTimeSend) {
+	public void setTransportTempleTimeSend(Date transportTempleTimeSend) {
 		this.transportTempleTimeSend = transportTempleTimeSend;
 	}
 

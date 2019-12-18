@@ -128,14 +128,14 @@ public class TransportationTempleServiceImpl implements TransportationTempleServ
 		* this function is mapping data of Dto to Entity.
 		* Params : TempleDto : TransportationTempleDto
 		* */
-		 private TransportationTempleEntity mapDtoToEntity(TransportationTempleDto TempleDto) {
+		 private TransportationTempleEntity mapDtoToEntity(TransportationTempleDto templeDto) {
 			 TransportationTempleEntity entity = new TransportationTempleEntity();
-			 if(TempleDto != null) {
-				 entity.setTransportationTempleId(TempleDto.getId());
-				 entity.setTransportationTempleName(TempleDto.getName());
-				 entity.setTransportationTempleStatus(TempleDto.isStatus());
-				 entity.setTransportationTempleTimePickup(TempleDto.getTimePickUp());
-				 entity.setTransportationTempleTimeSend(TempleDto.getTimeSend());
+			 if(templeDto != null) {
+				 entity.setTransportationTempleId(templeDto.getId());
+				 entity.setTransportationTempleName(templeDto.getName());
+				 entity.setTransportationTempleStatus(templeDto.isStatus());
+				 entity.setTransportationTempleTimePickup(templeDto.getTimePickUp());
+				 entity.setTransportationTempleTimeSend(templeDto.getTimeSend());
 			 }
 			 return entity;
 		 }
