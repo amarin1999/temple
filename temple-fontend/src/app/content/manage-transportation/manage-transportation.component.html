@@ -59,16 +59,18 @@
                     let-columns="columns"
                   >
                     <tr>
-                      <td *ngFor="let col of columns">
-                        <div *ngIf="rowData[col.field] === rowData['name']">
+                      <td>
+                        <div>
                           {{ rowData["name"] }}
                         </div>
-                        <div
-                          *ngIf="rowData[col.field] === rowData['timePickUp']"
-                        >
+                      </td>
+                      <td>
+                        <div >
                           {{ rowData["timePickUp"] | date: "HH:mm" }}
                         </div>
-                        <div *ngIf="rowData[col.field] === rowData['timeSend']">
+                      </td>
+                      <td>
+                        <div>
                           {{ rowData["timeSend"] | date: "HH:mm" }}
                         </div>
                       </td>

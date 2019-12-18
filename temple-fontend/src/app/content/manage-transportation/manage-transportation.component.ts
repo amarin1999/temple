@@ -24,7 +24,8 @@ export class ManageTransportationComponent implements OnInit {
   public timeSend = null;
   public temp: string;
   public tabIndex: number = 0;
-  public typeTran: Transportation[];
+  public typeTran: any;
+  public status: boolean = true;
 
   constructor(
     private breadCrumbService: BreadcrumbService,
@@ -80,6 +81,7 @@ export class ManageTransportationComponent implements OnInit {
       res => {
         this.transportTemple = res['data'];
         this.transportTemple = this.transportTemple.map( data => {
+          
           return { id : data.id , name: data.name , timePickUp : data.timePickUp , timeSend: data.timeSend }
         });
     });
@@ -98,8 +100,8 @@ export class ManageTransportationComponent implements OnInit {
 
   public save() {
     this.transportation.name = this.newTransportation;
-    this.transportation.timePickUp = this.timePickUp;
-    this.transportation.timeSend = this.timeSend;
+    this.transportation.timePickUp = new Date(this.timePickUp).getTime();
+    this.transportation.timeSend = new Date(this.timeSend).getTime();
     const checkArry = this.transport.filter(
       res => res.name === this.transportation.name
     );
@@ -184,8 +186,13 @@ export class ManageTransportationComponent implements OnInit {
       this.transportation.name = this.newTransportation;
       this.transportation.timePickUp = this.timePickUp;
       this.transportation.timeSend = this.timeSend;
-      this.transportationService
-        .updateTransportation(this.transportation)
+      this.transportation.status = this.status;
+    
+      if(this.tabIndex === 0){
+        console.log(this.transportation);
+        
+        this.transportationService
+        .updateTransportationTemple(this.transportation)
         .subscribe(
           res => {
             if (res['status'] === 'Success') {
@@ -194,11 +201,11 @@ export class ManageTransportationComponent implements OnInit {
                 summary: 'ข้อความจากระบบ',
                 detail: 'ดำเนินการแก้ไขสำเร็จ'
               });
-              const index = this.transport.findIndex(
+              const index = this.transportTemple.findIndex(
                 e => e.id === res['data']['id']
               );
 
-              this.transport[index] = res['data'];
+              this.transportTemple[index] = res['data'];
               // this.filterData[index] = res["data"];
             }
           },
@@ -210,6 +217,35 @@ export class ManageTransportationComponent implements OnInit {
             });
           }
         );
+      } else {
+          this.transportationService
+          .updateTransportation(this.transportation)
+          .subscribe(
+            res => {
+              if (res['status'] === 'Success') {
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'ข้อความจากระบบ',
+                  detail: 'ดำเนินการแก้ไขสำเร็จ'
+                });
+                const index = this.transport.findIndex(
+                  e => e.id === res['data']['id']
+                );
+
+                this.transport[index] = res['data'];
+                // this.filterData[index] = res["data"];
+              }
+            },
+            e => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'ข้อความจากระบบ',
+                detail: 'ดำเนินการแก้ไขไม่สำเร็จ'
+              });
+            }
+          );
+      }
+      
       this.clear();
     } else {
       // this.messageService.clear;

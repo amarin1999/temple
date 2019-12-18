@@ -1,7 +1,7 @@
 package com.cdgs.temple.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "transportation_temple")
@@ -32,11 +34,13 @@ public class TransportationTempleEntity implements Serializable{
 	@Column(name = "transportation_temple_status")
 	private boolean transportationTempleStatus = true;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "transportation_temple_time_pickup")
-	private LocalDateTime transportationTempleTimePickup;
+	private Date transportationTempleTimePickup;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "transportation_temple_time_send")
-	private LocalDateTime transportationTempleTimeSend;
+	private Date transportationTempleTimeSend;
 
 	public Long getTransportationTempleId() {
 		return transportationTempleId;
@@ -62,19 +66,19 @@ public class TransportationTempleEntity implements Serializable{
 		this.transportationTempleStatus = transportationTempleStatus;
 	}
 
-	public LocalDateTime getTransportationTempleTimePickup() {
+	public Date getTransportationTempleTimePickup() {
 		return transportationTempleTimePickup;
 	}
 
-	public void setTransportationTempleTimePickup(LocalDateTime transportationTempleTimePickup) {
+	public void setTransportationTempleTimePickup(Date transportationTempleTimePickup) {
 		this.transportationTempleTimePickup = transportationTempleTimePickup;
 	}
 
-	public LocalDateTime getTransportationTempleTimeSend() {
+	public Date getTransportationTempleTimeSend() {
 		return transportationTempleTimeSend;
 	}
 
-	public void setTransportationTempleTimeSend(LocalDateTime transportationTempleTimeSend) {
+	public void setTransportationTempleTimeSend(Date transportationTempleTimeSend) {
 		this.transportationTempleTimeSend = transportationTempleTimeSend;
 	}
 	
