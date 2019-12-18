@@ -48,11 +48,11 @@ public class TempCourseEntity implements Serializable {
 
     @Column(name = "course_create_date")
     @CreationTimestamp
-    private LocalDateTime courseCreateDate;
+    private Date courseCreateDate;
 
     @Column(name = "course_last_update")
     @CreationTimestamp
-    private LocalDateTime courseLastUpdate;
+    private Date courseLastUpdate;
 
     @ManyToOne
     @JoinColumn(name = "course_create_by", insertable = false, updatable = false)
@@ -139,19 +139,19 @@ public class TempCourseEntity implements Serializable {
         this.courseCreateBy = courseCreateBy;
     }
 
-    public LocalDateTime getCourseCreateDate() {
+    public Date getCourseCreateDate() {
         return courseCreateDate;
     }
 
-    public void setCourseCreateDate(LocalDateTime courseCreateDate) {
+    public void setCourseCreateDate(Date courseCreateDate) {
         this.courseCreateDate = courseCreateDate;
     }
 
-    public LocalDateTime getCourseLastUpdate() {
+    public Date getCourseLastUpdate() {
         return courseLastUpdate;
     }
 
-    public void setCourseLastUpdate(LocalDateTime courseLastUpdate) {
+    public void setCourseLastUpdate(Date courseLastUpdate) {
         this.courseLastUpdate = courseLastUpdate;
     }
 

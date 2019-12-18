@@ -160,7 +160,7 @@ public validationMessage = {
 
   private initNotice() {
     this.noticearr.map(res => {
-      this.notice.push({ id: res })
+    this.notice.push({ id: res })
     });
   }
 
@@ -198,7 +198,7 @@ public validationMessage = {
         const date = [];
         date[0] = datecon;
         date[1] = datecon2;
-        // console.log(date);
+        console.log('date', date);
 
         const location = {
           id: res['data']['locationId'],
@@ -240,11 +240,11 @@ public validationMessage = {
           const date2 = this.formEdit.get('date').value;
         //  console.log('dateForm0 =' + date2[0]);
         //  console.log('dateForm1 =' + date2[1]);
-          const stDate = formatDate(date2[0], 'yyyy-MM-dd', 'en');
-          const endDate = formatDate(date2[1], 'yyyy-MM-dd', 'en');
+          const stDate = formatDate(date2[0], 'yyyy-MM-dd', 'th');
+          const endDate = formatDate(date2[1], 'yyyy-MM-dd', 'th');
           const id = this.courseId;
           const date = this.formEdit.get('date').value;
-          const datesort = date.map(res => formatDate(res, 'yyyy-MM-dd', 'en')).sort();
+          const datesort = date.map(res => formatDate(res, 'yyyy-MM-dd', 'th')).sort();
         // const lastUpdate = formatDate(Date.now(), 'yyyy-MM-dd hh:mm:ss', 'en');
         // console.log(this.obj);
 

@@ -2,7 +2,7 @@ package com.cdgs.temple.entity;
 
 import java.io.Serializable;
 
-import java.time.LocalDateTime;
+// import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -54,11 +54,11 @@ public class CourseEntity implements Serializable {
 
     @Column(name = "course_create_date")
     @CreationTimestamp
-    private LocalDateTime courseCreateDate;
+    private Date courseCreateDate;
 
     @Column(name = "course_last_update")
     @CreationTimestamp
-    private LocalDateTime courseLastUpdate;
+    private Date courseLastUpdate;
     
     @Column(name = "course_status")
     private String courseStatus;
@@ -160,19 +160,19 @@ public class CourseEntity implements Serializable {
         this.courseCreateBy = courseCreateBy;
     }
 
-    public LocalDateTime getCourseCreateDate() {
+    public Date getCourseCreateDate() {
         return courseCreateDate;
     }
 
-    public void setCourseCreateDate(LocalDateTime courseCreateDate) {
+    public void setCourseCreateDate(Date courseCreateDate) {
         this.courseCreateDate = courseCreateDate;
     }
 
-    public LocalDateTime getCourseLastUpdate() {
+    public Date getCourseLastUpdate() {
         return courseLastUpdate;
     }
 
-    public void setCourseLastUpdate(LocalDateTime courseLastUpdate) {
+    public void setCourseLastUpdate(Date courseLastUpdate) {
         this.courseLastUpdate = courseLastUpdate;
     }
 

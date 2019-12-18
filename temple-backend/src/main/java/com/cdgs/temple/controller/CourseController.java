@@ -2,6 +2,7 @@ package com.cdgs.temple.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -369,8 +370,8 @@ public class CourseController {
         CourseDto course;
         CourseScheduleDto courseSchedule = new CourseScheduleDto();
         CourseTeacherDto courseTeacher = new CourseTeacherDto();
-        LocalDate dateSt = body.getDate().get(0);
-    	LocalDate dateEnd = body.getDate().get(1);
+        Date dateSt = body.getDate().get(0);
+    	Date dateEnd = body.getDate().get(1);
 //        System.out.println("Date" + body.getDate());
         try {
             course = courseService.createCourse(body);
@@ -380,7 +381,7 @@ public class CourseController {
             	courseSchedule.setCourseScheduleDate(body.getDate().get(0));
                 courseScheduleService.createCourseSchedule(courseSchedule);
             }else {
-            	for (LocalDate date : body.getDate()) {
+            	for (Date date : body.getDate()) {
                 System.out.println("***date = " + date);
                 courseSchedule.setCourseScheduleDate(date);
                 courseScheduleService.createCourseSchedule(courseSchedule);
@@ -480,7 +481,7 @@ public class CourseController {
             /*ตรวจสอบเพิ่มกรณีไม่มีข้อมูลใน schedule*/
             if(courseScheduleService.getCourseId(id) == null) {
                 courseSchedule.setCourseId(course.getId());
-                for (LocalDate date : body.getDate()) {
+                for (Date date : body.getDate()) {
                     System.out.println("***date = " + date);
                     courseSchedule.setCourseScheduleDate(date);
                     courseScheduleService.createCourseSchedule(courseSchedule);

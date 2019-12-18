@@ -3,9 +3,9 @@
   <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
     <p-tabView (onChange)="onTabChange($event)">
       <!-- --------------------- Tab 2 การเดินทางด้วยวัด ------------------------------>
-      <p-tabPanel header="การเดินทางด้วยวัด">
+      <p-tabPanel header="การเดินทางของวัด">
         <div style="text-align:center">
-          <h1>การเดินทางด้วยวัด</h1>
+          <h1>การเดินทางของวัด</h1>
         </div>
         <div class="line"></div>
         <br />
@@ -39,7 +39,7 @@
                   </ng-template>
                   <ng-template pTemplate="header" let-columns>
                     <tr>
-                      <th pSortableColumn="name">
+                      <th pSortableColumn='name'>
                         ประเภทการเดินทาง
                       </th>
                       <th pSortableColumn="timePickUp" style="width: 15%;">

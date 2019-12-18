@@ -442,7 +442,7 @@ public class CourseServiceImpl implements CourseService {
 			Date date1=new SimpleDateFormat("dd-MM-yyyy").parse(datetest);  
 			System.out.println("datetest ="+datetest);
 
-			courseOld.setCourseLastUpdate(LocalDateTime.now());
+			courseOld.setCourseLastUpdate(new Date());
 			courseOld.setCourseLocationId(courseNew.getLocationId());
 			entity = courseRepository.save(courseOld);
 			// ลบของเก่า

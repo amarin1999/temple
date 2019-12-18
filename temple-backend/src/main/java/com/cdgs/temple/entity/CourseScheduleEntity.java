@@ -2,6 +2,7 @@ package com.cdgs.temple.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -21,7 +22,7 @@ public class CourseScheduleEntity implements Serializable {
 
     @Id
     @Column(name = "course_schedule_date")
-    private LocalDate courseScheduleDate;
+    private Date courseScheduleDate;
     
     
     public Long getCourseId() {
@@ -32,11 +33,11 @@ public class CourseScheduleEntity implements Serializable {
         this.courseId = courseId;
     }
 
-    public LocalDate getCourseScheduleDate() {
+    public Date getCourseScheduleDate() {
         return courseScheduleDate;
     }
 
-    public void setCourseScheduleDate(LocalDate courseScheduleDate) {
+    public void setCourseScheduleDate(Date courseScheduleDate) {
         this.courseScheduleDate = courseScheduleDate;
     }
 }
