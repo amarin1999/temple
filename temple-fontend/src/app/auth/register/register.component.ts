@@ -209,7 +209,7 @@ export class RegisterComponent implements OnInit {
     private ng2ImgMax: Ng2ImgMaxService,
     public sanitizer: DomSanitizer,
     public spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit() {
     // const email = this.registerForm.get('email');
@@ -297,7 +297,7 @@ export class RegisterComponent implements OnInit {
         this.actionAccept(type);
         // console.log(type);
       },
-      reject: () => {}
+      reject: () => { }
     });
   }
 
