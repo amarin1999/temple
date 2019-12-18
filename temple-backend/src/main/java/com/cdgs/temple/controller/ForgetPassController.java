@@ -1,5 +1,8 @@
 package com.cdgs.temple.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +34,12 @@ public class ForgetPassController {
     @PostMapping(path = "/")
     public ResponseEntity<?> forgetPassword(@Valid @RequestBody ForgetPassDto body){
     	ResponseDto<ResponseCountDto> res = new ResponseDto<>();
-//    	System.out.println(body.getEmail()+" | "+body.getUsername());
-    	Integer count = forgetPassService.countUser(body.getEmail(), body.getUsername());
-//    	System.out.println(count);
     	try {
-//    		System.out.println("Out If "+body.getEmail()+" | "+body.getUsername());
+//    		System.out.println(body.getUsername()+" | "+body.getIdCard()+" | "+body.getPhoneNumber());
+    		Integer count = forgetPassService.countUser(body.getUsername(), body.getIdCard(), body.getPhoneNumber());
+    		System.out.println(count);
     		if (count > 0) {
-//    			System.out.println("In If "+body.getEmail()+" | "+body.getUsername());
+    			res.setStringData(count.toString());
     			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
     			res.setCode(200);
     			return new ResponseEntity<>(res, HttpStatus.OK);
@@ -50,8 +52,8 @@ public class ForgetPassController {
     		System.out.println("Error");
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(401);
-    		return new ResponseEntity<>(res, HttpStatus.UNAUTHORIZED);
+            res.setCode(400);
+    		return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
     	}
     }
 
