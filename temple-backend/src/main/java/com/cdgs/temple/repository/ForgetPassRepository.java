@@ -11,10 +11,11 @@ import java.util.List;
 public interface ForgetPassRepository extends CrudRepository<ForgetPassEntity, Long> {
 	List<ForgetPassEntity> findAll();
 	
-	@Query(value = "SELECT COUNT(mb.member_id) as count"
-			+ " FROM members mb"
-			+ " WHERE mb.member_email = :email"
-			+ " and mb.member_username = :userName", nativeQuery = true)
-	Integer countUser(@Param("email") String email, @Param("userName") String username);
+	@Query(value = "SELECT COUNT(mb.member_id) as count "
+			+ "FROM members mb "
+			+ "WHERE 1=1 AND mb.member_username = :userName "
+			+ "AND mb.member_id_card = :idCard "
+			+ "AND mb.member_tel = :phoneNumber", nativeQuery = true)
+	Integer countUser(@Param("userName") String userName, @Param("idCard") String idCard, @Param("phoneNumber") String phoneNumber);
 
 }
