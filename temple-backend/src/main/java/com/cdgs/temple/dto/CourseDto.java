@@ -2,8 +2,6 @@ package com.cdgs.temple.dto;
 
 import java.io.Serializable;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,8 +19,8 @@ public class CourseDto implements Serializable {
     private Date endDate;
     private String detail;
     private int conditionMin;
-    private LocalDateTime createDate;
-    private LocalDateTime lastUpdate;
+    private Date createDate;
+    private Date lastUpdate;
     private Long memberId;
     private String memberFname;
     private String memberLname;
@@ -35,7 +33,7 @@ public class CourseDto implements Serializable {
     private List<Long> teacher;
     private List<MemberDto> teacherList;
     private List<CourseScheduleDto> dateList;
-    private List<LocalDate> date;
+    private List<Date> date;
     private Long transportTempleId;
     private String transportTempleName;
     private Date transportTempleTimePickUp;
@@ -97,19 +95,19 @@ public class CourseDto implements Serializable {
         this.conditionMin = conditionMin;
     }
 
-    public LocalDateTime getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public LocalDateTime getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(LocalDateTime lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -185,11 +183,11 @@ public class CourseDto implements Serializable {
         this.canRegister = canRegister;
     }
 
-	public List<LocalDate> getDate() {
+	public List<Date> getDate() {
 		return date;
 	}
 
-	public void setDate(List<LocalDate> date) {
+	public void setDate(List<Date> date) {
 		this.date = date;
 	}
 
