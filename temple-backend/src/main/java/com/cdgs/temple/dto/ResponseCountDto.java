@@ -7,13 +7,13 @@ public class ResponseCountDto implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 4708969530621243531L;
-	private int totalRecord;
+	private Integer totalRecord;
 
-    public int getTotalRecord() {
+    public Integer getTotalRecord() {
         return totalRecord;
     }
 
-    public void setTotalRecord(int totalRecord) {
-        this.totalRecord = totalRecord;
+    public void setTotalRecord(Integer count) {
+        this.totalRecord = count;
     }
 }
