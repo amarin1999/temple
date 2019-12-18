@@ -23,41 +23,41 @@ public class ForgetPassEntity implements Serializable {
 	
 	
 	@Id
-	@Column(name = "member_id")
+	@Column(name = "member_username")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long memberId;
+	private Long memberUsername;
 	
-	@Column(name = "member_username", unique = true)
-	private String memberUsername;
+	@Column(name = "member_id_card")
+	private String memberIdCard;
 	
-	@Column(name = "member_email")
-	private String memberEmail;
+	@Column(name = "member_tel")
+	private String memberTel;
 
-	public Long getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
-	}
-
-	public String getMemberUsername() {
+	public Long getMemberUsername() {
 		return memberUsername;
 	}
 
-	public void setMemberUsername(String memberUsername) {
+	public void setMemberUsername(Long memberUsername) {
 		this.memberUsername = memberUsername;
 	}
 
-	public String getMemberEmail() {
-		return memberEmail;
+	public String getMemberIdCard() {
+		return memberIdCard;
 	}
 
-	public void setMemberEmail(String memberEmail) {
-		this.memberEmail = memberEmail;
+	public void setMemberIdCard(String memberIdCard) {
+		this.memberIdCard = memberIdCard;
 	}
-	
-//	@Id
+
+	public String getMemberTel() {
+		return memberTel;
+	}
+
+	public void setMemberTel(String memberTel) {
+		this.memberTel = memberTel;
+	}
+
+	//	@Id
 //	@Column(name = "count")
 //	@GeneratedValue(strategy=GenerationType.IDENTITY)
 //	private Integer count;
