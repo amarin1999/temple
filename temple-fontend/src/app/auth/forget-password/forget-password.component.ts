@@ -19,7 +19,7 @@ export class ForgetPasswordComponent implements OnInit {
     constructor(
         private forgetPassService: ForgetPassService,
         private formBuilder: FormBuilder,
-        private spinner: NgxSpinnerService,
+        public spinner: NgxSpinnerService,
         private messageService: MessageService,
         private router: Router
     ) { }
@@ -48,17 +48,24 @@ export class ForgetPasswordComponent implements OnInit {
     }
 
     onSubmit(e) {
+        this.messageService.clear();
         e.preventDefault();
         const idCard = this.form.get('idCard').value;
         const username = this.form.get('username').value;
         const phoneNumber = this.form.get('phoneNumber').value;
         if (this.form.invalid) {
+            this.messageService.add({
+                key: 'alert',
+                sticky: true,
+                severity: 'warn',
+                summary: 'กรุณากรอกข้อมูลให้ครบถ้วน'
+            });
             this.subscribeInputMessageWaring();
         } else if (this.form.valid) {
             console.log(idCard, username, phoneNumber);
             this.forgetPassService.getUserForgetInfo(idCard, username, phoneNumber).toPromise().then(res => {
                 this.spinner.show();
-                console.log(res);
+                console.log(res['data']);
                 if (res['result'] === 'Success') {
                     if (res['code'] === 200) {
                         // Do something
@@ -69,13 +76,14 @@ export class ForgetPasswordComponent implements OnInit {
                             severity: 'success',
                             summary: 'ยืนยันการเปลี่ยนรหัสผ่าน'
                         });
+                        this.forgetPassService.memberData = res['data'];
                     } else if (res['code'] === 204) {
                         this.messageService.clear();
                         this.messageService.add({
-                            key: 'alertFalse',
+                            key: 'alert',
                             sticky: true,
-                            severity: 'warn',
-                            summary: 'ไม่มี Username อยู่ในระบบหรือข้อมูลไม่ตรงกัน'
+                            severity: 'error',
+                            summary: 'ไม่มีชื่อผู้ใช้อยู่ในระบบหรือข้อมูลไม่ตรงกัน'
                         });
                     }
                 }
@@ -83,14 +91,14 @@ export class ForgetPasswordComponent implements OnInit {
                 // Message Not found user or email in system
                 if (err['error']['code'] === 401) {
                     this.messageService.add({
-                        key: 'alertFalse',
+                        key: 'alert',
                         sticky: true,
                         severity: 'error',
                         summary: err['error']['errorMessage']
                     });
                 } else {
                     this.messageService.add({
-                        key: 'alertFalse',
+                        key: 'alert',
                         sticky: true,
                         severity: 'error',
                         summary: 'ระบบขัดข้อง โปรดติดต่อผู้ดูแลระบบ'
