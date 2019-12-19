@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.cdgs.temple.dto.ForgetPassDto;
 import com.cdgs.temple.dto.MemberDto;
 import com.cdgs.temple.entity.MemberEntity;
 import com.cdgs.temple.repository.MemberRepository;
@@ -111,6 +113,12 @@ public class MemberServiceImpl implements MemberService {
 		entity = memberRepository.save(memberConvert);
 		return mapEntityToDto(entity);
 
+	}
+	
+	@Override
+	public MemberDto getMemberByUserNameIdCardPhoneNumber(ForgetPassDto body) {
+		MemberEntity entity = memberRepository.getMemberByUserNameIdCardPhoneNumber(body.getUsername(), body.getIdCard(), body.getPhoneNumber());
+		return mapEntityToDto(entity);
 	}
 	
 	@Override
@@ -243,6 +251,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return dto;
 	}
+
 
 
 
