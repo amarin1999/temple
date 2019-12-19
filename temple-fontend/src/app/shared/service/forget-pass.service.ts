@@ -3,12 +3,15 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ApiConstants } from '../constants/ApiConstants';
 import { map } from 'rxjs/operators';
+import { Member } from '../interfaces/member';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ForgetPassService {
 
+
+  public memberData: Member;
   constructor(
     private http: HttpClient
   ) { }
@@ -23,11 +26,20 @@ export class ForgetPassService {
     //     return {
     //       status: res['result'],
     //       data: res['data'],
-    //       stringData: res['stringData'],
+    //       // stringData: res['stringData'],
     //       errorMessage: res['errorMessage'],
     //       code: res['code']
     //     };
     //   })
     // );
+  }
+
+  changePassword(password) {
+    const body = {
+      ...this.memberData[0],
+      'password': password
+    };
+    // console.log('body', body);
+    return this.http.put(ApiConstants.baseURl + '/forgetpass/', body);
   }
 }
