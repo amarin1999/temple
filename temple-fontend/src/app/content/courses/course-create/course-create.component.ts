@@ -155,8 +155,8 @@ export class CourseCreateComponent implements OnInit {
     );
 
     const currentYear = this.pipe.transform(Date.now(), 'yyyy');
-    const startYear = parseInt(currentYear) - 100;
-    this.yearRange = startYear + ':' + currentYear;
+    const startYear = parseInt(currentYear) + 5;
+    this.yearRange = currentYear + ':' + startYear ;
   }
 
   private initNotice() {
@@ -223,12 +223,12 @@ export class CourseCreateComponent implements OnInit {
           const date = this.courseForm.get('date').value;
           // console.log('dateForm0 =' + date[0]);
           // console.log('dateForm1 =' + date[1]);
-          const stDate = formatDate(date[0], 'yyyy-MM-dd', 'en');
+          const stDate = formatDate(date[0], 'yyyy-MM-dd', 'th');
           let endDate = '';
           let datesort = [];
           if (date[1] != null) {
-            endDate = formatDate(date[1], 'yyyy-MM-dd', 'en');
-            datesort = date.map(res => formatDate(res, 'yyyy-MM-dd', 'en')).sort();
+            endDate = formatDate(date[1], 'yyyy-MM-dd', 'th');
+            datesort = date.map(res => formatDate(res, 'yyyy-MM-dd', 'th')).sort();
           } else {
             endDate = stDate;
             for (let i = 0 ; i < 2; i++) {

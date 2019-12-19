@@ -444,6 +444,8 @@ public class CourseServiceImpl implements CourseService {
 
 			courseOld.setCourseLastUpdate(new Date());
 			courseOld.setCourseLocationId(courseNew.getLocationId());
+			courseOld.setCourseTransportTempleId(courseNew.getTransportTempleId());
+			
 			entity = courseRepository.save(courseOld);
 			// ลบของเก่า
 			courseTeacherRepository.deleteCourseTeachers(id);

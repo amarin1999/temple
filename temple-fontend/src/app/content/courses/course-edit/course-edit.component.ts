@@ -154,8 +154,8 @@ public validationMessage = {
     );
 
     const currentYear = this.pipe.transform(Date.now(), 'yyyy');
-    const startYear = parseInt(currentYear) - 100;
-    this.yearRange = startYear + ':' + currentYear;
+    const startYear = parseInt(currentYear)+5;
+    this.yearRange = currentYear + ':' + startYear ;
   }
 
   private initNotice() {
@@ -170,7 +170,6 @@ public validationMessage = {
       .subscribe(res => {
         /*var result = [];
         var teacherLength;*/
-        // console.log('res', res);
         const teachers = res['data']['teacherList'].map(res => {
           return {
             id: res['id'],
@@ -190,15 +189,14 @@ public validationMessage = {
         const dateJson = [];
         dateJson[0] = res['data']['stDate'];
         dateJson[1] = res['data']['endDate'];
-        // console.log(dateJson[0]);
-        // console.log(dateJson[1]);
-        const datecon = new Date(JSON.stringify(dateJson[0]));
-        const datecon2 = new Date(JSON.stringify(dateJson[1]));
+
+        const datecon = new Date(dateJson[0]);
+        const datecon2 = new Date(dateJson[1]);
 
         const date = [];
         date[0] = datecon;
         date[1] = datecon2;
-        console.log('date', date);
+        // console.log('date', date);
 
         const location = {
           id: res['data']['locationId'],
@@ -212,7 +210,7 @@ public validationMessage = {
           + ' เวลาส่ง : ' + new Date(res['data']['transportTempleTimeSend']).toLocaleTimeString('th-TH', this.optionTime)
         };
 
-        console.log(transportTemple);
+        // console.log(transportTemple);
         this.formEdit.controls['courseName'].setValue(res['data']['name']);
         this.formEdit.controls['detail'].setValue(res['data']['detail']);
         this.formEdit.controls['location'].setValue(location);
@@ -241,25 +239,36 @@ public validationMessage = {
         //  console.log('dateForm0 =' + date2[0]);
         //  console.log('dateForm1 =' + date2[1]);
           const stDate = formatDate(date2[0], 'yyyy-MM-dd', 'th');
-          const endDate = formatDate(date2[1], 'yyyy-MM-dd', 'th');
+          let endDate = '';
+          let datesort = [];
+
+          if(date2[1] != null) {
+            endDate = formatDate(date2[1], 'yyyy-MM-dd', 'th');
+            datesort = date2.map(res => formatDate(res, 'yyyy-MM-dd', 'th')).sort();
+          } else {
+            endDate = stDate;
+            for (let i = 0 ; i < 2; i++) {
+              datesort.push(stDate);
+            }
+          }
           const id = this.courseId;
-          const date = this.formEdit.get('date').value;
-          const datesort = date.map(res => formatDate(res, 'yyyy-MM-dd', 'th')).sort();
         // const lastUpdate = formatDate(Date.now(), 'yyyy-MM-dd hh:mm:ss', 'en');
         // console.log(this.obj);
+          // console.log('datesort' + datesort);
 
           const course = {
             name: this.formEdit.get('courseName').value,
             detail: this.formEdit.get('detail').value,
             locationId: this.formEdit.get('location').value.id,
-            conditionMin:  parseInt(this.formEdit.get('conditionMin').value.id),
+            conditionMin: parseInt(this.formEdit.get('conditionMin').value.id),
             date: datesort,
             stDate: stDate,
             endDate: endDate,
             // lastUpdate: lastUpdate,
-            teacher: this.formEdit.get('teachers').value.map(res => res.id)
+            teacher: this.formEdit.get('teachers').value.map(res => res.id),
+            transportTempleId: this.formEdit.get('transportTemple').value.id
           };
-          // console.log(course);
+          console.log(course);
 
           this.courseService.editCourse(id, course).subscribe(res => {
             if (res['result'] === 'Success') {
