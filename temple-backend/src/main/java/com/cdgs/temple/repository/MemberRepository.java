@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.cdgs.temple.entity.MemberEntity;
@@ -22,6 +23,13 @@ public interface MemberRepository extends CrudRepository<MemberEntity, Long> {
 			+ "member_id_card, member_age, member_ordian_number, member_ordian_date, member_postal_code "
 			+ "FROM temple.members;", nativeQuery = true)
 	List<MemberEntity> getAllUsersWithOutImg();
+	
+	@Query(value = "SELECT * "
+			+ "FROM members mb "
+			+ "WHERE 1=1 AND mb.member_username = :userName "
+			+ "AND mb.member_id_card = :idCard "
+			+ "AND mb.member_tel = :phoneNumber", nativeQuery = true)
+	MemberEntity getMemberByUserNameIdCardPhoneNumber(@Param("userName") String userName, @Param("idCard") String idCard, @Param("phoneNumber") String phoneNumber);
 	
 	
 }
