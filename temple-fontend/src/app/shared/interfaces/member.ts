@@ -1,3 +1,5 @@
+import { HistoryDharma } from './historyDharma';
+
 export interface Member {
   id?: Number;
   username?: String;
@@ -32,4 +34,5 @@ export interface Member {
   disease?: String;
   emergencyName?: String;
   emergencyRelationship?: String;
+  historydharma?: HistoryDharma;
 }
