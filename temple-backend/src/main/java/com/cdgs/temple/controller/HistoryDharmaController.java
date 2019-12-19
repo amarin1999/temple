@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.cdgs.temple.dto.HistoryDharmaDto;
 import com.cdgs.temple.service.HistoryDharmaService;
-import com.cdgs.temple.service.impl.ProvinceServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
 
 @RestController

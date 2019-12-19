@@ -7,7 +7,6 @@ import com.cdgs.temple.security.JwtTokenUtil;
 import com.cdgs.temple.security.JwtUser;
 import com.cdgs.temple.service.HistoryDharmaService;
 import com.cdgs.temple.service.MemberService;
-import com.cdgs.temple.service.impl.ProvinceServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
 import com.cdgs.temple.util.ResponseTokenDto;
 
