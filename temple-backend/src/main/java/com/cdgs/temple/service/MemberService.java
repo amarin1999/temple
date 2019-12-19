@@ -2,6 +2,7 @@ package com.cdgs.temple.service;
 
 import java.util.List;
 
+import com.cdgs.temple.dto.ForgetPassDto;
 import com.cdgs.temple.dto.MemberDto;
 
 public interface MemberService {
@@ -16,4 +17,5 @@ public interface MemberService {
     
     MemberDto createMemberByAdmin(MemberDto body);
     MemberDto updateMemberByAdmin(Long id,MemberDto body);
+	MemberDto getMemberByUserNameIdCardPhoneNumber(ForgetPassDto body);
 }
