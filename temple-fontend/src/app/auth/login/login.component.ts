@@ -5,6 +5,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {Router} from '@angular/router';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {MessageService} from 'primeng/api';
+import { ForgetPassService } from 'src/app/shared/service/forget-pass.service';
 
 
 @Component({
@@ -33,15 +34,17 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private spinner: NgxSpinnerService,
         private messageService: MessageService,
+        private forgetPassService: ForgetPassService
     ) {
     }
 
     ngOnInit() {
-
+        this.forgetPassService.memberData = null;
         this.createForm();
     }
 
     onSubmit(e) {
+        this.messageService.clear();
         e.preventDefault();
         const username = this.form.get('username').value;
         const password = this.form.get('password').value;
