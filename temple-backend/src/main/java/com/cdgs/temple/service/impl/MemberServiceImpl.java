@@ -148,6 +148,20 @@ public class MemberServiceImpl implements MemberService {
 		return mapEntityToDto(entity);
 		
 	}
+	
+	@Override
+	public MemberDto changePasswordMember(MemberDto body) {
+		MemberEntity entity;
+		MemberEntity memberData;
+		Optional<MemberEntity> memberEntity = memberRepository.findById(body.getId());
+		if(!memberEntity.isPresent()) {
+			return mapEntityToDto(memberEntity.get());
+		}
+		memberData = memberEntity.get();
+		memberData.setMemberPassword(bCryptPasswordEncoder.encode(body.getPassword()));
+		entity = memberRepository.save(memberData);
+		return mapEntityToDto(entity);
+	}
 
 	@Override
 	public MemberDto getCurrentMember() {
@@ -253,12 +267,4 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-
-
-
-
-
-
-
-	
 }

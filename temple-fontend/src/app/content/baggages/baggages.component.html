@@ -51,7 +51,7 @@
     </div>
 </div>
 <p-dialog (onHide)="clear()" header="รายละเอียดตู้สัมภาระ" [(visible)]="displayDialog" [responsive]="true"
-    showEffect="fade" [modal]="true">
+    showEffect="fade" [modal]="true" [contentStyle]="{ overflow: 'visible' }">
     <div class="ui-g ui-fluid" *ngIf="baggage">
         <div class="ui-g-12">
             <div class="ui-g-4" style="text-align: right;">

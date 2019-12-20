@@ -1,12 +1,10 @@
-
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
 <div class="ui-g">
     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 ">
         <div class="container" *ngIf="showButtonBack('user')" >
             <div style="text-align: center">
                 <h2>{{(course?.name) ? course?.name : 'ไม่มีข้อมูล'}}</h2>
             </div>
-            <!-- <p-messages [value]="msgs"></p-messages> -->
-            <p-toast [style]="{marginTop: '80px'}"></p-toast>
             <p-card>
                 <div class="ui-g">
                     <div class="ui-g-12 ui-lg-2 ui-md-2 ui-sm-12">

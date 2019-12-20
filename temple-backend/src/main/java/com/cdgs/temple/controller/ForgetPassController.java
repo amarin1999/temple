@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cdgs.temple.dto.ForgetPassDto;
 import com.cdgs.temple.dto.MemberDto;
-import com.cdgs.temple.dto.ResponseCountDto;
 import com.cdgs.temple.service.ForgetPassService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.util.ResponseDto;
@@ -78,10 +76,8 @@ public class ForgetPassController {
     @PutMapping(path = "/")
     public ResponseEntity<ResponseDto<MemberDto>> changePassword(@Valid @RequestBody MemberDto body) {
     	ResponseDto<MemberDto> res = new ResponseDto<>();
-    	List<MemberDto> members = new ArrayList<>();
-    	MemberDto member;
     	try {
-    		
+    		memberService.changePasswordMember(body);
     		res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);

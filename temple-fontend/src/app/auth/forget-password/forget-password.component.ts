@@ -62,9 +62,9 @@ export class ForgetPasswordComponent implements OnInit {
             });
             this.subscribeInputMessageWaring();
         } else if (this.form.valid) {
+            this.spinner.show();
             console.log(idCard, username, phoneNumber);
             this.forgetPassService.getUserForgetInfo(idCard, username, phoneNumber).toPromise().then(res => {
-                this.spinner.show();
                 console.log(res['data']);
                 if (res['result'] === 'Success') {
                     if (res['code'] === 200) {

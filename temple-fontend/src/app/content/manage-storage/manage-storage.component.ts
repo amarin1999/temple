@@ -7,14 +7,12 @@ import { MenuItem, ConfirmationService, Message, MessageService } from 'primeng/
 import { ManageUserService } from 'src/app/shared/service/manage-user.service';
 import { LoginComponent } from 'src/app/auth/login/login.component';
 
-
 @Component({
   selector: 'app-manage-storage',
   templateUrl: './manage-storage.component.html',
   styleUrls: ['./manage-storage.component.scss']
 })
 export class ManageStorageComponent implements OnInit {
-
 
   displayDialog: boolean;
   items: Baggage[];
@@ -52,15 +50,15 @@ export class ManageStorageComponent implements OnInit {
 
     this.initDialogData();
     this.getData();
-    this.getItem();    
+    this.getItem();
 
     this.cols = [
-      { field: 'createDate', header: 'วันที่',width:'16%'},
-      { field: 'memberName', header: 'สมาชิก',width:'20%'},
+      { field: 'createDate', header: 'วันที่', width: '16%' },
+      { field: 'memberName', header: 'สมาชิก', width: '20%' },
       { field: 'locker', header: 'หมายเลขตู้' },
       { field: 'status', header: 'สถานะ' },
       { field: 'memberId', header: 'รหัสผู้ใช้' },
-      { field: 'baggageId', header: 'รหัสสัมภาระ'}
+      { field: 'baggageId', header: 'รหัสสัมภาระ', width: '10%'}
     ];
 
     this.breadCrumbService.setPath([
@@ -99,8 +97,8 @@ export class ManageStorageComponent implements OnInit {
               return {
                 number: res['locationName'] + '  ' + res['number'],
                 lockerId: res['lockerId']
-              }
-            })
+              };
+            });
           }
         }
       );
@@ -129,11 +127,11 @@ export class ManageStorageComponent implements OnInit {
       number: event.locker,
       lockerId: event.lockerId
     };
-    this.numberOfLocker = [...this.numberOfLocker, this.data]
+    this.numberOfLocker = [...this.numberOfLocker, this.data];
     this.selectedNumber = this.numberOfLocker.filter(res => res.lockerId === event.lockerId)[0];
-    //console.log(this.numberOfLocker);
+    // console.log(this.numberOfLocker);
     this.selectedMember = this.members.filter(res => res.memberId === event.memberId)[0];
-    //console.log(this.selectedMember);
+    // console.log(this.selectedMember);
 
     this.selectedStatus = {
       val: event.status,
@@ -147,7 +145,7 @@ export class ManageStorageComponent implements OnInit {
     this.baggageService.delete(id).toPromise()
       .then(res => {
         if (res['status'] === 'Success') {
-          this.items.splice(index, 1)
+          this.items.splice(index, 1);
         }
       }).catch((e) => console.log(e['error']['message']));
   }
@@ -164,10 +162,10 @@ export class ManageStorageComponent implements OnInit {
         const data = {
           memberId: this.selectedMember['memberId'],
           lockerId: this.selectedNumber['lockerId']
-        }
+        };
         this.baggageService.saveStorage(data)
           .subscribe(res => {
-            if (res['status'] === "Success") {
+            if (res['status'] === 'Success') {
               this.getData();
               this.getItem();
               this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการฝากสัมภาระสำเร็จ' });
@@ -184,7 +182,7 @@ export class ManageStorageComponent implements OnInit {
             }
           );
       }
-    }); 
+    });
   }
 
   update() {
@@ -199,14 +197,17 @@ export class ManageStorageComponent implements OnInit {
           memberId: this.selectedMember['memberId'],
           lockerId: this.selectedNumber['lockerId'],
           status: this.selectedStatus['val']
-        }
+        };
         this.baggageService.updateStorage(this.baggageselect.baggageId, data).subscribe(res => {
 
           if (res['status'] === 'Success') {
             this.clear();
             this.getData();
             this.getItem();
-            this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: (res['data']['status'] == 1 ? 'แก้ไข' : 'คืน') + 'สัมภาระสำเร็จ' });
+            this.messageService.add({
+              severity: 'success', summary: 'ข้อความจากระบบ',
+              detail: (res['data']['status'] === 1 ? 'แก้ไข' : 'คืน') + 'สัมภาระสำเร็จ'
+            });
           } else {
             this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'แก้ไขสัมภาระไม่สำเร็จ' });
           }
