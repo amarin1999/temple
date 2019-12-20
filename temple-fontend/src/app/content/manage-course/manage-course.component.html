@@ -64,24 +64,35 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns">
                             <tr [pSelectableRow]="rowData">
-                                <td *ngFor="let col of columns;">
-                                    <div *ngIf="rowData[col.field] === rowData['createDate'] && col.field == 'createDate'" style="text-align: center">{{rowData['createDate'] | formatTHdate}}</div>
-                                    <div *ngIf="rowData[col.field] == rowData['lastUpdate'] && col.field == 'lastUpdate'" style="text-align: center">{{rowData['lastUpdate'] | formatTHdate}}</div>
-                                    <div *ngIf="rowData[col.field] == rowData['name']">{{rowData['name']}}</div>
-                                    <div *ngIf="rowData[col.field] == rowData['locationName']" style="text-align: center">{{rowData['locationName']}}</div>
-                                    <div *ngIf="rowData[col.field] == rowData['transportTemple']" style="text-align: center">{{rowData['transportTempleName']}} <br>
-                                        เวลารับ : {{rowData['transportTempleTimePickUp'] | date: "HH:mm"}} <br> เวลาส่ง : {{rowData['transportTempleTimeSend'] | date: "HH:mm"}}</div>
-                                    <div *ngIf="rowData[col.field] == rowData['conditionMin']" style="text-align: center">ต้องผ่านอย่างน้อย {{rowData['conditionMin']}} คอร์ส</div>
+                                <td>
+                                    {{rowData['createDate'] | formatTHdate}}
+                                </td>
+                                <td>
+                                    {{rowData['lastUpdate'] | formatTHdate}}
+                                </td>
+                                <td>
+                                    {{rowData['name']}}
+                                </td>
+                                <td>
+                                    {{rowData['locationName']}}
+                                </td>
+                                <td>
+                                    <div *ngIf="rowData['transportTempleName'] != null ; else nullValue">
+                                        {{rowData['transportTempleName']}} <br>
+                                        เวลารับ : {{rowData['transportTempleTimePickUp'] | date: "HH:mm"}} <br> เวลาส่ง : {{rowData['transportTempleTimeSend'] | date: "HH:mm"}}
+                                    </div>
+                                    <ng-template #nullValue>
+                                        ไม่มีข้อมูล
+                                    </ng-template>
+                                </td>
+                                <td>
+                                    ต้องผ่านอย่างน้อย {{rowData['conditionMin']}} คอร์ส
                                 </td>
                                 <td>
                                     <div class="ui-g" style="text-align: center">
                                         <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
                                             <button pButton type="button" label="แก้ไข" (click)="editCourse(rowData['id'])" class="ui-button-warning ui-button-raised"></button>
                                         </div>
-                                        <!-- <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-                                            <button pButton type="button" (click)="deleteCourse(rowData['id'])" label="ลบ"
-                                                class="ui-button-warning"></button>
-                                        </div> -->
                                     </div>
                                 </td>
                             </tr>

@@ -44,7 +44,7 @@ export class CourseEditComponent implements OnInit {
       date: new FormControl('', Validators.required),
       conditionMin: new FormControl('', Validators.required),
       teachers: new FormControl('', Validators.required),
-      transportTemple: new FormControl('')
+      transportTemple: new FormControl(null)
     }
   );
 

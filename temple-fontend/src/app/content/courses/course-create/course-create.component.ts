@@ -28,11 +28,12 @@ export class CourseCreateComponent implements OnInit {
   public filteredTeacher: any[];
   public teachers: any[];
   public teacher: any;
-  public transportTemple: any[];
+  public transportTempleId: number;
   public pipe = new DatePipe('th-TH');
   public yearRange: string;
   public timePickUp: any;
   public optionTime: any;
+
 
   @Input() displayCreateDialog = false;
   @Output() closeDisplayCreateDialog = new EventEmitter();
@@ -45,9 +46,9 @@ export class CourseCreateComponent implements OnInit {
         date: new FormControl('', Validators.required),
         conditionMin: new FormControl('', Validators.required),
         teachers: new FormControl('', Validators.required),
-        transportTemple: new FormControl('')
+        transportTemple: new FormControl(null)
       }
-    )
+    );
 
   public formError = {
     courseName: '',
@@ -84,7 +85,7 @@ export class CourseCreateComponent implements OnInit {
       required: 'ผู้สอน*'
     },
     conditionMin: {
-      required: 'หมายเหตุ*'
+      required: 'เงื่อนไข*'
     }
   };
   
@@ -187,19 +188,15 @@ export class CourseCreateComponent implements OnInit {
         this.formError[field] = '';
         const control = this.courseForm.get(field);
         if (control && this.validationMessage[field]) {
-          // console.log(field);
-          // console.log(control.valid);
           if (!control.valid) {
             this.formError[field] = this.validationMessage[field].required;
             if (field == 'courseName') {
               if (control.hasError('maxlength')) {
-                // console.log('if' + field);
                 this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
               }
             }
             if (field == 'detail' ){
               if (control.hasError('maxlength')) {
-                // console.log('if' + field);
                 this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
               }
             }
@@ -214,15 +211,16 @@ export class CourseCreateComponent implements OnInit {
     this.setValidate();
     if (!this.courseForm.valid ) {
         this.subscribeInputMessageWaring();
+        console.log(this.courseForm.get('transportTemple').errors);
+        
     } else {
       this.confirmationService.confirm({
         message: 'ยืนยันการสร้างคอร์ส',
         header: 'สร้างคอร์สใหม่',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+
           const date = this.courseForm.get('date').value;
-          // console.log('dateForm0 =' + date[0]);
-          // console.log('dateForm1 =' + date[1]);
           const stDate = formatDate(date[0], 'yyyy-MM-dd', 'th');
           let endDate = '';
           let datesort = [];
@@ -240,12 +238,18 @@ export class CourseCreateComponent implements OnInit {
           // console.log('datesort =' + datesort);
           // console.log('TEACHERS =' + this.courseForm.get('teachers').value.map(res => res.id));
 
+          if(this.courseForm.get('transportTemple').value == null){
+            this.transportTempleId = null;
+          } else {
+            this.transportTempleId = this.courseForm.get('transportTemple').value.id;
+          }
+
           const course = {
             no: 0,
             name: this.courseForm.get('courseName').value,
             detail: this.courseForm.get('detail').value,
             locationId: this.courseForm.get('location').value.id,
-            transportTempleId: this.courseForm.get('transportTemple').value.id,
+            transportTempleId: this.transportTempleId,
             conditionMin: this.courseForm.get('conditionMin').value.id,
             date: datesort,
             stDate: stDate,
@@ -253,7 +257,7 @@ export class CourseCreateComponent implements OnInit {
             status: 1,
             teacher: this.courseForm.get('teachers').value.map(res => res.id)
           };
-          // console.log(course);
+          console.log(course);
           this.courseService.createCourse(course).subscribe(res => {
             if (res['result'] === 'Success') {
               /* const index = this.courses.findIndex(course => course.id === this.courseId);
@@ -323,7 +327,7 @@ export class CourseCreateComponent implements OnInit {
         control.clearValidators();
         if (key == 'courseName' || key == 'detail') {
           control.setValidators([Validators.required, Validators.maxLength(255)]);
-        } else {
+        } else if(key != 'transportTemple') {
           control.setValidators(Validators.required);
         }
         control.updateValueAndValidity();

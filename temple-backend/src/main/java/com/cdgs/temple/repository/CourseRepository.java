@@ -83,7 +83,7 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 	
 	
 	@Query(value = "SELECT * FROM courses c "
-			+ "JOIN transportation_temple t "
+			+ "LEFT JOIN transportation_temple t "
 			+ "ON c.course_transportation_temple_id = t.transportation_temple_id "
 			+ "WHERE 1=1 AND c.course_enable = '1' "
 			+ "GROUP BY c.course_id "

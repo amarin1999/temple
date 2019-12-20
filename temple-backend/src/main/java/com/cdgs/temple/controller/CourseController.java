@@ -109,7 +109,10 @@ public class CourseController {
             return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
     }
-    
+    /**
+     * GetCourses
+     * this function for get courses by admin and monk
+     * */
     @GetMapping(path = "")
     @PreAuthorize("hasRole('admin') or hasRole('monk')")
     public ResponseEntity<ResponseDto<CourseDto>> GetCourses() {
@@ -356,7 +359,7 @@ public class CourseController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
-    /*
+    /**
      * createCourse
      * this function is create new course by admin
      * 
