@@ -18,4 +18,6 @@ public interface MemberService {
     MemberDto createMemberByAdmin(MemberDto body);
     MemberDto updateMemberByAdmin(Long id,MemberDto body);
 	MemberDto getMemberByUserNameIdCardPhoneNumber(ForgetPassDto body);
+	
+	MemberDto changePasswordMember(MemberDto body);
 }
