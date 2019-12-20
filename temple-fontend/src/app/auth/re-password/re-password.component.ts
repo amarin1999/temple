@@ -31,7 +31,7 @@ export class RePasswordComponent implements OnInit {
 
     public validationMessage = {
         password: {
-            required: 'รหัสผ่าน*'
+            required: 'รหัสผ่านใหม่*'
         },
         rePassword: {
             required: 'ยืนยันรหัสผ่าน*'
@@ -73,9 +73,9 @@ export class RePasswordComponent implements OnInit {
             });
             this.subscribeInputMessageWaring();
         } else if (this.form.valid) {
+            this.spinner.show();
             // console.log('MemberData', this.forgetPassService.memberData.password);
             this.forgetPassService.changePassword(password).toPromise().then(res => {
-                this.spinner.show();
                 console.log(res['data']);
                 if (res['result'] === 'Success') {
                     if (res['code'] === 200) {
@@ -85,16 +85,15 @@ export class RePasswordComponent implements OnInit {
                             key: 'alert',
                             sticky: true,
                             severity: 'success',
-                            summary: 'ยืนยันการเปลี่ยนรหัสผ่าน'
+                            summary: 'เปลี่ยนรหัสผ่านสำเร็จ'
                         });
-                        this.forgetPassService.memberData = res['data'];
-                    } else if (res['code'] === 204) {
+                    } else {
                         this.messageService.clear();
                         this.messageService.add({
                             key: 'alert',
                             sticky: true,
                             severity: 'error',
-                            summary: 'ไม่มีชื่อผู้ใช้อยู่ในระบบหรือข้อมูลไม่ตรงกัน'
+                            summary: 'ระบบขัดข้อง โปรดติดต่อผู้ดูแลระบบ'
                         });
                     }
                 }
