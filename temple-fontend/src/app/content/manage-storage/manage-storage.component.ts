@@ -7,14 +7,12 @@ import { MenuItem, ConfirmationService, Message, MessageService } from 'primeng/
 import { ManageUserService } from 'src/app/shared/service/manage-user.service';
 import { LoginComponent } from 'src/app/auth/login/login.component';
 
-
 @Component({
   selector: 'app-manage-storage',
   templateUrl: './manage-storage.component.html',
   styleUrls: ['./manage-storage.component.scss']
 })
 export class ManageStorageComponent implements OnInit {
-
 
   displayDialog: boolean;
   items: Baggage[];
@@ -147,7 +145,7 @@ export class ManageStorageComponent implements OnInit {
     this.baggageService.delete(id).toPromise()
       .then(res => {
         if (res['status'] === 'Success') {
-          this.items.splice(index, 1)
+          this.items.splice(index, 1);
         }
       }).catch((e) => console.log(e['error']['message']));
   }
