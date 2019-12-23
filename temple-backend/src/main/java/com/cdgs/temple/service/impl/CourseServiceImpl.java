@@ -9,6 +9,9 @@ import com.cdgs.temple.dto.*;
 import com.cdgs.temple.entity.*;
 import com.cdgs.temple.repository.TempCourseRepository;
 import com.cdgs.temple.service.CourseScheduleService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cdgs.temple.repository.CourseRepository;
@@ -25,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CourseServiceImpl implements CourseService {
+	
+	private static final  Logger log = LoggerFactory.getLogger(CourseServiceImpl.class);
 
 	private CourseRepository courseRepository;
 
@@ -154,8 +159,14 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public CourseDto getCourse(Long id) {
-		CourseEntity entity = courseRepository.findById(id).get();
-		return mapEntityEditToDto(entity);
+		try {
+			CourseEntity entity = courseRepository.findById(id).get();
+			return mapEntityEditToDto(entity);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
 
 	}
 	
@@ -584,7 +595,7 @@ public class CourseServiceImpl implements CourseService {
 		List<CourseScheduleDto> dateList = new ArrayList<>();
 		CourseDto dto = new CourseDto();
 		try {
-			if (entity != null) {
+ 			if (entity != null) {
 				dto.setId(entity.getCourseId());
 				dto.setNo(entity.getCourseNo());
 				dto.setName(entity.getCourseName());
@@ -594,10 +605,20 @@ public class CourseServiceImpl implements CourseService {
 				dto.setLastUpdate(entity.getCourseLastUpdate());
 				dto.setLocationId(entity.getLocationId().getLocationId());
 				dto.setLocationName(entity.getLocationId().getLocationName());
-				dto.setTransportTempleId(entity.getTransportTempleEntity().getTransportationTempleId());
-				dto.setTransportTempleName(entity.getTransportTempleEntity().getTransportationTempleName());
-				dto.setTransportTempleTimePickUp(entity.getTransportTempleEntity().getTransportationTempleTimePickup());
-				dto.setTransportTempleTimeSend(entity.getTransportTempleEntity().getTransportationTempleTimeSend());
+				
+				if (entity.getCourseTransportTempleId() != null) {
+					dto.setTransportTempleId(entity.getTransportTempleEntity().getTransportationTempleId());
+					dto.setTransportTempleName(entity.getTransportTempleEntity().getTransportationTempleName());
+					dto.setTransportTempleTimePickUp(entity.getTransportTempleEntity().getTransportationTempleTimePickup());
+					dto.setTransportTempleTimeSend(entity.getTransportTempleEntity().getTransportationTempleTimeSend());
+				} else {
+					dto.setTransportTempleId(null);
+					dto.setTransportTempleName(null);
+					dto.setTransportTempleTimePickUp(null);
+					dto.setTransportTempleTimeSend(null);
+				}
+				
+				
 				dto.setMemberId(entity.getCreateBy().getMemberId());
 				dto.setMemberFname(entity.getCreateBy().getMemberFname());
 				dto.setMemberLname(entity.getCreateBy().getMemberLname());
@@ -606,12 +627,11 @@ public class CourseServiceImpl implements CourseService {
 
 				for (CourseTeacherEntity courseTeacher : entity.getCourseTeacher()) {
 					teacherList.add(memberService.getMember(courseTeacher.getMemberId()));
-					System.out.println("teacherList = "+teacherList);
+//					System.out.println("teacherList = "+teacherList);
 				}
 				dto.setTeacherList(teacherList);
-
 				dto.setDateList(courseScheduleService.getCourseScheduleList(entity.getCourseId()));
-
+				
 				return dto;
 			} else {
 				return null;

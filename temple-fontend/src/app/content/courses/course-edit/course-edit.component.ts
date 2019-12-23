@@ -31,6 +31,7 @@ export class CourseEditComponent implements OnInit {
   public pipe = new DatePipe('th-TH');
   public yearRange: string;
   public optionTime: any;
+  public transportTempleList: any;
 
   @Input() displayEditDialog = false;
   @Input() courseId: number;
@@ -203,13 +204,16 @@ public validationMessage = {
           name: res['data']['locationName']
         };
 
-        const transportTemple = {
-          id: res['data']['transportTempleId'],
-          name: res['data']['transportTempleName']
-          + ' เวลารับ : ' + new Date(res['data']['transportTempleTimePickUp']).toLocaleTimeString('th-TH', this.optionTime)
-          + ' เวลาส่ง : ' + new Date(res['data']['transportTempleTimeSend']).toLocaleTimeString('th-TH', this.optionTime)
-        };
-
+        if (res['data']['transportTempleId'] != null ) {
+          this.transportTempleList = {
+            id: res['data']['transportTempleId'],
+            name: res['data']['transportTempleName']
+            + ' เวลารับ : ' + new Date(res['data']['transportTempleTimePickUp']).toLocaleTimeString('th-TH', this.optionTime)
+            + ' เวลาส่ง : ' + new Date(res['data']['transportTempleTimeSend']).toLocaleTimeString('th-TH', this.optionTime)
+          };
+        } else {
+          this.transportTempleList = null;
+        }
         // console.log(transportTemple);
         this.formEdit.controls['courseName'].setValue(res['data']['name']);
         this.formEdit.controls['detail'].setValue(res['data']['detail']);
@@ -217,7 +221,7 @@ public validationMessage = {
         this.formEdit.controls['teachers'].patchValue(teachers);
         this.formEdit.controls['date'].patchValue(date);
         this.formEdit.controls['conditionMin'].setValue({ id: '' + (res['data']['conditionMin']) });
-        this.formEdit.controls['transportTemple'].setValue(transportTemple);
+        this.formEdit.controls['transportTemple'].setValue(this.transportTempleList);
 
       },
         err => console.log(err['error']['message'])

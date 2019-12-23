@@ -112,7 +112,9 @@ public class CourseController {
     /**
      * GetCourses
      * this function for get courses by admin and monk
+     * 
      * */
+    
     @GetMapping(path = "")
     @PreAuthorize("hasRole('admin') or hasRole('monk')")
     public ResponseEntity<ResponseDto<CourseDto>> GetCourses() {
@@ -311,7 +313,7 @@ public class CourseController {
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
-            res.setCode(200);
+            res.setCode(400);
             return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
     }
@@ -453,7 +455,7 @@ public class CourseController {
 	    }
 	}
     
-    /*
+    /**
      * putCourse
      * this function for update course by admin.
      * params: id of row and body: CourseDto

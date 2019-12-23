@@ -1,6 +1,6 @@
 <!-- จัดการคอร์ส-สร้างคอร์ส (แอดมิน) -->
 <p-dialog (onHide)="onCancle($event)" header="สร้างคอร์สใหม่" [(visible)]="displayCreateDialog" [responsive]="true"  positionTop="100"
-  showEffect="fade" [modal]="true" [style]="{width: '700px'}">
+  showEffect="fade" [modal]="true" [style]="{width: '700px'}" [contentStyle]="{ overflow: 'visible' }">
   <form [formGroup]="courseForm">
     <div class="ui-g">
       <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 ">

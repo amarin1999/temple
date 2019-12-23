@@ -1,6 +1,6 @@
 <!-- จัดการคอร์ส-แก้ไขคอร์ส (แอดมิน) -->
 <p-dialog (onHide)="onCancle($event)"  header="แก้ไขคอร์ส" [(visible)]="displayEditDialog" [responsive]="true" 
-  showEffect="fade" [modal]="true" [style]="{width: '700px'}">
+  showEffect="fade" [modal]="true" [style]="{width: '700px'}" [contentStyle]="{ overflow: 'visible' }">
     <form [formGroup]="formEdit">
         <div class="ui-g">
             <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 ">
