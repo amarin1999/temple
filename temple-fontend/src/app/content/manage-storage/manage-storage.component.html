@@ -22,11 +22,11 @@
                                                         label="เพิ่ม" class="ui-button-info"
                                                         style="width: 50%"></button>
                                                 </div>
-                                                <div class="ui-g-12 ui-md-4 ui-md-offset-4" style="text-align: right;">
-                                                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                                                <div class="ui-g-12 ui-md-4 ui-md-offset-4 ui-inputgroup" style="text-align: right;">
+                                                    <fa-icon [icon]="['fas', 'search']" class="ui-inputgroup-addon"></fa-icon>
                                                     <input type="text" pInputText placeholder="ค้นหา"
                                                         (input)="dtBag.filterGlobal($event.target.value, 'contains')"
-                                                        style="width:auto">
+                                                        style="width: auto">
                                                 </div>
                                             </div>
                                         </ng-template>
@@ -105,8 +105,8 @@
                                                         label="เพิ่ม" class="ui-button-info"
                                                         style="width: 18%"></button> -->
                                                 </div>
-                                                <div class="ui-g-12 ui-md-4 ui-md-offset-4" style="text-align: right;">
-                                                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                                                <div class="ui-g-12 ui-md-4 ui-md-offset-4 ui-inputgroup" style="text-align: right;">
+                                                    <fa-icon [icon]="['fas', 'search']" class="ui-inputgroup-addon"></fa-icon>
                                                     <input type="text" pInputText placeholder="ค้นหา"
                                                         (input)="dtBagF.filterGlobal($event.target.value, 'contains')"
                                                         style="width:auto">
@@ -122,7 +122,7 @@
                                                         ariaLabelDesc="Activate to sort in descending order"
                                                         ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
                                                 </th>
-                                                <th *ngIf="showEditButton('admin')" style="width: '15%'"></th>
+                                                <!-- <th *ngIf="showEditButton('admin')" style="width: '15%'"></th> -->
                                             </tr>
                                         </ng-template>
                                         <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -157,7 +157,7 @@
                                                         {{rowData["baggageId"]}}
                                                     </div>
                                                 </td>
-                                                <td *ngIf="showEditButton('admin')">
+                                                <!-- <td *ngIf="showEditButton('admin')">
                                                     <div class="ui-g">
                                                         <div style="margin: 0 auto;">
                                                             <div class="ui-g">
@@ -170,7 +170,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                         </ng-template>
                                     </p-table>
