@@ -45,6 +45,12 @@
 
 }
 
+@media screen and (max-width: 555px) {
+  .top-bar .title span {
+    font-size: 15px;
+}
+}
+
 @media screen and (max-width: 520px) {
   .top-bar {
     height: 80px;
