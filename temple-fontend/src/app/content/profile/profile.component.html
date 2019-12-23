@@ -175,10 +175,28 @@
                                         <span>{{(userData) ? userData.titleName +''+ userData.fname+' '+userData.lname : ''}}</span>
                                     </div>
                                     <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
+                                        <span>อายุ :</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
+                                        <span>{{(userData?.age!=null) ? userData.age:'ไม่มีข้อมูล'}}</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
                                         <span>อาชีพ :</span>
                                     </div>
                                     <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
                                         <span>{{(userData?.job!=null) ? userData.job:'ไม่มีข้อมูล'}}</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
+                                        <span>วัน/เดือน/ปีบวช :</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
+                                        <span>{{(userData?.ordianDate!=null) ? (userData.ordianDate | formatTHdate):'ไม่มีข้อมูล'}}</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
+                                        <span>จำพรรษา :</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
+                                        <span>{{(userData?.ordianNumber!=null) ? userData.ordianNumber:'ไม่มีข้อมูล'}}  พรรษา</span>
                                     </div>
                                     <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
                                         <span>อีเมล :</span>
@@ -186,6 +204,8 @@
                                     <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
                                         <span>{{(userData?.email!=null) ? userData.email:'ไม่มีข้อมูล'}}</span>
                                     </div>
+
+                                    
                                     <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
                                         <span>เบอร์โทรศัพท์ :</span>
                                     </div>
@@ -195,8 +215,8 @@
                                     <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
                                         <span>ที่อยู่ :</span>
                                     </div>
-                                    <div class="ui-g-12 ui-lg-9 ui-md-10 set-md-dt">
-                                        <span>{{(userData?.address!=null) ? userData.address:'ไม่มีข้อมูล'}}</span>
+                                    <div class="ui-g-12 ui-lg-8 ui-md-10 set-md-dt">
+                                        <span>{{(userData?.address!=null) ? userData.address+''+'จังหวัด'+''+userData.address:'ไม่มีข้อมูล'}}</span>
                                     </div>
                                     <div class="ui-g-5 ui-lg-3 ui-md-2 text-info">
                                         <span>กรุ๊ปเลือด :</span>
