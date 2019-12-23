@@ -37,7 +37,7 @@ export class EditFormComponent implements OnInit {
   public titleName: any[];
   public th: any;
   public yearRange: string;
-  public detailWarning: any[];
+  public detailWarning: any[] = [];
   public registerSuccess: boolean;
   public showCancelMessage: boolean;
   public personalId: string;
@@ -254,18 +254,18 @@ export class EditFormComponent implements OnInit {
     this.onEdit = false;
     this.settingForm();
     this.historyDharmaService.getHistoryDharmaByMemberId(this.personalId).subscribe(
-        res => {
-          if (res.status === 'Success') {
-            this.courseHisList = res.data;
-            console.log('historyDharma', res.data);
-          } else {
-            console.log('getHistoryDharmaByMemberId Fail');
-          }
-        },
-        err => {
-          console.log(err['error']['message']);
+      res => {
+        if (res.status === 'Success') {
+          this.courseHisList = res.data;
+          console.log('historyDharma', res.data);
+        } else {
+          console.log('getHistoryDharmaByMemberId Fail');
         }
-      );
+      },
+      err => {
+        console.log(err['error']['message']);
+      }
+    );
     this.provinceService.getProvince().subscribe(
       res => {
         this.provinces = res.data;
@@ -519,10 +519,22 @@ export class EditFormComponent implements OnInit {
     this.yearRange = startYear + ':' + currentYear;
   }
 
+
   onSubmit(e) {
     // console.log('onsubmit');
+    let temp = 0;
+    this.courseHisList.filter(e => {
+      if (e.courseName === '' || e.courseName === null || e.location === '' || e.location === null) {
+        return temp = 1;
+      }
+    });
     if (!this.editForm.valid) {
       this.subscribeInputMessageWaring();
+      this.showMessageWrongValidate();
+    } else if (temp === 1) {
+      this.detailWarning = []
+      const details = 'กรุณากรอกข้อมูลการปฏิบัติธรรมที่ผ่านมาให้ครบถ้วน';
+      this.detailWarning.push(details);
       this.showMessageWrongValidate();
     } else {
       this.submitMessage(e);
@@ -654,9 +666,9 @@ export class EditFormComponent implements OnInit {
       this.formError[field] = '';
       const control = this.editForm.get(field);
       if (control && !control.valid) {
-        details = 'กรุณากรอกข้อมูลให้ครบถ้วน';
-        this.detailWarning[1] = details;
-        // this.detailWarning += this.validationMessage[field].detail + '\n';
+        // details = 'กรุณากรอกข้อมูลให้ครบถ้วน';
+        // this.detailWarning[1] = details;
+        this.detailWarning.push(this.validationMessage[field].detail);
         this.formError[field] = this.validationMessage[field].required;
       }
     }
