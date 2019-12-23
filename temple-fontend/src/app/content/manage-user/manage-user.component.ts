@@ -61,14 +61,14 @@ export class ManageUserComponent implements OnInit {
           this.personal = [
             ...this.personal.slice(0, index),
             ...this.personal.slice(index + 1)
-          ]
+          ];
         }
       },
         (e) => console.log(e['error']['message'])
       );
   }
   public onRowSelect(e) {
-    // console.log(e); 
+    // console.log(e);
     this.router.navigate(['/profile', e.data['id']]);
   }
 }
