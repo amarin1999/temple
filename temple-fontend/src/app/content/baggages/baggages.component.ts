@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import { LocationService } from '../location/location.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Location } from 'src/app/shared/interfaces/location';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-baggages',
@@ -36,6 +37,7 @@ export class BaggagesComponent implements OnInit {
     private locationService: LocationService,
     private formBuilder: FormBuilder,
     public messageService: MessageService,
+    public spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService
   ) {
   }
@@ -62,9 +64,11 @@ export class BaggagesComponent implements OnInit {
     ]);
 
     this.authService.getRole().subscribe(res => this.role = res);
+    // this.spinner.hide();
   }
 
   private getData() {
+    this.spinner.show();
     this.baggageService.getItemAll().subscribe(
       res => {
         if (res['status'] === 'Success') {
@@ -74,6 +78,7 @@ export class BaggagesComponent implements OnInit {
       },
       (e) => console.log(e['message'])
     );
+    this.spinner.hide();
   }
 
   showEditButton(...role) {
@@ -100,6 +105,7 @@ export class BaggagesComponent implements OnInit {
       // acceptLabel: 'ยืนยัน',
       // rejectLabel: 'ยกเลิก',
       accept: () => {
+        this.spinner.show();
         // this.messageService.clear()
         const index = this.items.findIndex(e => e.lockerId === event.lockerId);
         this.baggageService.delete(event.lockerId).toPromise()
@@ -120,6 +126,7 @@ export class BaggagesComponent implements OnInit {
               });
             }
           }).catch((e) => console.log(e['message']));
+          this.spinner.hide();
       },
       reject: () => {
       }
@@ -127,6 +134,7 @@ export class BaggagesComponent implements OnInit {
   }
 
   save() {
+    this.spinner.show();
     if (this.items.findIndex(res => res.number === this.baggageNumber && res.locationId === this.location['id']) < 0) {
       // this.messageService.clear();
       const data = {
@@ -149,9 +157,11 @@ export class BaggagesComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มไม่สำเร็จ : ตู้สัมภาระซ้ำ' });
     }
     this.clear();
+    this.spinner.hide();
   }
 
   update() {
+    this.spinner.show();
     const count = this.items.findIndex(res => res.number === this.baggageNumber && res.locationId === this.location['id']);
     if (count === this.number || count === -1) {
       const data = {
@@ -180,6 +190,7 @@ export class BaggagesComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการแก้ไขไม่สำเร็จ : ตู้สัมภาระซ้ำ' });
     }
     this.clear();
+    this.spinner.hide();
   }
 
   clear() {
@@ -207,4 +218,3 @@ export class BaggagesComponent implements OnInit {
     return filtered;
   }
 }
-
