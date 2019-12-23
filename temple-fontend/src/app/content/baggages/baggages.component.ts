@@ -35,7 +35,7 @@ export class BaggagesComponent implements OnInit {
     private authService: AuthService,
     private locationService: LocationService,
     private formBuilder: FormBuilder,
-    private messageService: MessageService,
+    public messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {
   }
@@ -44,14 +44,14 @@ export class BaggagesComponent implements OnInit {
     this.getData();
     this.locationService.getLocation().subscribe(
       res => {
-        if (res.status == 'Success') {
+        if (res.status === 'Success') {
           this.locations = res.data;
         }
       },
       error => {
-        console.log(error['error']['message']);
+        console.log(error['message']);
       }
-    )
+    );
     this.cols = [
       { field: 'number', header: 'หมายเลขตู้' },
       { field: 'locationName', header: 'สถานที่' },
@@ -69,10 +69,10 @@ export class BaggagesComponent implements OnInit {
       res => {
         if (res['status'] === 'Success') {
           this.items = res['data'];
-          this.baggage = res['data']
+          this.baggage = res['data'];
         }
       },
-      (e) => console.log(e['error']['message'])
+      (e) => console.log(e['message'])
     );
   }
 
@@ -84,7 +84,7 @@ export class BaggagesComponent implements OnInit {
     this.number = this.items.findIndex(res => res.lockerId === event.lockerId);
     this.newBaggage = false;
     this.baggage = this.items.filter(e => e.lockerId === event.lockerId)[0];
-    this.lockerId = this.baggage['lockerId']
+    this.lockerId = this.baggage['lockerId'];
     this.baggageNumber = this.baggage['number'];
     this.location = {
       id: +this.baggage['locationId'],
@@ -104,17 +104,24 @@ export class BaggagesComponent implements OnInit {
         const index = this.items.findIndex(e => e.lockerId === event.lockerId);
         this.baggageService.delete(event.lockerId).toPromise()
           .then(res => {
-            if (res['status'] === 'Success') {
+            if (res['status'] === 'Success' && res['code'] === 200) {
               this.items.splice(index, 1);
               this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการลบตู้สัมภาระสำเร็จ' });
               this.getData();
+            } else if (res['status'] === 'Success' && res['code'] === 204) {
+              this.messageService.add({
+                severity: 'error', summary: 'ข้อความจากระบบ', life: 5000
+                , detail: 'ดำเนินการลบตู้สัมภาระไม่สำเร็จ เนื่องจากมีการใช้ตู้สัมภาระนี้อยู่'
+              });
             } else {
-              this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการลบตู้สัมภาระไม่สำเร็จ' });
+              this.messageService.add({
+                severity: 'error', summary: 'ข้อความจากระบบ',
+                detail: 'เนื่องจากระบบมีข้อผิดพลาด'
+              });
             }
-          }).catch((e) => console.log(e['error']['message']));
+          }).catch((e) => console.log(e['message']));
       },
       reject: () => {
-
       }
     });
   }
@@ -129,12 +136,15 @@ export class BaggagesComponent implements OnInit {
       // this.messageService.clear()
       this.baggageService.save(data).toPromise().then(res => {
         if (res['status'] === 'Success') {
-          this.items=[...this.items,res['data'][0]]
+          this.items = [...this.items, res['data'][0]];
           this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มตู้สัมภาระสำเร็จ' });
         } else {
-          this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด' });
+          this.messageService.add({
+            severity: 'error', summary: 'ข้อความจากระบบ',
+            detail: 'ดำเนินการเพิ่มไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด'
+          });
         }
-      }).catch((e) => console.log(e['error']['message']));
+      }).catch((e) => console.log(e['message']));
     } else {
       this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มไม่สำเร็จ : ตู้สัมภาระซ้ำ' });
     }
@@ -142,8 +152,8 @@ export class BaggagesComponent implements OnInit {
   }
 
   update() {
-    const count = this.items.findIndex(res => res.number === this.baggageNumber && res.locationId === this.location['id'])
-    if (count == this.number || count == -1) {
+    const count = this.items.findIndex(res => res.number === this.baggageNumber && res.locationId === this.location['id']);
+    if (count === this.number || count === -1) {
       const data = {
         lockerId: this.baggage['lockerId'],
         number: this.baggageNumber,
@@ -157,11 +167,14 @@ export class BaggagesComponent implements OnInit {
             this.items[index] = res['data'][0];
             this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการแก้ไขตู้สัมภาระสำเร็จ' });
           } else {
-            this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการแก้ไขไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด' });
+            this.messageService.add({
+              severity: 'error', summary: 'ข้อความจากระบบ',
+              detail: 'ดำเนินการแก้ไขไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด'
+            });
           }
         },
           (e) => {
-            console.log(e['error']['message']);
+            console.log(e['message']);
           });
     } else {
       this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการแก้ไขไม่สำเร็จ : ตู้สัมภาระซ้ำ' });
@@ -180,14 +193,14 @@ export class BaggagesComponent implements OnInit {
     this.displayDialog = true;
   }
   filterLocationMultiple(event) {
-    let query = event.query;
+    const query = event.query;
     this.filteredLocation = this.filterLocation(query, this.locations);
   }
   filterLocation(query, locations: any[]): any[] {
-    let filtered: any[] = [];
+    const filtered: any[] = [];
     for (let i = 0; i < locations.length; i++) {
-      let location = locations[i]
-      if ((location.name).indexOf(query) == 0) {
+      const location = locations[i];
+      if ((location.name).indexOf(query) === 0) {
         filtered.push(location);
       }
     }
