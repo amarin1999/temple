@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import { LocationService } from '../location/location.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Location } from 'src/app/shared/interfaces/location';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-baggages',
@@ -35,7 +36,8 @@ export class BaggagesComponent implements OnInit {
     private authService: AuthService,
     private locationService: LocationService,
     private formBuilder: FormBuilder,
-    private messageService: MessageService,
+    public messageService: MessageService,
+    public spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService
   ) {
   }
@@ -44,14 +46,14 @@ export class BaggagesComponent implements OnInit {
     this.getData();
     this.locationService.getLocation().subscribe(
       res => {
-        if (res.status == 'Success') {
+        if (res.status === 'Success') {
           this.locations = res.data;
         }
       },
       error => {
-        console.log(error['error']['message']);
+        console.log(error['message']);
       }
-    )
+    );
     this.cols = [
       { field: 'number', header: 'หมายเลขตู้' },
       { field: 'locationName', header: 'สถานที่' },
@@ -62,18 +64,21 @@ export class BaggagesComponent implements OnInit {
     ]);
 
     this.authService.getRole().subscribe(res => this.role = res);
+    // this.spinner.hide();
   }
 
   private getData() {
+    this.spinner.show();
     this.baggageService.getItemAll().subscribe(
       res => {
         if (res['status'] === 'Success') {
           this.items = res['data'];
-          this.baggage = res['data']
+          this.baggage = res['data'];
         }
       },
-      (e) => console.log(e['error']['message'])
+      (e) => console.log(e['message'])
     );
+    this.spinner.hide();
   }
 
   showEditButton(...role) {
@@ -84,7 +89,7 @@ export class BaggagesComponent implements OnInit {
     this.number = this.items.findIndex(res => res.lockerId === event.lockerId);
     this.newBaggage = false;
     this.baggage = this.items.filter(e => e.lockerId === event.lockerId)[0];
-    this.lockerId = this.baggage['lockerId']
+    this.lockerId = this.baggage['lockerId'];
     this.baggageNumber = this.baggage['number'];
     this.location = {
       id: +this.baggage['locationId'],
@@ -100,26 +105,36 @@ export class BaggagesComponent implements OnInit {
       // acceptLabel: 'ยืนยัน',
       // rejectLabel: 'ยกเลิก',
       accept: () => {
+        this.spinner.show();
         // this.messageService.clear()
         const index = this.items.findIndex(e => e.lockerId === event.lockerId);
         this.baggageService.delete(event.lockerId).toPromise()
           .then(res => {
-            if (res['status'] === 'Success') {
+            if (res['status'] === 'Success' && res['code'] === 200) {
               this.items.splice(index, 1);
               this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการลบตู้สัมภาระสำเร็จ' });
               this.getData();
+            } else if (res['status'] === 'Success' && res['code'] === 204) {
+              this.messageService.add({
+                severity: 'error', summary: 'ข้อความจากระบบ', life: 5000
+                , detail: 'ดำเนินการลบตู้สัมภาระไม่สำเร็จ เนื่องจากมีการใช้ตู้สัมภาระนี้อยู่'
+              });
             } else {
-              this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการลบตู้สัมภาระไม่สำเร็จ' });
+              this.messageService.add({
+                severity: 'error', summary: 'ข้อความจากระบบ',
+                detail: 'เนื่องจากระบบมีข้อผิดพลาด'
+              });
             }
-          }).catch((e) => console.log(e['error']['message']));
+          }).catch((e) => console.log(e['message']));
+          this.spinner.hide();
       },
       reject: () => {
-
       }
     });
   }
 
   save() {
+    this.spinner.show();
     if (this.items.findIndex(res => res.number === this.baggageNumber && res.locationId === this.location['id']) < 0) {
       // this.messageService.clear();
       const data = {
@@ -129,21 +144,26 @@ export class BaggagesComponent implements OnInit {
       // this.messageService.clear()
       this.baggageService.save(data).toPromise().then(res => {
         if (res['status'] === 'Success') {
-          this.items=[...this.items,res['data'][0]]
+          this.items = [...this.items, res['data'][0]];
           this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มตู้สัมภาระสำเร็จ' });
         } else {
-          this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด' });
+          this.messageService.add({
+            severity: 'error', summary: 'ข้อความจากระบบ',
+            detail: 'ดำเนินการเพิ่มไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด'
+          });
         }
-      }).catch((e) => console.log(e['error']['message']));
+      }).catch((e) => console.log(e['message']));
     } else {
       this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มไม่สำเร็จ : ตู้สัมภาระซ้ำ' });
     }
     this.clear();
+    this.spinner.hide();
   }
 
   update() {
-    const count = this.items.findIndex(res => res.number === this.baggageNumber && res.locationId === this.location['id'])
-    if (count == this.number || count == -1) {
+    this.spinner.show();
+    const count = this.items.findIndex(res => res.number === this.baggageNumber && res.locationId === this.location['id']);
+    if (count === this.number || count === -1) {
       const data = {
         lockerId: this.baggage['lockerId'],
         number: this.baggageNumber,
@@ -157,16 +177,20 @@ export class BaggagesComponent implements OnInit {
             this.items[index] = res['data'][0];
             this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการแก้ไขตู้สัมภาระสำเร็จ' });
           } else {
-            this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการแก้ไขไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด' });
+            this.messageService.add({
+              severity: 'error', summary: 'ข้อความจากระบบ',
+              detail: 'ดำเนินการแก้ไขไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด'
+            });
           }
         },
           (e) => {
-            console.log(e['error']['message']);
+            console.log(e['message']);
           });
     } else {
       this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการแก้ไขไม่สำเร็จ : ตู้สัมภาระซ้ำ' });
     }
     this.clear();
+    this.spinner.hide();
   }
 
   clear() {
@@ -180,18 +204,17 @@ export class BaggagesComponent implements OnInit {
     this.displayDialog = true;
   }
   filterLocationMultiple(event) {
-    let query = event.query;
+    const query = event.query;
     this.filteredLocation = this.filterLocation(query, this.locations);
   }
   filterLocation(query, locations: any[]): any[] {
-    let filtered: any[] = [];
+    const filtered: any[] = [];
     for (let i = 0; i < locations.length; i++) {
-      let location = locations[i]
-      if ((location.name).indexOf(query) == 0) {
+      const location = locations[i];
+      if ((location.name).indexOf(query) === 0) {
         filtered.push(location);
       }
     }
     return filtered;
   }
 }
-

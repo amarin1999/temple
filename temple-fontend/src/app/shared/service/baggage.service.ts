@@ -73,9 +73,10 @@ export class BaggageService {
 
   delete(id) {
     return this.http.delete(ApiConstants.baseURl + `/lockers/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('access-token')}` } })
-      .pipe(map(res => {
+    .pipe(map(res => {
         return {
-          status: res['result']
+          status: res['result'],
+          code: res['code']
         };
       }));
   }

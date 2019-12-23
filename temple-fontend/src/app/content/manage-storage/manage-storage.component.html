@@ -1,3 +1,4 @@
+<ngx-spinner></ngx-spinner>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 <div class="ui-g">
     <div class="ui-g-12">
@@ -42,7 +43,7 @@
                                             </tr>
                                         </ng-template>
                                         <ng-template pTemplate="body" let-rowData let-columns="columns">
-                                            <tr *ngIf="rowData['status'] == 1">
+                                            <tr *ngIf="rowData['status'] === '1'">
                                                 <td>
                                                     <div style="text-align: center;">
                                                         {{rowData["lastUpdate"] | formatTHdate}}
@@ -60,7 +61,7 @@
                                                 </td>
                                                 <td>
                                                     <div style="text-align: center;">
-                                                        {{(rowData["status"] == 1)? 'ฝาก':'รับคืนแล้ว'}}
+                                                        {{(rowData["status"] === '1')? 'ฝาก':'รับคืนแล้ว'}}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -95,7 +96,7 @@
                                     <div style="text-align: center">
                                         <h2>สัมภาระที่รับคืนแล้ว</h2>
                                     </div>
-                                    <p-table #dtBagF [columns]="cols" [value]="items" [paginator]="true" [rows]="5"
+                                    <p-table #dtBagF [columns]="cols" [value]="itemsRe" [paginator]="true" [rows]="5"
                                         [responsive]="true">
                                         <ng-template pTemplate="caption" *ngIf="showEditButton('admin')">
                                             <div class="ui-g">
@@ -181,7 +182,6 @@
             </div>
         </div>
     </div>
-
     <p-dialog (onHide)="clear()" header="รายละเอียดสัมภาระ" [(visible)]="displayDialog" [responsive]="true"
         showEffect="fade" [modal]="true" [contentStyle]="{ overflow: 'visible' }">
         <div class="ui-g ui-fluid">
@@ -220,7 +220,6 @@
             </div>
         </p-footer>
     </p-dialog>
-    <!-- <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog> -->
     <p-confirmDialog [style]="{width: '50vw'}" #cf>
         <p-footer>
             <button type="button" pButton label="ยืนยัน" style="background-color: #007ad9"

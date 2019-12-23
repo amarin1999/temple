@@ -159,18 +159,19 @@ public class LockerController {
     public ResponseEntity<ResponseDto<LockerDto>> delete(
             @PathVariable("lockerId") Long lockerId
     ) {
+    	System.out.println(lockerId);
         ResponseDto<LockerDto> res = new ResponseDto<>();
         LockerDto locker;
         try {
             locker = lockerService.delete(lockerId);
             if (!(locker == null)) {
                 res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-                res.setCode(204);
-                return new ResponseEntity<>(res, HttpStatus.NO_CONTENT);
+                res.setCode(200);
+                return new ResponseEntity<>(res, HttpStatus.OK);
             } else {
-                res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-                res.setCode(400);
-                return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+                res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+                res.setCode(204);
+                return new ResponseEntity<>(res, HttpStatus.OK);
             }
         } catch (Exception e) {
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
