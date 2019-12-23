@@ -1,15 +1,16 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {MenuItem, LazyLoadEvent} from 'primeng/api';
-import {BreadcrumbService} from 'src/app/shared/service/breadcrumb.service';
-import {ManageUserService} from 'src/app/shared/service/manage-user.service';
-import {Member} from 'src/app/shared/interfaces/member';
-import {Router, ActivatedRoute} from '@angular/router';
-import {map, switchMap} from 'rxjs/operators';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MenuItem, LazyLoadEvent } from 'primeng/api';
+import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
+import { ManageUserService } from 'src/app/shared/service/manage-user.service';
+import { Member } from 'src/app/shared/interfaces/member';
+import { Router, ActivatedRoute } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
 import { CourseService } from '../courses/shared/course.service';
 import { Course } from 'src/app/shared/interfaces/course';
 import { of } from 'rxjs';
 import { ManageRoleService } from 'src/app/shared/service/manage-role.service';
-
+import { HistoryDharmaService } from 'src/app/shared/service/history-dharma.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-profile',
@@ -27,35 +28,58 @@ export class ProfileComponent implements OnInit {
   public values: Course[] = [];
   public totalGraduatedRecords: number;
   public selectedCourse: Course;
+  public courseHisList: any[] = [];
+  private personalId: string;
   @Output() status = new EventEmitter();
-  
   constructor(
     private breadCrumbService: BreadcrumbService,
     private manageUser: ManageUserService,
     private router: Router,
     private route: ActivatedRoute,
     private courseService: CourseService,
-    private roleService:ManageRoleService,
+    private roleService: ManageRoleService,
+    private historyDharmaService: HistoryDharmaService,
+    public spinner: NgxSpinnerService,
   ) {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.getData();
+    this.getCoursesHistoryDharma();
     this.showRole = this.roleService.getUserRoleStatus();
-    if(this.showRole){
+    if (this.showRole) {
       this.getGraduatedData();
       this.getGraduatedRecord();
     }
     this.userId = localStorage.getItem('userId');
     this.showRole = this.roleService.getUserRoleStatus();
     this.breadCrumbService.setPath([
-      {label: 'ข้อมูลส่วนตัว'},
+      { label: 'ข้อมูลส่วนตัว' },
     ]);
-    
+
     this.cols = [
-      {field: 'stDate', header: 'วันที่สำเร็จการอบรม'},
-      {field: 'name', header: 'ชื่อคอร์ส'}
-    ];        
+      { field: 'stDate', header: 'วันที่สำเร็จการอบรม' },
+      { field: 'name', header: 'ชื่อคอร์ส' }
+    ];
+    this.spinner.hide();
+  }
+
+  getCoursesHistoryDharma() {
+    this.personalId = this.route.snapshot.paramMap.get('id');
+    this.historyDharmaService.getHistoryDharmaByMemberId(this.personalId).subscribe(
+      res => {
+        if (res.status === 'Success') {
+          this.courseHisList = res.data;
+          console.log('historyDharma', res.data);
+        } else {
+          console.log('getHistoryDharmaByMemberId Fail');
+        }
+      },
+      err => {
+        console.log(err['error']['message']);
+      }
+    );
   }
 
   getData() {
@@ -76,13 +100,13 @@ export class ProfileComponent implements OnInit {
   private getGraduatedData() {
     this.values = [];
     this.courseService.getCoursesUser('1')
-    .subscribe(res => {
-      if (res['status'] === 'Success' ) {
-        this.graduatedcourses = res['data'];
-        // console.log('studycourse');
-        // console.log(this.graduatedcourses);
-      }
-    });
+      .subscribe(res => {
+        if (res['status'] === 'Success') {
+          this.graduatedcourses = res['data'];
+          // console.log('studycourse');
+          // console.log(this.graduatedcourses);
+        }
+      });
   }
 
   private getGraduatedRecord() {
@@ -101,7 +125,7 @@ export class ProfileComponent implements OnInit {
 
   public onRowSelect(e) {
     const course: Course = e.data;
-    this.router.navigate(['/courses',  course.id]);
+    this.router.navigate(['/courses', course.id]);
   }
 
 }
