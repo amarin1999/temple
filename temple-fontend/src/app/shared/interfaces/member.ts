@@ -19,10 +19,8 @@ export interface Member {
   titleName?: String;
   ordianNumber?: Number;
   ordianDate?: Date;
-  privice?: {
-    provinceId?: Number,
-    provinceName?: String
-  };
+  provinceId?: Number,
+  provinceName?: String
   postalCode?: String;
   genderId?: Number;
   genderName?: String;
