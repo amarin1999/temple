@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/shared/service/auth.service';
 import { MenuItem, ConfirmationService, Message, MessageService } from 'primeng/api';
 import { ManageUserService } from 'src/app/shared/service/manage-user.service';
 import { LoginComponent } from 'src/app/auth/login/login.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-manage-storage',
@@ -16,6 +17,7 @@ export class ManageStorageComponent implements OnInit {
 
   displayDialog: boolean;
   items: Baggage[];
+  itemsRe: Baggage[];
   newBaggage: boolean;
   baggage: Baggage;
   baggageNumber: String;
@@ -43,11 +45,13 @@ export class ManageStorageComponent implements OnInit {
     private memberService: ManageUserService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    public spinner: NgxSpinnerService,
+
   ) {
   }
 
   ngOnInit() {
-
+    this.spinner.show();
     this.initDialogData();
     this.getData();
     this.getItem();
@@ -58,7 +62,7 @@ export class ManageStorageComponent implements OnInit {
       { field: 'locker', header: 'หมายเลขตู้' },
       { field: 'status', header: 'สถานะ' },
       { field: 'memberId', header: 'รหัสผู้ใช้' },
-      { field: 'baggageId', header: 'รหัสสัมภาระ', width: '10%'}
+      { field: 'baggageId', header: 'รหัสสัมภาระ', width: '10%' }
     ];
 
     this.breadCrumbService.setPath([
@@ -66,6 +70,7 @@ export class ManageStorageComponent implements OnInit {
     ]);
 
     this.authService.getRole().subscribe(res => this.role = res);
+    this.spinner.hide();
   }
 
   private initDialogData() {
@@ -82,12 +87,12 @@ export class ManageStorageComponent implements OnInit {
       },
         err => {
           console.log(err);
-
         }
       );
 
   }
   private getItem() {
+    this.spinner.show();
     this.baggageService.getItem()
       .subscribe(
         res => {
@@ -102,17 +107,49 @@ export class ManageStorageComponent implements OnInit {
           }
         }
       );
+      this.spinner.hide();
   }
 
   private getData() {
+    this.spinner.show();
     this.baggageService.getItems().subscribe(
       res => {
         if (res['status'] === 'Success') {
-          this.items = res['data'];
+          this.items = res['data'].map(res => {
+            if (res['status'] === '1') {
+              return {
+                baggageId: res['baggageId'],
+                memberId: res['memberId'],
+                lockerId: res['lockerId'],
+                status: res['status'],
+                createDate: res['createDate'],
+                lastUpdate: res['lastUpdate'],
+                memberName: res['memberName'],
+                locker: res['locker']
+              };
+            } else { return null; }
+          });
+          this.itemsRe = res['data'].map(res => {
+            if (res['status'] !== '1') {
+              return {
+                baggageId: res['baggageId'],
+                memberId: res['memberId'],
+                lockerId: res['lockerId'],
+                status: res['status'],
+                createDate: res['createDate'],
+                lastUpdate: res['lastUpdate'],
+                memberName: res['memberName'],
+                locker: res['locker']
+              };
+            } else { return null; }
+          });
         }
+        this.items = this.items.filter(e => e != null);
+        this.itemsRe = this.itemsRe.filter(e => e != null);
       },
       (e) => console.log(e['error']['message'])
     );
+    this.spinner.hide();
   }
 
   showEditButton(...role) {
@@ -151,6 +188,7 @@ export class ManageStorageComponent implements OnInit {
   }
 
   save() {
+    this.spinner.show();
     this.confirmationService.confirm({
       message: 'ยืนยันการบันทึก',
       header: 'ข้อความจากระบบ',
@@ -183,9 +221,11 @@ export class ManageStorageComponent implements OnInit {
           );
       }
     });
+    this.spinner.hide();
   }
 
   update() {
+    this.spinner.show();
     this.confirmationService.confirm({
       message: 'ยืนยันการแก้ไข',
       header: 'ข้อความจากระบบ',
@@ -206,7 +246,7 @@ export class ManageStorageComponent implements OnInit {
             this.getItem();
             this.messageService.add({
               severity: 'success', summary: 'ข้อความจากระบบ',
-              detail: (res['data']['status'] === 1 ? 'แก้ไข' : 'คืน') + 'สัมภาระสำเร็จ'
+              detail: (res['data']['status'] === '1' ? 'แก้ไข' : 'คืน') + 'สัมภาระสำเร็จ'
             });
           } else {
             this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'แก้ไขสัมภาระไม่สำเร็จ' });
@@ -218,6 +258,7 @@ export class ManageStorageComponent implements OnInit {
         );
       }
     });
+    this.spinner.hide();
   }
 
   clear() {
