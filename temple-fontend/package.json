@@ -33,6 +33,7 @@
     "ng2-img-max": "^2.1.18",
     "ngx-cookie-service": "^2.1.0",
     "ngx-spinner": "^7.0.0",
+    "npm": "^6.13.4",
     "primeicons": "^1.0.0",
     "primeng": "^7.0.5",
     "rxjs": "~6.4.0",
