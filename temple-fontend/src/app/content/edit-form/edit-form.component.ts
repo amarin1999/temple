@@ -253,9 +253,7 @@ export class EditFormComponent implements OnInit {
     this.showCancelMessage = false;
     this.onEdit = false;
     this.settingForm();
-    this.historyDharmaService
-      .getHistoryDharmaByMemberId(this.personalId)
-      .subscribe(
+    this.historyDharmaService.getHistoryDharmaByMemberId(this.personalId).subscribe(
         res => {
           if (res.status === 'Success') {
             this.courseHisList = res.data;
@@ -342,7 +340,7 @@ export class EditFormComponent implements OnInit {
     );
     this.manageUserService.getUser(this.personalId).subscribe(
       res => {
-        console.log(res);
+        console.log('getUser', res);
         const titlename = {
           id: res['data']['titleId'],
           display: res['data']['titleDisplay'],
@@ -731,29 +729,28 @@ export class EditFormComponent implements OnInit {
           lname: this.editForm.get('lname').value,
           age: this.editForm.get('age').value,
           idCard: this.editForm.get('idCard').value,
-          job: this.editForm.get('job').value,
+          job: this.editForm.get('job').value === '' ? null : this.editForm.get('job').value,
           address: this.editForm.get('address').value,
           provinceId: parseInt(provinceCode.provinceId),
           postalCode: this.editForm.get('postalCode').value,
           tel: this.editForm.get('phone').value,
-          ordianDate: this.editForm.get('ordianDate').value,
-          ordianNumber: this.editForm.get('ordianNumber').value,
+          ordianDate: this.editForm.get('ordianDate').value === '' ? null : this.editForm.get('ordianDate').value,
+          ordianNumber: this.editForm.get('ordianNumber').value === '' ? null : this.editForm.get('ordianNumber').value,
           emergencyTel: this.editForm.get('phoneEmergency').value,
-          email: this.editForm.get('email').value,
+          email: this.editForm.get('email').value === '' ? null : this.editForm.get('email').value,
           img: this.profileString,
           registerDate: null,
-          lastUpdate: null,
+          lastUpdate: new Date(),
           genderId: this.editForm.get('gender').value,
           titleId: +titleCode.id,
           roleId: +role.roleId,
           historyDharma: this.courseHisList,
           emergencyName: emerName,
-          emergencyRelationship: this.editForm.get('relationshipEmergency')
-            .value,
-          other: this.editForm.get('other').value,
-          allergyFood: this.editForm.get('foodsAllergy').value,
-          allergyMedicine: this.editForm.get('drugsAllergy').value,
-          disease: this.editForm.get('underlyDisease').value,
+          emergencyRelationship: this.editForm.get('relationshipEmergency').value,
+          other: this.editForm.get('other').value === '' ? null : this.editForm.get('other').value,
+          allergyFood: this.editForm.get('foodsAllergy').value === '' ? null : this.editForm.get('foodsAllergy').value,
+          allergyMedicine: this.editForm.get('drugsAllergy').value === '' ? null : this.editForm.get('drugsAllergy').value,
+          disease: this.editForm.get('underlyDisease').value === '' ? null : this.editForm.get('underlyDisease').value,
           blood: bloodGroup.value
         };
         console.log('dataUser23', dataUser);
