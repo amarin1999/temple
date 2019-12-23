@@ -94,7 +94,8 @@
                                     <span>จำพรรษา</span>
                                 </div>
                                 <div class="ui-g-7 ui-lg-7 ui-md-4 ">
-                                    <span>{{(userData?.ordianNumber!=null) ? userData.ordianNumber:'ไม่มีข้อมูล'}} พรรษา</span>
+                                    <span>{{(userData?.ordianNumber!=null) ? userData.ordianNumber:'ไม่มีข้อมูล'}}
+                                        พรรษา</span>
                                 </div>
                                 <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
                                     <span>อาหารที่แพ้</span>
@@ -335,7 +336,6 @@
                     </p-header>
                     <div class="ui-g">
                         <div class="ui-g-12 ui-lg-12 ui-md-12">
-                            {{courseHisList | json}}
                             <p-table [columns]="cols" [value]="courseHisList" [paginator]="true" [rows]="10"
                                 (onRowSelect)="onRowSelect($event)" selectionMode="single" [responsive]="true"
                                 [(selection)]="selectedCourse" [totalRecords]="totalGraduatedRecords">
@@ -361,22 +361,14 @@
                                     <tr [pSelectableRow]="rowData">
                                         <td>
                                             <div style="text-align: center">
-                                                {{rowData['']}}
+                                                {{rowData['courseName']}}
                                             </div>
                                         </td>
-                                        <!-- <td *ngFor="let col of columns">
-                                            <div>
-                                                <div style="text-align: center"
-                                                    *ngIf="rowData[col.field] == rowData['stDate'] && rowData['stDate'] != null ;else elseValue">
-                                                    {{rowData['stDate'] | formatTHdate}} -
-                                                    {{rowData['endDate'] | formatTHdate}}</div>
-                                                <ng-template #elseValue>
-                                                    <div style="text-align: center "></div>
-                                                </ng-template>
-                                                <div *ngIf="rowData[col.field] == rowData['name']">{{rowData['name']}}
-                                                </div>
+                                        <td>
+                                            <div style="text-align: center">
+                                                {{rowData['location']}}
                                             </div>
-                                        </td> -->
+                                        </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
