@@ -18,14 +18,8 @@
                   <ng-container *ngIf="editForm.controls.imgProfile.value; else elseNoImage">
                     <img src="data:image/jpg;base64,{{
                         editForm.controls.imgProfile.value
-                      }}" class="img-info" 
-                      *ngIf="showLoadingPicture"
-                    />
-                      <img
-                      src="./assets/images/spinner.gif"
-                      class="img-info"
-                      *ngIf="showNoProfile"
-                    />
+                      }}" class="img-info" *ngIf="showLoadingPicture" />
+                    <img src="./assets/images/spinner.gif" class="img-info" *ngIf="showNoProfile" />
                   </ng-container>
                   <ng-template #elseNoImage>
                     <img src="./assets/images/no-img.png" class="img-info" />
@@ -337,7 +331,7 @@
               </div>
             </div>
             <div class="ui-g-12">
-                <!-- การปฏิบัติธรรมที่ผ่านมา -->
+              <!-- การปฏิบัติธรรมที่ผ่านมา -->
               <div class="ui-g-3 ui-lg-2 ui-md-1 text-right">
                 <span>การปฏิบัติธรรมที่ผ่านมา: </span>
               </div>
