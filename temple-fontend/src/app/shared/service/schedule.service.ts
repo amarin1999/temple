@@ -38,14 +38,14 @@ export class ScheduleService {
       .pipe(
         map(res => {
           // console.log(res['data']);
-          
+
           return {
             status: res['result'],
             data: res['data'].map(data => ({
-              title: data['course']['courseName'],
-              start: data['courseScheduleDate'],
-              end: data['course']['courseEndDate'],
-              url: `#/courses/${data['courseId']}`
+              'title': data['course']['courseName'],
+              'start': data['courseScheduleDate'],
+              'end': data['course']['courseEndDate'],
+              'url': `#/courses/${data['courseId']}`
             }))
           };
         })
