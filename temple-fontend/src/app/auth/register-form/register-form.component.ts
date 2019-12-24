@@ -110,27 +110,20 @@ export class RegisterFormComponent implements OnInit {
     idCard: '',
     password: '',
     repassword: '',
+    role: '',
     titleName: '',
     age: '',
     fname: '',
     lname: '',
-    role: '',
-    job: '',
-    gender: '',
-    address: '',
-    ordianDate: '',
     phone: '',
-    phoneEmergency: '',
+    address: '',
+    province: '',
+    postalCode: '',
+    blood: '',
     fnameEmergency: '',
     lnameEmergency: '',
     relationshipEmergency: '',
-    other: '',
-    foodsAllergy: '',
-    drugsAllergy: '',
-    underlyDisease: '',
-    blood: '',
-    postalCode: '',
-    province: ''
+    phoneEmergency: '',
   };
 
   public validationMessage = {
@@ -154,6 +147,10 @@ export class RegisterFormComponent implements OnInit {
       detail: 'กรุณากรอก อายุ',
       required: 'อายุ*'
     },
+    role: {
+      detail: 'กรุณาระบุ สิทธิการใช้งาน',
+      required: 'สิทธิการใช้งาน*'
+    },
     titleName: {
       detail: 'กรุณาระบุ คำนำหน้า',
       required: 'คำนำหน้า*'
@@ -169,10 +166,6 @@ export class RegisterFormComponent implements OnInit {
     phone: {
       detail: 'กรุณากรอก เบอร์โทร',
       required: 'เบอร์โทรศัพท์*'
-    },
-    gender: {
-      detail: 'กรุณากรอก เพศ',
-      required: 'เพศ*'
     },
     address: {
       detail: 'กรุณากรอก ที่อยู่',
@@ -311,17 +304,15 @@ export class RegisterFormComponent implements OnInit {
     this.courseHisList.filter(e => {
       if (e.courseName === '' || e.courseName === null || e.location === '' || e.location === null) {
         return temp = 1;
-      } else if (temp === 1) {
-        this.detailWarning = []
-        const details = 'กรุณากรอกข้อมูลการปฏิบัติธรรมที่ผ่านมาให้ครบถ้วน';
-        this.detailWarning.push(details);
-        this.showMessage();
-      } else {
-        this.submitMessage(e);
       }
     });
     if (!this.registerForm.valid) {
       this.subscribeInputMessageWaring();
+      this.showMessage();
+    } else if (temp === 1) {
+      this.detailWarning = []
+      const details = 'กรุณากรอกข้อมูลการปฏิบัติธรรมที่ผ่านมาให้ครบถ้วน';
+      this.detailWarning.push(details);
       this.showMessage();
     } else {
       this.submitMessage(e);
@@ -430,7 +421,7 @@ export class RegisterFormComponent implements OnInit {
                   'error'
                 );
               } else {
-                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
+                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากระบบมีข้อผิดพลาด', 'error');
               }
             }
           },
@@ -451,7 +442,7 @@ export class RegisterFormComponent implements OnInit {
                 'error'
               );
             } else {
-              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
+              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากระบบมีข้อผิดพลาด', 'error');
             }
           }
         );
@@ -531,8 +522,8 @@ export class RegisterFormComponent implements OnInit {
         this.validationMessage[field].required
       ) {
         details = 'กรุณากรอกข้อมูลให้ครบถ้วน';
-        this.detailWarning[1] = details;
-        // this.detailWarning += this.validationMessage[field].detail + '\n';
+        // this.detailWarning[1] = details;
+        this.detailWarning.push(this.validationMessage[field].detail);
         this.formError[field] = this.validationMessage[field].required;
       }
     }
@@ -552,6 +543,13 @@ export class RegisterFormComponent implements OnInit {
       summary: 'ข้อความจากระบบ',
       detail: detail
     });
+  }
+
+  /**
+   * clear message diaog
+   */
+  clearMessageService() {
+    this.messageService.clear();
   }
 
   /**
