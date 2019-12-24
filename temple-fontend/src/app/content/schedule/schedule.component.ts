@@ -55,7 +55,9 @@ export class ScheduleComponent implements OnInit {
               this.date = new Date(element.end);
               this.date.setDate((this.date.getDate()) + 1);
               this.newEndDate = new DatePipe('en-En').transform(this.date, 'yyyy-MM-dd');
+              this.newStartDate = new DatePipe('en-En').transform(element.start, 'yyyy-MM-dd');
               element.end =  this.newEndDate;
+              element.start = this.newStartDate;
               // console.log(this.newEndDate);
             });
             this.events = res['data'];
@@ -82,9 +84,7 @@ export class ScheduleComponent implements OnInit {
             // console.log(this.newEndDate);
           });
           this.events = res['data'];
-          console.log(this.events);
-
-
+          // console.log(this.events);
         }
       },
       err => {
