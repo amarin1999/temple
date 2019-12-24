@@ -39,7 +39,7 @@ public class TransportationController {
 	@Autowired
 	TransportationTempleService transportationTempleService;
 	
-	 /*
+	 /**
      * getTransportation 
      * Description : this controller get data of transportation.
      * Params : -
@@ -67,7 +67,7 @@ public class TransportationController {
 	
 	
 	
-	/*
+	/**
      * postTransporatation 
      * Description : this controller insert data of transportation.
      * Params : body : TransportationDto
@@ -100,7 +100,7 @@ public class TransportationController {
 	}
 	
 	
-	/*
+	/**
      * updateTransportation 
      * Description : this controller update data of transportation.
      * Params : body : TransportationDto, id : Long
@@ -131,7 +131,7 @@ public class TransportationController {
 	}
 	
 	
-	/*
+	/**
      * deleteTransportation 
      * Description : this controller update status of transportation from 1 to 0.
      * Params : body : TransportationDto, id : Long
@@ -162,7 +162,7 @@ public class TransportationController {
 	 * -------------------------------------Manage Data Transportation of Temple ---------------------------------------------------
 	 * */
 	
-	/*
+	/**
 	 * getTransportationTemple()
 	 * This function for get transportation of temple 
 	 * 
@@ -186,7 +186,7 @@ public class TransportationController {
 	}
 	
 	
-	/*
+	/**
 	 * insertTransportationTemple()
 	 * This function for insert transportation of temple
 	 * 
@@ -217,7 +217,7 @@ public class TransportationController {
 	}
 	
 	
-	/*
+	/**
 	 * updateTransportationTemple()
 	 * This function for update transportation of temple
 	 * params: id,  body: TransportationTempleDto
@@ -248,7 +248,7 @@ public class TransportationController {
 	}
 	
 	
-	/*
+	/**
 	 * deleteTransportationTemple()
 	 * This function for delete transportation of temple
 	 * params: id,  body: TransportationTempleDto
