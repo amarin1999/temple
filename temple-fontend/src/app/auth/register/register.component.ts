@@ -110,16 +110,15 @@ export class RegisterComponent implements OnInit {
     age: '',
     fname: '',
     lname: '',
-    gender: '',
+    phone: '',
     address: '',
     province: '',
     postalCode: '',
-    phone: '',
-    phoneEmergency: '',
+    blood: '',
     fnameEmergency: '',
     lnameEmergency: '',
     relationshipEmergency: '',
-    blood: ''
+    phoneEmergency: '',
   };
 
   public validationMessage = {
@@ -158,10 +157,6 @@ export class RegisterComponent implements OnInit {
     phone: {
       detail: 'กรุณากรอก เบอร์โทร',
       required: 'เบอร์โทรศัพท์*'
-    },
-    gender: {
-      detail: 'กรุณากรอก เพศ',
-      required: 'เพศ*'
     },
     address: {
       detail: 'กรุณากรอก ที่อยู่',
@@ -383,7 +378,7 @@ export class RegisterComponent implements OnInit {
                   'error'
                 );
               } else {
-                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
+                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากระบบมีข้อผิดพลาด', 'error');
               }
             }
           },
@@ -404,7 +399,7 @@ export class RegisterComponent implements OnInit {
                 'error'
               );
             } else {
-              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
+              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากระบบมีข้อผิดพลาด', 'error');
             }
           }
         );
@@ -492,9 +487,17 @@ export class RegisterComponent implements OnInit {
   }
 
   /**
+   * clear message diaog
+   */
+  clearMessageService() {
+    this.messageService.clear();
+  }
+
+  /**
    * Toast สมัครสมาชิก
    * @param key ;
    * @param detail ;
+   * @param severity ;
    */
   showToast(key, detail, severity) {
     this.messageService.clear();
