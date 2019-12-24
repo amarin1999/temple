@@ -107,26 +107,20 @@ export class EditFormComponent implements OnInit {
     password: '',
     repassword: '',
     idCard: '',
+    role: '',
     titleName: '',
     age: '',
     fname: '',
     lname: '',
-    job: '',
-    gender: '',
+    phone: '',
     address: '',
     province: '',
     postalCode: '',
-    phone: '',
-    phoneEmergency: '',
+    blood: '',
     fnameEmergency: '',
     lnameEmergency: '',
     relationshipEmergency: '',
-    other: '',
-    foodsAllergy: '',
-    drugsAllergy: '',
-    underlyDisease: '',
-    blood: '',
-    role: ''
+    phoneEmergency: '',
   };
 
   public validationMessage = {
@@ -146,13 +140,17 @@ export class EditFormComponent implements OnInit {
       detail: 'กรุณากรอก เลขประจำตัวประชาชน',
       required: 'เลขประจำตัวประชาชน*'
     },
-    age: {
-      detail: 'กรุณากรอก อายุ',
-      required: 'อายุ*'
+    role: {
+      detail: 'กรุณาระบุ สิทธิการใช้งาน',
+      required: 'สิทธิการใช้งาน*'
     },
     titleName: {
       detail: 'กรุณาระบุ คำนำหน้า',
       required: 'คำนำหน้า*'
+    },
+    age: {
+      detail: 'กรุณากรอก อายุ',
+      required: 'อายุ*'
     },
     fname: {
       detail: 'กรุณากรอก ชื่อ',
@@ -165,10 +163,6 @@ export class EditFormComponent implements OnInit {
     phone: {
       detail: 'กรุณากรอก เบอร์โทร',
       required: 'เบอร์โทรศัพท์*'
-    },
-    gender: {
-      detail: 'กรุณากรอก เพศ',
-      required: 'เพศ*'
     },
     address: {
       detail: 'กรุณากรอก ที่อยู่',
