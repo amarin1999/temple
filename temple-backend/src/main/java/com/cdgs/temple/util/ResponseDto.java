@@ -2,12 +2,14 @@ package com.cdgs.temple.util;
 
 import java.util.List;
 
+import com.cdgs.temple.dto.TransportationTempleDto;
+
 public class ResponseDto<T> {
 
     private String result;
     private String stringData;
     private List<T> data;
-    private String errorMessage;
+	private String errorMessage;
     private int code;
     public ResponseDto() {
     }
@@ -70,5 +72,6 @@ public class ResponseDto<T> {
 	public void setStringData(String stringData) {
 		this.stringData = stringData;
 	}
+	
 
 }

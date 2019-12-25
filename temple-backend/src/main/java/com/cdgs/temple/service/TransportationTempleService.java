@@ -8,6 +8,8 @@ import com.cdgs.temple.dto.TransportationTempleDto;
 
 public interface TransportationTempleService {
 	List<TransportationTempleDto> getTransportationTempleName();
+	
+	List<TransportationTempleDto> getTransportationTempleNameCouse(Long id);
 		
 	TransportationTempleDto createTransportationTemple(TransportationTempleDto transportation);
 		

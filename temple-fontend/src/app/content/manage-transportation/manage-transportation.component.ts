@@ -34,71 +34,61 @@ export class ManageTransportationComponent implements OnInit {
         private messageService: MessageService
     ) { }
 
-    ngOnInit() {
-        this.breadCrumbService.setPath([
-            { label: 'จัดการการเดินทางทั้งหมด', routerLink: '/transportation' }
-        ]);
-        this.getTransportation();
-        this.getTransportationTemple();
-        this.initTransportation();
-        this.cols = [
-            { field: 'name', header: 'ประเภทการเดินทาง' },
-        ];
-        this.colsTemple = [
-            { field: 'name', header: 'ประเภทการเดินทาง' },
-            { field: 'timePickUp', header: 'เวลารับ' },
-            { field: 'timeSend', header: 'เวลาส่ง' }
-        ];
-    }
-    onTabChange(event) {
-        this.tabIndex = event.index;
-    }
+  ngOnInit() {
+    this.breadCrumbService.setPath([
+      { label: 'จัดการการเดินทางทั้งหมด', routerLink: '/transportation' }
+    ]);
+    this.getTransportation();
+    this.getTransportationTemple();
+    this.initTransportation();
+    this.cols = [
+      { field: 'name', header: 'ประเภทการเดินทาง' },
+    ];
+    this.colsTemple = [
+      { field: 'name', header: 'ประเภทการเดินทาง' },
+      { field: 'timePickUp', header: 'เวลารับ' },
+      { field: 'timeSend', header: 'เวลาส่ง' }
+    ];
+  }
+  
+  onTabChange(event) {
+    this.tabIndex = event.index;
+  }
 
-    showDialogToAdd() {
-        this.displayTransportation = true;
-        this.displayDialog = true;
-        this.newTransportation = '';
-    }
+  showDialogToAdd() {
+    this.displayTransportation = true;
+    this.displayDialog = true;
+    this.newTransportation = '';
+  }
 
-    getTransportation() {
-        this.transportationService.getTranSportToEdit().subscribe(
-            res => {
-                this.transport = res['data'];
-            });
-        // combineLatest for process 2 service before subscribe
-        // combineLatest(
-        //   this.transportationService.getTranSportToEdit(),
-        //   this.transportationService.getTranSportTempleToEdit()
-        // ).subscribe(
-        //   ([tranSport , tranSportTemple]) => {
-        //     this.transport = [...tranSport.data , ...tranSportTemple.data];
-        //     console.log(this.transport);
-        //   }
-        // );
-    }
-    getTransportationTemple() {
-        this.transportationService.getTranSportTempleToEdit().subscribe(
-            res => {
-                this.transportTemple = res['data'];
-                this.transportTemple = this.transportTemple.map(data => {
-
-                    return { id: data.id, name: data.name, timePickUp: data.timePickUp, timeSend: data.timeSend };
-                });
-            });
-    }
-
-    // public searchData(event) {
-    //   if (!event) {
-    //     this.filterData = this.transport;
-    //   } else {
-    //     this.filterData = this.transport.filter(res => {
-    //       console.log(res['name'].trim().toLowerCase().includes(event.trim().toLowerCase()));
-    //       return res['name'].trim().toLowerCase().includes(event.trim().toLowerCase());
-    //     });
+  getTransportation() {
+    this.transportationService.getTranSportToEdit().subscribe(
+      res => {
+        this.transport = res['data'];
+    });
+    // combineLatest for process 2 service before subscribe
+    // combineLatest(
+    //   this.transportationService.getTranSportToEdit(),
+    //   this.transportationService.getTranSportTempleToEdit()
+    // ).subscribe(
+    //   ([tranSport , tranSportTemple]) => {
+    //     this.transport = [...tranSport.data , ...tranSportTemple.data];
+    //     console.log(this.transport);
     //   }
-    // }
+    // );
+  }
+  getTransportationTemple() {
+    this.transportationService.getTranSportTemple().subscribe(
+      res => {
+        this.transportTemple = res['data'];
+        this.transportTemple = this.transportTemple.map( data => {
+          
+          return { id : data.id , name: data.name , timePickUp : data.timePickUp , timeSend: data.timeSend }
+        });
+    });
+  }
 
-    public save() {
+  public save() {
         this.transportation.name = this.newTransportation;
         this.transportation.timePickUp = new Date(this.timePickUp).getTime();
         this.transportation.timeSend = new Date(this.timeSend).getTime();

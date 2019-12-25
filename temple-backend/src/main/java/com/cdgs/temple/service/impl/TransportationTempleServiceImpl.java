@@ -36,7 +36,15 @@ public class TransportationTempleServiceImpl implements TransportationTempleServ
 	        }
 	        return mapListEntityToDto(transportationTempleEntity);
 	 }
-	 
+	 public List<TransportationTempleDto> getTransportationTempleNameCouse(Long id){
+		 List<TransportationTempleEntity> transportationTempleEntity = new ArrayList<TransportationTempleEntity>(); 
+		 try {
+			 transportationTempleEntity = transportationTempleRepository.findAllByStatusIsTrueId(id);
+		 }catch (Exception e) {
+			 log.error("Transportation Error=>" + e.getMessage());
+		 }
+		return  mapListEntityToDto(transportationTempleEntity);
+	 }
 	 /*
 	     * createTransportationTemple 
 	     * this function insert data to DB.
@@ -104,7 +112,7 @@ public class TransportationTempleServiceImpl implements TransportationTempleServ
 					 }
 					 return TempledtoList;
 		}
-	
+	 
 	 /*
      * mapEntityToDto 
      * this function is mapping data of Entity to Dto.
@@ -122,8 +130,27 @@ public class TransportationTempleServiceImpl implements TransportationTempleServ
 			 }
 			 return Templedto;
 		 }
+	
 		 
-	/*
+		 /*
+		     * mapEntityToDto 
+		     * this function is mapping data of Entity to Dto.
+		     * Params is entity : TransportationEntity
+		     * */
+				 private TransportationTempleDto mapEntityToDtoById (TransportationTempleEntity temp) {
+					 TransportationTempleDto Templedto = new TransportationTempleDto();
+					 if(temp!=null) {
+						 Templedto.setId(((TransportationTempleEntity) temp).getTransportationTempleId());
+						 Templedto.setName(((TransportationTempleEntity) temp).getTransportationTempleName());
+						 Templedto.setStatus(((TransportationTempleEntity) temp).isTransportationTempleStatus());
+						 Templedto.setTimePickUp(((TransportationTempleEntity) temp).getTransportationTempleTimePickup());
+						 Templedto.setTimeSend(((TransportationTempleEntity) temp).getTransportationTempleTimeSend());
+						 
+					 }
+					 return Templedto;
+				 }
+				 
+		/*
 	 	* mapEntityToDto 
 		* this function is mapping data of Dto to Entity.
 		* Params : TempleDto : TransportationTempleDto
@@ -154,6 +181,17 @@ public class TransportationTempleServiceImpl implements TransportationTempleServ
 				 entity.setTransportationTempleStatus(opEntity.get().isTransportationTempleStatus());
 				 entity.setTransportationTempleTimePickup(opEntity.get().getTransportationTempleTimePickup());
 				 entity.setTransportationTempleTimeSend(opEntity.get().getTransportationTempleTimeSend());
+			 }
+			 return entity;
+		 }
+		 private List<TransportationTempleEntity> mapOptionToEntityTemple(Optional<TransportationTempleEntity> opEntity) {
+			 List<TransportationTempleEntity> entity = new ArrayList<>();
+			 if(opEntity != null) {
+				 ((TransportationTempleEntity) entity).setTransportationTempleId(opEntity.get().getTransportationTempleId());
+				 ((TransportationTempleEntity) entity).setTransportationTempleName(opEntity.get().getTransportationTempleName());
+				 ((TransportationTempleEntity) entity).setTransportationTempleStatus(opEntity.get().isTransportationTempleStatus());
+				 ((TransportationTempleEntity) entity).setTransportationTempleTimePickup(opEntity.get().getTransportationTempleTimePickup());
+				 ((TransportationTempleEntity) entity).setTransportationTempleTimeSend(opEntity.get().getTransportationTempleTimeSend());
 			 }
 			 return entity;
 		 }
