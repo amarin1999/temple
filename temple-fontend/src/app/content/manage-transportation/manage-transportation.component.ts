@@ -157,7 +157,7 @@ export class ManageTransportationComponent implements OnInit {
                         }
                     },
                     e => {
-                        // console.log(e['error']['message'])
+                        // console.log(e['error']['errorMessage'])
                         // this.messageService.clear;
                         this.messageService.add({
                             severity: 'error',
@@ -281,12 +281,21 @@ export class ManageTransportationComponent implements OnInit {
                                 this.getTransportationTemple();
                             }
                         },
-                        e => {
-                            this.messageService.add({
-                                severity: 'error',
-                                summary: 'ข้อความจากระบบ',
-                                detail: 'ดำเนินการลบไม่สำเร็จ'
-                            });
+                        (e) => {
+                            console.log(e['error']['errorMessage']);
+                            if (e['error']['errorMessage'] === 'transportationTemple is using') {
+                                this.messageService.add({
+                                    severity: 'error',
+                                    summary: 'ข้อความจากระบบ: ',
+                                    detail: 'ดำเนินการลบการเดินทางของวัดไม่สำเร็จเนื่องจากการเดินทางของวัดถูกใช้งานอยู่'
+                                });
+                            } else {
+                                this.messageService.add({
+                                    severity: 'error',
+                                    summary: 'ข้อความจากระบบ: ',
+                                    detail: 'ดำเนินการลบคำนำหน้าไม่สำเร็จเนื่องจาก ' + e['error']['errorMessage']
+                                });
+                            }
                         }
                     );
                 } else {
@@ -301,12 +310,21 @@ export class ManageTransportationComponent implements OnInit {
                                 this.getTransportation();
                             }
                         },
-                        e => {
-                            this.messageService.add({
-                                severity: 'error',
-                                summary: 'ข้อความจากระบบ',
-                                detail: 'ดำเนินการลบไม่สำเร็จ'
-                            });
+                        (e) => {
+                            console.log(e['error']['errorMessage']);
+                            if (e['error']['errorMessage'] === 'transportation is using') {
+                                this.messageService.add({
+                                    severity: 'error',
+                                    summary: 'ข้อความจากระบบ: ',
+                                    detail: 'ดำเนินการลบการเดินทางด้วยตัวเองไม่สำเร็จเนื่องจากการเดินทางด้วยตัวเองถูกใช้งานอยู่'
+                                });
+                            } else {
+                                this.messageService.add({
+                                    severity: 'error',
+                                    summary: 'ข้อความจากระบบ: ',
+                                    detail: 'ดำเนินการลบคำนำหน้าไม่สำเร็จเนื่องจาก ' + e['error']['errorMessage']
+                                });
+                            }
                         }
                     );
                 }
