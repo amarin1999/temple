@@ -13,6 +13,6 @@ public interface TransportationTempleService {
 		
 	TransportationTempleDto updateTransportationTemple (Long id,TransportationTempleDto transportation);
 		
-	TransportationTempleDto deleteTransportationTemple (Long id,TransportationTempleDto transportation);
+	Boolean deleteTransportationTemple (Long id,TransportationTempleDto transportation);
 
 }
