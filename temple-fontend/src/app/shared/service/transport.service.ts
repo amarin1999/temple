@@ -24,8 +24,8 @@ export class TransportService {
               id: data['id'],
               name: data['name'],
               status: data['status']
-            }
-          })
+            };
+          });
         })
       );
   }
@@ -49,7 +49,7 @@ export class TransportService {
           return {
             status: res['result'],
             data: res['data']
-          }
+          };
         })
       );
   }
@@ -61,7 +61,7 @@ export class TransportService {
           return {
             status: res['result'],
             data: res['data']
-          }
+          };
         })
       );
   }
@@ -73,9 +73,9 @@ export class TransportService {
           return {
             status: res['result'],
             data: res['data'][0]
-          }
+          };
         })
-      )
+      );
   }
 
   createTransportationTemple(transportTemple: TransportationTemple) {
@@ -87,7 +87,7 @@ export class TransportService {
           return {
             status: res['result'],
             data: res['data']
-          }
+          };
         })
       );
   }
@@ -99,9 +99,9 @@ export class TransportService {
           return {
             status: res['result'],
             data: res['data'][0]
-          }
+          };
         })
-      )
+      );
   }
 
   updateTransportationTemple(transportTemple: TransportationTemple) {
@@ -111,7 +111,7 @@ export class TransportService {
           return {
             status: res['result'],
             data: res['data'][0]
-          }
+          };
         })
       );
   }
@@ -122,9 +122,9 @@ export class TransportService {
         map(res => {
           return {
             status: res['result']
-          }
+          };
         })
-      )
+      );
   }
 
   deleteTransportationTemple(id: number) {
@@ -133,7 +133,7 @@ export class TransportService {
         map(res => {
           return {
             status: res['result']
-          }
+          };
         })
       );
   }
