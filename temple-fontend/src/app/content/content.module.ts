@@ -43,6 +43,7 @@ import { RadioButtonModule } from "primeng/radiobutton";
 import { ThaiCalendarModule } from '../shared/directive/thai-calendar/thai-calendar.module';
 import {TabMenuModule} from 'primeng/tabmenu';
 import { Ng2ImgMaxModule } from 'ng2-img-max';
+import { ReportComponent } from './report/report.component';
 
 
 registerLocaleData(localeTh);
@@ -77,7 +78,8 @@ registerLocaleData(localeTh);
     ManageCourseForMonkComponent,
     FormatTHdatePipe,
     ManageTransportationComponent,
-    CourseRegisterOutTimeComponent
+    CourseRegisterOutTimeComponent,
+    ReportComponent
   ],
   imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule , ThaiCalendarModule, TabMenuModule, Ng2ImgMaxModule],
   exports: [ContentComponent],

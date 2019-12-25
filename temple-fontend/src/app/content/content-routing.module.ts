@@ -25,6 +25,7 @@ import { ManageStorageComponent } from './manage-storage/manage-storage.componen
 import { ManageCourseForMonkComponent } from './manage-course-for-monk/manage-course-for-monk.component';
 import { ManageTransportationComponent } from './manage-transportation/manage-transportation.component'
 import { CourseRegisterOutTimeComponent } from './courses/course-register-out-time/course-register-out-time.component';
+import { ReportComponent } from './report/report.component';
 
 const routes: Routes = [
   {
@@ -164,6 +165,10 @@ const routes: Routes = [
       {
         path: 'courseOutTime',
         component: CourseRegisterOutTimeComponent
+      },
+      {
+        path: 'report',
+        component: ReportComponent
       }
     ]
   }];

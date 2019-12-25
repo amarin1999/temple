@@ -544,6 +544,11 @@ export class RegisterComponent implements OnInit {
     return filtered;
   }
 
+  /**
+   * เปรียบเทียบค่าที่ได้จากแป้นพิมพ์ กับ ค่าที่ได้จากดาต้าเบส
+   * @param query
+   * @param provinces
+0   */
   filterProvince(query, provinces: any[]): any[] {
     const filtered: any[] = [];
     for (let i = 0; i < provinces.length; i++) {
