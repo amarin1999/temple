@@ -77,7 +77,7 @@ export class ManageTransportationComponent implements OnInit {
     // );
   }
   getTransportationTemple() {
-    this.transportationService.getTranSportTempleToEdit().subscribe(
+    this.transportationService.getTranSportTemple().subscribe(
       res => {
         this.transportTemple = res['data'];
         this.transportTemple = this.transportTemple.map( data => {

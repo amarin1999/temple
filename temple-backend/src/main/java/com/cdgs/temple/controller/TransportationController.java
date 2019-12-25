@@ -161,18 +161,39 @@ public class TransportationController {
 	/********************************************************************************************************************************
 	 * -------------------------------------Manage Data Transportation of Temple ---------------------------------------------------
 	 * */
-	
+	/**
+	  * getTransportationTemple()
+	  * This function for get transportation of temple 
+	  * 
+	   */
+	 @GetMapping(path = "/temple")
+	 public ResponseEntity<ResponseDto<TransportationTempleDto>> getTransportationTemple(){
+	  List<TransportationTempleDto> templeDto = new ArrayList<>();
+	  ResponseDto<TransportationTempleDto> res = new ResponseDto<TransportationTempleDto>();
+	  try {
+	   templeDto = transportationTempleService.getTransportationTempleName();
+	   res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+	   res.setData(templeDto);
+	   res.setCode(200);
+	   return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
+	  }catch (Exception e) {
+	   res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+	   res.setErrorMessage(e.getMessage());
+	   res.setCode(400);
+	   return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.BAD_REQUEST);
+	  }
+	 }
 	/*
 	 * getTransportationTemple()
-	 * This function for get transportation of temple 
+	 * This function for get transportation of temple 2
 	 * 
 	 	*/
-	@GetMapping(path = "/temple")
-	public ResponseEntity<ResponseDto<TransportationTempleDto>> getTransportationTemple(){
+	@GetMapping(path = "/templeMonk/{id}")
+	public ResponseEntity<ResponseDto<TransportationTempleDto>> getTransportationTempleMonk(@PathVariable("id") Long id){
 		List<TransportationTempleDto> templeDto = new ArrayList<>();
 		ResponseDto<TransportationTempleDto> res = new ResponseDto<TransportationTempleDto>();
 		try {
-			templeDto = transportationTempleService.getTransportationTempleName();
+			templeDto = transportationTempleService.getTransportationTempleNameCouse(id);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(templeDto);
 			res.setCode(200);
