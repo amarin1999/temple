@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.cdgs.temple.repository.ForgetPassRepository;
 import com.cdgs.temple.service.ForgetPassService;
-import com.cdgs.temple.service.MemberService;
 
 @Service
 public class ForgetPassServiceImpl implements ForgetPassService{
@@ -15,19 +14,20 @@ public class ForgetPassServiceImpl implements ForgetPassService{
 	private static final Logger log = LoggerFactory.getLogger(ForgetPassService.class);
 	
 	private final ForgetPassRepository forgetpassRepository;
-	private	final MemberService memberService;
-
 	
 	@Autowired
-	public ForgetPassServiceImpl(ForgetPassRepository forgetpassRepository, MemberService memberService) {
-		this.memberService = memberService;
+	public ForgetPassServiceImpl(ForgetPassRepository forgetpassRepository) {
 		this.forgetpassRepository = forgetpassRepository;
-		
 	}
 	
 	@Override
 	public Integer countUser(String userName, String idCard, String phoneNumber){
-		Integer count = forgetpassRepository.countUser(userName, idCard, phoneNumber);
+		Integer count = null;
+		try {
+			count = forgetpassRepository.countUser(userName, idCard, phoneNumber);
+		} catch (Exception e) {
+			log.error("ForgetPassServiceImpl>>" + e.getMessage());
+		}
 		return count;
 	}
 

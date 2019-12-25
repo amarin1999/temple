@@ -5,7 +5,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "courses")

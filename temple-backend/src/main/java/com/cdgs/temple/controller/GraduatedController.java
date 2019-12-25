@@ -8,7 +8,6 @@ import com.cdgs.temple.dto.ResponseCountDto;
 import com.cdgs.temple.service.GraduatedCourseService;
 import com.cdgs.temple.service.GraduatedService;
 import com.cdgs.temple.service.MemberService;
-import com.cdgs.temple.service.SpecialApproveService;
 import com.cdgs.temple.util.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,19 +23,16 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/graduated")
 public class GraduatedController {
-    private SpecialApproveService specialApproveService;
     private MemberService memberService;
     private GraduatedService graduatedService;
     private GraduatedCourseService graduatedCourseService;
 
     @Autowired
     public GraduatedController(
-            SpecialApproveService specialApproveService,
             MemberService memberService,
             GraduatedService graduatedService,
             GraduatedCourseService graduatedCourseService
     ) {
-        this.specialApproveService = specialApproveService;
         this.memberService = memberService;
         this.graduatedService = graduatedService;
         this.graduatedCourseService = graduatedCourseService;
@@ -66,7 +62,6 @@ public class GraduatedController {
 	@PreAuthorize("hasRole('monk')")
 	public ResponseEntity<ResponseDto<GraduatedDto>> Update(@Valid @RequestBody GraduatedDto body) {
 		ResponseDto<GraduatedDto> res = new ResponseDto<>();
-		List<GraduatedDto> graduatedDto = new ArrayList<>();
 		MemberDto member = memberService.getCurrentMember();
 		GraduatedDto bodydto = new GraduatedDto();
 		System.out.println(body.toString());

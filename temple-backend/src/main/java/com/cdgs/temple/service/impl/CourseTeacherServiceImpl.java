@@ -10,20 +10,16 @@ import com.cdgs.temple.dto.CourseTeacherDto;
 import com.cdgs.temple.entity.CourseTeacherEntity;
 import com.cdgs.temple.repository.CourseTeacherRepository;
 import com.cdgs.temple.service.CourseTeacherService;
-import com.cdgs.temple.service.MemberService;
 
 @Service
 public class CourseTeacherServiceImpl implements CourseTeacherService {
 	
 	private final CourseTeacherRepository courseTeacherRepository;
-	 private MemberService memberService;
 	 
 	@Autowired
 	public CourseTeacherServiceImpl(
-			CourseTeacherRepository courseTeacherRepository,
-			MemberService memberService) {
+			CourseTeacherRepository courseTeacherRepository) {
 		this.courseTeacherRepository = courseTeacherRepository;
-		this.memberService = memberService;
 	}
 	
 	private List<CourseTeacherDto> mapEntityListToDtoList(List<CourseTeacherEntity> entities) {

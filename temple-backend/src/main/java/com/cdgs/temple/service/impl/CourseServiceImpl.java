@@ -1,7 +1,6 @@
 package com.cdgs.temple.service.impl;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -429,61 +428,36 @@ public class CourseServiceImpl implements CourseService {
 	public CourseDto updateCourse(Long id, CourseDto courseNew) {
 		CourseEntity courseOld = courseRepository.findById(id).get();
 		CourseEntity entity;
-		CourseTeacherEntity courseTeacher;
-		CourseScheduleEntity courseSchedule;
 		try {
 			System.out.println("st1 = " + courseNew.getStDate());
 
 			// set update name, detail, location
 			courseOld.setCourseName(courseNew.getName());
 			System.out.println("name = " + courseNew.getName());
-
 			courseOld.setCourseDetail(courseNew.getDetail());
 			System.out.println("detail = " + courseNew.getDetail());
 			courseOld.setLocationId(locationRepository.findById(courseNew.getLocationId()).get());
 			courseOld.setCourseStDate(courseNew.getStDate());
 			System.out.println("st = " + courseNew.getStDate());
 			System.out.println("stOld = " + courseOld.getCourseStDate());
-
 			courseOld.setCourseConditionMin(courseNew.getConditionMin());
 			courseOld.setCourseEndDate(courseNew.getEndDate());
 			System.out.println("end = " + courseNew.getEndDate());
 			System.out.println("endOld = " + courseOld.getCourseEndDate());
-			
 			String datetest = "2019-12-12";
 			Date date1=new SimpleDateFormat("dd-MM-yyyy").parse(datetest);  
 			System.out.println("datetest ="+datetest);
-
 			courseOld.setCourseLastUpdate(new Date());
 			courseOld.setCourseLocationId(courseNew.getLocationId());
 			courseOld.setCourseTransportTempleId(courseNew.getTransportTempleId());
-			
 			entity = courseRepository.save(courseOld);
 			// ลบของเก่า
 			courseTeacherRepository.deleteCourseTeachers(id);
-			//courseScheduleRepository.deleteCourseSchdule(id);
-			// System.out.println("show =>" + courseScheduleList.toString());
-			//
-			// if(courseTeacherList != null) {
-			// courseTeacherRepository.saveAll(courseTeacherList);
-			// }
-			// if (courseScheduleList != null) {
-			// courseScheduleRepository.saveAll(courseScheduleList);
-			// }
 			if (courseNew.getTeacherList() != null) {
 				for (CourseScheduleDto date : courseNew.getDateList()) {
 					courseScheduleService.createCourseSchedule(date);
 				}
 			}
-			
-//			if (courseNew.getTeacherList() != null) {
-//
-//			}
-			// courseTeacher.setCourseId(course.getId());
-			// for (Long tId : body.getTeacher()) {
-			// courseTeacher.setMemberId(tId);
-			// courseTeacher = courseTeacherservice.createCourseTeacher(courseTeacher);
-			// }
 
 			entity.setCourseTeacher(courseTeacherRepository.findAllByCourseId(id));
 			entity.setCourseSchdule(courseScheduleRepository.findAllByCourseId(id));
@@ -593,7 +567,6 @@ public class CourseServiceImpl implements CourseService {
 
 	private CourseDto  mapEntityEditToDto(CourseEntity entity) {
 		List<MemberDto> teacherList = new ArrayList<>();
-		List<CourseScheduleDto> dateList = new ArrayList<>();
 		CourseDto dto = new CourseDto();
 		try {
  			if (entity != null) {
@@ -628,7 +601,6 @@ public class CourseServiceImpl implements CourseService {
 
 				for (CourseTeacherEntity courseTeacher : entity.getCourseTeacher()) {
 					teacherList.add(memberService.getMember(courseTeacher.getMemberId()));
-//					System.out.println("teacherList = "+teacherList);
 				}
 				dto.setTeacherList(teacherList);
 				dto.setDateList(courseScheduleService.getCourseScheduleList(entity.getCourseId()));
@@ -659,17 +631,4 @@ public class CourseServiceImpl implements CourseService {
 		return dto;
 	}
 	
-	/*
-	 * private String setFieldName(String fieldName,String status) { String DbField
-	 * =""; if(status.equals("0")) { DbField = "ORDER BY t1.mhc_status"; }else {
-	 * DbField = "ORDER BY t1.course_st_date"; }
-	 * 
-	 * if(fieldName != "") { if(fieldName.equals("stDate")) { DbField +=
-	 * ",t1.course_st_date"; }else if(fieldName.equals("name")) { DbField +=
-	 * ",t1.course_name"; }else if(fieldName.equals("locationName")) { DbField +=
-	 * ",status_text"; }else if(fieldName.equals("conditionMin")) { DbField +=
-	 * ",t1.course_condition_min"; } } return DbField; }
-	 */
-	
-
 }
