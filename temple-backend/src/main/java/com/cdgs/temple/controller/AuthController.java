@@ -86,7 +86,7 @@ public class AuthController {
             member = memberService.createMember(body);
             //System.out.println("Course Passed = "+body.getMemberCoursePassed());
            // System.out.println("member Job = "+body.getJob());
-           System.out.println(members);
+           System.out.println(members.toString());
            System.out.println(member.getId());
            historyDharma = body.getHistoryDharma();
             if (!(member == null)) {
@@ -96,7 +96,6 @@ public class AuthController {
                 	try {
                 		historyDharmaService.createHistoryDharma(historyDharmaData);
                 	} catch (Exception e) {
-                		// TODO Auto-generated catch block
                 		log.error(e.getMessage());
                 	}
                 });
