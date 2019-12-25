@@ -30,14 +30,14 @@ export class TransportService {
       );
   }
 
-  getTranSportTemple(){
+  getTranSportTemple() {
     return this.http.get(ApiConstants.baseURl + `/transportations/temple`)
       .pipe(
         map((res: any[]) => {
-            return {
-              status: res['result'],
-              data: res['data']
-            };
+          return {
+            status: res['result'],
+            data: res['data']
+          };
         })
       );
   }
@@ -92,8 +92,8 @@ export class TransportService {
       );
   }
 
-  updateTransportation(transportation: Transportation){
-    return this.http.put(`${ApiConstants.baseURl}/transportations/${transportation.id}`,transportation)
+  updateTransportation(transportation: Transportation) {
+    return this.http.put(`${ApiConstants.baseURl}/transportations/${transportation.id}`, transportation)
       .pipe(
         map(res => {
           return {
@@ -104,7 +104,7 @@ export class TransportService {
       )
   }
 
-  updateTransportationTemple(transportTemple: TransportationTemple){
+  updateTransportationTemple(transportTemple: TransportationTemple) {
     return this.http.put(`${ApiConstants.baseURl}/transportations/temple/${transportTemple.id}`, transportTemple)
       .pipe(
         map(res => {
@@ -116,19 +116,19 @@ export class TransportService {
       );
   }
 
-  deleteTransportation(id: number){
-    return this.http.put(`${ApiConstants.baseURl}/transportations/delete/${id}`,{id: id})
+  deleteTransportation(id: number) {
+    return this.http.put(`${ApiConstants.baseURl}/transportations/delete/${id}`, { id: id })
       .pipe(
-        map(res=>{
-          return{
+        map(res => {
+          return {
             status: res['result']
           }
         })
       )
   }
 
-  deleteTransportationTemple(id: number){
-    return this.http.put(`${ApiConstants.baseURl}/transportations/temple/delete/${id}`, {id: id})
+  deleteTransportationTemple(id: number) {
+    return this.http.put(`${ApiConstants.baseURl}/transportations/temple/delete/${id}`, { id: id })
       .pipe(
         map(res => {
           return {
