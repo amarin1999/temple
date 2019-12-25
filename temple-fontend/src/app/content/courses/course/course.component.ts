@@ -145,7 +145,7 @@ export class CourseComponent implements OnInit, OnDestroy {
         // console.log(this.transports);
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
     this.id = this.route.snapshot.paramMap.get('id');

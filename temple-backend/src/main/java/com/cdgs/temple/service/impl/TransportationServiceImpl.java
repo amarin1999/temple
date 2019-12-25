@@ -78,18 +78,17 @@ public class TransportationServiceImpl implements TransportationService {
 	     * create : 23/09/2562 By Korawit Ratyiam
 	     * PS. : This controller can't not delete data because this data is foreign Key of Sensation
 	     * */
-	 public TransportationDto deleteTransportation (Long id,TransportationDto transportation) {
-		 TransportationEntity entity = new TransportationEntity();
-		 TransportationEntity temp = new TransportationEntity();
+	 public Boolean deleteTransportation (Long id,TransportationDto transportation) {
 		 try {
-			 Optional<TransportationEntity> opTransportation = transportationRepository.findById(id);
-			 temp = mapOptionToentity(opTransportation);
-			 temp.setTransportationStatus(false);
-			 entity = transportationRepository.save(temp);
+			 if (id != null) {
+				 transportationRepository.deleteById(id);
+				 return true;
+			 }
 		 }catch (Exception e) {
 			 log.error("DeleteTransportation Error=>" + e.getMessage());
+			 return false;
 		}
-		 return mapEntityToDto(entity);
+		 return false;
 	 }
 	 
 	 

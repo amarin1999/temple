@@ -107,52 +107,50 @@ export class EditFormComponent implements OnInit {
     password: '',
     repassword: '',
     idCard: '',
+    role: '',
     titleName: '',
     age: '',
     fname: '',
     lname: '',
-    job: '',
-    gender: '',
+    phone: '',
     address: '',
     province: '',
     postalCode: '',
-    phone: '',
-    phoneEmergency: '',
+    blood: '',
     fnameEmergency: '',
     lnameEmergency: '',
     relationshipEmergency: '',
-    other: '',
-    foodsAllergy: '',
-    drugsAllergy: '',
-    underlyDisease: '',
-    blood: '',
-    role: ''
+    phoneEmergency: '',
   };
 
   public validationMessage = {
     username: {
-      detail: 'กรุณากรอก Username',
-      required: 'Username*'
+      detail: 'กรุณากรอก ชื่อผู้ใช้',
+      required: 'ชื่อผู้ใช้*'
     },
     password: {
-      detail: 'กรุณากรอก Password',
-      required: 'Password*'
+      detail: 'กรุณากรอก รหัสผ่าน',
+      required: 'รหัสผ่าน*'
     },
     repassword: {
-      detail: 'กรุณากรอก Re-password',
-      required: 'Re-password*'
+      detail: 'กรุณากรอก ยืนยันรหัสผ่าน',
+      required: 'ยืนยันรหัสผ่าน*'
     },
     idCard: {
       detail: 'กรุณากรอก เลขประจำตัวประชาชน',
       required: 'เลขประจำตัวประชาชน*'
     },
+    role: {
+      detail: 'กรุณาระบุ สิทธิการใช้งาน',
+      required: 'สิทธิการใช้งาน*'
+    },
+    titleName: {
+      detail: 'กรุณาระบุ คำนำหน้า',
+      required: 'คำนำหน้า*'
+    },
     age: {
       detail: 'กรุณากรอก อายุ',
       required: 'อายุ*'
-    },
-    titleName: {
-      detail: 'กรุณากรอก คำนำหน้า',
-      required: 'คำนำหน้า*'
     },
     fname: {
       detail: 'กรุณากรอก ชื่อ',
@@ -162,33 +160,25 @@ export class EditFormComponent implements OnInit {
       detail: 'กรุณากรอก นามสกุล',
       required: 'นามสกุล*'
     },
-    job: {
-      detail: 'กรุณากรอก อาชีพ',
-      required: 'อาชีพ*'
-    },
-    gender: {
-      detail: 'กรุณากรอก เพศ',
-      required: 'เพศ*'
+    phone: {
+      detail: 'กรุณากรอก เบอร์โทร',
+      required: 'เบอร์โทรศัพท์*'
     },
     address: {
       detail: 'กรุณากรอก ที่อยู่',
       required: 'ที่อยู่*'
     },
     province: {
-      detail: 'กรุณากรอก จังหวัด',
+      detail: 'กรุณาระบุ จังหวัด',
       required: 'จังหวัด*'
     },
     postalCode: {
       detail: 'กรุณากรอก รหัสไปรษณีย์',
       required: 'รหัสไปรษณีย์*'
     },
-    phone: {
-      detail: 'กรุณากรอก เบอร์โทร',
-      required: 'เบอร์โทร*'
-    },
-    phoneEmergency: {
-      detail: 'กรุณากรอก เบอร์ติดต่อฉุกเฉิน',
-      required: 'เบอร์ติดต่อฉุกเฉิน*'
+    blood: {
+      detail: 'กรุณาระบุ กรุ๊ปเลือด',
+      required: 'กรุ๊ปเลือด*'
     },
     fnameEmergency: {
       detail: 'กรุณากรอก ชื่อผู้ติดต่อฉุกเฉิน',
@@ -202,26 +192,10 @@ export class EditFormComponent implements OnInit {
       detail: 'กรุณากรอก ความสัมพันธ์กับผู้ติดต่อฉุกเฉิน',
       required: 'ความสัมพันธ์*'
     },
-    other: {
-      detail: 'กรุณากรอก หมายเหตุ',
-      required: 'หมายเหตุ*'
+    phoneEmergency: {
+      detail: 'กรุณากรอก เบอร์ติดต่อฉุกเฉิน',
+      required: 'เบอร์ติดต่อฉุกเฉิน*'
     },
-    foodsAllergy: {
-      detail: 'กรุณากรอก อาหารที่แพ้',
-      required: 'อาหารที่แพ้*'
-    },
-    drugsAllergy: {
-      detail: 'กรุณากรอก ยาที่แพ้',
-      required: 'ยาที่แพ้*'
-    },
-    underlyDisease: {
-      detail: 'กรุณากรอก โรคประจำตัว',
-      required: 'โรคประจำตัว*'
-    },
-    blood: {
-      detail: 'กรุณากรอก กรุ๊ปเลือด',
-      required: 'กรุ๊ปเลือด*'
-    }
   };
 
   constructor(
@@ -263,7 +237,7 @@ export class EditFormComponent implements OnInit {
         }
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
     this.provinceService.getProvince().subscribe(
@@ -271,7 +245,7 @@ export class EditFormComponent implements OnInit {
         this.provinces = res.data;
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
     this.titleService.getTitleNames().subscribe(
@@ -279,7 +253,7 @@ export class EditFormComponent implements OnInit {
         this.titleNames = res;
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
 
@@ -335,7 +309,7 @@ export class EditFormComponent implements OnInit {
         }
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
     this.manageUserService.getUser(this.personalId).subscribe(
@@ -418,7 +392,7 @@ export class EditFormComponent implements OnInit {
         );
         this.editForm.controls['province'].patchValue(province);
       },
-      err => console.log(err['error']['message'])
+      err => console.log(err['error']['errorMessage'])
     );
     this.spinner.hide();
   }

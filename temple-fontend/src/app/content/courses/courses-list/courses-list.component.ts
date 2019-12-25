@@ -148,15 +148,15 @@ export class CoursesListComponent implements OnInit {
       { field: "conditionMin", header: "หมายเหตุ" },
       { field: "status", header: "สถานะ" }
     ];
-    // this.transportation.getTranSport().subscribe(
-    //   res => {
-    //     this.transports = res;
-    //     // console.log(this.transports);
-    //   },
-    //   err => {
-    //     console.log(err['error']['message']);
-    //   }
-    // );
+
+    this.transportation.getTranSport().subscribe(
+      res => {
+        this.transports = res;
+      },
+      err => {
+        console.log(err['error']['errorMessage']);
+      }
+    );
 
     this.breadCrumbService.setPath([
       { label: "ลงทะเบียนเรียน", routerLink: "/courses" }

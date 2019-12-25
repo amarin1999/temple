@@ -1,5 +1,10 @@
 package com.cdgs.temple.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +17,8 @@ import com.cdgs.temple.service.SensationService;
 public class SensationServiceImpl implements SensationService{
 	
 private final SensationRepository sensationRepository;
+
+	private static final Logger log = LoggerFactory.getLogger(SensationServiceImpl.class);
 	
 	@Autowired
 	public SensationServiceImpl(SensationRepository sensationRepository) {
@@ -24,13 +31,23 @@ private final SensationRepository sensationRepository;
 			if(body != null) {
 				entity = sensationRepository.save(mapDtoToEntity(body));	
 			}
-			return mapEntityToDto(entity);
-				
 		} catch (Exception e) {
-			return null;
+			log.error(e.getMessage());
 		}
+		return mapEntityToDto(entity);
 	}
 
+	@Override
+	public List<SensationDto> getAllSensations() {
+		List<SensationEntity> entity = new ArrayList<SensationEntity>();
+		try { 
+			entity = sensationRepository.findAll();
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return mapListEntityToDto(entity);
+	}
+	
 	private SensationDto mapEntityToDto(SensationEntity entity) {
 		SensationDto dto = new SensationDto();
 		try {
@@ -38,12 +55,11 @@ private final SensationRepository sensationRepository;
 				dto.setId(entity.getSenseId());
 				dto.setExpected(entity.getSenseExpected());
 				dto.setExperience(entity.getSenseExprience());
-//				dto.setTransportationId(entity.getTransportationId());
 			}
-			return dto;
 		} catch (Exception e) {
-			return null;
+			log.error(e.getMessage());
 		}
+		return dto;
 	}
 
 	private SensationEntity mapDtoToEntity(SensationDto sense) {
@@ -54,14 +70,21 @@ private final SensationRepository sensationRepository;
 				entity.setSenseId(sense.getId());
 				entity.setSenseExpected(sense.getExpected());
 				entity.setSenseExprience(sense.getExperience());
-//				entity.setTransportationId(sense.getTransportationId());
 			}
-			return entity;
 		}catch (Exception e) {
-			return null;
+			log.error(e.getMessage());
 		}
+		return entity;
 		
 	}
-
-
+	
+	private List<SensationDto> mapListEntityToDto(List<SensationEntity> entities) {
+		List<SensationDto> dtoList = new ArrayList<SensationDto>();
+		if (entities != null) {
+			for (SensationEntity entity : entities) { 
+				dtoList.add(mapEntityToDto(entity));
+			}
+		}
+		return dtoList;
+	}
 }

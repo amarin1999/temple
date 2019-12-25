@@ -246,7 +246,7 @@
                 <div class="ui-g-12 ui-lg-6 ui-md-6">
                   <div class="ui-g-12 ui-lg-4 ui-md-4 text-right">
                     <div class="text-right">
-                      <span>จำนวนพรรษา</span>
+                      <span>จำพรรษา</span>
                     </div>
                   </div>
                   <div class="ui-g-12 ui-lg-2 ui-md-1">
@@ -541,8 +541,10 @@
       </div>
       <div class="ui-g ui-fluid">
         <div class="ui-g-12">
-          <button type="button" pButton [label]="messageback" class="ui-button-success ui-button-raised"
-            [routerLink]="urlback"></button>
+          <button *ngIf="message.severity === 'success'" type="button" pButton [label]="messageback"
+            class="ui-button-success ui-button-raised" [routerLink]="urlback"></button>
+          <button *ngIf="message.severity !== 'success'" type=" button" pButton label="ปิด"
+            class="ui-button-success ui-button-raised" (click)="clearMessageService()"></button>
         </div>
       </div>
     </ng-template>

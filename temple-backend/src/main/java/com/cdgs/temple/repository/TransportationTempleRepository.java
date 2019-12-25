@@ -17,4 +17,5 @@ public interface TransportationTempleRepository  extends CrudRepository<Transpor
 	List<TransportationTempleEntity> findAllByStatusIsTrueId(Long id);
 	
 	Optional<TransportationTempleEntity> findById(Long id);
+	
 }

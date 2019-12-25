@@ -71,12 +71,6 @@
                         <div class="ui-g">
                             <div class="ui-g-12 ui-lg-5 ui-md-12 ">
                                 <div class="ui-g-5 ui-lg-5 ui-md-2 text-info">
-                                    <span>วัน/เดือน/ปีบวช</span>
-                                </div>
-                                <div class="ui-g-7 ui-lg-7 ui-md-4 ">
-                                    <span>{{(userData?.ordianDate!=null) ? (userData.ordianDate | formatTHdate ):'ไม่มีข้อมูล'}}</span>
-                                </div>
-                                <div class="ui-g-5 ui-lg-5 ui-md-2 text-info">
                                     <span>ยาที่แพ้</span>
                                 </div>
                                 <div class="ui-g-7 ui-lg-7 ui-md-4 ">
@@ -90,13 +84,6 @@
                                 </div>
                             </div>
                             <div class="ui-g-12 ui-lg-7 ui-md-12">
-                                <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
-                                    <span>จำพรรษา</span>
-                                </div>
-                                <div class="ui-g-7 ui-lg-7 ui-md-4 ">
-                                    <span>{{(userData?.ordianNumber!=null) ? userData.ordianNumber:'ไม่มีข้อมูล'}}
-                                        พรรษา</span>
-                                </div>
                                 <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
                                     <span>อาหารที่แพ้</span>
                                 </div>
@@ -174,49 +161,11 @@
                                     <div class="ui-g-12 ui-lg-3 ui-md-4 " id="name">
                                         <span>{{(userData) ? userData.titleName +''+ userData.fname+' '+userData.lname : ''}}</span>
                                     </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
+                                    <div class="ui-g-5 ui-lg-3 ui-md-2 set-md-hd">
                                         <span>อายุ :</span>
                                     </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
+                                    <div class="ui-g-7 ui-lg-3 ui-md-4">
                                         <span>{{(userData?.age!=null) ? userData.age:'ไม่มีข้อมูล'}}</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
-                                        <span>อาชีพ :</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
-                                        <span>{{(userData?.job!=null) ? userData.job:'ไม่มีข้อมูล'}}</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
-                                        <span>วัน/เดือน/ปีบวช :</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
-                                        <span>{{(userData?.ordianDate!=null) ? (userData.ordianDate | formatTHdate):'ไม่มีข้อมูล'}}</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
-                                        <span>จำพรรษา :</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
-                                        <span>{{(userData?.ordianNumber!=null) ? userData.ordianNumber:'ไม่มีข้อมูล'}}  พรรษา</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
-                                        <span>อีเมล :</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
-                                        <span>{{(userData?.email!=null) ? userData.email:'ไม่มีข้อมูล'}}</span>
-                                    </div>
-
-                                    
-                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
-                                        <span>เบอร์โทรศัพท์ :</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
-                                        <span>{{(userData?.tel!=null) ? userData.tel:'ไม่มีข้อมูล'}}</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
-                                        <span>ที่อยู่ :</span>
-                                    </div>
-                                    <div class="ui-g-12 ui-lg-8 ui-md-10 set-md-dt">
-                                        <span>{{(userData?.address!=null) ? userData.address+''+'จังหวัด'+''+userData.address:'ไม่มีข้อมูล'}}</span>
                                     </div>
                                     <div class="ui-g-5 ui-lg-3 ui-md-2 text-info">
                                         <span>กรุ๊ปเลือด :</span>
@@ -230,10 +179,10 @@
                                     <div class="ui-g-7 ui-lg-3 ui-md-4 ">
                                         <span>{{(userData?.allergyMedicine!=null) ? userData.allergyMedicine:'ไม่มีข้อมูล'}}</span>
                                     </div>
-                                    <div class="ui-g-5 ui-lg-3 ui-md-2 text-info">
+                                    <div class="ui-g-5 ui-lg-3 ui-md-2 ui-sm-6 text-info">
                                         <span>โรคประจำตัว :</span>
                                     </div>
-                                    <div class="ui-g-5 ui-lg-3 ui-md-4 ">
+                                    <div class="ui-g-7 ui-lg-3 ui-md-4 ui-sm-12  set-md-dt">
                                         <span>{{(userData?.disease!=null) ? userData.disease:'ไม่มีข้อมูล'}}</span>
                                     </div>
                                     <div class="ui-g-5 ui-lg-3 ui-md-2 text-info">
@@ -242,6 +191,45 @@
                                     <div class="ui-g-7 ui-lg-3 ui-md-4 ">
                                         <span>{{(userData?.allergyFood!=null) ? userData.allergyFood:'ไม่มีข้อมูล'}}</span>
                                     </div>
+                                    <div class="ui-g-4 ui-lg-3 ui-md-2 set-md-hd">
+                                        <span>อาชีพ :</span>
+                                    </div>
+                                    <div class="ui-g-8 ui-lg-3 ui-md-4">
+                                        <span>{{(userData?.job!=null) ? userData.job:'ไม่มีข้อมูล'}}</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-3 set-md-hd date">
+                                        <span>วัน/เดือน/ปีบวช :</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-3 set-md-dt">
+                                        <span>{{(userData?.ordianDate!=null) ? (userData.ordianDate | formatTHdate):'ไม่มีข้อมูล'}}</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
+                                        <span>จำพรรษา :</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
+                                        <span>{{(userData?.ordianNumber!=null) ? userData.ordianNumber:'ไม่มีข้อมูล'}}
+                                            พรรษา</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
+                                        <span>เบอร์โทรศัพท์ :</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-4 set-md-dt">
+                                        <span>{{(userData?.tel!=null) ? userData.tel:'ไม่มีข้อมูล'}}</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
+                                        <span>อีเมล :</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-9 ui-md-10 set-md-dt">
+                                        <span>{{(userData?.email!=null) ? userData.email:'ไม่มีข้อมูล'}}</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
+                                        <span>ที่อยู่ :</span>
+                                    </div>
+                                    <div class="ui-g-12 ui-lg-9 ui-md-10 set-md-dt">
+                                        <span>{{(userData?.address!=null) ? userData.address+' '+'จังหวัด'+
+                                            userData.provinceName+' '+'รหัสไปรษณีย์'+' '+userData.postalCode : 'ไม่มีข้อมูล'}}</span>
+                                    </div>
+
                                     <div class="ui-g-5 ui-lg-3 ui-md-2 text-info">
                                         <span>หมายเหตุ :</span>
                                     </div>
@@ -282,7 +270,6 @@
                 </div>
             </ng-template>
             <!-- panel 1 ปิดข้อมูลส่วนตัวของพระอาจารย์กรณีเป็น 2 คอลัมน์ -->
-
             <!--panel 2 ตารางคอร์สที่ผ่านการอบรบแล้ว (ผู้ใช้) -->
             <div class="ui-g-12 ui-lg-6 ui-md-12" *ngIf="showRole">
                 <p-panel styleClass="panelHeader">
@@ -296,6 +283,7 @@
                             <div class="img-checked">
                                 <img src="./assets/images/checked.png">
                             </div>
+
                         </div>
                         <div class="ui-g-10 ui-lg-11 ui-md-11 ">
                             <span>จำนวนคอร์สที่ผ่านการอบรมแล้ว {{totalGraduatedRecords}} คอร์ส</span>
@@ -356,29 +344,19 @@
                     </p-header>
                     <div class="ui-g">
                         <div class="ui-g-12 ui-lg-12 ui-md-12">
-                            <p-table [columns]="cols" [value]="courseHisList" [paginator]="true" [rows]="10"
-                                (onRowSelect)="onRowSelect($event)" selectionMode="single" [responsive]="true"
-                                [(selection)]="selectedCourse" [totalRecords]="totalGraduatedRecords">
+                            <p-table [columns]="cols" [value]="courseHisList" [paginator]="true" [rows]="10" [responsive]="true">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
-                                        <th pSortableColumn="stDate">
+                                        <th>
                                             ชื่อคอร์ส
-                                            <p-sortIcon field="stDate" ariaLabel="Activate to sort"
-                                                ariaLabelDesc="Activate to sort in descending order"
-                                                ariaLabelAsc="Activate to sort in ascending order">
-                                            </p-sortIcon>
                                         </th>
-                                        <th pSortableColumn="name">
+                                        <th>
                                             สถานที่
-                                            <p-sortIcon field="name" ariaLabel="Activate to sort"
-                                                ariaLabelDesc="Activate to sort in descending order"
-                                                ariaLabelAsc="Activate to sort in ascending order">
-                                            </p-sortIcon>
                                         </th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-columns="columns">
-                                    <tr [pSelectableRow]="rowData">
+                                    <tr>
                                         <td>
                                             <div style="text-align: center">
                                                 {{rowData['courseName']}}
@@ -397,5 +375,3 @@
                 </p-panel>
             </div>
         </div>
-    </div>
-</div>

@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
         }
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
   }
@@ -91,7 +91,7 @@ export class ProfileComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err['error']['message']);
+          console.log(err['error']['errorMessage']);
         }
       );
     });

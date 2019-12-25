@@ -83,18 +83,18 @@ public class TransportationTempleServiceImpl implements TransportationTempleServ
 	     * Params : transportation : TransportationTempleDto, id : Long
 	     * 
 	     * */
-	 public TransportationTempleDto deleteTransportationTemple (Long id,TransportationTempleDto transportation) {
-		 TransportationTempleEntity entity = new TransportationTempleEntity();
-		 TransportationTempleEntity temp = new TransportationTempleEntity();
+	 public Boolean deleteTransportationTemple (Long id,TransportationTempleDto transportation) {
 		 try {
-			 Optional<TransportationTempleEntity> opTransportation = transportationTempleRepository.findById(id);
-			 temp = mapOptionToEntity(opTransportation);
-			 temp.setTransportationTempleStatus(false);
-			 entity = transportationTempleRepository.save(temp);
+			 if (id != null ) {
+				 transportationTempleRepository.deleteById(id);
+				 return true;
+			 }
+			 
 		 }catch (Exception e) {
 			 log.error("DeleteTransportation Error=>" + e.getMessage());
+			 return false;
 		}
-		 return mapEntityToDto(entity);
+		 return true;
 	 }
 	 
 	 /* 

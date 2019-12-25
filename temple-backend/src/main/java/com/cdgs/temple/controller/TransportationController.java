@@ -39,7 +39,7 @@ public class TransportationController {
 	@Autowired
 	TransportationTempleService transportationTempleService;
 	
-	 /*
+	 /**
      * getTransportation 
      * Description : this controller get data of transportation.
      * Params : -
@@ -67,7 +67,7 @@ public class TransportationController {
 	
 	
 	
-	/*
+	/**
      * postTransporatation 
      * Description : this controller insert data of transportation.
      * Params : body : TransportationDto
@@ -100,7 +100,7 @@ public class TransportationController {
 	}
 	
 	
-	/*
+	/**
      * updateTransportation 
      * Description : this controller update data of transportation.
      * Params : body : TransportationDto, id : Long
@@ -131,7 +131,7 @@ public class TransportationController {
 	}
 	
 	
-	/*
+	/**
      * deleteTransportation 
      * Description : this controller update status of transportation from 1 to 0.
      * Params : body : TransportationDto, id : Long
@@ -141,13 +141,17 @@ public class TransportationController {
 	@PutMapping(path = "/delete/{id}")
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<ResponseDto<TransportationDto>> deleteTransportation(@PathVariable("id") Long id,@Valid @RequestBody TransportationDto body){
-		List<TransportationDto> dto = new ArrayList<>();
 		ResponseDto<TransportationDto> res  = new ResponseDto<TransportationDto>();
-		TransportationDto transportation = new TransportationDto();
+		Boolean transportation;
 		try {
 			transportation = transporatationService.deleteTransportation(id, body);
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setCode(200);
+			if(transportation) {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setCode(200);
+			} else {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+				throw new Exception ("transportation is using");
+			}
 			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 		}catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
@@ -161,6 +165,7 @@ public class TransportationController {
 	/********************************************************************************************************************************
 	 * -------------------------------------Manage Data Transportation of Temple ---------------------------------------------------
 	 * */
+
 	/**
 	  * getTransportationTemple()
 	  * This function for get transportation of temple 
@@ -183,7 +188,9 @@ public class TransportationController {
 	   return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.BAD_REQUEST);
 	  }
 	 }
-	/*
+
+
+	/**
 	 * getTransportationTemple()
 	 * This function for get transportation of temple 2
 	 * 
@@ -207,7 +214,7 @@ public class TransportationController {
 	}
 	
 	
-	/*
+	/**
 	 * insertTransportationTemple()
 	 * This function for insert transportation of temple
 	 * 
@@ -238,7 +245,7 @@ public class TransportationController {
 	}
 	
 	
-	/*
+	/**
 	 * updateTransportationTemple()
 	 * This function for update transportation of temple
 	 * params: id,  body: TransportationTempleDto
@@ -269,7 +276,7 @@ public class TransportationController {
 	}
 	
 	
-	/*
+	/**
 	 * deleteTransportationTemple()
 	 * This function for delete transportation of temple
 	 * params: id,  body: TransportationTempleDto
@@ -279,13 +286,17 @@ public class TransportationController {
 	@PutMapping(path= "/temple/delete/{id}")
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<ResponseDto<TransportationTempleDto>> deleteTransportationTemple(@PathVariable("id") Long id,@Valid @RequestBody TransportationTempleDto body){
-		List<TransportationTempleDto> templeDto = new ArrayList<>();
 		ResponseDto<TransportationTempleDto> res = new ResponseDto<TransportationTempleDto>();
-		TransportationTempleDto transportationTemple = new TransportationTempleDto();
+		Boolean delTransportationTemple;
 		try {
-			transportationTemple = transportationTempleService.deleteTransportationTemple(id, body);
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setCode(200);
+			delTransportationTemple = transportationTempleService.deleteTransportationTemple(id, body);
+			if(delTransportationTemple) {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setCode(200);
+			} else {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+				throw new Exception ("transportationTemple is using");
+			}
 			return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
 		}catch (Exception e){
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());

@@ -38,7 +38,7 @@ export class ScheduleService {
       .pipe(
         map(res => {
           // console.log(res['data']);
-          
+
           return {
             status: res['result'],
             data: res['data'].map(data => ({

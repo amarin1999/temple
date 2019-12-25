@@ -56,7 +56,6 @@ public class SpecialApproveServiceImpl implements SpecialApproveService{
 		tempSensation.setId(body.getSenseId());
     	tempSensation.setExpected(body.getExpected());
     	tempSensation.setExperience(body.getExperience());
-    	tempSensation.setTransportationId(body.getTransportationId());
     	sensation = sensationService.createSensation(tempSensation);
     	body.setSenseId(sensation.getId());
     	
@@ -155,8 +154,6 @@ public class SpecialApproveServiceImpl implements SpecialApproveService{
 		dto.setMemberId(entity.getMemberId());
 		dto.setStatus(entity.getSpaStatus());
 		dto.setSenseId(entity.getSenseId());
-		
-		
 		return dto;
 	}
 
@@ -181,6 +178,5 @@ public class SpecialApproveServiceImpl implements SpecialApproveService{
 		entity.setSenseId(dto.getSenseId());
 		return entity;
 	}
-
 
 }

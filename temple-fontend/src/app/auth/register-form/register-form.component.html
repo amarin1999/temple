@@ -13,7 +13,7 @@
               <!------- username ------->
               <div class="ui-g-12 ui-lg-4 ui-md-4 ">
                 <div *ngIf="!formError.username" class="text-right">
-                  <span >ชื่อผู้ใช้<span class="star">*</span></span>
+                  <span>ชื่อผู้ใช้<span class="star">*</span></span>
                 </div>
                 <div *ngIf="formError.username" class="text-danger text-invalid text-right">
                   {{ formError.username }}
@@ -104,11 +104,11 @@
                   <img [src]="
                       previewImg ? previewImg : './assets/images/no-img.png'
                     " class="img-info" *ngIf="showLoadingPicture" />
-                  <img src="./assets/images/spinner.gif" class="img-info" *ngIf="showNoProfile"/>
+                  <img src="./assets/images/spinner.gif" class="img-info" *ngIf="showNoProfile" />
                   <div class="btn-upload" style="text-align: center">
-                    <label for="profile" pButton style="background-color:#b8860b;border:#b8860b;"
-                      label=" อัปโหลดรูปภาพ" disabled=false ></label>
-                    <input accept="image/*" type="file" name="img" id="profile" (change)="profileSelect($event, 1)"  />
+                    <label for="profile" pButton style="background-color:#b8860b;border:#b8860b;" label=" อัปโหลดรูปภาพ"
+                      disabled=false></label>
+                    <input accept="image/*" type="file" name="img" id="profile" (change)="profileSelect($event, 1)" />
                     <div style="color: #BABABA;">
                       ** ขนาดไฟล์รูปไม่เกิน 2MB. นามสกุลไฟล์ .jpg เท่านั้น
                     </div>
@@ -536,20 +536,9 @@
     </div>
   </div>
 </div>
-
 <p-dialog header="ข้อความแจ้งเตือน" [(visible)]="displaySystemMessage" [style]="{ width: '300px' }" [modal]="true">
   <div *ngFor="let item of detailWarning">{{ item }}</div>
 </p-dialog>
-
-<!-- <p-toast position="center" key="systemMessage" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
-    <ng-template let-message pTemplate="message">
-        <div style="text-align: center">
-            <h3>{{message.summary}}</h3>
-            <pre class="text-left">{{message.detail}}</pre>
-        </div>
-    </ng-template>
-</p-toast>  -->
-
 <p-confirmDialog [style]="{ width: '50vw' }" #cd>
   <p-footer>
     <button type="button" pButton label="ยืนยัน" (click)="cd.accept()" class="ui-button-raised ui-button-info"></button>
@@ -557,7 +546,6 @@
       class="ui-button-raised ui-button-secondary"></button>
   </p-footer>
 </p-confirmDialog>
-
 <p-toast position="center" key="alertMessage" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
   <ng-template let-message pTemplate="message">
     <div style="text-align: center">
@@ -566,8 +554,10 @@
     </div>
     <div class="ui-g ui-fluid">
       <div class="ui-g-12">
-        <button type="button" pButton [label]="messageback" class="ui-button-success ui-button-raised"
-          [routerLink]="urlback"></button>
+        <button *ngIf="message.severity === 'success'" type="button" pButton [label]="messageback"
+            class="ui-button-success ui-button-raised" [routerLink]="urlback"></button>
+          <button *ngIf="message.severity !== 'success'" type=" button" pButton label="ปิด"
+            class="ui-button-success ui-button-raised" (click)="clearMessageService()"></button>
       </div>
     </div>
   </ng-template>

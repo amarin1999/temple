@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   public titleName: any[];
   public th: any;
   public yearRange: string;
-  public detailWarning: any[];
+  public detailWarning: any[] = [];
   public registerSuccess: boolean;
   public showCancelMessage: boolean;
   public urlback: string;
@@ -110,91 +110,86 @@ export class RegisterComponent implements OnInit {
     age: '',
     fname: '',
     lname: '',
-    gender: '',
+    phone: '',
     address: '',
     province: '',
     postalCode: '',
-    phone: '',
-    phoneEmergency: '',
+    blood: '',
     fnameEmergency: '',
     lnameEmergency: '',
     relationshipEmergency: '',
-    blood: ''
+    phoneEmergency: '',
   };
 
   public validationMessage = {
     username: {
-      // detail: 'กรุณากรอก Username',
+      detail: 'กรุณากรอก ชื่อผู้ใช้',
       required: 'ชื่อผู้ใช้*'
     },
     password: {
-      // detail: 'กรุณากรอก Password',
+      detail: 'กรุณากรอก รหัสผ่าน',
       required: 'รหัสผ่าน*'
     },
     repassword: {
-      // detail: 'กรุณากรอก Re-password',
+      detail: 'กรุณากรอก ยืนยันรหัสผ่าน',
       required: 'ยืนยันรหัสผ่าน*'
     },
     idCard: {
-      // detail: 'กรุณากรอก เลขประจำตัวประชาชน',
+      detail: 'กรุณากรอก เลขประจำตัวประชาชน',
       required: 'เลขประจำตัวประชาชน*'
     },
     age: {
-      // detail: 'กรุณากรอก อายุ',
+      detail: 'กรุณากรอก อายุ',
       required: 'อายุ*'
     },
     titleName: {
-      // detail: 'กรุณากรอก คำนำหน้า',
+      detail: 'กรุณาระบุ คำนำหน้า',
       required: 'คำนำหน้า*'
     },
     fname: {
-      // detail: 'กรุณากรอก ชื่อ',
+      detail: 'กรุณากรอก ชื่อ',
       required: 'ชื่อ*'
     },
     lname: {
-      // detail: 'กรุณากรอก นามสกุล',
+      detail: 'กรุณากรอก นามสกุล',
       required: 'นามสกุล*'
     },
-    gender: {
-      // detail: 'กรุณากรอก เพศ',
-      required: 'เพศ*'
+    phone: {
+      detail: 'กรุณากรอก เบอร์โทร',
+      required: 'เบอร์โทรศัพท์*'
     },
     address: {
-      // detail: 'กรุณากรอก ที่อยู่',
+      detail: 'กรุณากรอก ที่อยู่',
       required: 'ที่อยู่*'
     },
     province: {
-      // detail: 'กรุณากรอก จังหวัด',
+      detail: 'กรุณาระบุ จังหวัด',
       required: 'จังหวัด*'
     },
     postalCode: {
-      // detail: 'กรุณากรอก รหัสไปรษณีย์',
+      detail: 'กรุณากรอก รหัสไปรษณีย์',
       required: 'รหัสไปรษณีย์*'
     },
-    phone: {
-      // detail: 'กรุณากรอก เบอร์โทร',
-      required: 'เบอร์โทรศัพท์*'
-    },
-    phoneEmergency: {
-      // detail: 'กรุณากรอก เบอร์ติดต่อฉุกเฉิน',
-      required: 'เบอร์ติดต่อฉุกเฉิน*'
+    blood: {
+      detail: 'กรุณาระบุ กรุ๊ปเลือด',
+      required: 'กรุ๊ปเลือด*'
     },
     fnameEmergency: {
-      // detail: 'กรุณากรอก ชื่อผู้ติดต่อฉุกเฉิน',
+      detail: 'กรุณากรอก ชื่อผู้ติดต่อฉุกเฉิน',
       required: 'ชื่อผู้ติดต่อฉุกเฉิน*'
     },
     lnameEmergency: {
-      // detail: 'กรุณากรอก นามสกุลผู้ติดต่อฉุกเฉิน',
+      detail: 'กรุณากรอก นามสกุลผู้ติดต่อฉุกเฉิน',
       required: 'นามสกุลผู้ติดต่อฉุกเฉิน*'
     },
     relationshipEmergency: {
-      // detail: 'กรุณากรอก ความสัมพันธ์กับผู้ติดต่อฉุกเฉิน',
+      detail: 'กรุณากรอก ความสัมพันธ์กับผู้ติดต่อฉุกเฉิน',
       required: 'ความสัมพันธ์*'
     },
-    blood: {
-      // detail: 'กรุณากรอก กรุ๊ปเลือด',
-      required: 'กรุ๊ปเลือด*'
-    }
+    phoneEmergency: {
+      detail: 'กรุณากรอก เบอร์ติดต่อฉุกเฉิน',
+      required: 'เบอร์ติดต่อฉุกเฉิน*'
+    },
   };
   previewImg: string | ArrayBuffer;
   constructor(
@@ -223,7 +218,7 @@ export class RegisterComponent implements OnInit {
         this.provinces = res.data;
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
     this.titleService.getTitleNames().subscribe(
@@ -232,7 +227,7 @@ export class RegisterComponent implements OnInit {
         this.titleNames = res;
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
 
@@ -265,8 +260,19 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(e) {
+    let temp = 0;
+    this.courseHisList.filter(e => {
+      if (e.courseName === '' || e.courseName === null || e.location === '' || e.location === null) {
+        return temp = 1;
+      }
+    });
     if (!this.registerForm.valid) {
       this.subscribeInputMessageWaring();
+      this.showMessage();
+    } else if (temp === 1) {
+      this.detailWarning = []
+      const details = 'กรุณากรอกข้อมูลการปฏิบัติธรรมที่ผ่านมาให้ครบถ้วน';
+      this.detailWarning.push(details);
       this.showMessage();
     } else {
       this.submitMessage(e);
@@ -372,7 +378,7 @@ export class RegisterComponent implements OnInit {
                   'error'
                 );
               } else {
-                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
+                this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากระบบมีข้อผิดพลาด', 'error');
               }
             }
           },
@@ -393,7 +399,7 @@ export class RegisterComponent implements OnInit {
                 'error'
               );
             } else {
-              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จ', 'error');
+              this.showToast('alertMessage', 'สมัครสมาชิกไม่สำเร็จเนื่องจากระบบมีข้อผิดพลาด', 'error');
             }
           }
         );
@@ -457,32 +463,41 @@ export class RegisterComponent implements OnInit {
     for (const field of Object.keys(this.formError)) {
       this.formError[field] = '';
       const control = this.registerForm.get(field);
-      if (field === 'repassword') {
-        if (control.value === '') {
-          this.detailWarning[0] = 'กรุณากรอกยืนยันรหัสผ่าน';
-        } else if (control.value !== this.registerForm.get('password').value) {
-          this.detailWarning[0] = 'กรุณากรอกรหัสผ่านให้ตรงกัน';
-        } else {
-          continue;
-        }
-        this.formError[field] = this.validationMessage[field].required;
-      } else if (
+      // if (field === 'repassword') {
+      //   if (control.value === '') {
+      //     this.detailWarning[0] = 'กรุณากรอกยืนยันรหัสผ่าน';
+      //   } else if (control.value !== this.registerForm.get('password').value) {
+      //     this.detailWarning[0] = 'กรุณากรอกรหัสผ่านให้ตรงกัน';
+      //   } else {
+      //     continue;
+      //   }
+      //   this.formError[field] = this.validationMessage[field].required;
+      // } else 
+      if (
         control &&
         !control.valid &&
         this.validationMessage[field].required
       ) {
         details = 'กรุณากรอกข้อมูลให้ครบถ้วน';
-        this.detailWarning[1] = details;
-        // this.detailWarning += this.validationMessage[field].detail + '\n';
+        // this.detailWarning[1] = details;
+        this.detailWarning.push(this.validationMessage[field].detail);
         this.formError[field] = this.validationMessage[field].required;
       }
     }
   }
 
   /**
+   * clear message diaog
+   */
+  clearMessageService() {
+    this.messageService.clear();
+  }
+
+  /**
    * Toast สมัครสมาชิก
    * @param key ;
    * @param detail ;
+   * @param severity ;
    */
   showToast(key, detail, severity) {
     this.messageService.clear();
