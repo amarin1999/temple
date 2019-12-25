@@ -270,7 +270,6 @@
                 </div>
             </ng-template>
             <!-- panel 1 ปิดข้อมูลส่วนตัวของพระอาจารย์กรณีเป็น 2 คอลัมน์ -->
-
             <!--panel 2 ตารางคอร์สที่ผ่านการอบรบแล้ว (ผู้ใช้) -->
             <div class="ui-g-12 ui-lg-6 ui-md-12" *ngIf="showRole">
                 <p-panel styleClass="panelHeader">
@@ -291,7 +290,6 @@
                         </div>
                     </div>
                     <div class="ui-g">
-
                         <div class="ui-g-12 ui-lg-12 ui-md-12">
                             <p-table [columns]="cols" [value]="graduatedcourses" [paginator]="true" [rows]="10"
                                 (onRowSelect)="onRowSelect($event)" selectionMode="single" [responsive]="true"
@@ -346,29 +344,19 @@
                     </p-header>
                     <div class="ui-g">
                         <div class="ui-g-12 ui-lg-12 ui-md-12">
-                            <p-table [columns]="cols" [value]="courseHisList" [paginator]="true" [rows]="10"
-                                (onRowSelect)="onRowSelect($event)" selectionMode="single" [responsive]="true"
-                                [(selection)]="selectedCourse" [totalRecords]="totalGraduatedRecords">
+                            <p-table [columns]="cols" [value]="courseHisList" [paginator]="true" [rows]="10" [responsive]="true">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
-                                        <th pSortableColumn="stDate">
+                                        <th>
                                             ชื่อคอร์ส
-                                            <p-sortIcon field="stDate" ariaLabel="Activate to sort"
-                                                ariaLabelDesc="Activate to sort in descending order"
-                                                ariaLabelAsc="Activate to sort in ascending order">
-                                            </p-sortIcon>
                                         </th>
-                                        <th pSortableColumn="name">
+                                        <th>
                                             สถานที่
-                                            <p-sortIcon field="name" ariaLabel="Activate to sort"
-                                                ariaLabelDesc="Activate to sort in descending order"
-                                                ariaLabelAsc="Activate to sort in ascending order">
-                                            </p-sortIcon>
                                         </th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-columns="columns">
-                                    <tr [pSelectableRow]="rowData">
+                                    <tr>
                                         <td>
                                             <div style="text-align: center">
                                                 {{rowData['courseName']}}

@@ -111,14 +111,10 @@ public class SpecialApproveController {
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
 		List<SpecialApproveDto> specialApproves = new ArrayList<>();
 		SpecialApproveDto dto;
-		
 		MemberDto member = memberService.getCurrentMember();
-		
-	    
 //	    System.out.println(body.getTransportationId() + " " + body.getExpected() + " " + body.getExperience() + " " + body.getDetail());
 //	    return null;
 		try {
-			
         	body.setMemberId(member.getId());
         	body.setStatus("2");
 			dto = specialApproveService.create(body);
@@ -149,7 +145,6 @@ public class SpecialApproveController {
 		List<SpecialApproveDto> listDto = new ArrayList<>();
 		MemberDto member = memberService.getCurrentMember();
 		SpecialApproveDto bodydto = new SpecialApproveDto();
-		
 		try {
 			bodydto.setStatus(body.getStatus());
 			for (long said : body.getSpaId()) {
@@ -198,7 +193,6 @@ public class SpecialApproveController {
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
 		SpecialApproveDto dto = new SpecialApproveDto();
 		List<SpecialApproveDto> listDto = new ArrayList<>();
-		
 		MemberDto member = memberService.getCurrentMember();
 		try {
 			dto = specialApproveService.getApproveByCourseIdAndMemberId(courseId, member.getId());
@@ -206,7 +200,6 @@ public class SpecialApproveController {
                 res.setResult("Success");
             else
                 res.setResult("Fail");
-			
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {

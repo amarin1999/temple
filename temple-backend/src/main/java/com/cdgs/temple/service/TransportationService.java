@@ -11,5 +11,5 @@ public interface TransportationService {
 	
 	TransportationDto updateTransportation (Long id,TransportationDto transportation);
 	
-	TransportationDto deleteTransportation (Long id,TransportationDto transportation);
+	Boolean deleteTransportation (Long id,TransportationDto transportation);
 }

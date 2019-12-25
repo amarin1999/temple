@@ -237,7 +237,7 @@ export class EditFormComponent implements OnInit {
         }
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
     this.provinceService.getProvince().subscribe(
@@ -245,7 +245,7 @@ export class EditFormComponent implements OnInit {
         this.provinces = res.data;
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
     this.titleService.getTitleNames().subscribe(
@@ -253,7 +253,7 @@ export class EditFormComponent implements OnInit {
         this.titleNames = res;
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
 
@@ -309,7 +309,7 @@ export class EditFormComponent implements OnInit {
         }
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
     this.manageUserService.getUser(this.personalId).subscribe(
@@ -392,7 +392,7 @@ export class EditFormComponent implements OnInit {
         );
         this.editForm.controls['province'].patchValue(province);
       },
-      err => console.log(err['error']['message'])
+      err => console.log(err['error']['errorMessage'])
     );
     this.spinner.hide();
   }

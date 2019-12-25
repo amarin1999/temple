@@ -259,6 +259,7 @@ public class CourseDto implements Serializable {
 				+ ", transportTempleTimePickUp =" + transportTempleTimePickUp + ", transportTempleTimeSend ="
 				+ transportTempleTimeSend + "]";
 	}
+
 	
 	
 	

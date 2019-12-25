@@ -418,6 +418,7 @@ public class CourseServiceImpl implements CourseService {
 			dto.setSaStatus(entity.getSaStatus());
 			dto.setMhcStatus(entity.getMhcStatus());
 			dto.setCanRegister(entity.getCanRegister());
+			dto.setTransportTempleId(entity.getTransportTempleId());
 		} else {
 			dto = null;
 		}

@@ -225,7 +225,7 @@ export class RegisterFormComponent implements OnInit {
         this.provinces = res.data;
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
     // ------------ Get Role ----------------------------
@@ -246,7 +246,7 @@ export class RegisterFormComponent implements OnInit {
         this.titleNames = res;
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
 

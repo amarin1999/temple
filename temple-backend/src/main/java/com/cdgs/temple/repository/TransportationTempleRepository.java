@@ -12,5 +12,10 @@ public interface TransportationTempleRepository  extends CrudRepository<Transpor
 	@Query(value ="SELECT * FROM transportation_temple WHERE transportation_temple_status = '1'", nativeQuery = true)
 	List<TransportationTempleEntity> findAllByStatusIsTrue();
 	
+	@Query(value ="SELECT * FROM transportation_temple WHERE transportation_temple_status = '1'"
+			+ "AND transportation_temple_id = :id", nativeQuery = true)
+	List<TransportationTempleEntity> findAllByStatusIsTrueId(Long id);
+	
 	Optional<TransportationTempleEntity> findById(Long id);
+	
 }

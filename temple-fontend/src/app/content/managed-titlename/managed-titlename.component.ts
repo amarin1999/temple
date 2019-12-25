@@ -81,7 +81,7 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
           }
         },
         err => {
-          console.log(err['error']['message']);
+          console.log(err['error']['errorMessage']);
           // this.msgs.push({severity:'error', summary:'ข้อความจากระบบ', detail:'การดำเนินการสำเร็จ'});
         }
       );
@@ -116,8 +116,10 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
         },
           (e) => {
             // console.log(e);
-            this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ',
-                                      detail: 'ดำเนินการบันทึกไม่สำเร็จ (คำนำหน้าชื่อหรือคำย่ออาจมีอยู่แล้ว)', life: 5000 });
+            this.messageService.add({
+              severity: 'error', summary: 'ข้อความจากระบบ',
+              detail: 'ดำเนินการบันทึกไม่สำเร็จ (คำนำหน้าชื่อหรือคำย่ออาจมีอยู่แล้ว)', life: 5000
+            });
           }
         );
       this.clear();
@@ -242,12 +244,20 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
             }
           },
             (e) => {
-              console.log(e['error']['message']);
-              this.messageService.add({
-                severity: 'error',
-                summary: 'ข้อความจากระบบ: ',
-                detail: 'ดำเนินการลบคำนำหน้าไม่สำเร็จ'
-              });
+              console.log(e['error']['errorMessage']);
+              if (e['error']['errorMessage'] === 'titleName is using') {
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'ข้อความจากระบบ: ',
+                  detail: 'ดำเนินการลบคำนำหน้าไม่สำเร็จเนื่องจากคำนำหน้าใช้งานอยู่'
+                });
+              } else {
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'ข้อความจากระบบ: ',
+                  detail: 'ดำเนินการลบคำนำหน้าไม่สำเร็จเนื่องจาก ' + e['error']['errorMessage']
+                });
+              }
             }
           );
       },

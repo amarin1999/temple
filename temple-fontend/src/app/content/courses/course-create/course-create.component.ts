@@ -120,7 +120,7 @@ export class CourseCreateComponent implements OnInit {
         }
       },
       error => {
-        console.log(error['error']['message']);
+        console.log(error['error']['errorMessage']);
 
       }
     );
@@ -134,7 +134,7 @@ export class CourseCreateComponent implements OnInit {
         }
       },
       error => {
-        console.log(error['error']['message']);
+        console.log(error['error']['errorMessage']);
 
       }
     );
@@ -151,7 +151,7 @@ export class CourseCreateComponent implements OnInit {
         });
       },
       error => {
-        console.log(error['error']['message']);
+        console.log(error['error']['errorMessage']);
       }
     );
 

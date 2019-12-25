@@ -141,13 +141,17 @@ public class TransportationController {
 	@PutMapping(path = "/delete/{id}")
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<ResponseDto<TransportationDto>> deleteTransportation(@PathVariable("id") Long id,@Valid @RequestBody TransportationDto body){
-		List<TransportationDto> dto = new ArrayList<>();
 		ResponseDto<TransportationDto> res  = new ResponseDto<TransportationDto>();
-		TransportationDto transportation = new TransportationDto();
+		Boolean transportation;
 		try {
 			transportation = transporatationService.deleteTransportation(id, body);
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setCode(200);
+			if(transportation) {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setCode(200);
+			} else {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+				throw new Exception ("transportation is using");
+			}
 			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 		}catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
@@ -161,18 +165,42 @@ public class TransportationController {
 	/********************************************************************************************************************************
 	 * -------------------------------------Manage Data Transportation of Temple ---------------------------------------------------
 	 * */
-	
+
+	/**
+	  * getTransportationTemple()
+	  * This function for get transportation of temple 
+	  * 
+	   */
+	 @GetMapping(path = "/temple")
+	 public ResponseEntity<ResponseDto<TransportationTempleDto>> getTransportationTemple(){
+	  List<TransportationTempleDto> templeDto = new ArrayList<>();
+	  ResponseDto<TransportationTempleDto> res = new ResponseDto<TransportationTempleDto>();
+	  try {
+	   templeDto = transportationTempleService.getTransportationTempleName();
+	   res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+	   res.setData(templeDto);
+	   res.setCode(200);
+	   return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
+	  }catch (Exception e) {
+	   res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+	   res.setErrorMessage(e.getMessage());
+	   res.setCode(400);
+	   return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.BAD_REQUEST);
+	  }
+	 }
+
+
 	/**
 	 * getTransportationTemple()
-	 * This function for get transportation of temple 
+	 * This function for get transportation of temple 2
 	 * 
 	 	*/
-	@GetMapping(path = "/temple")
-	public ResponseEntity<ResponseDto<TransportationTempleDto>> getTransportationTemple(){
+	@GetMapping(path = "/templeMonk/{id}")
+	public ResponseEntity<ResponseDto<TransportationTempleDto>> getTransportationTempleMonk(@PathVariable("id") Long id){
 		List<TransportationTempleDto> templeDto = new ArrayList<>();
 		ResponseDto<TransportationTempleDto> res = new ResponseDto<TransportationTempleDto>();
 		try {
-			templeDto = transportationTempleService.getTransportationTempleName();
+			templeDto = transportationTempleService.getTransportationTempleNameCouse(id);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(templeDto);
 			res.setCode(200);
@@ -258,13 +286,17 @@ public class TransportationController {
 	@PutMapping(path= "/temple/delete/{id}")
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<ResponseDto<TransportationTempleDto>> deleteTransportationTemple(@PathVariable("id") Long id,@Valid @RequestBody TransportationTempleDto body){
-		List<TransportationTempleDto> templeDto = new ArrayList<>();
 		ResponseDto<TransportationTempleDto> res = new ResponseDto<TransportationTempleDto>();
-		TransportationTempleDto transportationTemple = new TransportationTempleDto();
+		Boolean delTransportationTemple;
 		try {
-			transportationTemple = transportationTempleService.deleteTransportationTemple(id, body);
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setCode(200);
+			delTransportationTemple = transportationTempleService.deleteTransportationTemple(id, body);
+			if(delTransportationTemple) {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setCode(200);
+			} else {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+				throw new Exception ("transportationTemple is using");
+			}
 			return new ResponseEntity<ResponseDto<TransportationTempleDto>>(res, HttpStatus.OK);
 		}catch (Exception e){
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
