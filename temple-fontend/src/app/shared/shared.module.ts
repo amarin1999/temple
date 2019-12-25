@@ -5,7 +5,6 @@ import {RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {NgxSpinnerModule} from 'ngx-spinner';
-
 import {ButtonModule} from 'primeng/button';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {DropdownModule} from 'primeng/dropdown';
@@ -122,7 +121,7 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
     AutoCompleteModule,
     PanelModule,
     TabViewModule,
-    ToggleButtonModule
+    ToggleButtonModule,
   ],
   providers: [
     TitleNameService,
