@@ -15,6 +15,7 @@ import { PrePathService } from 'src/app/shared/service/pre-path.service';
 import { TransportService } from 'src/app/shared/service/transport.service';
 import { ExcelService } from 'src/app/shared/service/excel.service';
 import { saveAs } from 'file-saver'; 
+import { combineLatest } from 'rxjs';
 
 const MIME_TYPE= {
   xls: 'application/vnd.ms-excel' 
@@ -51,6 +52,8 @@ export class CourseComponent implements OnInit, OnDestroy {
   public currentUrl: string;
   public urlback: any;
   public transports: any[];
+  public optionTime: any;
+  public transportId: any;
 
   public cols = [
     { field: 'name', header: 'ชื่อ-นามสกุล' },
@@ -137,17 +140,17 @@ export class CourseComponent implements OnInit, OnDestroy {
         browserRefresh = !router.navigated;
       }
   }); */
-    this.transportation.getTranSport().subscribe(
-      res => {
-        this.transports = [
-          ...res
-        ];
-        // console.log(this.transports);
-      },
-      err => {
-        console.log(err['error']['errorMessage']);
-      }
-    );
+    // this.transportation.getTranSport().subscribe(
+    //   res => {
+    //     this.transports = [
+    //       ...res
+    //     ];
+    //     // console.log(this.transports);
+    //   },
+    //   err => {
+    //     console.log(err['error']['errorMessage']);
+    //   }
+    // );
     this.id = this.route.snapshot.paramMap.get('id');
     this.getData();
     this.authService.getRole().subscribe(res => this.role = res);
@@ -336,8 +339,52 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   public rgCourse(courseId: number) {
     this.closeMessage();
-    this.displayRegisterDialog = true;
     this.courseId = courseId;
+    this.courseService.getCourseByid(courseId).subscribe(res => {
+      this.transportId = res["data"]["transportTempleId"];
+      console.log(this.transportId);
+      if (this.transportId !== null) {
+        // combineLatest for process 2 service before subscribe
+        this.optionTime = { hour: "2-digit", minute: "2-digit" };
+        combineLatest(
+          this.transportation.getTranSportToEdit(),
+          this.transportation.getTranSportTempleToEdit(this.transportId)
+        ).subscribe(([tranSport, tranSportTemple]) => {
+          this.transports = [
+            ...tranSport.data,
+            ...tranSportTemple.data.map(data => {
+              return {
+                id: data.id,
+                name:
+                  data.name +
+                  " เวลารับ: " +
+                  new Date(data.timePickUp).toLocaleTimeString(
+                    "th-TH",
+                    this.optionTime
+                  ) +
+                  " เวลา: " +
+                  new Date(data.timeSend).toLocaleTimeString(
+                    "th-TH",
+                    this.optionTime
+                  )
+              };
+            })
+          ];
+        });
+      } else {
+        this.transportation.getTranSportToEdit().subscribe(
+          data => {
+            this.transports = [...data.data];
+          }
+          );
+      }
+      // this.transportId = this.transportId.map(
+      //   data => {
+      //     return data.transportTempleId;
+      //   }
+      // );
+    });
+    this.displayRegisterDialog = true;
   }
 
 
