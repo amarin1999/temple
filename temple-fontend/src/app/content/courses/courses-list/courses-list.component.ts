@@ -128,7 +128,7 @@ export class CoursesListComponent implements OnInit {
         // console.log(this.transports);
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
 

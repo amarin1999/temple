@@ -120,6 +120,8 @@ export class TransportService {
     return this.http.put(`${ApiConstants.baseURl}/transportations/delete/${id}`, { id: id })
       .pipe(
         map(res => {
+          console.log('res', res);
+          
           return {
             status: res['result']
           };

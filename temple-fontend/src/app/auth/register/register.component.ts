@@ -218,7 +218,7 @@ export class RegisterComponent implements OnInit {
         this.provinces = res.data;
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
     this.titleService.getTitleNames().subscribe(
@@ -227,7 +227,7 @@ export class RegisterComponent implements OnInit {
         this.titleNames = res;
       },
       err => {
-        console.log(err['error']['message']);
+        console.log(err['error']['errorMessage']);
       }
     );
 

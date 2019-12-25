@@ -147,7 +147,7 @@ export class ManageStorageComponent implements OnInit {
         this.items = this.items.filter(e => e != null);
         this.itemsRe = this.itemsRe.filter(e => e != null);
       },
-      (e) => console.log(e['error']['message'])
+      (e) => console.log(e['error']['errorMessage'])
     );
     this.spinner.hide();
   }
@@ -184,7 +184,7 @@ export class ManageStorageComponent implements OnInit {
         if (res['status'] === 'Success') {
           this.items.splice(index, 1);
         }
-      }).catch((e) => console.log(e['error']['message']));
+      }).catch((e) => console.log(e['error']['errorMessage']));
   }
 
   save() {

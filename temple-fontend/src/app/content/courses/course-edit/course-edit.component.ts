@@ -121,7 +121,7 @@ public validationMessage = {
         }
       },
       error => {
-        console.log(error['error']['message']);
+        console.log(error['error']['errorMessage']);
 
       }
     );
@@ -133,7 +133,7 @@ public validationMessage = {
         }
       },
       error => {
-        console.log(error['error']['message']);
+        console.log(error['error']['errorMessage']);
 
       }
     );
@@ -150,7 +150,7 @@ public validationMessage = {
         });
       },
       error => {
-        console.log(error['error']['message']);
+        console.log(error['error']['errorMessage']);
       }
     );
 
@@ -224,7 +224,7 @@ public validationMessage = {
         this.formEdit.controls['transportTemple'].setValue(this.transportTempleList);
 
       },
-        err => console.log(err['error']['message'])
+        err => console.log(err['error']['errorMessage'])
       );
   }
 

@@ -35,7 +35,7 @@ export class ManageUserComponent implements OnInit {
         this.personal = res.data;
       }
     },
-      (e) => console.log(e['error']['message'])
+      (e) => console.log(e['error']['errorMessage'])
     );
     this.menu = [
       { label: '', icon: 'pi pi-home', routerLink: '/' },
@@ -64,7 +64,7 @@ export class ManageUserComponent implements OnInit {
           ];
         }
       },
-        (e) => console.log(e['error']['message'])
+        (e) => console.log(e['error']['errorMessage'])
       );
   }
   public onRowSelect(e) {
