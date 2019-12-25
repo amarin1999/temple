@@ -270,7 +270,6 @@
                 </div>
             </ng-template>
             <!-- panel 1 ปิดข้อมูลส่วนตัวของพระอาจารย์กรณีเป็น 2 คอลัมน์ -->
-
             <!--panel 2 ตารางคอร์สที่ผ่านการอบรบแล้ว (ผู้ใช้) -->
             <div class="ui-g-12 ui-lg-6 ui-md-12" *ngIf="showRole">
                 <p-panel styleClass="panelHeader">
@@ -291,7 +290,6 @@
                         </div>
                     </div>
                     <div class="ui-g">
-
                         <div class="ui-g-12 ui-lg-12 ui-md-12">
                             <p-table [columns]="cols" [value]="graduatedcourses" [paginator]="true" [rows]="10"
                                 (onRowSelect)="onRowSelect($event)" selectionMode="single" [responsive]="true"
