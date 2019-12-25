@@ -2,8 +2,6 @@ package com.cdgs.temple.util;
 
 import java.util.List;
 
-import com.cdgs.temple.dto.TransportationTempleDto;
-
 public class ResponseDto<T> {
 
     private String result;
