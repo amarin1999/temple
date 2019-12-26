@@ -205,6 +205,7 @@ public class CourseServiceImpl implements CourseService {
 			}
 		} catch (Exception e) {
 			log.error("assignCourse>>> " + e.getMessage());
+			return null;
 		}
 	}
 
