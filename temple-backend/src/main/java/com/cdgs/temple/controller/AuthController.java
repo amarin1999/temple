@@ -40,7 +40,7 @@ public class AuthController {
     private final HistoryDharmaService historyDharmaService;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
-
+ 
     @Autowired
     public AuthController(MemberService memberService, AuthenticationManager authenticationManager, HistoryDharmaService historyDharmaService ,
             JwtTokenUtil jwtTokenUtil) {
