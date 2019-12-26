@@ -29,10 +29,10 @@ export class ReportComponent implements OnInit {
     ]);
 
     this.cols = [
-      { field: 'vin', header: 'เพศ' },
-      {field: 'year', header: 'Year' },
-      { field: 'brand', header: 'Brand' },
-      { field: 'color', header: 'Color' }
+      { field: 'gender', header: 'เพศ' },
+      {field: 'transportation', header: 'การเดินทาง' },
+      { field: 'newUser', header: 'คนใหม่' },
+      { field: 'region', header: 'ภูมิภาค' }
   ];
 
   this.courseService.getCourses().subscribe( res => { 

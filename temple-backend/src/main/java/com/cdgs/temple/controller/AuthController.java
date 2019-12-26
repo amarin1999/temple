@@ -57,6 +57,10 @@ public class AuthController {
     @PostMapping(path = "/login")
     public ResponseEntity<?> login(@Valid @RequestBody AuthDto user) {
         try {
+        	
+        	
+        	
+        	
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
             final JwtUser userDetails = (JwtUser) authentication.getPrincipal();
@@ -69,6 +73,11 @@ public class AuthController {
             ResponseDto<AuthDto> res = new ResponseDto<>();
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage("Username หรือ Password ไม่ถูกต้อง ");
+            
+            
+            
+            
+            
             res.setCode(401);
             return new ResponseEntity<>(res, HttpStatus.UNAUTHORIZED);
         }

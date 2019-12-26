@@ -16,16 +16,42 @@
       </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns">
-                    {{col.header}}
-                </th>
+                <th colspan="3"> เพศ </th>
+                <th colspan="2"> การเดินทาง </th>
+                <th rowspan="2"> คนใหม่ </th>
+                <th colspan="8"> ภูมิภาค </th>
+            </tr>
+            <tr>
+                <th>หญิง</th>
+                <th>ชาย</th>
+                <th>ไม่ระบุ</th>
+                <th>การเดินทางของวัด</th>
+                <th>การเดินทางด้วยตัวเอง</th>
+                <th>กรุงเทพฯ</th>
+                <th>ภาคกลาง</th>
+                <th>ภาคเหนือ</th>
+                <th>ภาคใต้</th>
+                <th>ภาคตะวันออก</th>
+                <th>ภาคตะวันตก</th>
+                <th>ภาคอีสาน</th>
+                <th>สกลนคร</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>
-                <td *ngFor="let col of columns">
-                        {{rowData[col.field]}}
-                </td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
             </tr>
         </ng-template>
   </p-table>
