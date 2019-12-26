@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.cdgs.temple.entity.InsertCourseScheduleEntity;
 import com.cdgs.temple.repository.InsertCourseScheduleRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,8 @@ import com.cdgs.temple.service.CourseScheduleService;
 
 @Service
 public class CourseScheduleServiceImpl implements CourseScheduleService {
+	
+	private static final Logger log = LoggerFactory.getLogger(CourseScheduleServiceImpl.class);
 
     private CourseScheduleRepository courseScheduleRepository;
     private InsertCourseScheduleRepository insertCourseScheduleRepository;
@@ -36,7 +41,7 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
             entities = courseScheduleRepository.findCourseScheduleByMemberId(memberId);
             dto = mapEntityListToDtoList(entities);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error("getCourseScheduleByUser>> " + e.getMessage());
             dto = null;
         }
         return dto;
@@ -52,7 +57,7 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
             entities = courseScheduleRepository.findCourseTeacherByMemberId(memberId);
             dto = mapEntityListToDtoList(entities);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+        	log.error("getCourseScheduleByMonk>> " + e.getMessage());
             dto = null;
         }
         return dto;
@@ -65,8 +70,6 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
         courseScheduleList = courseScheduleRepository.findAllByCourseId(courseId);
         dtoList = mapEntityListToDtoList(courseScheduleList);
         return dtoList;
-
-        //return null;
     }
 
 
@@ -79,8 +82,7 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
             System.out.println(entity);
             return mapInsertEntityToDto(entity);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-
+        	log.error("createCourseSchedule>> " + e.getMessage());
             return null;
         }
     }

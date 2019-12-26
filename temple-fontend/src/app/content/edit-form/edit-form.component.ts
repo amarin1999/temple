@@ -41,7 +41,7 @@ export class EditFormComponent implements OnInit {
   public registerSuccess: boolean;
   public showCancelMessage: boolean;
   public personalId: string;
-  public previewImg: any;
+  public previewImg: any = null;
   public onEdit: boolean;
   public pipe = new DatePipe('th-TH');
   public showRole: boolean;
@@ -61,7 +61,7 @@ export class EditFormComponent implements OnInit {
   showLoadingPicture = true;
   currentId = 0;
   profile: any;
-  profileString: string;
+  profileString: any = null;
   titleNames: any[];
   bloodGroup: SelectItem[] = [
     { label: 'O', value: 'O' },
@@ -369,7 +369,7 @@ export class EditFormComponent implements OnInit {
         this.editForm.controls['phoneEmergency'].setValue(
           res['data']['emergencyTel']
         );
-
+        // this.profileString = res['data']['img'];
         this.editForm.controls['imgProfile'].setValue(res['data']['img']);
         this.editForm.controls['relationshipEmergency'].setValue(
           res['data']['emergencyRelationship']
@@ -724,7 +724,7 @@ export class EditFormComponent implements OnInit {
           ordianNumber: this.editForm.get('ordianNumber').value === '' ? null : this.editForm.get('ordianNumber').value,
           emergencyTel: this.editForm.get('phoneEmergency').value,
           email: this.editForm.get('email').value === '' ? null : this.editForm.get('email').value,
-          img: this.profileString,
+          img: this.editForm.get('imgProfile').value,
           registerDate: null,
           lastUpdate: new Date(),
           genderId: this.editForm.get('gender').value,
