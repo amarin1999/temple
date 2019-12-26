@@ -56,6 +56,8 @@ public class MemberDto implements Serializable {
 	
 	private Long provinceId;
 	private String provinceName;
+//	private Long regionId;
+//	private String regionName;
 	private List<HistoryDharmaDto> historyDharma;
 	
 	
@@ -277,6 +279,7 @@ public class MemberDto implements Serializable {
 	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
+		
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

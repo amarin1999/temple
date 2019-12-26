@@ -24,7 +24,7 @@ public class ProvinceServiceImpl implements ProvinceService {
 	public List<ProvinceDto> getProvince() {
 		List<ProvinceEntity> provinceEntities = new ArrayList<ProvinceEntity>();
 		try {
-			provinceEntities = provinceRepository.findAll();
+			provinceEntities = provinceRepository.getAll();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -43,9 +43,16 @@ public class ProvinceServiceImpl implements ProvinceService {
 	
 	private ProvinceDto convEntityToDto(ProvinceEntity entity) {
 		ProvinceDto dto = new ProvinceDto();
-		if (entity != null) {
-			dto.setProvinceId(entity.getProvinceId());
-			dto.setProvinceName(entity.getProvinceName());
+		try {
+			if (entity != null) {
+				dto.setProvinceId(entity.getProvinceId());
+				dto.setProvinceName(entity.getProvinceName());
+				dto.setRegionId(entity.getRegionId());
+				dto.setRegionName(entity.getRegion().getRegionName());
+			}
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
 		}
 		return dto;
 	}
