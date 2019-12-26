@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,14 +30,26 @@ public class ProvinceEntity implements Serializable{
 	@Column(name = "province_desc", unique = true)
 	private String provinceName;
 	
+	@Column(name = "region_id", unique = true)
+	private Long regionId;
+	
+	@ManyToOne
+	@JoinColumn(name = "region_id", insertable = false, updatable = false)
+	private RegionEntity region;
+	
+//	@Column(name = "region_name", unique = true)
+//	private String regionName;
+	
 	public ProvinceEntity() {
 		super();
 	}
 	
-	public ProvinceEntity(Long provinceId, String provinceName) {
+	public ProvinceEntity(Long provinceId, String provinceName, Long regionId, String regionName) {
 		super();
 		this.provinceId = provinceId;
 		this.provinceName = provinceName;
+		this.regionId = regionId;
+//		this.regionName = regionName;
 	}
 
 	public Long getProvinceId() {
@@ -52,6 +66,22 @@ public class ProvinceEntity implements Serializable{
 
 	public void setProvinceName(String provinceName) {
 		this.provinceName = provinceName;
+	}
+
+	public Long getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(Long regionId) {
+		this.regionId = regionId;
+	}
+
+	public RegionEntity getRegion() {
+		return region;
+	}
+
+	public void setRegion(RegionEntity region) {
+		this.region = region;
 	}
 	
 }
