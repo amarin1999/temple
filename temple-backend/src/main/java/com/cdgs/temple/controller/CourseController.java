@@ -535,7 +535,7 @@ public class CourseController {
         MemberDto member = memberService.getCurrentMember();
         SensationDto tempSensation = new SensationDto();
         SensationDto sensation = new SensationDto();
-        System.out.println(body.getTransportationId());
+        System.out.println("Detail" + body.getTransportationId());
        
         try {
             if (courseService.getCoursesUserByCourseId(member.getId(), body.getCourseId()) == 0) {
