@@ -9,6 +9,9 @@ import com.cdgs.temple.service.GraduatedCourseService;
 import com.cdgs.temple.service.GraduatedService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.util.ResponseDto;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,8 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/graduated")
 public class GraduatedController {
+	private static final Logger log = LoggerFactory.getLogger(GraduatedController.class);
+	
     private MemberService memberService;
     private GraduatedService graduatedService;
     private GraduatedCourseService graduatedCourseService;
@@ -71,14 +76,13 @@ public class GraduatedController {
 				bodydto.setMhcId(mhc.getMhcId());
 				bodydto.setStatus(mhc.getStatus());
 				System.out.println("body => " +bodydto.toString());
-				// return boolean
 				graduatedService.update(bodydto, member.getId());
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println("400");
+			log.error(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);

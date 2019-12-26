@@ -254,8 +254,6 @@ public class ExcelController {
                     	cell = rowBody.createCell(4);
                     	cell.setCellStyle(tableBody);
                     	sheet.addMergedRegion(new CellRangeAddress(bodyStRow,bodyStRow,3,4));
-                    	//System.out.print(cell);
-                    	
                     	
                     	sheet.addMergedRegion(new CellRangeAddress(bodyStRow,bodyStRow,5,6));
                     	cell = rowBody.createCell(5);

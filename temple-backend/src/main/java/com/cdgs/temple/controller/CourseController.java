@@ -376,7 +376,6 @@ public class CourseController {
         CourseTeacherDto courseTeacher = new CourseTeacherDto();
         Date dateSt = body.getDate().get(0);
     	Date dateEnd = body.getDate().get(1);
-//        System.out.println("Date" + body.getDate());
         try {
             course = courseService.createCourse(body);
             courseSchedule.setCourseId(course.getId());
