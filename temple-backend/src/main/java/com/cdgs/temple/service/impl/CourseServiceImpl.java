@@ -527,6 +527,7 @@ public class CourseServiceImpl implements CourseService {
 			entity.setRegisterDate(body.getRegisterDate());
 			entity.setSenseId(body.getSenseId());
 			entity.setMhcStatus(body.getStatus());
+			entity.setTranId(body.getTransportationId());
 		}
 		return entity;
 	}
