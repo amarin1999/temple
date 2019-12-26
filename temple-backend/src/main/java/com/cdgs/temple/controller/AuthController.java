@@ -57,10 +57,6 @@ public class AuthController {
     @PostMapping(path = "/login")
     public ResponseEntity<?> login(@Valid @RequestBody AuthDto user) {
         try {
-        	
-        	
-        	
-        	
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
             final JwtUser userDetails = (JwtUser) authentication.getPrincipal();
