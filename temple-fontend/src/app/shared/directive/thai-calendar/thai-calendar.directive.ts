@@ -23,7 +23,6 @@ export class ThaiCalendarDirective {
       }
     };
 
-
     const oldParseValueFromString  = this.calendar.parseValueFromString.bind(this.calendar);
     this.calendar.parseValueFromString = (text: string) => {
       text = this.convertBDyearToADyearString(text);
@@ -48,7 +47,6 @@ export class ThaiCalendarDirective {
       }
     };
     this.calendar.showOverlay = showOverlayCustom.bind(this);
-
     const oldPopulateYearOptions = this.calendar.populateYearOptions.bind(this.calendar);
     this.calendar.populateYearOptions = (start: any, end: any) => {
       oldPopulateYearOptions(start, end);
