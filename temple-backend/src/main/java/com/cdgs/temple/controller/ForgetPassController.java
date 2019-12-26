@@ -46,9 +46,7 @@ public class ForgetPassController {
     	MemberDto member;
     	MemberDto member2 = new MemberDto();
     	try {
-//    		System.out.println(body.getUsername()+" | "+body.getIdCard()+" | "+body.getPhoneNumber());
     		Integer count = forgetPassService.countUser(body.getUsername(), body.getIdCard(), body.getPhoneNumber());
-    		System.out.println(count);
     		if (count > 0) {
     			member = memberService.getMemberByUserNameIdCardPhoneNumber(body);
     			member2.setId(member.getId());
@@ -65,7 +63,7 @@ public class ForgetPassController {
     			return new ResponseEntity<>(res, HttpStatus.OK);
     		}
     	} catch (Exception e) {
-    		System.out.println("Error");
+    		log.error(e.getMessage());
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage(e.getMessage());
             res.setCode(400);

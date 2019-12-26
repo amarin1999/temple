@@ -55,7 +55,7 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 		List<HistoryDharmaEntity> historyDharmaEntities = new ArrayList<>();
 		
 		historyDharmaEntities = historyDharmaRepository.findAll();
-		System.out.println(historyDharmaEntities.toString());
+		log.info("getAll historyDharma >>" + historyDharmaEntities.toString());
 		return mapListEntityToDto(historyDharmaEntities);
 	}
 	
@@ -64,7 +64,7 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 		Integer numberOfDelete;
 		try {
 			numberOfDelete = historyDharmaRepository.delHistoryDhamaById(delId);
-			System.out.println("Delete " + numberOfDelete + " Row.");
+			log.info("Delete historyDharma >> " + numberOfDelete + " Row.");
 			return numberOfDelete;
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -77,8 +77,6 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 		HistoryDharmaEntity historyDharmaConvert = mapDtoToEntity(body);
 		HistoryDharmaEntity entity = new HistoryDharmaEntity();
 		try {
-			System.out.println(body.toString());
-			
 			Optional<HistoryDharmaEntity> historyDharmaEntity = historyDharmaRepository.findById(id);
 			if (!historyDharmaEntity.isPresent()) {
 				return mapEntityToDto(historyDharmaEntity.get());
@@ -88,7 +86,6 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 			entity = historyDharmaRepository.save(historyDharmaConvert);
 			return mapEntityToDto(entity);
 		} catch (Exception e) {
-			// TODO: handle exception
 			log.error(e.getMessage());
 			throw new Exception(e.getMessage());
 		}
@@ -126,9 +123,7 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 	
 	private HistoryDharmaEntity mapDtoToEntity(HistoryDharmaDto dto) throws Exception {
 		HistoryDharmaEntity entity = new HistoryDharmaEntity();
-		System.out.println(dto.toString());
 		try {
-//				entity.setHistoryDharmaId(dto.getId());
 				entity.setHistoryDharmaDesc(dto.getCourseName());
 				entity.setHistoryDharmaLocation(dto.getLocation());
 				entity.setHistoryDharmaMemberId(dto.getMemberId());

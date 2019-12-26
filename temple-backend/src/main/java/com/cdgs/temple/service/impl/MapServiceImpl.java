@@ -21,12 +21,9 @@ public class MapServiceImpl implements MapService{
 	public List<MapDto> getMap() {
 		List<MapEntity> mapEntities = new ArrayList<MapEntity>();
 		List<MapDto> mapDto = new ArrayList<MapDto>();
-		
 		mapEntities = mapRepository.findAll();
-		
 		System.out.println(mapEntities.toString());
 		mapDto = mapEntitiesToDto(mapEntities);
-		
 		return mapDto; 
 	}
 

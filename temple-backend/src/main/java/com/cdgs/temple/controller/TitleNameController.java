@@ -93,7 +93,6 @@ public class TitleNameController {
 					throw new Exception("titleName is duplicate");
 				}
 			}
-			
 			titleName = titleNameService.createTitleName(body);
 			if(titleName != null) {
 				dto.add(titleName);
