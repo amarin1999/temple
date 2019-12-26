@@ -187,9 +187,12 @@ public class CourseServiceImpl implements CourseService {
 		return mapTempEntityToDto(entity);
 
 	}
+	
+	
 
 	@Override
 	public MembersHasCourseDto assignCourse(MembersHasCourseDto body) {
+//		System.out.println(body.getStatus());
 		MembersHasCourseEntity entity = mapDtoToEntity(body);
 		long count = membersHasCourseRepository.CountForPassCourse(body.getMemberId());
 		CourseEntity course = courseRepository.findById(body.getCourseId()).get();
@@ -204,7 +207,6 @@ public class CourseServiceImpl implements CourseService {
 				throw new Exception("เงื่อนไขการสมัครไม่ถูกต้อง aa");
 			}
 		} catch (Exception e) {
-			log.error("assignCourse>>> " + e.getMessage());
 			return null;
 		}
 	}
@@ -463,10 +465,10 @@ public class CourseServiceImpl implements CourseService {
 			return mapEntityEditToDto(entity);
 
 		} catch (RuntimeException e) {
-			log.error("updateCourse >>>> " + e.getMessage());
+			System.out.println(e.getMessage());
 			return null;
 		} catch (Exception e) {
-			log.error("updateCourse >>>> " + e.getMessage());
+			System.out.println(e.getMessage());
 			return null;
 		}
 	}
@@ -608,7 +610,6 @@ public class CourseServiceImpl implements CourseService {
 				return null;
 			}
 		} catch (Exception e) {
-			log.error("mapEntityEditToDto >>>> " + e.getMessage());
 			throw new RuntimeException(e.getMessage());
 		}
 	}

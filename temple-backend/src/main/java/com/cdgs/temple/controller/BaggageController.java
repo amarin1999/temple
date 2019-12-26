@@ -39,7 +39,7 @@ public class BaggageController {
     }
 
     @GetMapping(path = "")
-    @PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
+    //@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
     public ResponseEntity<ResponseDto<BaggageDto>> getAll() {
         List<BaggageDto> dto;
         ResponseDto<BaggageDto> res = new ResponseDto<>();

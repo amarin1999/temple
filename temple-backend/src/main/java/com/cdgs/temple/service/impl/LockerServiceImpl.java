@@ -7,9 +7,6 @@ import java.util.List;
 
 import com.cdgs.temple.dto.LockerDto;
 import com.cdgs.temple.entity.LockerEntity;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +16,6 @@ import com.cdgs.temple.service.LockerService;
 
 @Service
 public class LockerServiceImpl implements LockerService {
-	
-	private static final Logger log = LoggerFactory.getLogger(LockerServiceImpl.class);
 
 	private LockerRepository lockerRepository;
 	private LocationRepository locationRepository;
@@ -58,7 +53,6 @@ public class LockerServiceImpl implements LockerService {
 			LockerEntity entity = lockerRepository.findByLockerId(lockerId);
 			return mapEntityToDto(entity);
 		} catch (Exception $e) {
-			log.error("getLockerById" + $e.getMessage());
 			System.out.println($e.getMessage());
 			return null;
 		}

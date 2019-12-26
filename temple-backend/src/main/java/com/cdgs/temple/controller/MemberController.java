@@ -47,6 +47,7 @@ public class MemberController {
 	@GetMapping(path = "")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') ")
 	public ResponseEntity<ResponseDto<MemberDto>> getMembers() {
+		System.out.println("getAllUsers");
 		List<MemberDto> dto ;
 		ResponseDto<MemberDto> res = new ResponseDto<>();
 		try {
@@ -68,6 +69,7 @@ public class MemberController {
 	@GetMapping(path = "/getAllUsersWithOutImg")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') ")
 	public ResponseEntity<ResponseDto<MemberDto>> getAllUsersWithOutImg() {
+		System.out.println("getAllUsersWithOutImg");
 		List<MemberDto> dto ;
 		ResponseDto<MemberDto> res = new ResponseDto<>();
 		try {
@@ -153,16 +155,18 @@ public class MemberController {
                 	historyDharmaData.setMemberId(member.getId());
                 	if ((historyDharmaData.getId()) == null) {
                 		try {
-                			log.info("Insert historyDharmaData" + historyDharmaData.getCourseName());
+                			System.out.println("Insert historyDharmaData");
                 			historyDharmaService.createHistoryDharma(historyDharmaData);
                 		} catch (Exception e) {
+                			// TODO Auto-generated catch block
                 			log.error(e.getMessage());
                 		}
                 	} else {
                 		try {
-                			log.info("Update historyDharmaData" + historyDharmaData.getCourseName());
+                			System.out.println("Update historyDharmaData");
                 			historyDharmaService.updateHistoryDhama(historyDharmaData.getId(), historyDharmaData);
                 		} catch (Exception e) {
+							// TODO: handle exception.
                 			log.error(e.getMessage());
 						}
                 	}
@@ -220,16 +224,18 @@ public class MemberController {
                 	historyDharmaData.setMemberId(member.getId());
                 	if ((historyDharmaData.getId()) == null) {
                 		try {
-                			log.info("Insert historyDharmaData ByAdmin" + historyDharmaData.toString());
+                			System.out.println("Insert historyDharmaData");
                 			historyDharmaService.createHistoryDharma(historyDharmaData);
                 		} catch (Exception e) {
+                			// TODO Auto-generated catch block
                 			log.error(e.getMessage());
                 		}
                 	} else {
                 		try {
-                			log.info("Update historyDharmaData ByAdmin" + historyDharmaData.toString());
+                			System.out.println("Update historyDharmaData");
                 			historyDharmaService.updateHistoryDhama(historyDharmaData.getId(), historyDharmaData);
                 		} catch (Exception e) {
+							// TODO: handle exception.
                 			log.error(e.getMessage());
 						}
                 	}

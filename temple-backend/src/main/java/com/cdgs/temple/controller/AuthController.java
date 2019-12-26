@@ -81,8 +81,14 @@ public class AuthController {
         List<HistoryDharmaDto> historyDharma = new ArrayList<>();
         MemberDto member;
         try {
-        	member = memberService.createMember(body);
-            historyDharma = body.getHistoryDharma();
+        	System.out.println(body.toString());
+        	//System.out.println("member Role = "+body.getRoleId());
+            member = memberService.createMember(body);
+            //System.out.println("Course Passed = "+body.getMemberCoursePassed());
+           // System.out.println("member Job = "+body.getJob());
+           System.out.println(members.toString());
+           System.out.println(member.getId());
+           historyDharma = body.getHistoryDharma();
             if (!(member == null)) {
                 members.add(member);
                 historyDharma.forEach(historyDharmaData -> {

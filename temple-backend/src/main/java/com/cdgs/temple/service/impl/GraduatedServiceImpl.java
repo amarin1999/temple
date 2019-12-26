@@ -5,9 +5,6 @@ import com.cdgs.temple.entity.GraduatedEntity;
 import com.cdgs.temple.repository.GraduatedRepository;
 import com.cdgs.temple.repository.MembersHasCourseRepository;
 import com.cdgs.temple.service.GraduatedService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -15,8 +12,6 @@ import java.util.List;
 
 @Service
 public class GraduatedServiceImpl implements GraduatedService {
-	
-	private static final Logger log = LoggerFactory.getLogger(GraduatedServiceImpl.class);
 
 	private final GraduatedRepository graduatedRepository;
 	private final MembersHasCourseRepository memberHasCourseRepository;
@@ -52,7 +47,7 @@ public class GraduatedServiceImpl implements GraduatedService {
 			System.out.println("after");
 			return true;
 		} catch (Exception e) {
-			log.error("update >>> " + e.getMessage());
+			System.out.println(e.getMessage());
 			return false;
 		}
 	}
