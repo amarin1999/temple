@@ -369,7 +369,6 @@ export class EditFormComponent implements OnInit {
         this.editForm.controls['phoneEmergency'].setValue(
           res['data']['emergencyTel']
         );
-        // this.profileString = res['data']['img'];
         this.editForm.controls['imgProfile'].setValue(res['data']['img']);
         this.editForm.controls['relationshipEmergency'].setValue(
           res['data']['emergencyRelationship']
