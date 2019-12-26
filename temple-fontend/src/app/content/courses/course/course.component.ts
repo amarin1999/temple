@@ -269,7 +269,7 @@ export class CourseComponent implements OnInit, OnDestroy {
         this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการลงทะเบียน' });
       }
     });
-  }
+  } 
 
   public approvalCourse() {
     const transItem = this.approveFormCourse.get('transportation').value;
