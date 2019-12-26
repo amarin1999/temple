@@ -36,13 +36,9 @@ public class AuthController {
 
     @Value("${jwt.header}")
     private String tokenHeader;
-
     private final MemberService memberService;
-    
     private final HistoryDharmaService historyDharmaService;
-
     private final AuthenticationManager authenticationManager;
-
     private final JwtTokenUtil jwtTokenUtil;
 
     @Autowired
@@ -69,11 +65,6 @@ public class AuthController {
             ResponseDto<AuthDto> res = new ResponseDto<>();
             res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
             res.setErrorMessage("Username หรือ Password ไม่ถูกต้อง ");
-            
-            
-            
-            
-            
             res.setCode(401);
             return new ResponseEntity<>(res, HttpStatus.UNAUTHORIZED);
         }
