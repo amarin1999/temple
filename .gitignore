@@ -1,6 +1,7 @@
-temple-fontend/node_modules/
-temple-backend/target/
+temple-fontend/node_modules
+temple-backend/target
 temple-backend/.classpath
 temple-backend/.project
-temple-backend/.settings/
-temple-fontend/dist/
+temple-backend/.settings
+temple-backend/.sts4-cache
+temple-fontend/dist
