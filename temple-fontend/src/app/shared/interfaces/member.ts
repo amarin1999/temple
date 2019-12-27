@@ -22,6 +22,8 @@ export interface Member {
   provinceId?: Number;
   provinceName?: String;
   postalCode?: String;
+  regionId?: Number;
+  regionName?: String;
   genderId?: Number;
   genderName?: String;
   job?: String;
