@@ -395,6 +395,50 @@ export class CoursesListComponent implements OnInit {
   public saCourse(courseId: number) {
     this.closeMessage();
     this.courseId = courseId;
+    this.courseService.getCourseByid(courseId).subscribe(res => {
+      this.transportId = res["data"]["transportTempleId"];
+      console.log(this.transportId);
+      if (this.transportId !== null) {
+        // combineLatest for process 2 service before subscribe
+        this.optionTime = { hour: "2-digit", minute: "2-digit" };
+        combineLatest(
+          this.transportation.getTranSportToEdit(),
+          this.transportation.getTranSportTempleToEdit(this.transportId)
+        ).subscribe(([tranSport, tranSportTemple]) => {
+          this.transports = [
+            ...tranSport.data,
+            ...tranSportTemple.data.map(data => {
+              return {
+                id: data.id,
+                name:
+                  data.name +
+                  " เวลารับ: " +
+                  new Date(data.timePickUp).toLocaleTimeString(
+                    "th-TH",
+                    this.optionTime
+                  ) +
+                  " เวลา: " +
+                  new Date(data.timeSend).toLocaleTimeString(
+                    "th-TH",
+                    this.optionTime
+                  )
+              };
+            })
+          ];
+        });
+      } else {
+        this.transportation.getTranSportToEdit().subscribe(
+          data => {
+            this.transports = [...data.data];
+          }
+          );
+      }
+      // this.transportId = this.transportId.map(
+      //   data => {
+      //     return data.transportTempleId;
+      //   }
+      // );
+    });
     this.displayApproveDialog = true;
   }
 
