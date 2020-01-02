@@ -7,10 +7,11 @@
     <form [formGroup]="formReport">
     <p-table [columns]="cols" [value]="cars">
         <ng-template pTemplate="caption">
-          <div style="text-align:left">
+          <div style="text-align:left;">
             <p-autoComplete formControlName="courses" placeholder="กรุณาเลือกชื่อคอร์ส"
             [suggestions]="filteredCourse" value="id" (completeMethod)="filterCourseMultiple($event)"
-            [minLength]="1" field="name" [dropdown]="true">
+            [minLength]="1" field="name" [dropdown]="true" >
+            <i class="fa fa-reset" (click)="onClear()"></i>       
           </p-autoComplete>
           </div>
       </ng-template>
