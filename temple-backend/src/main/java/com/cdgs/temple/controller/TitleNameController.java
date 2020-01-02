@@ -144,7 +144,7 @@ public class TitleNameController {
 			if(titleName) {
 				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 				res.setCode(200);
-				System.out.println(titleNameService.deleteTitleName(id));
+				log.info("deleteTitleName >> " + titleNameService.deleteTitleName(id));
 			}else {
 				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 				throw new Exception ("titleName is using");
@@ -152,6 +152,7 @@ public class TitleNameController {
 			}
 			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
