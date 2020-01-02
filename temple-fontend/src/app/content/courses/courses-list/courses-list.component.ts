@@ -131,7 +131,7 @@ export class CoursesListComponent implements OnInit {
     private router: Router,
     private transportation: TransportService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.values = [];
@@ -394,6 +394,50 @@ export class CoursesListComponent implements OnInit {
   public saCourse(courseId: number) {
     this.closeMessage();
     this.courseId = courseId;
+    this.courseService.getCourseByid(courseId).subscribe(res => {
+      this.transportId = res['data']['transportTempleId'];
+      console.log(this.transportId);
+      if (this.transportId !== null) {
+        // combineLatest for process 2 service before subscribe
+        this.optionTime = { hour: '2-digit', minute: '2-digit' };
+        combineLatest(
+          this.transportation.getTranSportToEdit(),
+          this.transportation.getTranSportTempleToEdit(this.transportId)
+        ).subscribe(([tranSport, tranSportTemple]) => {
+          this.transports = [
+            ...tranSport.data,
+            ...tranSportTemple.data.map(data => {
+              return {
+                id: data.id,
+                name:
+                  data.name +
+                  ' เวลารับ: ' +
+                  new Date(data.timePickUp).toLocaleTimeString(
+                    'th-TH',
+                    this.optionTime
+                  ) +
+                  ' เวลา: ' +
+                  new Date(data.timeSend).toLocaleTimeString(
+                    'th-TH',
+                    this.optionTime
+                  )
+              };
+            })
+          ];
+        });
+      } else {
+        this.transportation.getTranSportToEdit().subscribe(
+          data => {
+            this.transports = [...data.data];
+          }
+          );
+      }
+      // this.transportId = this.transportId.map(
+      //   data => {
+      //     return data.transportTempleId;
+      //   }
+      // );
+    });
     this.displayApproveDialog = true;
   }
 
@@ -507,7 +551,7 @@ export class CoursesListComponent implements OnInit {
         this.formAssignError[field] = this.validationAssignMessage[
           field
         ].required;
-        if (field != 'transportation' && control.hasError('maxlength')) {
+        if (field !== 'transportation' && control.hasError('maxlength')) {
           // console.log(field)
           // console.log(control.hasError('maxlength'))
           this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 100 ตัวอักษร';
@@ -530,7 +574,7 @@ export class CoursesListComponent implements OnInit {
         this.formApproveError[field] = this.validationApproveMessage[
           field
         ].required;
-        if (field != 'transportation' && control.hasError('maxlength')) {
+        if (field !== 'transportation' && control.hasError('maxlength')) {
           // console.log(field)
           // console.log(control.hasError('maxlength'))
           this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 100 ตัวอักษร';
@@ -561,7 +605,7 @@ export class CoursesListComponent implements OnInit {
   }
 
   onCancle(e) {
-    if (e == 'as') {
+    if (e === 'as') {
       this.displayRegisterDialog = false;
       this.assignFormCourse.reset();
       Object.values(this.assignFormCourse.controls).forEach(df => {
@@ -585,7 +629,7 @@ export class CoursesListComponent implements OnInit {
       Object.keys(this.assignFormCourse.controls).forEach(key => {
         const control = this.assignFormCourse.get(key);
         control.clearValidators();
-        if (key == 'transportation') {
+        if (key === 'transportation') {
           control.setValidators(Validators.required);
         } else {
           control.setValidators([
@@ -599,9 +643,9 @@ export class CoursesListComponent implements OnInit {
       Object.keys(this.approveFormCourse.controls).forEach(key => {
         const control = this.approveFormCourse.get(key);
         control.clearValidators();
-        if (key == 'transportation') {
+        if (key === 'transportation') {
           control.setValidators(Validators.required);
-        } else if (key == 'detail') {
+        } else if (key === 'detail') {
           control.setValidators([
             Validators.required,
             Validators.maxLength(255)
