@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,8 @@ import com.cdgs.temple.util.ResponseDto;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/locations")
 public class LocationController {
+	
+	private static final Logger log = LoggerFactory.getLogger(LocationController.class);
 	
 	@Autowired
 	LocationService locationService;
@@ -125,12 +129,21 @@ public class LocationController {
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<ResponseDto<LocationDto>> deleteLocation(@PathVariable("id") long id) {
 		ResponseDto<LocationDto> res = new ResponseDto<LocationDto>();
-		if (locationService.deleteLocation(id)) {
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setCode(204);
+		boolean location;
+		try {
+			location = locationService.deleteLocation(id);
+			if (location) {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setCode(200);
+			} else {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+				throw new Exception ("location is using");
+			}
 			return new ResponseEntity<ResponseDto<LocationDto>>(res, HttpStatus.OK);
-		} else {
+		} catch (Exception e) {
+			log.error(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
 			return new ResponseEntity<ResponseDto<LocationDto>>(res, HttpStatus.BAD_REQUEST);
 		}

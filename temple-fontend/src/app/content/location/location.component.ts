@@ -51,17 +51,22 @@ export class LocationComponent implements OnInit {
   }
 
   save() {
-
     if (this.locations.findIndex(res => res.name == this.locationNameEdit) < 0) {
       // this.messageService.clear();
       this.location['name'] = this.locationNameEdit;
       this.locationService.save(this.location).toPromise().then(res => {
         if (res['status'] === 'Success') {
           this.locations.push(res['data']);
-          this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่ม สถานที่ : ' + res['data']['name']+' สำเร็จ' });
+          this.messageService.add({
+            severity: 'success', summary: 'ข้อความจากระบบ',
+            detail: 'ดำเนินการเพิ่ม สถานที่ : ' + res['data']['name'] + ' สำเร็จ'
+          });
           this.getLocation();
         } else {
-          this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มไม่สำเร็จ เนื่องจากระบบมีข้อผิดพลาด' });
+          this.messageService.add({
+            severity: 'error', summary: 'ข้อความจากระบบ',
+            detail: 'ดำเนินการเพิ่มไม่สำเร็จ เนื่องจากระบบมีข้อผิดพลาด'
+          });
         }
       });
     } else {
@@ -86,6 +91,11 @@ export class LocationComponent implements OnInit {
     this.displayDialog = true;
   }
 
+
+  /**
+   * @param id ;
+   * Delete location
+   */
   delete(id) {
     this.confirmationService.confirm({
       message: 'ยืนยันการลบ',
@@ -96,12 +106,36 @@ export class LocationComponent implements OnInit {
         this.locationService.delete(id).toPromise()
           .then(res => {
             if (res['status'] === 'Success') {
+              console.log('res', res);
+
               this.locations.splice(index, 1);
-              
-              this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ' , detail: 'ดำเนินการลบสำเร็จ'});
+              this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการลบสำเร็จ' });
               this.getLocation();
             } else {
-              this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการลบไม่สำเร็จ เนื่องจากมีการใช้สถานที่นี้อยู่หรือระบบมีข้อผิดพลาด ' , life: 8000});
+              this.messageService.add({
+                severity: 'error', summary: 'ข้อความจากระบบ',
+                detail: 'ดำเนินการลบไม่สำเร็จ เนื่องจากมีการใช้สถานที่นี้อยู่หรือระบบมีข้อผิดพลาด ', life: 8000
+              });
+            }
+          })
+          .catch(e => {
+            if (e['error']['result'] === 'Fail') {
+              if (e['error']['errorMessage'] === 'location is using') {
+                this.messageService.add({
+                  severity: 'error', summary: 'ข้อความจากระบบ',
+                  detail: 'ดำเนินการลบไม่สำเร็จ เนื่องจากมีการใช้สถานที่นี้อยู่', life: 8000
+                });
+              } else {
+                this.messageService.add({
+                  severity: 'error', summary: 'ข้อความจากระบบ',
+                  detail: 'ดำเนินการลบไม่สำเร็จ เนื่องจากระบบมีข้อผิดพลาด', life: 8000
+                });
+              }
+            } else {
+              this.messageService.add({
+                severity: 'error', summary: 'ข้อความจากระบบ',
+                detail: 'ดำเนินการไม่สำเร็จ เนื่องจากระบบมีข้อผิดพลาด', life: 8000
+              });
             }
           });
       },
@@ -109,7 +143,6 @@ export class LocationComponent implements OnInit {
         // this.messageService.add({ severity: 'info', summary: 'ยกเลิกการลบ' });
       }
     });
-
   }
 
   getLocation() {
@@ -130,6 +163,10 @@ export class LocationComponent implements OnInit {
   //   }
   // }
 
+  /**
+   * Updata Location
+   * Getdata from Formcontrol
+   */
   update() {
     // this.messageService.clear();
     if (this.locations.findIndex(res => res.name == this.locationNameEdit) < 0 || this.location['name'] == this.locationNameEdit) {
@@ -138,15 +175,24 @@ export class LocationComponent implements OnInit {
         if (res['status'] === 'Success') {
           const index = this.locations.findIndex(e => e.id === res['data']['id']);
           this.locations[index].name = res['data']['name'];
-          this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการแก้ไข สถานที่ : ' + res['data']['name']+' สำเร็จ' });
+          this.messageService.add({
+            severity: 'success', summary: 'ข้อความจากระบบ',
+            detail: 'ดำเนินการแก้ไข สถานที่ : ' + res['data']['name'] + ' สำเร็จ'
+          });
         } else {
-          this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการแก้ไขไม่สำเร็จ เนื่องจากระบบมีข้อผิดพลาด ' });
+          this.messageService.add({
+            severity: 'error', summary: 'ข้อความจากระบบ',
+            detail: 'ดำเนินการแก้ไขไม่สำเร็จ เนื่องจากระบบมีข้อผิดพลาด '
+          });
         }
 
       });
       this.clear();
     } else {
-      this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการแก้ไขไม่สำเร็จ เนื่องจากสถานที่ซ้ำ' });
+      this.messageService.add({
+        severity: 'error', summary: 'ข้อความจากระบบ',
+        detail: 'ดำเนินการแก้ไขไม่สำเร็จ เนื่องจากสถานที่ซ้ำ'
+      });
     }
   }
 }
