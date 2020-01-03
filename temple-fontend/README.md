@@ -1,6 +1,10 @@
-# MockTemple
+# Temple
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.1.
+
+## Version
+
+0.0.1
 
 ## Development server
 
