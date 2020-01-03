@@ -30,13 +30,14 @@ export class ManageUserComponent implements OnInit {
       { label: 'จัดการสมาชิก', routerLink: '/users' },
     ]);
 
-    this.manageUser.getAllUsersWithOutImg().subscribe(res => {
+    this.manageUser.getAllUsersWithOutImg().toPromise().then(res => {
       if (res['status'] === 'Success') {
         this.personal = res.data;
       }
-    },
-      (e) => console.log(e['error']['errorMessage'])
-    );
+    }).catch(e =>
+      console.log(e['error']['errorMessage'])
+    ).finally(() => this.spinner.hide());
+
     this.menu = [
       { label: '', icon: 'pi pi-home', routerLink: '/' },
       { label: 'Manange Locations : จัดการสถานที่' },
@@ -47,7 +48,6 @@ export class ManageUserComponent implements OnInit {
       { field: 'rolename', header: 'rolename' },
       { field: 'contact', header: 'contact' }
     ];
-    this.spinner.hide();
   }
 
   deleteUser(id) {

@@ -217,7 +217,6 @@ export class EditFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.spinner.show();
     this.settingCalendarTH();
     this.showRole = this.roleService.getRoleStatus();
     this.roles = this.roleService.getRoles();
@@ -271,7 +270,6 @@ export class EditFormComponent implements OnInit {
         { label: 'แก้ไขข้อมูลส่วนตัว' }
       ]);
     }
-    this.spinner.hide();
   }
 
   addCourseHis() {
@@ -299,21 +297,19 @@ export class EditFormComponent implements OnInit {
   settingForm() {
     this.spinner.show();
     this.courseHisDelList = [];
-    this.historyDharmaService.getHistoryDharmaByMemberId(this.personalId).subscribe(
-      res => {
+    this.historyDharmaService.getHistoryDharmaByMemberId(this.personalId).toPromise()
+      .then(res => {
         if (res.status === 'Success') {
           this.courseHisList = res.data;
-          console.log('historyDharma', res.data);
-        } else {
-          console.log('getHistoryDharmaByMemberId Fail');
         }
-      },
-      err => {
+      }
+      ).catch(err => {
         console.log(err['error']['errorMessage']);
       }
-    );
-    this.manageUserService.getUser(this.personalId).subscribe(
-      res => {
+      ).finally(() => this.spinner.hide());
+    this.spinner.show();
+    this.manageUserService.getUser(this.personalId).toPromise()
+      .then(res => {
         console.log('getUser', res);
         const titlename = {
           id: res['data']['titleId'],
@@ -390,10 +386,15 @@ export class EditFormComponent implements OnInit {
           res['data']['postalCode']
         );
         this.editForm.controls['province'].patchValue(province);
-      },
-      err => console.log(err['error']['errorMessage'])
-    );
-    this.spinner.hide();
+      }
+      ).catch(err => {
+        console.log(err['error']['errorMessage']);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'ข้อความจากระบบ',
+          detail: 'ระบบขัดข้อง โปรดติดต่อผู้ดูแลระบบ'
+        });
+      }).finally(() => this.spinner.hide());
   }
 
   settingCalendarTH() {
@@ -671,24 +672,20 @@ export class EditFormComponent implements OnInit {
   actionAccept(type) {
     switch (type) {
       case 'clear': {
-        this.spinner.show();
         this.settingForm();
         this.messageService.add({
           severity: 'success',
           summary: 'ข้อความจากระบบ',
           detail: 'ดำเนินการคืนค่าข้อมูลส่วนตัวสำเร็จ'
         });
-        this.spinner.hide();
         break;
       }
       case 'cancle': {
-        this.spinner.show();
         if (this.authService.getRole().value === 'admin') {
           this.router.navigateByUrl(`/users`);
         } else {
           this.router.navigateByUrl(`/profile/${this.personalId}`);
         }
-        this.spinner.hide();
         break;
       }
       case 'submit': {
@@ -738,10 +735,8 @@ export class EditFormComponent implements OnInit {
           disease: this.editForm.get('underlyDisease').value === '' ? null : this.editForm.get('underlyDisease').value,
           blood: bloodGroup.value
         };
-        console.log('dataUser23', dataUser);
-
-        this.manageUserService.updateUser(this.personalId, dataUser).subscribe(
-          res => {
+        this.manageUserService.updateUser(this.personalId, dataUser).toPromise()
+          .then(res => {
             if (res['status'] === 'Success') {
               this.showToast(
                 'alertMessage',
@@ -755,12 +750,16 @@ export class EditFormComponent implements OnInit {
                 'error'
               );
             }
-          },
-          err => {
-            console.log(err);
-          }
-        );
-        this.spinner.hide();
+          }).catch(
+            err => {
+              console.log(err);
+              this.showToast(
+                'alertMessage',
+                'แก้ไขข้อมูลส่วนตัวไม่สำเร็จ',
+                'error'
+              );
+            }
+          ).finally(() => this.spinner.hide());
         break;
       }
       default: {
