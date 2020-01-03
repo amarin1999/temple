@@ -4,7 +4,7 @@
 
 0.0.1
 
-## Devaloper
+## Developer
 
 Intern Department ADD-CDGs Team.
 
