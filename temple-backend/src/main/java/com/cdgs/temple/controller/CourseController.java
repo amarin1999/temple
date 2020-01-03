@@ -121,7 +121,6 @@ public class CourseController {
         ResponseDto<CourseDto> res = new ResponseDto<>();
         List<CourseDto> dto = new ArrayList<>();
         MemberDto member = memberService.getCurrentMember();
-
         try { 
         	 if(member.getRoleName().equals("monk")){
         		 dto = courseService.getCoursesMonk(member.getId());	  
@@ -150,8 +149,6 @@ public class CourseController {
         ResponseCountDto dto = new ResponseCountDto();
         int count = 0;
         MemberDto member = memberService.getCurrentMember();
-        /*
-         * */
         try {
             if (member.getRoleName().equals("user")) {
         		if(status.equals("0")) {
@@ -159,17 +156,13 @@ public class CourseController {
         		}else if(status.equals("2") || status.equals("1")) {
         			count = courseService.countUserCourses(member.getId(),status);
         		}
-        		
         	}else if(member.getRoleName().equals("monk")){
         		count = courseService.countMonkCourses(member.getId());
         	}
         	else{
         		count = courseService.countCourses();
-        		System.out.println("admin" + count);
         	}
-        		
 	            //count = courseService.countCourses();
-	           
 	            dto.setTotalRecord(count);
 	            listDto.add(dto);
 	            res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -293,19 +286,12 @@ public class CourseController {
         ResponseDto<CourseDto> res = new ResponseDto<>();
         List<CourseDto> dto = new ArrayList<>();
         MemberDto member = memberService.getCurrentMember();
-
         try {
             if (member.getRoleName().equals("user")) {
                 dto.add(courseService.getCourseUser(member.getId(), id));
-                System.out.println(dto);
-
             } else {
                 dto.add(courseService.getCourse(id));
-                System.out.println(id);
-                System.out.println(member.getRoleName());
-
             }
-
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(dto);
             res.setCode(200);
@@ -390,14 +376,12 @@ public class CourseController {
                 courseScheduleService.createCourseSchedule(courseSchedule);
             	}
             }
-            
             courseTeacher.setCourseId(course.getId());
             for (Long tId : body.getTeacher()) {
                 courseTeacher.setMemberId(tId);
                 courseTeacher = courseTeacherservice.createCourseTeacher(courseTeacher);
 
             }
-
             courses.add(course);
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(courses);
@@ -429,13 +413,11 @@ public class CourseController {
 	  		courseDto.setStDate(body.getStDate());
 	  		courseDto.setEndDate(body.getEndDate());
 	  		courseOutTimeDto = courseService.createCourse(courseDto);
-	  		
 	  		courseTeacherDto.setCourseId(courseOutTimeDto.getId());
           for (Long tId : courseDto.getTeacher()) {
           	courseTeacherDto.setMemberId(tId);
           	courseTeacherDto = courseTeacherservice.createCourseTeacher(courseTeacherDto);
           }
-	  		
 	  		body.setCourseId(courseOutTimeDto.getId());
 	  		body.setStatus("4");
 	  		body.setMemberId(member.getId());
@@ -490,7 +472,6 @@ public class CourseController {
                     courseScheduleService.createCourseSchedule(courseSchedule);
                 }
         	}
-            
             courseTeacher.setCourseId(course.getId());
             for (Long tId : body.getTeacher()) {
                 courseTeacher.setMemberId(tId);
