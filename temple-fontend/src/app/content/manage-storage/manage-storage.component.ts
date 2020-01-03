@@ -51,7 +51,6 @@ export class ManageStorageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
     this.initDialogData();
     this.getData();
     this.getItem();
@@ -70,7 +69,6 @@ export class ManageStorageComponent implements OnInit {
     ]);
 
     this.authService.getRole().subscribe(res => this.role = res);
-    this.spinner.hide();
   }
 
   private initDialogData() {
@@ -93,27 +91,26 @@ export class ManageStorageComponent implements OnInit {
   }
   private getItem() {
     this.spinner.show();
-    this.baggageService.getItem()
-      .subscribe(
-        res => {
-          // console.log(res);
-          if (res['status'] === 'Success') {
-            this.numberOfLocker = res['data'].map(res => {
-              return {
-                number: res['locationName'] + '  ' + res['number'],
-                lockerId: res['lockerId']
-              };
-            });
-          }
+    this.baggageService.getItem().toPromise()
+      .then(res => {
+        // console.log(res);
+        if (res['status'] === 'Success') {
+          this.numberOfLocker = res['data'].map(res => {
+            return {
+              number: res['locationName'] + '  ' + res['number'],
+              lockerId: res['lockerId']
+            };
+          });
         }
-      );
-      this.spinner.hide();
+      }).catch(err => {
+        console.log(err['error']['errorMessage']);
+      }).finally(() => this.spinner.hide());
   }
 
   private getData() {
     this.spinner.show();
-    this.baggageService.getItems().subscribe(
-      res => {
+    this.baggageService.getItems().toPromise()
+      .then(res => {
         if (res['status'] === 'Success') {
           this.items = res['data'].map(res => {
             if (res['status'] === '1') {
@@ -146,10 +143,9 @@ export class ManageStorageComponent implements OnInit {
         }
         this.items = this.items.filter(e => e != null);
         this.itemsRe = this.itemsRe.filter(e => e != null);
-      },
-      (e) => console.log(e['error']['errorMessage'])
-    );
-    this.spinner.hide();
+      }).catch(e =>
+        console.log(e['error']['errorMessage'])
+      ).finally(() => this.spinner.hide());
   }
 
   showEditButton(...role) {
@@ -188,21 +184,21 @@ export class ManageStorageComponent implements OnInit {
   }
 
   save() {
-    this.spinner.show();
     this.confirmationService.confirm({
       message: 'ยืนยันการบันทึก',
       header: 'ข้อความจากระบบ',
       // acceptLabel: 'ใช่',
       // rejectLabel: 'ไม่',
       accept: () => {
+        this.spinner.show();
         // this.messageService.clear();
         this.displayDialog = false;
         const data = {
           memberId: this.selectedMember['memberId'],
           lockerId: this.selectedNumber['lockerId']
         };
-        this.baggageService.saveStorage(data)
-          .subscribe(res => {
+        this.baggageService.saveStorage(data).toPromise()
+          .then(res => {
             if (res['status'] === 'Success') {
               this.getData();
               this.getItem();
@@ -210,55 +206,55 @@ export class ManageStorageComponent implements OnInit {
             } else {
               this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการฝากสัมภาระไม่สำเร็จ' });
             }
-          },
-            (err) => {
-              this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการฝากสัมภาระไม่สำเร็จ' });
-            },
-            () => {
-              this.selectedMember = null;
-              this.selectedNumber = null;
-            }
-          );
+          }).catch(err => {
+            this.messageService.add({
+              severity: 'error', summary: 'ข้อความจากระบบ',
+              detail: 'ดำเนินการฝากสัมภาระไม่สำเร็จเนื่องจาก ' + err['error']['errorMessage']
+            });
+          }).finally(() => {
+            this.spinner.hide();
+            this.selectedMember = null;
+            this.selectedNumber = null;
+          });
       }
     });
-    this.spinner.hide();
   }
 
   update() {
-    this.spinner.show();
     this.confirmationService.confirm({
       message: 'ยืนยันการแก้ไข',
       header: 'ข้อความจากระบบ',
       acceptLabel: 'ใช่',
       rejectLabel: 'ไม่',
       accept: () => {
+        this.spinner.show();
         this.displayDialog = false;
         const data = {
           memberId: this.selectedMember['memberId'],
           lockerId: this.selectedNumber['lockerId'],
           status: this.selectedStatus['val']
         };
-        this.baggageService.updateStorage(this.baggageselect.baggageId, data).subscribe(res => {
-
-          if (res['status'] === 'Success') {
-            this.clear();
-            this.getData();
-            this.getItem();
+        this.baggageService.updateStorage(this.baggageselect.baggageId, data).toPromise()
+          .then(res => {
+            if (res['status'] === 'Success') {
+              this.clear();
+              this.getData();
+              this.getItem();
+              this.messageService.add({
+                severity: 'success', summary: 'ข้อความจากระบบ',
+                detail: (res['data']['status'] === '1' ? 'แก้ไข' : 'คืน') + 'สัมภาระสำเร็จ'
+              });
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'แก้ไขสัมภาระไม่สำเร็จ' });
+            }
+          }).catch(err => {
             this.messageService.add({
-              severity: 'success', summary: 'ข้อความจากระบบ',
-              detail: (res['data']['status'] === '1' ? 'แก้ไข' : 'คืน') + 'สัมภาระสำเร็จ'
+              severity: 'error', summary: 'ข้อความจากระบบ',
+              detail: 'แก้ไขสัมภาระไม่สำเร็จเนื่องจาก ' + err['error']['errorMessage']
             });
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'แก้ไขสัมภาระไม่สำเร็จ' });
-          }
-        },
-          err => {
-            this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'แก้ไขสัมภาระไม่สำเร็จ' });
-          }
-        );
+          }).finally(() => this.spinner.hide());
       }
     });
-    this.spinner.hide();
   }
 
   clear() {
