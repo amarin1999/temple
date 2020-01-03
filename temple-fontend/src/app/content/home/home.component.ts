@@ -28,13 +28,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
     this.breadCrumbService.clearPath();
     this.userId = localStorage.getItem('userId');
     this.authService.getRole().subscribe(res => this.role = res);
     localStorage.setItem('preurl', JSON.stringify( this.pathService.setPreviousUrl()));
     this.getCountGraduatedCourse();
-    this.spinner.hide();
   }
 
   showHomeMenu(...role) {
@@ -48,7 +46,6 @@ export class HomeComponent implements OnInit {
         this.total = res['data'][0]['totalRecord'];
       }
     });
- //   console.log(this.total);
 }
 
 }

@@ -14,12 +14,13 @@ import { Location } from '@angular/common';
 import { PrePathService } from 'src/app/shared/service/pre-path.service';
 import { TransportService } from 'src/app/shared/service/transport.service';
 import { ExcelService } from 'src/app/shared/service/excel.service';
-import { saveAs } from 'file-saver'; 
+import { saveAs } from 'file-saver';
 import { combineLatest } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
-const MIME_TYPE= {
-  xls: 'application/vnd.ms-excel' 
-}
+const MIME_TYPE = {
+  xls: 'application/vnd.ms-excel'
+};
 
 @Component({
   selector: 'app-course',
@@ -132,6 +133,7 @@ export class CourseComponent implements OnInit, OnDestroy {
     private transportation: TransportService,
     private excelService: ExcelService,
     private messageService: MessageService,
+    public spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
@@ -157,7 +159,7 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.getMemberByCourseId();
     this.getCountGraduatedCourse();
     this.setUrl();
-    //console.log("id"+this.id);
+    // console.log("id"+this.id);
   }
 
   ngOnDestroy() {
@@ -167,14 +169,14 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   /*------------------------------------------*/
-  
-  downloadFile(fileName){
-    const EXT = fileName.substr(fileName.lastIndexOf('.')+1);
-    this.courseService.downloadFile({'fileName': fileName})
-    .subscribe(data => {
-      //บันทึกในเครื่อง client
-      saveAs(new Blob([data], {type: MIME_TYPE[EXT]}), fileName)
-    }) 
+
+  downloadFile(fileName) {
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.courseService.downloadFile({ 'fileName': fileName })
+      .subscribe(data => {
+        // บันทึกในเครื่อง client
+        saveAs(new Blob([data], { type: MIME_TYPE[EXT] }), fileName);
+      });
   }
 
   /*------------------------------------------*/
@@ -225,7 +227,7 @@ export class CourseComponent implements OnInit, OnDestroy {
         { label: 'จัดการคอร์ส', routerLink: '/manageCourse' },
         { label: 'รายชื่อผู้เรียน' },
       ]);
-    } else if (this.url === ('/profile/'+localStorage.getItem('userId'))){
+    } else if (this.url === ('/profile/' + localStorage.getItem('userId'))) {
       this.breadCrumbService.setPath([
         { label: 'ข้อมูลส่วนตัว', routerLink: ['/profile', localStorage.getItem('userId')] },
         { label: 'รายละเอียดคอร์ส' },
@@ -250,26 +252,33 @@ export class CourseComponent implements OnInit, OnDestroy {
       header: 'ลงทะเบียน',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.courseService.assignCourse(dataCourse).subscribe((res) => {
-          // console.log(res);
-          if (res['result'] === 'Success') {
-            this.course.status = 'กำลังศึกษา';
-            this.course.canRegister = 0;
-            this.course.mhcStatus = '2';
+        this.spinner.show();
+        this.courseService.assignCourse(dataCourse).toPromise()
+          .then((res) => {
+            if (res['result'] === 'Success') {
+              this.course.status = 'กำลังศึกษา';
+              this.course.canRegister = 0;
+              this.course.mhcStatus = '2';
+              this.onCancle('as');
+              this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการลงทะเบียนสำเร็จ' });
+            } else if (res['result'] === 'Fail') {
+              this.onCancle('as');
+              this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] });
+            }
+          }).catch(err => {
             this.onCancle('as');
-            this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการลงทะเบียนสำเร็จ' });
-          } else if (res['result'] === 'Fail') {
-            this.onCancle('as');
-            this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] });
-          }
-        });
+            this.messageService.add({
+              severity: 'error', summary: 'ข้อความจากระบบ',
+              detail: 'ดำเนินการลงทะเบียนไม่สำเร็จเนื่องจาก' + err['errorMessage']
+            });
+          }).finally(() => this.spinner.hide());
       },
       reject: () => {
         this.onCancle('as');
-        this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการลงทะเบียน' });
+        // this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการลงทะเบียน' });
       }
     });
-  } 
+  }
 
   public approvalCourse() {
     const transItem = this.approveFormCourse.get('transportation').value;
@@ -285,48 +294,63 @@ export class CourseComponent implements OnInit, OnDestroy {
       header: 'ขออนุมัติพิเศษ',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        this.spinner.show();
         // console.log(this.specialApprove);
-        this.courseService.approvalCourse(dataCourse).subscribe((res) => {
-          if (res['result'] === 'Success') {
-            this.course.status = 'รออนุมัติ';
-            this.course.canRegister = 0;
-            this.course.saStatus = '2';
-            this.onCancle('ap');
-            this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการขออนุมัติพิเศษสำเร็จ' });
-          } else if (res['result'] === 'Fail') {
-            this.onCancle('ap');
-            this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] });
-          }
-        });
+        this.courseService.approvalCourse(dataCourse).toPromise()
+          .then((res) => {
+            if (res['result'] === 'Success') {
+              this.course.status = 'รออนุมัติ';
+              this.course.canRegister = 0;
+              this.course.saStatus = '2';
+              this.onCancle('ap');
+              this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการขออนุมัติพิเศษสำเร็จ' });
+            } else if (res['result'] === 'Fail') {
+              this.onCancle('ap');
+              this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] });
+            }
+          }).catch(err => {
+            this.messageService.add({
+              severity: 'error', summary: 'ข้อความจากระบบ',
+              detail: 'ดำเนินการขออนุมัติพิเศษไม่สำเร็จเนื่องจาก ' + err['errorMessage']
+            });
+          }).finally(() => this.spinner.hide());
       },
       reject: () => {
         this.onCancle('ap');
-        this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการขออนุมัติพิเศษ' });
+        // this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการขออนุมัติพิเศษ' });
       }
     });
   }
 
   public cancelApprovalCourse(id) {
     this.closeMessage();
+    this.spinner.show();
     this.confirmationService.confirm({
       message: 'ยืนยันการยกเลิกการขออนุมัติพิเศษ',
       header: 'ยกเลิกการขออนุมัติพิเศษ',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.courseService.cancelApprovalCourse(id).subscribe((res) => {
-          // console.log(res);
-          if (res['result'] === 'Success') {
-            this.course.status = 'ยังไม่ได้ลงทะเบียน';
-            this.course.canRegister = 1;
-            this.course.saStatus = null;
-            this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการขออนุมัติพิเศษสำเร็จ' });
-          } else if (res['result'] === 'Fail') {
-            this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] });
+        this.courseService.cancelApprovalCourse(id).toPromise()
+          .then((res) => {
+            // console.log(res);
+            if (res['result'] === 'Success') {
+              this.course.status = 'ยังไม่ได้ลงทะเบียน';
+              this.course.canRegister = 1;
+              this.course.saStatus = null;
+              this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการขออนุมัติพิเศษสำเร็จ' });
+            } else if (res['result'] === 'Fail') {
+              this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] });
+            }
           }
-        });
+          ).catch(err => {
+            this.messageService.add({
+              severity: 'error', summary: 'ข้อความจากระบบ',
+              detail: 'ยกเลิกการขออนุมัติพิเศษไม่สำเร็จเนื่องจาก ' + err['error']['errorMessage']
+            });
+          }).finally(() => this.spinner.hide());
       },
       reject: () => {
-        this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ปฏิเสธยกเลิกการขออนุมัติพิเศษ' });
+        // this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ปฏิเสธยกเลิกการขออนุมัติพิเศษ' });
       }
     });
   }
@@ -338,85 +362,94 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public rgCourse(courseId: number) {
+    this.spinner.show();
     this.closeMessage();
     this.courseId = courseId;
-    this.courseService.getCourseByid(courseId).subscribe(res => {
-      this.transportId = res["data"]["transportTempleId"];
-      console.log(this.transportId);
-      if (this.transportId !== null) {
-        // combineLatest for process 2 service before subscribe
-        this.optionTime = { hour: "2-digit", minute: "2-digit" };
-        combineLatest(
-          this.transportation.getTranSportToEdit(),
-          this.transportation.getTranSportTempleToEdit(this.transportId)
-        ).subscribe(([tranSport, tranSportTemple]) => {
-          this.transports = [
-            ...tranSport.data,
-            ...tranSportTemple.data.map(data => {
-              return {
-                id: data.id,
-                name:
-                  data.name +
-                  " เวลารับ: " +
-                  new Date(data.timePickUp).toLocaleTimeString(
-                    "th-TH",
-                    this.optionTime
-                  ) +
-                  " เวลา: " +
-                  new Date(data.timeSend).toLocaleTimeString(
-                    "th-TH",
-                    this.optionTime
-                  )
-              };
-            })
-          ];
-        });
-      } else {
-        this.transportation.getTranSportToEdit().subscribe(
-          data => {
-            this.transports = [...data.data];
-          }
+    this.courseService.getCourseByid(courseId).toPromise()
+      .then(res => {
+        this.transportId = res['data']['transportTempleId'];
+        console.log(this.transportId);
+        if (this.transportId !== null) {
+          // combineLatest for process 2 service before subscribe
+          this.optionTime = { hour: '2-digit', minute: '2-digit' };
+          combineLatest(
+            this.transportation.getTranSportToEdit(),
+            this.transportation.getTranSportTempleToEdit(this.transportId)
+          ).subscribe(([tranSport, tranSportTemple]) => {
+            this.transports = [
+              ...tranSport.data,
+              ...tranSportTemple.data.map(data => {
+                return {
+                  id: data.id,
+                  name:
+                    data.name +
+                    ' เวลารับ: ' +
+                    new Date(data.timePickUp).toLocaleTimeString(
+                      'th-TH',
+                      this.optionTime
+                    ) +
+                    ' เวลา: ' +
+                    new Date(data.timeSend).toLocaleTimeString(
+                      'th-TH',
+                      this.optionTime
+                    )
+                };
+              })
+            ];
+          });
+        } else {
+          this.transportation.getTranSportToEdit().subscribe(
+            data => {
+              this.transports = [...data.data];
+            }
           );
+        }
+        // this.transportId = this.transportId.map(
+        //   data => {
+        //     return data.transportTempleId;
+        //   }
+        // );
       }
-      // this.transportId = this.transportId.map(
-      //   data => {
-      //     return data.transportTempleId;
-      //   }
-      // );
-    });
+      ).catch(err => {
+        console.log(err['error']['errorMessage']);
+      }).finally(() => this.spinner.hide());
     this.displayRegisterDialog = true;
   }
 
 
   private getData() {
     // console.log(this.id);
+    this.spinner.show();
     this.route.params.pipe(switchMap(param =>
       this.courseService.getCourseByid(param.id)
-    )).subscribe(res => {
-      // console.log('getdata  ')
-      // console.log(res)
-      if (res.status === 'Success') {
-        this.course = res['data'];
-        this.status = this.course.mhcStatus;
-        this.memberId = this.course.memberId;
-      }
-    });
+    )).toPromise().then(res => {
+          // console.log('getdata  ')
+          // console.log(res)
+          if (res.status === 'Success') {
+            this.course = res['data'];
+            this.status = this.course.mhcStatus;
+            this.memberId = this.course.memberId;
+          }
+    }).catch(err => {
+      console.log(err['error']['errorMessage']);
+    }).finally(() => this.spinner.hide());
   }
 
   private getMemberByCourseId() {
     this.courseService.getUserByCourseId(this.id)
       .subscribe(res => {
         // console.log(res);
+        // tslint:disable-next-line: forin
         for (let key in res.data) {
           // console.log(key, '=>', res.data[key]);
           this.memberIdList.push(res.data[key].memberId);
           this.totalMember = this.memberIdList.length;
           this.manageUserService.getMemberById(res.data[key].memberId).subscribe(res => {
-            // console.log(res); 
+            // console.log(res);
 
-            this.memberList.push(res)
+            this.memberList.push(res);
           });
-        }  //console.log(this.totalMember);
+        }  // console.log(this.totalMember);
       });
 
 
@@ -434,12 +467,12 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   createExcel() {
     this.excelService.createExcel(this.id).subscribe(res => {
-      if (res['result'] === 'Success'){
+      if (res['result'] === 'Success') {
         // console.log(res['result'])
         this.downloadFile('temple.xls');
-        this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการบันทึกไฟล์สำเร็จ', sticky: true});
+        this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการบันทึกไฟล์สำเร็จ', sticky: true });
       } else {
-        this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการบันทึกไฟล์ไม่สำเร็จ',  life: 5000});
+        this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการบันทึกไฟล์ไม่สำเร็จ', life: 5000 });
         // console.log(res)
       }
     });
@@ -487,7 +520,7 @@ export class CourseComponent implements OnInit, OnDestroy {
       const control = this.assignFormCourse.get(field);
       if (control && !control.valid && this.validationAssignMessage[field]) {
         this.formAssignError[field] = this.validationAssignMessage[field].required;
-        if (field != 'transportation' && control.hasError('maxlength')) {
+        if (field !== 'transportation' && control.hasError('maxlength')) {
           // console.log(field)
           // console.log(control.hasError('maxlength'))
           this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 100 ตัวอักษร';
@@ -507,10 +540,10 @@ export class CourseComponent implements OnInit, OnDestroy {
       const control = this.approveFormCourse.get(field);
       if (control && !control.valid && this.validationApproveMessage[field]) {
         this.formApproveError[field] = this.validationApproveMessage[field].required;
-        if (field != 'transportation' && control.hasError('maxlength')) {
+        if (field !== 'transportation' && control.hasError('maxlength')) {
           // console.log(field)
           // console.log(control.hasError('maxlength'))
-          this.formLengthError[field] = '*ข้อความต้องมีตัวอักษรน้อยกว่า 100 ตัว'
+          this.formLengthError[field] = '*ข้อความต้องมีตัวอักษรน้อยกว่า 100 ตัว';
         } else {
           this.formLengthError[field] = '';
         }
@@ -532,7 +565,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   onCancle(e) {
-    if (e == 'as') {
+    if (e === 'as') {
       this.displayRegisterDialog = false;
       this.assignFormCourse.reset();
       Object.values(this.assignFormCourse.controls).forEach(df => {
@@ -556,7 +589,7 @@ export class CourseComponent implements OnInit, OnDestroy {
       Object.keys(this.assignFormCourse.controls).forEach(key => {
         const control = this.assignFormCourse.get(key);
         control.clearValidators();
-        if (key == 'transportation') {
+        if (key === 'transportation') {
           control.setValidators(Validators.required);
         } else {
           control.setValidators([Validators.required, Validators.maxLength(100)]);
@@ -567,9 +600,9 @@ export class CourseComponent implements OnInit, OnDestroy {
       Object.keys(this.approveFormCourse.controls).forEach(key => {
         const control = this.approveFormCourse.get(key);
         control.clearValidators();
-        if (key == 'transportation') {
+        if (key === 'transportation') {
           control.setValidators(Validators.required);
-        } else if (key == 'detail') {
+        } else if (key === 'detail') {
           control.setValidators([Validators.required, Validators.maxLength(255)]);
         } else {
           control.setValidators([Validators.required, Validators.maxLength(100)]);

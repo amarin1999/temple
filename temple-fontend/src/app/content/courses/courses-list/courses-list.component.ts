@@ -20,6 +20,8 @@ import { TransportService } from 'src/app/shared/service/transport.service';
 import { element } from '@angular/core/src/render3';
 import { CourseCreateComponent } from '../course-create/course-create.component';
 import { TransportationTemple } from 'src/app/shared/interfaces/transportation-temple';
+import { Spinner } from 'primeng/primeng';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-courses-list',
@@ -130,7 +132,8 @@ export class CoursesListComponent implements OnInit {
     private breadCrumbService: BreadcrumbService,
     private router: Router,
     private transportation: TransportService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    public spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
@@ -176,41 +179,49 @@ export class CoursesListComponent implements OnInit {
       header: 'ข้อความจากระบบ',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.courseService.assignCourse(dataCourse).subscribe(res => {
-          // console.log(res);
-          if (res['result'] === 'Success') {
-            const index = this.courses.findIndex(
-              course => course.id === this.courseId
-            );
-            const upd = this.courses[index];
-            upd.status = 'กำลังศึกษา';
-            upd.canRegister = 0;
-            upd.mhcStatus = '2';
-            const name = upd.name;
-            this.updateTable([
-              ...this.courses.slice(0, index),
-              upd,
-              ...this.courses.slice(index + 1)
-            ]);
-            this.onCancle('as');
-            this.messageService.add({
-              severity: 'success',
-              summary: 'ข้อความจากระบบ',
-              detail: 'ดำเนินการลงทะเบียนคอร์ส ' + name + ' สำเร็จ'
-            });
-            this.getData();
-            this.getStudyingData();
-            this.getTotalRecord();
-            this.getStudyTotalRecord();
-          } else if (res['result'] === 'Fail') {
+        this.spinner.show();
+        this.courseService.assignCourse(dataCourse).toPromise()
+          .then(res => {
+            if (res['result'] === 'Success') {
+              const index = this.courses.findIndex(
+                course => course.id === this.courseId
+              );
+              const upd = this.courses[index];
+              upd.status = 'กำลังศึกษา';
+              upd.canRegister = 0;
+              upd.mhcStatus = '2';
+              const name = upd.name;
+              this.updateTable([
+                ...this.courses.slice(0, index),
+                upd,
+                ...this.courses.slice(index + 1)
+              ]);
+              this.onCancle('as');
+              this.messageService.add({
+                severity: 'success',
+                summary: 'ข้อความจากระบบ',
+                detail: 'ดำเนินการลงทะเบียนคอร์ส ' + name + ' สำเร็จ'
+              });
+              this.getData();
+              this.getStudyingData();
+              this.getTotalRecord();
+              this.getStudyTotalRecord();
+            } else if (res['result'] === 'Fail') {
+              this.onCancle('as');
+              this.messageService.add({
+                severity: 'error',
+                summary: 'ข้อความจากระบบ',
+                detail: res['errorMessage']
+              });
+            }
+          }).catch(err => {
             this.onCancle('as');
             this.messageService.add({
               severity: 'error',
               summary: 'ข้อความจากระบบ',
-              detail: res['errorMessage']
+              detail: err['error']['errorMessage']
             });
-          }
-        });
+          }).finally(() => this.spinner.hide());
       },
       reject: () => {
         this.onCancle('as');
@@ -243,44 +254,53 @@ export class CoursesListComponent implements OnInit {
       header: 'ข้อความจากระบบ',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.courseService.approvalCourse(dataCourse).subscribe(res => {
-          // console.log(res);
-          if (res['result'] === 'Success') {
-            const index = this.courses.findIndex(
-              course => course.id === this.courseId
-            );
-            const upd = this.courses[index];
-            upd.status = 'รอการอนุมัติ';
-            upd.saStatus = '2';
-            upd.canRegister = 0;
-            this.updateTable([
-              ...this.courses.slice(0, index),
-              upd,
-              ...this.courses.slice(index + 1)
-            ]);
-            this.onCancle('ap');
-            this.messageService.add({
-              severity: 'success',
-              summary: 'ข้อความจากระบบ',
-              detail: 'ดำเนินการขออนุมัติพิเศษสำเร็จ'
-            });
-            this.getData();
-            this.getStudyingData();
-            this.getTotalRecord();
-            this.getStudyTotalRecord();
-          } else if (res['result'] === 'Fail') {
+        this.spinner.show();
+        this.courseService.approvalCourse(dataCourse).toPromise()
+          .then(res => {
+            console.log(res);
+            if (res['result'] === 'Success') {
+              const index = this.courses.findIndex(
+                course => course.id === this.courseId
+              );
+              const upd = this.courses[index];
+              upd.status = 'รอการอนุมัติ';
+              upd.saStatus = '2';
+              upd.canRegister = 0;
+              this.updateTable([
+                ...this.courses.slice(0, index),
+                upd,
+                ...this.courses.slice(index + 1)
+              ]);
+              this.onCancle('ap');
+              this.messageService.add({
+                severity: 'success',
+                summary: 'ข้อความจากระบบ',
+                detail: 'ดำเนินการขออนุมัติพิเศษสำเร็จ'
+              });
+              this.getData();
+              this.getStudyingData();
+              this.getTotalRecord();
+              this.getStudyTotalRecord();
+            } else if (res['result'] === 'Fail') {
+              this.onCancle('ap');
+              this.messageService.add({
+                severity: 'error',
+                summary: 'ข้อความจากระบบ',
+                detail: res['errorMessage']
+              });
+              this.getData();
+              this.getStudyingData();
+              this.getTotalRecord();
+              this.getStudyTotalRecord();
+            }
+          }).catch(err => {
             this.onCancle('ap');
             this.messageService.add({
               severity: 'error',
               summary: 'ข้อความจากระบบ',
-              detail: res['errorMessage']
+              detail: err['error']['errorMessage']
             });
-            this.getData();
-            this.getStudyingData();
-            this.getTotalRecord();
-            this.getStudyTotalRecord();
-          }
-        });
+          }).finally(() => this.spinner.hide());
       },
       reject: () => {
         this.onCancle('ap');
@@ -294,23 +314,27 @@ export class CoursesListComponent implements OnInit {
   }
 
   private getData() {
+    this.spinner.show();
     this.values = [];
-    this.courseService.getCoursesUser('0').subscribe(res => {
-      if (res['status'] === 'Success') {
-        res['data'].forEach(element => {
-          if (
-            element.status === 'ยังไม่ได้ลงทะเบียน' ||
-            element.status === 'รอการอนุมัติ'
-          ) {
-            this.values.push(element);
-          }
-        });
-        // console.log('course');
-      }
-      // this.values.sort((a,b) => a.name.localeCompare(b.name));
-      this.courses = this.values;
-      // console.log(this.courses);
-    });
+    this.courseService.getCoursesUser('0').toPromise()
+      .then(res => {
+        if (res['status'] === 'Success') {
+          res['data'].forEach(element => {
+            if (
+              element.status === 'ยังไม่ได้ลงทะเบียน' ||
+              element.status === 'รอการอนุมัติ'
+            ) {
+              this.values.push(element);
+            }
+          });
+          // console.log('course');
+        }
+        // this.values.sort((a,b) => a.name.localeCompare(b.name));
+        this.courses = this.values;
+        // console.log(this.courses);
+      }).catch(err => {
+        console.log(err['error']['errorMessage']);
+      }).finally(() => this.spinner.hide());
   }
 
   private getStudyingData() {
@@ -349,37 +373,45 @@ export class CoursesListComponent implements OnInit {
       header: 'ข้อความจากระบบ',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.courseService.cancelApprovalCourse(id).subscribe(res => {
-          // console.log(res);
-          if (res['result'] === 'Success') {
-            const index = this.courses.findIndex(course => course.id === id);
-            const upd = this.courses[index];
-            upd.status = 'ยังไม่ได้ลงทะเบียน';
-            upd.canRegister = 1;
-            upd.saStatus = null;
-            this.updateTable([
-              ...this.courses.slice(0, index),
-              upd,
-              ...this.courses.slice(index + 1)
-            ]);
+        this.spinner.show();
+        this.courseService.cancelApprovalCourse(id).toPromise()
+          .then(res => {
+            // console.log(res);
+            if (res['result'] === 'Success') {
+              const index = this.courses.findIndex(course => course.id === id);
+              const upd = this.courses[index];
+              upd.status = 'ยังไม่ได้ลงทะเบียน';
+              upd.canRegister = 1;
+              upd.saStatus = null;
+              this.updateTable([
+                ...this.courses.slice(0, index),
+                upd,
+                ...this.courses.slice(index + 1)
+              ]);
 
-            this.messageService.add({
-              severity: 'success',
-              summary: 'ข้อความจากระบบ',
-              detail: 'ดำเนินการยกเลิกการขออนุมัติพิเศษสำเร็จ'
-            });
-            this.getData();
-            this.getStudyingData();
-            this.getTotalRecord();
-            this.getStudyTotalRecord();
-          } else if (res['result'] === 'Fail') {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'ข้อความจากระบบ',
+                detail: 'ดำเนินการยกเลิกการขออนุมัติพิเศษสำเร็จ'
+              });
+              this.getData();
+              this.getStudyingData();
+              this.getTotalRecord();
+              this.getStudyTotalRecord();
+            } else if (res['result'] === 'Fail') {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'ข้อความจากระบบ',
+                detail: res['error']['errorMessage']
+              });
+            }
+          }).catch(err => {
             this.messageService.add({
               severity: 'error',
               summary: 'ข้อความจากระบบ',
-              detail: res['errorMessage']
+              detail: err['error']['errorMessage']
             });
-          }
-        });
+          }).finally(() => this.spinner.hide());
       },
       reject: () => {
         this.messageService.add({
@@ -430,7 +462,7 @@ export class CoursesListComponent implements OnInit {
           data => {
             this.transports = [...data.data];
           }
-          );
+        );
       }
       // this.transportId = this.transportId.map(
       //   data => {
@@ -477,7 +509,7 @@ export class CoursesListComponent implements OnInit {
         });
       } else {
         this.transportation.getTranSportToEdit().subscribe(data => {
-          this.transports = [...data.data];
+          this.transports = data.data;
         });
       }
       // this.transportId = this.transportId.map(

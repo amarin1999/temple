@@ -23,9 +23,9 @@ public class TempleApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Datasources"+ dataSource);
+		System.out.println("Datasources: "+ dataSource);
 		HikariDataSource dataSoxe = (HikariDataSource)dataSource;
-		System.out.println("Datasource"+ dataSoxe.getMaximumPoolSize());
+		System.out.println("Datasource: "+ dataSoxe.getMaximumPoolSize());
 	}
 
 }
