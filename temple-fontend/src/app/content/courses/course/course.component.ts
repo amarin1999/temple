@@ -137,22 +137,6 @@ export class CourseComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    /* this.subscription = router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        browserRefresh = !router.navigated;
-      }
-  }); */
-    // this.transportation.getTranSport().subscribe(
-    //   res => {
-    //     this.transports = [
-    //       ...res
-    //     ];
-    //     // console.log(this.transports);
-    //   },
-    //   err => {
-    //     console.log(err['error']['errorMessage']);
-    //   }
-    // );
     this.id = this.route.snapshot.paramMap.get('id');
     this.getData();
     this.authService.getRole().subscribe(res => this.role = res);
@@ -163,9 +147,6 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.courseService.setCourse(null);
-    // console.log('dt ' + this.url);
-    // localStorage.setItem('preurl', JSON.stringify( this.url ));
   }
 
   /*------------------------------------------*/
@@ -324,12 +305,12 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   public cancelApprovalCourse(id) {
     this.closeMessage();
-    this.spinner.show();
     this.confirmationService.confirm({
       message: 'ยืนยันการยกเลิกการขออนุมัติพิเศษ',
       header: 'ยกเลิกการขออนุมัติพิเศษ',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        this.spinner.show();
         this.courseService.cancelApprovalCourse(id).toPromise()
           .then((res) => {
             // console.log(res);
@@ -416,23 +397,23 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.displayRegisterDialog = true;
   }
 
-
   private getData() {
     // console.log(this.id);
-    this.spinner.show();
+    // this.spinner.show();
     this.route.params.pipe(switchMap(param =>
-      this.courseService.getCourseByid(param.id)
-    )).toPromise().then(res => {
-          // console.log('getdata  ')
-          // console.log(res)
+      this.courseService.getCourseByid(param.id).toPromise()
+        .then(res => {
+          console.log('getdata  ');
+          console.log(res);
           if (res.status === 'Success') {
             this.course = res['data'];
             this.status = this.course.mhcStatus;
             this.memberId = this.course.memberId;
           }
-    }).catch(err => {
-      console.log(err['error']['errorMessage']);
-    }).finally(() => this.spinner.hide());
+        }).catch(err => {
+          console.log(err['error']['errorMessage']);
+        }).finally(() =>
+          this.spinner.hide()))).subscribe();
   }
 
   private getMemberByCourseId() {
