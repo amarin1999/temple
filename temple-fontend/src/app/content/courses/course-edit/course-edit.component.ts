@@ -5,7 +5,7 @@ import { CourseService } from '../shared/course.service';
 import { formatDate, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '../../location/location.service';
-import { ConfirmationService , MessageService} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { TransportService } from 'src/app/shared/service/transport.service';
 import { TransportationTemple } from 'src/app/shared/interfaces/transportation-temple';
@@ -49,44 +49,44 @@ export class CourseEditComponent implements OnInit {
     }
   );
 
-public formError = {
-  courseName: '',
-  detail: '',
-  location: '',
-  date: '',
-  teachers: '',
-  conditionMin: ''
-};
+  public formError = {
+    courseName: '',
+    detail: '',
+    location: '',
+    date: '',
+    teachers: '',
+    conditionMin: ''
+  };
 
-public formLengthError = {
-  courseName: '',
-  detail: '',
-  location: '',
-  date: '',
-  teachers: '',
-  conditionMin: ''
-};
+  public formLengthError = {
+    courseName: '',
+    detail: '',
+    location: '',
+    date: '',
+    teachers: '',
+    conditionMin: ''
+  };
 
-public validationMessage = {
-  courseName: {
-    required: 'ชื่อคอร์ส*'
-  },
-  detail: {
-    required: 'รายละเอียด*'
-  },
-  location: {
-    required: 'สถานที่*'
-  },
-  date: {
-    required: 'วันที่เรียน*'
-  },
-  teachers: {
-    required: 'ผู้สอน*'
-  },
-  conditionMin: {
-    required: 'หมายเหตุ*'
-  }
-};
+  public validationMessage = {
+    courseName: {
+      required: 'ชื่อคอร์ส*'
+    },
+    detail: {
+      required: 'รายละเอียด*'
+    },
+    location: {
+      required: 'สถานที่*'
+    },
+    date: {
+      required: 'วันที่เรียน*'
+    },
+    teachers: {
+      required: 'ผู้สอน*'
+    },
+    conditionMin: {
+      required: 'หมายเหตุ*'
+    }
+  };
 
 
   constructor(
@@ -102,11 +102,9 @@ public validationMessage = {
   ) { }
 
   ngOnInit() {
-   this.initNotice();
-
-/*     this.courseId = this.route.snapshot.paramMap.get('id');
-    console.log(this.courseId); */
-
+    this.initNotice();
+    /*     this.courseId = this.route.snapshot.paramMap.get('id');
+        console.log(this.courseId); */
     this.courseService.getTeachers().subscribe(
       res => {
         if (res.status === 'Success') {
@@ -117,12 +115,10 @@ public validationMessage = {
             }
           })
           // console.log(this.teachers);
-
         }
       },
       error => {
         console.log(error['error']['errorMessage']);
-
       }
     );
 
@@ -138,14 +134,15 @@ public validationMessage = {
       }
     );
 
-       // ------------ Get List of Transportation Temple ------------
-    this.optionTime = {hour: '2-digit', minute: '2-digit'};
+    // ------------ Get List of Transportation Temple ------------
+    this.optionTime = { hour: '2-digit', minute: '2-digit' };
     this.transportTempleService.getTranSportTemple().subscribe(
       res => {
-        this.transport = res['data'].map( data => {
-          return {  id: data.id ,
-                    name: data.name + ' เวลารับ : ' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
-                     ' เวลาส่ง : ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
+        this.transport = res['data'].map(data => {
+          return {
+            id: data.id,
+            name: data.name + ' เวลารับ : ' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
+              ' เวลาส่ง : ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
           }
         });
       },
@@ -155,13 +152,13 @@ public validationMessage = {
     );
 
     const currentYear = this.pipe.transform(Date.now(), 'yyyy');
-    const startYear = parseInt(currentYear)+5;
-    this.yearRange = currentYear + ':' + startYear ;
+    const startYear = parseInt(currentYear) + 5;
+    this.yearRange = currentYear + ':' + startYear;
   }
 
   private initNotice() {
     this.noticearr.map(res => {
-    this.notice.push({ id: res })
+      this.notice.push({ id: res })
     });
   }
 
@@ -204,12 +201,12 @@ public validationMessage = {
           name: res['data']['locationName']
         };
 
-        if (res['data']['transportTempleId'] != null ) {
+        if (res['data']['transportTempleId'] != null) {
           this.transportTempleList = {
             id: res['data']['transportTempleId'],
             name: res['data']['transportTempleName']
-            + ' เวลารับ : ' + new Date(res['data']['transportTempleTimePickUp']).toLocaleTimeString('th-TH', this.optionTime)
-            + ' เวลาส่ง : ' + new Date(res['data']['transportTempleTimeSend']).toLocaleTimeString('th-TH', this.optionTime)
+              + ' เวลารับ : ' + new Date(res['data']['transportTempleTimePickUp']).toLocaleTimeString('th-TH', this.optionTime)
+              + ' เวลาส่ง : ' + new Date(res['data']['transportTempleTimeSend']).toLocaleTimeString('th-TH', this.optionTime)
           };
         } else {
           this.transportTempleList = null;
@@ -231,8 +228,8 @@ public validationMessage = {
 
   onSubmit() {
     this.setValidate();
-    if (!this.formEdit.valid ) {
-        this.subscribeInputMessageWaring();
+    if (!this.formEdit.valid) {
+      this.subscribeInputMessageWaring();
     } else {
       this.confirmationService.confirm({
         message: 'ยืนยันการแก้ไขคอร์ส',
@@ -240,24 +237,24 @@ public validationMessage = {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           const date2 = this.formEdit.get('date').value;
-        //  console.log('dateForm0 =' + date2[0]);
-        //  console.log('dateForm1 =' + date2[1]);
+          //  console.log('dateForm0 =' + date2[0]);
+          //  console.log('dateForm1 =' + date2[1]);
           const stDate = formatDate(date2[0], 'yyyy-MM-dd', 'th');
           let endDate = '';
           let datesort = [];
 
-          if(date2[1] != null) {
+          if (date2[1] != null) {
             endDate = formatDate(date2[1], 'yyyy-MM-dd', 'th');
             datesort = date2.map(res => formatDate(res, 'yyyy-MM-dd', 'th')).sort();
           } else {
             endDate = stDate;
-            for (let i = 0 ; i < 2; i++) {
+            for (let i = 0; i < 2; i++) {
               datesort.push(stDate);
             }
           }
           const id = this.courseId;
-        // const lastUpdate = formatDate(Date.now(), 'yyyy-MM-dd hh:mm:ss', 'en');
-        // console.log(this.obj);
+          // const lastUpdate = formatDate(Date.now(), 'yyyy-MM-dd hh:mm:ss', 'en');
+          // console.log(this.obj);
           // console.log('datesort' + datesort);
 
           const course = {
@@ -285,7 +282,7 @@ public validationMessage = {
           });
         },
         reject: () => {
-          this.msgs = [{severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการแก้ไขคอร์ส'}];
+          this.msgs = [{ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการแก้ไขคอร์ส' }];
           this.onCancle(this.msgs);
         }
       });
@@ -302,38 +299,38 @@ public validationMessage = {
         debounceTime(500),
         distinctUntilChanged()
       ).subscribe(() => this.waringMessage());
-      this.waringMessage();
+    this.waringMessage();
   }
 
   waringMessage() {
     if (!this.formError) {
       return;
     }
-      for (const field of Object.keys(this.formError)) {
-        this.formError[field] = '';
-        const control = this.formEdit.get(field);
-        if (control && this.validationMessage[field]) {
-          // console.log(field);
-          // console.log(control.valid);
-          if (!control.valid) {
-            this.formError[field] = this.validationMessage[field].required;
-            if (field == 'courseName') {
-              if (control.hasError('maxlength')) {
-                // console.log('if' + field);
-                this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
-              }
+    for (const field of Object.keys(this.formError)) {
+      this.formError[field] = '';
+      const control = this.formEdit.get(field);
+      if (control && this.validationMessage[field]) {
+        // console.log(field);
+        // console.log(control.valid);
+        if (!control.valid) {
+          this.formError[field] = this.validationMessage[field].required;
+          if (field == 'courseName') {
+            if (control.hasError('maxlength')) {
+              // console.log('if' + field);
+              this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
             }
-            if (field == 'detail' ){
-              if (control.hasError('maxlength')) {
-                // console.log('if' + field);
-                this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
-              }
-            }
-          }else{
-            this.formLengthError[field] = '';
           }
+          if (field == 'detail') {
+            if (control.hasError('maxlength')) {
+              // console.log('if' + field);
+              this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
+            }
+          }
+        } else {
+          this.formLengthError[field] = '';
         }
       }
+    }
   }
 
   filterTeacherMultiple(event) {
@@ -341,7 +338,7 @@ public validationMessage = {
     this.filteredTeacher = this.filterTeacher(query, this.teachers);
   }
 
-  filterTeacher(query, teachers: any): any[] {   
+  filterTeacher(query, teachers: any): any[] {
     let filtered: any[] = [];
     for (let i = 0; i < teachers.length; i++) {
       let teacher = teachers[i]
@@ -355,11 +352,11 @@ public validationMessage = {
   onCancle(message) {
     this.closeDisplayEditDialog.emit(message);
     this.formEdit.reset();
-        Object.values(this.formEdit.controls).forEach(df => {
-          df.markAsPristine();
-          df.setValidators(null);
-          df.updateValueAndValidity();
-        });
+    Object.values(this.formEdit.controls).forEach(df => {
+      df.markAsPristine();
+      df.setValidators(null);
+      df.updateValueAndValidity();
+    });
   }
 
   setValidate() {

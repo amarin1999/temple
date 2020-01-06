@@ -88,7 +88,6 @@ export class CourseCreateComponent implements OnInit {
       required: 'เงื่อนไข*'
     }
   };
-  
 
   constructor(
     private breadCrumbService: BreadcrumbService,
