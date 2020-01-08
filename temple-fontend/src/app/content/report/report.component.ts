@@ -42,6 +42,7 @@ export class ReportComponent implements OnInit {
         return {id : data.id, name: data.name}
       }
     );
+    // console.log('course', this.course);
   },
   err => {
     console.log(err['error']['message']);
@@ -67,6 +68,15 @@ export class ReportComponent implements OnInit {
       }
     }
     return filtered;
+  }
+
+  onSelect(data) {
+
+  }
+  onClear(event) {
+    if (event.data == null) {
+      // console.log('data');
+    }
   }
 
 
