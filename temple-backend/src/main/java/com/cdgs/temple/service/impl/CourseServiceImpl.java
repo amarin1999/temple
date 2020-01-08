@@ -357,12 +357,12 @@ public class CourseServiceImpl implements CourseService {
 					dto.setLocationId(entity.getLocationId().getLocationId());
 					dto.setLocationName(entity.getLocationId().getLocationName());
 				}
-				if (entity.getTransportTempleEntity() != null) {
-					dto.setTransportTempleId(entity.getTransportTempleEntity().getTransportationTempleId());
-					dto.setTransportTempleName(entity.getTransportTempleEntity().getTransportationTempleName());
-					dto.setTransportTempleTimePickUp(entity.getTransportTempleEntity().getTransportationTempleTimePickup());
-					dto.setTransportTempleTimeSend(entity.getTransportTempleEntity().getTransportationTempleTimeSend());
-				}
+//				if (entity.getTransportTempleEntity() != null) {
+//					dto.setTransportTempleId(entity.getTransportTempleEntity().getTransportationTimeId());
+//					dto.setTransportTempleName(entity.getTransportTem);
+//					dto.setTransportTempleTimePickUp(entity.getTransportTempleEntity().getTransportationTempleTimePickup());
+//					dto.setTransportTempleTimeSend(entity.getTransportTempleEntity().getTransportationTempleTimeSend());
+//				}
 				if (entity.getCreateBy() != null) {
 					dto.setMemberId(entity.getCreateBy().getMemberId());
 					dto.setMemberFname(entity.getCreateBy().getMemberFname());
@@ -447,7 +447,6 @@ public class CourseServiceImpl implements CourseService {
 			System.out.println("datetest ="+datetest);
 			courseOld.setCourseLastUpdate(new Date());
 			courseOld.setCourseLocationId(courseNew.getLocationId());
-			courseOld.setCourseTransportTempleId(courseNew.getTransportTempleId());
 			entity = courseRepository.save(courseOld);
 			// ลบของเก่า
 			courseTeacherRepository.deleteCourseTeachers(id);
@@ -514,7 +513,6 @@ public class CourseServiceImpl implements CourseService {
 		entity.setCourseLastUpdate(course.getLastUpdate());
 		entity.setCourseLocationId(course.getLocationId());
 		entity.setCourseCreateBy(course.getMemberId());
-		entity.setCourseTransportTempleId(course.getTransportTempleId());
 		return entity;
 	}
 
@@ -579,17 +577,17 @@ public class CourseServiceImpl implements CourseService {
 				dto.setLocationId(entity.getLocationId().getLocationId());
 				dto.setLocationName(entity.getLocationId().getLocationName());
 				
-				if (entity.getCourseTransportTempleId() != null) {
-					dto.setTransportTempleId(entity.getTransportTempleEntity().getTransportationTempleId());
-					dto.setTransportTempleName(entity.getTransportTempleEntity().getTransportationTempleName());
-					dto.setTransportTempleTimePickUp(entity.getTransportTempleEntity().getTransportationTempleTimePickup());
-					dto.setTransportTempleTimeSend(entity.getTransportTempleEntity().getTransportationTempleTimeSend());
-				} else {
-					dto.setTransportTempleId(null);
-					dto.setTransportTempleName(null);
-					dto.setTransportTempleTimePickUp(null);
-					dto.setTransportTempleTimeSend(null);
-				}
+//				if (entity.getCourseTransportTempleId() != null) {
+//					dto.setTransportTempleId(entity.getTransportTempleEntity().getTransportationTimeId());
+//					dto.setTransportTempleName(entity.getTransportTempleEntity().getTranName());
+//					dto.setTransportTempleTimePickUp(entity.getTransportTempleEntity().getTransportationTempleTimePickup());
+//					dto.setTransportTempleTimeSend(entity.getTransportTempleEntity().getTransportationTempleTimeSend());
+//				} else {
+//					dto.setTransportTempleId(null);
+//					dto.setTransportTempleName(null);
+//					dto.setTransportTempleTimePickUp(null);
+//					dto.setTransportTempleTimeSend(null);
+//				}
 				
 				
 				dto.setMemberId(entity.getCreateBy().getMemberId());

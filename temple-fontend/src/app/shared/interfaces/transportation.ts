@@ -1,7 +1,8 @@
 export interface Transportation {
     id?: number;
     name?: string;
-    status?: boolean;
+    tranTimeId?: number;
+    courseId?: number;
     timePickUp?: number;
     timeSend?: number;
 }
