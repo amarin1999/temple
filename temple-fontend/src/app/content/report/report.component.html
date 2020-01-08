@@ -5,15 +5,17 @@
     </div>
     <div class="line"></div><br>  
     <form [formGroup]="formReport">
-    <p-table [columns]="cols" [value]="cars">
+    <p-table [columns]="cols" [value]="data">
         <ng-template pTemplate="caption">
           <div style="text-align:left;">
             <p-autoComplete formControlName="courses" placeholder="กรุณาเลือกชื่อคอร์ส"
             [suggestions]="filteredCourse" value="id" (completeMethod)="filterCourseMultiple($event)"
-            [minLength]="1" field="name" [dropdown]="true" (onSelect)= "onSelect($event)" (onClear)="onClear($event)">
+            [minLength]="1" field="name" [dropdown]="true" >
+            <i class="fa fa-reset"></i>  
+            <!-- <i class="fa fa-reset" (click)="onClear()"></i>        -->
           </p-autoComplete>
           </div>
-      </ng-template>
+      </ng-template> 
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th colspan="3" class="bgTable1"> เพศ </th>
@@ -22,40 +24,41 @@
                 <th colspan="8" class="bgTable4"> ภูมิภาค </th>
             </tr>
             <tr>
-                <th rowspan="2" class="bgTable1">หญิง</th>
-                <th rowspan="2" class="bgTable1">ชาย</th>
-                <th rowspan="2" class="bgTable1">ไม่ระบุ</th>
-                <th rowspan="2" class="bgTable2">การเดินทางของวัด</th>
-                <th rowspan="2" class="bgTable2">การเดินทางด้วยตัวเอง</th>
-                <th colspan="2" class="bgTable4">ภาคกลาง</th>
-                <th colspan="2" class="bgTable4">ภาคตะวันออกเฉียงเหนือ</th>
-                <th rowspan="2" class="bgTable4">ภาคเหนือ</th>
-                <th rowspan="2" class="bgTable4">ภาคตะวันออก</th>
-                <th rowspan="2" class="bgTable4">ภาคตะวันตก</th>
-                <th rowspan="2" class="bgTable4">ภาคใต้</th>
+                <th rowspan="2" class="bgTable1_1">หญิง</th>
+                <th rowspan="2" class="bgTable1_1">ชาย</th>
+                <th rowspan="2" class="bgTable1_1">ไม่ระบุ</th>
+                <th rowspan="2" class="bgTable2_2">การเดินทางของวัด</th>
+                <th rowspan="2" class="bgTable2_2">การเดินทางด้วยตัวเอง</th>
+                <th colspan="2" class="bgTable3_3">ภาคกลาง</th>
+                <th colspan="2" class="bgTable3_3">ภาคตะวันออกเฉียงเหนือ</th>
+                <th rowspan="2" class="bgTable3_3">ภาคเหนือ</th>
+                <th rowspan="2" class="bgTable3_3">ภาคตะวันออก</th>
+                <th rowspan="2" class="bgTable3_3">ภาคตะวันตก</th>
+                <th rowspan="2" class="bgTable3_3">ภาคใต้</th>
             </tr>
             <tr>
-               <th class="bgTable4">กรุงเทพฯ</th>
-               <th class="bgTable4">อื่นๆ</th>
-               <th class="bgTable4">สกลนคร</th>
-               <th class="bgTable4">อื่นๆ</th>
+               <th class="bgTable4_4">กรุงเทพฯ</th>
+               <th class="bgTable4_4">อื่นๆ</th>
+               <th class="bgTable4_4">สกลนคร</th>
+               <th class="bgTable4_4">อื่นๆ</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <ng-template pTemplate="body" let-rowData >
             <tr>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
+               <td class="td1">{{rowData.female}}</td>
+               <td class="td1">{{rowData.male}}</td>
+               <td class="td1">{{rowData.non}}</td>
+               <td class="td2">{{rowData.temple}}</td>
+               <td class="td2">{{rowData.myself}}</td>
+               <td class="td1">{{rowData.new}}</td>
+               <td class="td3">{{rowData.bkk}}</td>
+               <td class="td3">{{rowData.other}}</td>
+               <td class="td3">{{rowData.sakon}}</td>
+               <td class="td3">{{rowData.other2}}</td>
+               <td class="td2">{{rowData.north}}</td>
+               <td class="td2">{{rowData.east}}</td>
+               <td class="td2">{{rowData.west}}</td>
+               <td class="td2">{{rowData.south}}</td>
             </tr>
         </ng-template>
   </p-table>
