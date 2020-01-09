@@ -11,7 +11,7 @@ public interface TransportationRepository extends CrudRepository<TransportationE
 	@Query(value ="SELECT * FROM transportations where tran_time_id IS NULL;", nativeQuery = true)
 	List<TransportationEntity> findAll();
 	
-	@Query(value = "SELECT t.tran_id, t.tran_name, t.tran_time_id, t.courses_id, tt.tran_time_pickup, tt.tran_time_send "
+	@Query(value = "SELECT t.tran_id, t.tran_name, t.tran_time_id, t.course_id, tt.tran_time_pickup, tt.tran_time_send "
 			+ "FROM transportations t "
 			+ "LEFT JOIN transportations_time tt "
 			+ "ON t.tran_time_id = tt.tran_time_id "
