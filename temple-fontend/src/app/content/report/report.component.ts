@@ -11,6 +11,7 @@ import { CourseService } from '../courses/shared/course.service';
 export class ReportComponent implements OnInit {
 
   cols: any[];
+  data: any;
   filteredCourse: any[];
   public course: any[];
 
