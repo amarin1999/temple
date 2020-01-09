@@ -8,8 +8,3 @@ temple-fontend/dist/
 temple-fontend/.vscode/
 temple-backend/.idea/
 temple-backend/demo/
-.idea/
-temple-backend/TempleAPI.iml
-temple-backend/.mvn/.mvn.iml
-temple-backend/src/main/main.iml
-temple-backend/src/test/test.iml
