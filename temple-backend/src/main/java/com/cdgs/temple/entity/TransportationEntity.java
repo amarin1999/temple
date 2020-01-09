@@ -34,7 +34,7 @@ public class TransportationEntity implements Serializable{
 	@Column(name = "tran_time_id")
 	private Long transportationTimeId;
 	
-	@Column(name = "courses_id")
+	@Column(name = "course_id")
 	private Long transportationCoursesId;
 
 	@OneToOne
@@ -42,7 +42,7 @@ public class TransportationEntity implements Serializable{
 	private TransportationTimeEntity transportationTimeEntity;
 	
 	@ManyToOne
-	@JoinColumn(name = "courses_id", insertable = false, updatable = false)
+	@JoinColumn(name = "course_id", insertable = false, updatable = false)
 	private CourseEntity coursesEntity;
 
 	public Long getTransportationId() {

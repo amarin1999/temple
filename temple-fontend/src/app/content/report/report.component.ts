@@ -9,7 +9,7 @@ import { CourseService } from '../courses/shared/course.service';
   styleUrls: ['./report.component.scss']
 })
 export class ReportComponent implements OnInit {
-  data: any[];
+
   cols: any[];
   data: any;
   filteredCourse: any[];
