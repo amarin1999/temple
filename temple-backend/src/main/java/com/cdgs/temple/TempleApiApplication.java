@@ -28,6 +28,11 @@ public class TempleApiApplication implements CommandLineRunner {
 		System.out.println("JdbcUrl: "+ dataSoxe.getJdbcUrl());
 		System.out.println("Username: "+ dataSoxe.getUsername());
 		System.out.println("Password: "+ dataSoxe.getPassword());
+		System.out.println();
+		System.out.println("============================================================================================");
+		System.out.println("API Started...");
+		System.out.println("============================================================================================");
+		System.out.println();
 	}
 
 }
