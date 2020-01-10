@@ -15,62 +15,62 @@ import org.hibernate.annotations.CreationTimestamp;
 @Embeddable
 public class CourseEntity implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1615306482250637476L;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1615306482250637476L;
 
-    @Id
-    @Column(name = "course_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long courseId;
-    
-    @Column(name = "course_no")
-    private Long courseNo;
+	@Id
+	@Column(name = "course_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long courseId;
 
-    @Column(name = "course_name")
-    private String courseName;
+	@Column(name = "course_no")
+	private Long courseNo;
 
-    @Column(name = "course_st_date")
-    private Date courseStDate;
+	@Column(name = "course_name")
+	private String courseName;
 
-    @Column(name = "course_end_date")
-    private Date courseEndDate;
+	@Column(name = "course_st_date")
+	private Date courseStDate;
 
-    @Column(name = "course_detail")
-    private String courseDetail;
+	@Column(name = "course_end_date")
+	private Date courseEndDate;
 
-    @Column(name = "course_condition_min")
-    private int courseConditionMin;
+	@Column(name = "course_detail")
+	private String courseDetail;
 
-    @Column(name = "course_location_id")
-    private Long courseLocationId;
+	@Column(name = "course_condition_min")
+	private int courseConditionMin;
 
-    @Column(name = "course_create_by")
-    private Long courseCreateBy;
+	@Column(name = "course_location_id")
+	private Long courseLocationId;
 
-    @Column(name = "course_create_date")
-    @CreationTimestamp
-    private Date courseCreateDate;
+	@Column(name = "course_create_by")
+	private Long courseCreateBy;
 
-    @Column(name = "course_last_update")
-    @CreationTimestamp
-    private Date courseLastUpdate;
-    
-    @Column(name = "course_status")
-    private String courseStatus;
-    
-    @Column(name = "course_enable")
-    private boolean courseEnable = true;
+	@Column(name = "course_create_date")
+	@CreationTimestamp
+	private Date courseCreateDate;
 
-    @ManyToOne
-    @JoinColumn(name = "course_create_by", insertable = false, updatable = false)
-    private MemberEntity createBy;
+	@Column(name = "course_last_update")
+	@CreationTimestamp
+	private Date courseLastUpdate;
 
-    @ManyToOne
-    @JoinColumn(name = "course_location_id", insertable = false, updatable = false)
-    private LocationEntity locationId;
-    
+	@Column(name = "course_status")
+	private String courseStatus;
+
+	@Column(name = "course_enable")
+	private boolean courseEnable = true;
+
+	@ManyToOne
+	@JoinColumn(name = "course_create_by", insertable = false, updatable = false)
+	private MemberEntity createBy;
+
+	@ManyToOne
+	@JoinColumn(name = "course_location_id", insertable = false, updatable = false)
+	private LocationEntity locationId;
+
 //    @Column(name = "transportation_temple_name")
 //    private String transportTempleName;
 //    
@@ -79,113 +79,112 @@ public class CourseEntity implements Serializable {
 //    
 //    @Column(name = "transportation_temple_time_send")
 //    private LocalDateTime transportTempleTimeSend;
-    
-    @OneToMany
-    @JoinColumn(name = "course_id",insertable = false, updatable = false)
-    private List<CourseScheduleEntity> courseSchdule;
-    
-    @OneToMany
-    @JoinColumn(name = "course_id",insertable = false, updatable = false)
-    private List<CourseTeacherEntity> courseTeacher;
-    
-    
-    public Long getCourseId() {
-        return courseId;
-    }
 
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
-    }
+	@OneToMany
+	@JoinColumn(name = "course_id", insertable = false, updatable = false)
+	private List<CourseScheduleEntity> courseSchdule;
 
-    public String getCourseName() {
-        return courseName;
-    }
+	@OneToMany
+	@JoinColumn(name = "course_id", insertable = false, updatable = false)
+	private List<CourseTeacherEntity> courseTeacher;
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
+	public Long getCourseId() {
+		return courseId;
+	}
 
-    public Date getCourseStDate() {
-        return courseStDate;
-    }
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
+	}
 
-    public void setCourseStDate(Date courseStDate) {
-        this.courseStDate = courseStDate;
-    }
+	public String getCourseName() {
+		return courseName;
+	}
 
-    public Date getCourseEndDate() {
-        return courseEndDate;
-    }
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
 
-    public void setCourseEndDate(Date courseEndDate) {
-        this.courseEndDate = courseEndDate;
-    }
+	public Date getCourseStDate() {
+		return courseStDate;
+	}
 
-    public String getCourseDetail() {
-        return courseDetail;
-    }
+	public void setCourseStDate(Date courseStDate) {
+		this.courseStDate = courseStDate;
+	}
 
-    public void setCourseDetail(String courseDetail) {
-        this.courseDetail = courseDetail;
-    }
+	public Date getCourseEndDate() {
+		return courseEndDate;
+	}
 
-    public int getCourseConditionMin() {
-        return courseConditionMin;
-    }
+	public void setCourseEndDate(Date courseEndDate) {
+		this.courseEndDate = courseEndDate;
+	}
 
-    public void setCourseConditionMin(int courseConditionMin) {
-        this.courseConditionMin = courseConditionMin;
-    }
+	public String getCourseDetail() {
+		return courseDetail;
+	}
 
-    public Long getCourseLocationId() {
-        return courseLocationId;
-    }
+	public void setCourseDetail(String courseDetail) {
+		this.courseDetail = courseDetail;
+	}
 
-    public void setCourseLocationId(Long courseLocationId) {
-        this.courseLocationId = courseLocationId;
-    }
+	public int getCourseConditionMin() {
+		return courseConditionMin;
+	}
 
-    public Long getCourseCreateBy() {
-        return courseCreateBy;
-    }
+	public void setCourseConditionMin(int courseConditionMin) {
+		this.courseConditionMin = courseConditionMin;
+	}
 
-    public void setCourseCreateBy(Long courseCreateBy) {
-        this.courseCreateBy = courseCreateBy;
-    }
+	public Long getCourseLocationId() {
+		return courseLocationId;
+	}
 
-    public Date getCourseCreateDate() {
-        return courseCreateDate;
-    }
+	public void setCourseLocationId(Long courseLocationId) {
+		this.courseLocationId = courseLocationId;
+	}
 
-    public void setCourseCreateDate(Date courseCreateDate) {
-        this.courseCreateDate = courseCreateDate;
-    }
+	public Long getCourseCreateBy() {
+		return courseCreateBy;
+	}
 
-    public Date getCourseLastUpdate() {
-        return courseLastUpdate;
-    }
+	public void setCourseCreateBy(Long courseCreateBy) {
+		this.courseCreateBy = courseCreateBy;
+	}
 
-    public void setCourseLastUpdate(Date courseLastUpdate) {
-        this.courseLastUpdate = courseLastUpdate;
-    }
+	public Date getCourseCreateDate() {
+		return courseCreateDate;
+	}
 
-    public MemberEntity getCreateBy() {
-        return createBy;
-    }
+	public void setCourseCreateDate(Date courseCreateDate) {
+		this.courseCreateDate = courseCreateDate;
+	}
 
-    public void setCreateBy(MemberEntity createBy) {
-        this.createBy = createBy;
-    }
+	public Date getCourseLastUpdate() {
+		return courseLastUpdate;
+	}
 
-    public LocationEntity getLocationId() {
-        return locationId;
-    }
+	public void setCourseLastUpdate(Date courseLastUpdate) {
+		this.courseLastUpdate = courseLastUpdate;
+	}
 
-    public void setLocationId(LocationEntity locationId) {
-        this.locationId = locationId;
-    }
+	public MemberEntity getCreateBy() {
+		return createBy;
+	}
 
-    public boolean isCourseEnable() {
+	public void setCreateBy(MemberEntity createBy) {
+		this.createBy = createBy;
+	}
+
+	public LocationEntity getLocationId() {
+		return locationId;
+	}
+
+	public void setLocationId(LocationEntity locationId) {
+		this.locationId = locationId;
+	}
+
+	public boolean isCourseEnable() {
 		return courseEnable;
 	}
 
@@ -224,5 +223,5 @@ public class CourseEntity implements Serializable {
 	public void setCourseStatus(String courseStatus) {
 		this.courseStatus = courseStatus;
 	}
-	
+
 }

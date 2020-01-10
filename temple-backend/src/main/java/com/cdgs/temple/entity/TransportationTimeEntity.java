@@ -16,8 +16,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "transportations_time")
 @Embeddable
-public class TransportationTimeEntity implements Serializable{
-
+public class TransportationTimeEntity implements Serializable {
 
 	/**
 	 * 
@@ -26,17 +25,17 @@ public class TransportationTimeEntity implements Serializable{
 
 	@Id
 	@Column(name = "tran_time_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long transportationTimeId;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "tran_time_pickup")
 	private Date transportationTempleTimePickup;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "tran_time_send")
 	private Date transportationTempleTimeSend;
-	
+
 	public Long getTransportationTimeId() {
 		return transportationTimeId;
 	}
@@ -60,5 +59,5 @@ public class TransportationTimeEntity implements Serializable{
 	public void setTransportationTempleTimeSend(Date transportationTempleTimeSend) {
 		this.transportationTempleTimeSend = transportationTempleTimeSend;
 	}
-	
+
 }

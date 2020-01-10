@@ -32,8 +32,7 @@ public class GenderServiceImpl implements GenderService {
 			return null;
 		}
 	}
-	
-	
+
 	private GenderDto convEntityToDto(GenderEntity gender) {
 		GenderDto dto = new GenderDto();
 		dto.setId(gender.getGenderId());

@@ -17,12 +17,13 @@ import com.cdgs.temple.service.LocationService;
 
 @Service
 public class LocationServiceImpl implements LocationService {
-	
-    private static final Logger log = LoggerFactory.getLogger(LocationServiceImpl.class);
+
+	private static final Logger log = LoggerFactory.getLogger(LocationServiceImpl.class);
 
 	@Autowired(required = true)
 	LocationRepository locationRepository;
 	TransportationRepository transportationRepository;
+
 	@Override
 	public List<LocationDto> getLocations() {
 		List<LocationEntity> locationEntities = new ArrayList<LocationEntity>();
@@ -92,5 +93,5 @@ public class LocationServiceImpl implements LocationService {
 			return false;
 		}
 	}
-	
+
 }

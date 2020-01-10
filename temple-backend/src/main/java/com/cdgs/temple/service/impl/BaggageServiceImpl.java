@@ -24,7 +24,8 @@ public class BaggageServiceImpl implements BaggageService {
 	private LockerRepository lockerRepository;
 
 	@Autowired(required = false)
-	public BaggageServiceImpl(BaggageRepository baggageRepository, LockerRepository lockerRepository ,MemberRepository memberRepository) {
+	public BaggageServiceImpl(BaggageRepository baggageRepository, LockerRepository lockerRepository,
+			MemberRepository memberRepository) {
 		this.baggageRepository = baggageRepository;
 		this.lockerRepository = lockerRepository;
 		this.memberRepository = memberRepository;
@@ -72,7 +73,7 @@ public class BaggageServiceImpl implements BaggageService {
 
 	@Override
 	public BaggageDto update(Long baggageId, BaggageDto body) {
-		
+
 		BaggageEntity entity = baggageRepository.findById(baggageId).get();
 		entity.setBaggageId(baggageId);
 		entity.setMemberId(body.getMemberId());
@@ -83,7 +84,7 @@ public class BaggageServiceImpl implements BaggageService {
 		lockerEntity.setIsActive(body.getStatus());
 		lockerRepository.save(lockerEntity);
 		entity.setLockerId(body.getLockerId());
-		entity.setMember( memberRepository.findById(body.getMemberId()).get());
+		entity.setMember(memberRepository.findById(body.getMemberId()).get());
 		return mapEntityToDto(baggageRepository.save(entity));
 	}
 
@@ -124,8 +125,9 @@ public class BaggageServiceImpl implements BaggageService {
 			}
 			if (entity.getLocker() == null) {
 				dto.setLocker(null);
-			}else {
-				String locker =  entity.getLocker().getLocation().getLocationName()  +" "+ entity.getLocker().getLockerNumber();
+			} else {
+				String locker = entity.getLocker().getLocation().getLocationName() + " "
+						+ entity.getLocker().getLockerNumber();
 				dto.setLocker(locker);
 			}
 

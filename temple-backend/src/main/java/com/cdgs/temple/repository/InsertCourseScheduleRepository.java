@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface InsertCourseScheduleRepository extends CrudRepository<InsertCourseScheduleEntity, Long>{
+public interface InsertCourseScheduleRepository extends CrudRepository<InsertCourseScheduleEntity, Long> {
 
 	List<InsertCourseScheduleEntity> findAll();
 

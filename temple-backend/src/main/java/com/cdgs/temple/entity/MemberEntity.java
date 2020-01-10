@@ -28,7 +28,7 @@ public class MemberEntity implements Serializable {
 	@Column(name = "member_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long memberId;
-	
+
 	@Column(name = "member_username", unique = true)
 	private String memberUsername;
 
@@ -79,40 +79,40 @@ public class MemberEntity implements Serializable {
 
 	@Column(name = "member_other")
 	private String memberOther;
-	
+
 	@Column(name = "member_blood")
 	private String memberBlood;
-	
+
 	@Column(name = "member_allergy_food")
 	private String memberAllergyFood;
-	
+
 	@Column(name = "member_allergy_medicine")
 	private String memberAllergyMedicine;
-	
+
 	@Column(name = "member_disease")
 	private String memberDisease;
-	
+
 	@Column(name = "member_emer_name")
 	private String memberEmerName;
-	
+
 	@Column(name = "member_emer_relationship")
 	private String memberEmerRelationship;
-	
+
 	@Column(name = "member_province_id")
 	private Long memberProvinceId;
-	
+
 	@Column(name = "member_postal_code")
 	private String memberPostalCode;
-	
+
 	@Column(name = "member_id_card")
 	private String memberIdCard;
-	
+
 	@Column(name = "member_age")
 	private Long memberAge;
-	
+
 	@Column(name = "member_ordian_number")
 	private Long ordianNumber;
-	
+
 	@Column(name = "member_ordian_date")
 	private LocalDateTime ordianDate;
 
@@ -127,25 +127,22 @@ public class MemberEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "member_title_id", insertable = false, updatable = false)
 	private TitleNamesEntity titleName;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "member_province_id", insertable = false, updatable = false)
 	private ProvinceEntity province;
-	
 
 	public LocalDateTime getOrdianDate() {
 		return ordianDate;
 	}
 
-
 	public void setOrdianDate(LocalDateTime ordianDate) {
 		this.ordianDate = ordianDate;
 	}
-	
+
 	public Long getOrdianNumber() {
 		return ordianNumber;
 	}
-
 
 	public void setOrdianNumber(Long ordianNumber) {
 		this.ordianNumber = ordianNumber;
@@ -155,7 +152,6 @@ public class MemberEntity implements Serializable {
 		return memberPostalCode;
 	}
 
-
 	public void setMemberPostalCode(String memberPostalCode) {
 		this.memberPostalCode = memberPostalCode;
 	}
@@ -163,7 +159,6 @@ public class MemberEntity implements Serializable {
 	public Long getMemberAge() {
 		return memberAge;
 	}
-
 
 	public void setMemberAge(Long memberAge) {
 		this.memberAge = memberAge;
@@ -173,254 +168,205 @@ public class MemberEntity implements Serializable {
 		return memberProvinceId;
 	}
 
-
 	public void setMemberProvinceId(Long memberProvinceId) {
 		this.memberProvinceId = memberProvinceId;
 	}
-
 
 	public String getMemberIdCard() {
 		return memberIdCard;
 	}
 
-
 	public void setMemberIdCard(String memberIdCard) {
 		this.memberIdCard = memberIdCard;
 	}
+
 	public ProvinceEntity getProvince() {
 		return province;
 	}
-
 
 	public void setProvince(ProvinceEntity province) {
 		this.province = province;
 	}
 
-
 	public Long getMemberId() {
 		return memberId;
 	}
-
 
 	public void setMemberId(Long memberId) {
 		this.memberId = memberId;
 	}
 
-
 	public String getMemberUsername() {
 		return memberUsername;
 	}
-
 
 	public void setMemberUsername(String memberUsername) {
 		this.memberUsername = memberUsername;
 	}
 
-
 	public String getMemberPassword() {
 		return memberPassword;
 	}
-
 
 	public void setMemberPassword(String memberPassword) {
 		this.memberPassword = memberPassword;
 	}
 
-
 	public String getMemberFname() {
 		return memberFname;
 	}
-
 
 	public void setMemberFname(String memberFname) {
 		this.memberFname = memberFname;
 	}
 
-
 	public String getMemberLname() {
 		return memberLname;
 	}
-
 
 	public void setMemberLname(String memberLname) {
 		this.memberLname = memberLname;
 	}
 
-
 	public String getMemberAddress() {
 		return memberAddress;
 	}
-
 
 	public void setMemberAddress(String memberAddress) {
 		this.memberAddress = memberAddress;
 	}
 
-
 	public String getMemberTel() {
 		return memberTel;
 	}
-
 
 	public void setMemberTel(String memberTel) {
 		this.memberTel = memberTel;
 	}
 
-
 	public String getMemberEmergencyTel() {
 		return memberEmergencyTel;
 	}
-
 
 	public void setMemberEmergencyTel(String memberEmergencyTel) {
 		this.memberEmergencyTel = memberEmergencyTel;
 	}
 
-
 	public String getMemberEmail() {
 		return memberEmail;
 	}
-
 
 	public void setMemberEmail(String memberEmail) {
 		this.memberEmail = memberEmail;
 	}
 
-
 	public byte[] getMemberImg() {
 		return memberImg;
 	}
-
 
 	public void setMemberImg(byte[] memberImg) {
 		this.memberImg = memberImg;
 	}
 
-
 	public LocalDateTime getMemberRegisterDate() {
 		return memberRegisterDate;
 	}
-
 
 	public void setMemberRegisterDate(LocalDateTime memberRegisterDate) {
 		this.memberRegisterDate = memberRegisterDate;
 	}
 
-
 	public LocalDateTime getMemberLastUpdate() {
 		return memberLastUpdate;
 	}
-
 
 	public void setMemberLastUpdate(LocalDateTime memberLastUpdate) {
 		this.memberLastUpdate = memberLastUpdate;
 	}
 
-
 	public Long getMemberGenderId() {
 		return memberGenderId;
 	}
-
 
 	public void setMemberGenderId(Long memberGenderId) {
 		this.memberGenderId = memberGenderId;
 	}
 
-
 	public Long getMemberRoleId() {
 		return memberRoleId;
 	}
-
 
 	public void setMemberRoleId(Long memberRoleId) {
 		this.memberRoleId = memberRoleId;
 	}
 
-
 	public Long getMemberTitleId() {
 		return memberTitleId;
 	}
-
 
 	public void setMemberTitleId(Long memberTitleId) {
 		this.memberTitleId = memberTitleId;
 	}
 
-
 	public String getMemberJob() {
 		return memberJob;
 	}
-
 
 	public void setMemberJob(String memberJob) {
 		this.memberJob = memberJob;
 	}
 
-
 	public String getMemberOther() {
 		return memberOther;
 	}
-
 
 	public void setMemberOther(String memberOther) {
 		this.memberOther = memberOther;
 	}
 
-
 	public String getMemberBlood() {
 		return memberBlood;
 	}
-
 
 	public void setMemberBlood(String memberBlood) {
 		this.memberBlood = memberBlood;
 	}
 
-
 	public String getMemberAllergyFood() {
 		return memberAllergyFood;
 	}
-
 
 	public void setMemberAllergyFood(String memberAllergyFood) {
 		this.memberAllergyFood = memberAllergyFood;
 	}
 
-
 	public String getMemberAllergyMedicine() {
 		return memberAllergyMedicine;
 	}
-
 
 	public void setMemberAllergyMedicine(String memberAllergyMedicine) {
 		this.memberAllergyMedicine = memberAllergyMedicine;
 	}
 
-
 	public String getMemberDisease() {
 		return memberDisease;
 	}
-
 
 	public void setMemberDisease(String memberDisease) {
 		this.memberDisease = memberDisease;
 	}
 
-
 	public String getMemberEmerName() {
 		return memberEmerName;
 	}
-
 
 	public void setMemberEmerName(String memberEmerName) {
 		this.memberEmerName = memberEmerName;
 	}
 
-
 	public String getMemberEmerRelationship() {
 		return memberEmerRelationship;
 	}
-
 
 	public void setMemberEmerRelationship(String memberEmerRelationship) {
 		this.memberEmerRelationship = memberEmerRelationship;
@@ -434,26 +380,21 @@ public class MemberEntity implements Serializable {
 		this.gender = gender;
 	}
 
-
 	public RoleEntity getRole() {
 		return role;
 	}
-
 
 	public void setRole(RoleEntity role) {
 		this.role = role;
 	}
 
-
 	public TitleNamesEntity getTitleName() {
 		return titleName;
 	}
 
-
 	public void setTitleName(TitleNamesEntity titleName) {
 		this.titleName = titleName;
 	}
-
 
 	@Override
 	public String toString() {

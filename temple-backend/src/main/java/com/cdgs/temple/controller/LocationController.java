@@ -29,30 +29,31 @@ import com.cdgs.temple.util.ResponseDto;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/locations")
 public class LocationController {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(LocationController.class);
-	
+
 	@Autowired
 	LocationService locationService;
+
 	@GetMapping(path = "")
-	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')" )
-		public ResponseEntity<ResponseDto<LocationDto>> getLocations() {
-			List<LocationDto> locations = new ArrayList<LocationDto>();
-			ResponseDto<LocationDto> res = new ResponseDto<LocationDto>();
-			try {
-				locations = locationService.getLocations();
-				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-				res.setData(locations);
-				res.setCode(200);
-				return new ResponseEntity<ResponseDto<LocationDto>>(res, HttpStatus.OK);
-			} catch (Exception e) {
-				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-				res.setErrorMessage(e.getMessage());
-				res.setCode(400);
-				return new ResponseEntity<ResponseDto<LocationDto>>(res, HttpStatus.BAD_REQUEST);
-			}
+	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
+	public ResponseEntity<ResponseDto<LocationDto>> getLocations() {
+		List<LocationDto> locations = new ArrayList<LocationDto>();
+		ResponseDto<LocationDto> res = new ResponseDto<LocationDto>();
+		try {
+			locations = locationService.getLocations();
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(locations);
+			res.setCode(200);
+			return new ResponseEntity<ResponseDto<LocationDto>>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<LocationDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-	
+	}
+
 	@GetMapping("/{id}")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
 	public ResponseEntity<ResponseDto<LocationDto>> getLocation(@PathVariable("id") Long id) {
@@ -76,7 +77,7 @@ public class LocationController {
 		}
 
 	}
-	
+
 	@PutMapping("/{id}")
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<ResponseDto<LocationDto>> putCustomer(@PathVariable("id") Long id,
@@ -100,8 +101,7 @@ public class LocationController {
 			return new ResponseEntity<ResponseDto<LocationDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
+
 	@PostMapping(path = "")
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<ResponseDto<LocationDto>> postLocations(@Valid @RequestBody LocationDto body) {
@@ -137,7 +137,7 @@ public class LocationController {
 				res.setCode(200);
 			} else {
 				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-				throw new Exception ("location is using");
+				throw new Exception("location is using");
 			}
 			return new ResponseEntity<ResponseDto<LocationDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
@@ -149,6 +149,5 @@ public class LocationController {
 		}
 	}
 	// end location
-
 
 }

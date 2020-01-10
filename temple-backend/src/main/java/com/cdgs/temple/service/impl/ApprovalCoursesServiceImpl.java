@@ -12,21 +12,21 @@ import com.cdgs.temple.repository.ApprovalCoursesRepository;
 import com.cdgs.temple.service.ApprovalCoursesService;
 
 @Service
-public class ApprovalCoursesServiceImpl implements ApprovalCoursesService{
-	
+public class ApprovalCoursesServiceImpl implements ApprovalCoursesService {
+
 	@Autowired(required = false)
 	ApprovalCoursesRepository approvalCoursesRepository;
-	
+
 	@Override
-	public List<ApprovalCoursesDto> getApprovalCourses(String query,Long monkId,int limit,int offset){
+	public List<ApprovalCoursesDto> getApprovalCourses(String query, Long monkId, int limit, int offset) {
 		List<ApprovalCoursesEntity> listAppCourse = approvalCoursesRepository.getAll(query, monkId, limit, offset);
 		List<ApprovalCoursesDto> listAppDto = mapListEntityToListDto(listAppCourse);
 		return listAppDto;
-		
+
 	}
-	
-	private List<ApprovalCoursesDto> mapListEntityToListDto(List<ApprovalCoursesEntity> listAppCourse){
-		List<ApprovalCoursesDto> dto = new ArrayList<>(); 
+
+	private List<ApprovalCoursesDto> mapListEntityToListDto(List<ApprovalCoursesEntity> listAppCourse) {
+		List<ApprovalCoursesDto> dto = new ArrayList<>();
 		for (ApprovalCoursesEntity appCourse : listAppCourse) {
 			dto.add(mapEntityToDto(appCourse));
 		}

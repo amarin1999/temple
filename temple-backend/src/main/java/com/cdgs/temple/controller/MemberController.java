@@ -30,24 +30,24 @@ import com.cdgs.temple.util.ResponseDto;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/members")
 public class MemberController {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
-	
+
 	// start member
-	private	final MemberService memberService;
-	
-    private final HistoryDharmaService historyDharmaService;
+	private final MemberService memberService;
+
+	private final HistoryDharmaService historyDharmaService;
 
 	@Autowired
 	public MemberController(MemberService memberService, HistoryDharmaService historyDharmaService) {
 		this.historyDharmaService = historyDharmaService;
 		this.memberService = memberService;
 	}
-	
+
 	@GetMapping(path = "")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') ")
 	public ResponseEntity<ResponseDto<MemberDto>> getMembers() {
-		List<MemberDto> dto ;
+		List<MemberDto> dto;
 		ResponseDto<MemberDto> res = new ResponseDto<>();
 		try {
 			dto = memberService.getMembers();
@@ -64,11 +64,11 @@ public class MemberController {
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping(path = "/getAllUsersWithOutImg")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') ")
 	public ResponseEntity<ResponseDto<MemberDto>> getAllUsersWithOutImg() {
-		List<MemberDto> dto ;
+		List<MemberDto> dto;
 		ResponseDto<MemberDto> res = new ResponseDto<>();
 		try {
 			dto = memberService.getMembers();
@@ -86,8 +86,8 @@ public class MemberController {
 
 	@GetMapping(path = "/monk")
 	@PreAuthorize("hasRole('admin')")
-	public ResponseEntity<ResponseDto<MemberDto>> getTeacher(){
-		List<MemberDto> dto ;
+	public ResponseEntity<ResponseDto<MemberDto>> getTeacher() {
+		List<MemberDto> dto;
 		ResponseDto<MemberDto> res = new ResponseDto<>();
 		try {
 			dto = memberService.getTeacher();
@@ -113,9 +113,9 @@ public class MemberController {
 		MemberDto member = memberService.getCurrentMember();
 		MemberDto member2;
 		try {
-			if(member.getRoleName().equals("user")){
+			if (member.getRoleName().equals("user")) {
 				member2 = memberService.getMember(member.getId());
-			}else{
+			} else {
 				member2 = memberService.getMember(id);
 			}
 			dto.add(member2);
@@ -131,43 +131,43 @@ public class MemberController {
 		}
 	}
 
-
 	@PutMapping(path = "/{id}")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
-	public ResponseEntity<ResponseDto<MemberDto>> putMembers(@PathVariable("id") Long id,@Valid @RequestBody MemberDto body) {
+	public ResponseEntity<ResponseDto<MemberDto>> putMembers(@PathVariable("id") Long id,
+			@Valid @RequestBody MemberDto body) {
 		ResponseDto<MemberDto> res = new ResponseDto<>();
 		List<MemberDto> members = new ArrayList<>();
-        List<HistoryDharmaDto> historyDharma = new ArrayList<>();
+		List<HistoryDharmaDto> historyDharma = new ArrayList<>();
 		MemberDto member1 = memberService.getCurrentMember();
-		MemberDto member ;
+		MemberDto member;
 		try {
 			historyDharma = body.getHistoryDharma();
-			if(member1.getRoleName().equals("admin")){
-				member = memberService.updateMember(id,body);
-			}else{
-				member = memberService.updateMember(member1.getId(),body);
+			if (member1.getRoleName().equals("admin")) {
+				member = memberService.updateMember(id, body);
+			} else {
+				member = memberService.updateMember(member1.getId(), body);
 			}
 			if (member != null) {
 				members.add(member);
-                historyDharma.forEach(historyDharmaData -> {
-                	historyDharmaData.setMemberId(member.getId());
-                	if ((historyDharmaData.getId()) == null) {
-                		try {
-                			log.info("Insert historyDharmaData" + historyDharmaData.getCourseName());
-                			historyDharmaService.createHistoryDharma(historyDharmaData);
-                		} catch (Exception e) {
-                			log.error(e.getMessage());
-                		}
-                	} else {
-                		try {
-                			log.info("Update historyDharmaData" + historyDharmaData.getCourseName());
-                			historyDharmaService.updateHistoryDhama(historyDharmaData.getId(), historyDharmaData);
-                		} catch (Exception e) {
-                			log.error(e.getMessage());
+				historyDharma.forEach(historyDharmaData -> {
+					historyDharmaData.setMemberId(member.getId());
+					if ((historyDharmaData.getId()) == null) {
+						try {
+							log.info("Insert historyDharmaData" + historyDharmaData.getCourseName());
+							historyDharmaService.createHistoryDharma(historyDharmaData);
+						} catch (Exception e) {
+							log.error(e.getMessage());
 						}
-                	}
-                });
-			} 
+					} else {
+						try {
+							log.info("Update historyDharmaData" + historyDharmaData.getCourseName());
+							historyDharmaService.updateHistoryDhama(historyDharmaData.getId(), historyDharmaData);
+						} catch (Exception e) {
+							log.error(e.getMessage());
+						}
+					}
+				});
+			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(members);
 			res.setCode(201);
@@ -180,70 +180,71 @@ public class MemberController {
 		}
 	}
 	// end member
-	
-    @PostMapping(path = "/registerByAdmin")
-    @PreAuthorize("hasRole('admin')")
-    public ResponseEntity<ResponseDto<MemberDto>> registerByAdmin(@Valid @RequestBody MemberDto body) {
-        ResponseDto<MemberDto> res = new ResponseDto<>();
-        List<MemberDto> members = new ArrayList<>();
-        MemberDto member;
-        try {
-            member = memberService.createMemberByAdmin(body);
-            if (!(member == null)) {
-                members.add(member);
-            }
-            res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-            res.setData(members);
-            res.setCode(201);
-            return new ResponseEntity<>(res, HttpStatus.CREATED);
-        } catch (Exception e) {
-            res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-            res.setErrorMessage(e.getMessage());
-            res.setCode(400);
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
-        }
-    }
-    
-    @PutMapping(path = "/updateByAdmin/{id}")
-    @PreAuthorize("hasRole('admin')")
-    public ResponseEntity<ResponseDto<MemberDto>> updateByAdmin(@PathVariable("id") Long id,@Valid @RequestBody MemberDto body) {
-        ResponseDto<MemberDto> res = new ResponseDto<>();
-        List<MemberDto> members = new ArrayList<>();
-        List<HistoryDharmaDto> historyDharma = new ArrayList<>();
-        MemberDto member;
-        try {
-            member = memberService.updateMemberByAdmin(id, body);
-            historyDharma = body.getHistoryDharma();
-            if (!(member == null)) {
-                members.add(member);
-                historyDharma.forEach(historyDharmaData -> {
-                	historyDharmaData.setMemberId(member.getId());
-                	if ((historyDharmaData.getId()) == null) {
-                		try {
-                			log.info("Insert historyDharmaData ByAdmin" + historyDharmaData.toString());
-                			historyDharmaService.createHistoryDharma(historyDharmaData);
-                		} catch (Exception e) {
-                			log.error(e.getMessage());
-                		}
-                	} else {
-                		try {
-                			log.info("Update historyDharmaData ByAdmin" + historyDharmaData.toString());
-                			historyDharmaService.updateHistoryDhama(historyDharmaData.getId(), historyDharmaData);
-                		} catch (Exception e) {
-                			log.error(e.getMessage());
+
+	@PostMapping(path = "/registerByAdmin")
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<ResponseDto<MemberDto>> registerByAdmin(@Valid @RequestBody MemberDto body) {
+		ResponseDto<MemberDto> res = new ResponseDto<>();
+		List<MemberDto> members = new ArrayList<>();
+		MemberDto member;
+		try {
+			member = memberService.createMemberByAdmin(body);
+			if (!(member == null)) {
+				members.add(member);
+			}
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(members);
+			res.setCode(201);
+			return new ResponseEntity<>(res, HttpStatus.CREATED);
+		} catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PutMapping(path = "/updateByAdmin/{id}")
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<ResponseDto<MemberDto>> updateByAdmin(@PathVariable("id") Long id,
+			@Valid @RequestBody MemberDto body) {
+		ResponseDto<MemberDto> res = new ResponseDto<>();
+		List<MemberDto> members = new ArrayList<>();
+		List<HistoryDharmaDto> historyDharma = new ArrayList<>();
+		MemberDto member;
+		try {
+			member = memberService.updateMemberByAdmin(id, body);
+			historyDharma = body.getHistoryDharma();
+			if (!(member == null)) {
+				members.add(member);
+				historyDharma.forEach(historyDharmaData -> {
+					historyDharmaData.setMemberId(member.getId());
+					if ((historyDharmaData.getId()) == null) {
+						try {
+							log.info("Insert historyDharmaData ByAdmin" + historyDharmaData.toString());
+							historyDharmaService.createHistoryDharma(historyDharmaData);
+						} catch (Exception e) {
+							log.error(e.getMessage());
 						}
-                	}
-                });
-            }
-            res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-            res.setData(members);
-            res.setCode(201);
-            return new ResponseEntity<>(res, HttpStatus.CREATED);
-        } catch (Exception e) {
-            res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-            res.setErrorMessage(e.getMessage());
-            res.setCode(400);
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
-        }
-    }
+					} else {
+						try {
+							log.info("Update historyDharmaData ByAdmin" + historyDharmaData.toString());
+							historyDharmaService.updateHistoryDhama(historyDharmaData.getId(), historyDharmaData);
+						} catch (Exception e) {
+							log.error(e.getMessage());
+						}
+					}
+				});
+			}
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(members);
+			res.setCode(201);
+			return new ResponseEntity<>(res, HttpStatus.CREATED);
+		} catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
 }

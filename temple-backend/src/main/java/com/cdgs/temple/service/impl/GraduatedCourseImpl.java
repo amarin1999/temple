@@ -12,26 +12,25 @@ import com.cdgs.temple.repository.GraduatedCourseRepository;
 import com.cdgs.temple.service.GraduatedCourseService;
 
 @Service
-public class GraduatedCourseImpl implements GraduatedCourseService{
+public class GraduatedCourseImpl implements GraduatedCourseService {
 
-	
 	@Autowired(required = false)
 	GraduatedCourseRepository graduatedCourseRepository;
-	
+
 	@Override
-	public List<GraduatedCourseDto> getAll(String query,Long monkId,Long limit,Long offset) {
-		List<GraduatedCourseEntity> listCourse =  graduatedCourseRepository.getAll(query,monkId,limit,offset);
+	public List<GraduatedCourseDto> getAll(String query, Long monkId, Long limit, Long offset) {
+		List<GraduatedCourseEntity> listCourse = graduatedCourseRepository.getAll(query, monkId, limit, offset);
 		List<GraduatedCourseDto> listCourseDto = mapListEntityToListDto(listCourse);
 		return listCourseDto;
 	}
-	
+
 	@Override
 	public Integer countCourses(Long monkId) {
 		return graduatedCourseRepository.getTotalRecord(monkId);
 	}
 
 	private List<GraduatedCourseDto> mapListEntityToListDto(List<GraduatedCourseEntity> listCourse) {
-		List<GraduatedCourseDto> dto = new ArrayList<>(); 
+		List<GraduatedCourseDto> dto = new ArrayList<>();
 		for (GraduatedCourseEntity course : listCourse) {
 			dto.add(mapEntityToDto(course));
 		}
@@ -46,9 +45,5 @@ public class GraduatedCourseImpl implements GraduatedCourseService{
 		dto.setNumberOfMembers(course.getCountMember());
 		return dto;
 	}
-
-
-	
-	
 
 }

@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 public class GraduatedServiceImpl implements GraduatedService {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(GraduatedServiceImpl.class);
 
 	private final GraduatedRepository graduatedRepository;

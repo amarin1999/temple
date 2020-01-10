@@ -12,10 +12,10 @@ import com.cdgs.temple.repository.MembersHasCourseRepository;
 import com.cdgs.temple.service.MembersHasCourseService;
 
 @Service
-public class MembersHasCoursesServiceImpl implements MembersHasCourseService{
+public class MembersHasCoursesServiceImpl implements MembersHasCourseService {
 
 	private final MembersHasCourseRepository memberHasCourseRepository;
-	
+
 	@Autowired
 	public MembersHasCoursesServiceImpl(MembersHasCourseRepository memberHasCourseRepository) {
 		this.memberHasCourseRepository = memberHasCourseRepository;
@@ -25,8 +25,6 @@ public class MembersHasCoursesServiceImpl implements MembersHasCourseService{
 	public List<MembersHasCourseDto> getMembersHasCourse() {
 		return mapListEntityToDto(memberHasCourseRepository.findAll());
 	}
-
-
 
 	@Override
 	public MembersHasCourseDto createEntityMembersHasCourse() {
@@ -42,7 +40,7 @@ public class MembersHasCoursesServiceImpl implements MembersHasCourseService{
 	public MembersHasCourseDto deleteMembersHasCourse() {
 		return null;
 	}
-	
+
 	@Override
 	public Long countForPassCourses(Long memberId) {
 		return memberHasCourseRepository.CountForPassCourse(memberId);
@@ -55,7 +53,7 @@ public class MembersHasCoursesServiceImpl implements MembersHasCourseService{
 
 	private List<MembersHasCourseDto> mapListEntityToDto(List<MembersHasCourseEntity> entities) {
 		List<MembersHasCourseDto> listDto = new ArrayList<>();
-		if(!entities.isEmpty()) {
+		if (!entities.isEmpty()) {
 			for (MembersHasCourseEntity entity : entities) {
 				listDto.add(mapEntityToDto(entity));
 			}
@@ -66,7 +64,7 @@ public class MembersHasCoursesServiceImpl implements MembersHasCourseService{
 
 	private MembersHasCourseDto mapEntityToDto(MembersHasCourseEntity entity) {
 		MembersHasCourseDto dto = new MembersHasCourseDto();
-		if(entity != null) {
+		if (entity != null) {
 			dto.setMembersHasCourseId(entity.getMembersHasCourseId());
 			dto.setMemberId(entity.getMemberId());
 			dto.setCourseId(entity.getCourseId());

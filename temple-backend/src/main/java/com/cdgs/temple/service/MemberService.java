@@ -7,17 +7,24 @@ import com.cdgs.temple.dto.MemberDto;
 
 public interface MemberService {
 	List<MemberDto> getMembers();
+
 	List<MemberDto> getAllUsersWithOutImg();
+
 	MemberDto getMember(Long id);
+
 	MemberDto createMember(MemberDto body);
-	MemberDto updateMember(Long id,MemberDto body);
+
+	MemberDto updateMember(Long id, MemberDto body);
+
 	MemberDto getCurrentMember();
-	
-    List<MemberDto> getTeacher();
-    
-    MemberDto createMemberByAdmin(MemberDto body);
-    MemberDto updateMemberByAdmin(Long id,MemberDto body);
+
+	List<MemberDto> getTeacher();
+
+	MemberDto createMemberByAdmin(MemberDto body);
+
+	MemberDto updateMemberByAdmin(Long id, MemberDto body);
+
 	MemberDto getMemberByUserNameIdCardPhoneNumber(ForgetPassDto body);
-	
+
 	MemberDto changePasswordMember(MemberDto body);
 }

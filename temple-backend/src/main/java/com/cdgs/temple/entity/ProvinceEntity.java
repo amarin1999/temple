@@ -15,35 +15,35 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "province")
 @Embeddable
-public class ProvinceEntity implements Serializable{
+public class ProvinceEntity implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6625697339055110519L;
-	
+
 	@Id
 	@Column(name = "province_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long provinceId;
-	
+
 	@Column(name = "province_desc", unique = true)
 	private String provinceName;
-	
+
 	@Column(name = "region_id", unique = true)
 	private Long regionId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "region_id", insertable = false, updatable = false)
 	private RegionEntity region;
-	
+
 //	@Column(name = "region_name", unique = true)
 //	private String regionName;
-	
+
 	public ProvinceEntity() {
 		super();
 	}
-	
+
 	public ProvinceEntity(Long provinceId, String provinceName, Long regionId, String regionName) {
 		super();
 		this.provinceId = provinceId;
@@ -83,5 +83,5 @@ public class ProvinceEntity implements Serializable{
 	public void setRegion(RegionEntity region) {
 		this.region = region;
 	}
-	
+
 }

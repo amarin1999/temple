@@ -9,11 +9,11 @@ import java.util.List;
 
 @Repository
 public interface BaggageRepository extends CrudRepository<BaggageEntity, Long> {
-	
-    List<BaggageEntity> findAll();
-    
-    List<BaggageEntity> findAllByMemberId(long memberId);
-    
-    BaggageEntity findAllByBaggageId(Long baggageId);
-  
+
+	List<BaggageEntity> findAll();
+
+	List<BaggageEntity> findAllByMemberId(long memberId);
+
+	BaggageEntity findAllByBaggageId(Long baggageId);
+
 }

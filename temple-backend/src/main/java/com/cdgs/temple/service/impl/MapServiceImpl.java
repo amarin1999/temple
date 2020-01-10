@@ -12,10 +12,10 @@ import com.cdgs.temple.repository.MapRepository;
 import com.cdgs.temple.service.MapService;
 
 @Service
-public class MapServiceImpl implements MapService{
-	
+public class MapServiceImpl implements MapService {
+
 	@Autowired(required = true)
-	MapRepository mapRepository ;
+	MapRepository mapRepository;
 
 	@Override
 	public List<MapDto> getMap() {
@@ -24,7 +24,7 @@ public class MapServiceImpl implements MapService{
 		mapEntities = mapRepository.findAll();
 		System.out.println(mapEntities.toString());
 		mapDto = mapEntitiesToDto(mapEntities);
-		return mapDto; 
+		return mapDto;
 	}
 
 	private List<MapDto> mapEntitiesToDto(List<MapEntity> mapEntities) {
@@ -37,10 +37,10 @@ public class MapServiceImpl implements MapService{
 
 	private MapDto mapEntityToDto(MapEntity mapEntity) {
 		MapDto mapDto = new MapDto();
-		mapDto.setId( mapEntity.getMemberId());
-		mapDto.setUsername( mapEntity.getMemberLname()+"   "+mapEntity.getMemberFname());
+		mapDto.setId(mapEntity.getMemberId());
+		mapDto.setUsername(mapEntity.getMemberLname() + "   " + mapEntity.getMemberFname());
 		mapDto.setGenderName(mapEntity.getGenderName());
 		return mapDto;
 	}
-	
+
 }

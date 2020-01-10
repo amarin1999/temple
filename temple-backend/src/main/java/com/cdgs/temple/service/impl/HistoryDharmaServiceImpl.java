@@ -17,9 +17,9 @@ import com.cdgs.temple.service.HistoryDharmaService;
 @Service
 public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 	private static final Logger log = LoggerFactory.getLogger(HistoryDharmaServiceImpl.class);
-	
+
 	private final HistoryDharmaRepository historyDharmaRepository;
-	
+
 	@Autowired
 	public HistoryDharmaServiceImpl(HistoryDharmaRepository historyDharmaRepository) {
 		this.historyDharmaRepository = historyDharmaRepository;
@@ -49,16 +49,16 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 		}
 		return mapListEntityToDto(HistoryDharmaEntity);
 	}
-	
+
 	@Override
 	public List<HistoryDharmaDto> getAll() throws Exception {
 		List<HistoryDharmaEntity> historyDharmaEntities = new ArrayList<>();
-		
+
 		historyDharmaEntities = historyDharmaRepository.findAll();
 		log.info("getAll historyDharma >>" + historyDharmaEntities.toString());
 		return mapListEntityToDto(historyDharmaEntities);
 	}
-	
+
 	@Override
 	public Integer delHistoryDhamaById(Long delId) throws Exception {
 		Integer numberOfDelete;
@@ -71,7 +71,7 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 			throw new Exception(e.getMessage());
 		}
 	}
-	
+
 	@Override
 	public HistoryDharmaDto updateHistoryDhama(Long id, HistoryDharmaDto body) throws Exception {
 		HistoryDharmaEntity historyDharmaConvert = mapDtoToEntity(body);
@@ -90,11 +90,11 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 			throw new Exception(e.getMessage());
 		}
 	}
-	
+
 	private HistoryDharmaDto mapEntityToDto(HistoryDharmaEntity entity) throws Exception {
 		HistoryDharmaDto dto = new HistoryDharmaDto();
 		try {
-			if(entity != null) {
+			if (entity != null) {
 				dto.setId(entity.getHistoryDharmaId());
 				dto.setCourseName(entity.getHistoryDharmaDesc());
 				dto.setLocation(entity.getHistoryDharmaLocation());
@@ -106,27 +106,27 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 			throw new Exception(e.getMessage());
 		}
 	}
-	
+
 	private List<HistoryDharmaDto> mapListEntityToDto(List<HistoryDharmaEntity> entities) throws Exception {
 		List<HistoryDharmaDto> dtoList = new ArrayList<>();
 		try {
 			for (HistoryDharmaEntity entity : entities) {
 				dtoList.add(mapEntityToDto(entity));
 			}
-			
+
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			throw new Exception(e.getMessage());
 		}
 		return dtoList;
 	}
-	
+
 	private HistoryDharmaEntity mapDtoToEntity(HistoryDharmaDto dto) throws Exception {
 		HistoryDharmaEntity entity = new HistoryDharmaEntity();
 		try {
-				entity.setHistoryDharmaDesc(dto.getCourseName());
-				entity.setHistoryDharmaLocation(dto.getLocation());
-				entity.setHistoryDharmaMemberId(dto.getMemberId());
+			entity.setHistoryDharmaDesc(dto.getCourseName());
+			entity.setHistoryDharmaLocation(dto.getLocation());
+			entity.setHistoryDharmaMemberId(dto.getMemberId());
 			return entity;
 		} catch (Exception e) {
 			log.error(e.getMessage());

@@ -22,12 +22,12 @@ import com.cdgs.temple.util.ResponseDto;
 @RequestMapping("/v1/provinces")
 
 public class ProvinceController {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ProvinceController.class);
-	
+
 	@Autowired
 	ProvinceService provinceService;
-	
+
 	@GetMapping(path = "")
 	public ResponseEntity<ResponseDto<ProvinceDto>> getProvinces() {
 		List<ProvinceDto> dto = new ArrayList<ProvinceDto>();

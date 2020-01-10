@@ -12,67 +12,66 @@ import org.hibernate.annotations.CreationTimestamp;
 @Embeddable
 public class MembersHasCourseEntity implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5345044781843738399L;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -5345044781843738399L;
 
-    @Id
-    @Column(name = "members_has_course_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long membersHasCourseId;
+	@Id
+	@Column(name = "members_has_course_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long membersHasCourseId;
 
-    @Column(name = "member_id")
-    private long memberId;
+	@Column(name = "member_id")
+	private long memberId;
 
-    @Column(name = "course_id")
-    private long courseId;
-    
-    @Column(name = "mhc_status")
-    private char mhcStatus;
+	@Column(name = "course_id")
+	private long courseId;
 
-    @Column(name = "register_date")
-    @CreationTimestamp
-    private LocalDateTime registerDate;
-    
-    @Column(name = "sense_id")
-    private long senseId;
-    
-    @Column(name = "tran_id")
-    private long tranId;
+	@Column(name = "mhc_status")
+	private char mhcStatus;
 
+	@Column(name = "register_date")
+	@CreationTimestamp
+	private LocalDateTime registerDate;
+
+	@Column(name = "sense_id")
+	private long senseId;
+
+	@Column(name = "tran_id")
+	private long tranId;
 
 	@OneToOne
-    @JoinColumn(name = "course_id", insertable = false, updatable = false)
-    private CourseEntity course;
-    
-    @OneToOne
-    @JoinColumn(name = "sense_id", insertable = false, updatable = false)
-    private SensationEntity sense;
+	@JoinColumn(name = "course_id", insertable = false, updatable = false)
+	private CourseEntity course;
 
-    public long getMembersHasCourseId() {
-        return membersHasCourseId;
-    }
+	@OneToOne
+	@JoinColumn(name = "sense_id", insertable = false, updatable = false)
+	private SensationEntity sense;
 
-    public void setMembersHasCourseId(long membersHasCourseId) {
-        this.membersHasCourseId = membersHasCourseId;
-    }
+	public long getMembersHasCourseId() {
+		return membersHasCourseId;
+	}
 
-    public long getMemberId() {
-        return memberId;
-    }
+	public void setMembersHasCourseId(long membersHasCourseId) {
+		this.membersHasCourseId = membersHasCourseId;
+	}
 
-    public void setMemberId(long memberId) {
-        this.memberId = memberId;
-    }
+	public long getMemberId() {
+		return memberId;
+	}
 
-    public long getCourseId() {
-        return courseId;
-    }
+	public void setMemberId(long memberId) {
+		this.memberId = memberId;
+	}
 
-    public void setCourseId(long courseId) {
-        this.courseId = courseId;
-    }
+	public long getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(long courseId) {
+		this.courseId = courseId;
+	}
 
 	public char getMhcStatus() {
 		return mhcStatus;
@@ -83,29 +82,29 @@ public class MembersHasCourseEntity implements Serializable {
 	}
 
 	public LocalDateTime getRegisterDate() {
-        return registerDate;
-    }
+		return registerDate;
+	}
 
-    public void setRegisterDate(LocalDateTime registerDate) {
-        this.registerDate = registerDate;
-    }
+	public void setRegisterDate(LocalDateTime registerDate) {
+		this.registerDate = registerDate;
+	}
 
-    public CourseEntity getCourse() {
-        return course;
-    }
+	public CourseEntity getCourse() {
+		return course;
+	}
 
-    public void setCourse(CourseEntity course) {
-        this.course = course;
-    }
+	public void setCourse(CourseEntity course) {
+		this.course = course;
+	}
 
-    public long getSenseId() {
+	public long getSenseId() {
 		return senseId;
 	}
 
 	public void setSenseId(long senseId) {
 		this.senseId = senseId;
 	}
-	
+
 	public long getTranId() {
 		return tranId;
 	}
@@ -115,10 +114,9 @@ public class MembersHasCourseEntity implements Serializable {
 	}
 
 	@Override
-    public String toString() {
-        return "MembersHasCourseEntity [membersHasCourseId=" + membersHasCourseId + ", memberId=" + memberId
-                + ", courseId=" + courseId 
-                + ", mhcStatus=" + mhcStatus + ", registerDate=" + registerDate + "]";
-    }
+	public String toString() {
+		return "MembersHasCourseEntity [membersHasCourseId=" + membersHasCourseId + ", memberId=" + memberId
+				+ ", courseId=" + courseId + ", mhcStatus=" + mhcStatus + ", registerDate=" + registerDate + "]";
+	}
 
 }

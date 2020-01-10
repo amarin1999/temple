@@ -24,7 +24,7 @@ public class GenderEntity implements Serializable {
 
 	@Column(name = "gender_name")
 	private String genderName;
-	
+
 	public Long getGenderId() {
 		return genderId;
 	}
@@ -40,7 +40,5 @@ public class GenderEntity implements Serializable {
 	public void setGenderName(String genderName) {
 		this.genderName = genderName;
 	}
-	
-	
 
 }

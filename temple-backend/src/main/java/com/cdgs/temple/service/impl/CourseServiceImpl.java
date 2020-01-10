@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CourseServiceImpl implements CourseService {
-	
-	private static final  Logger log = LoggerFactory.getLogger(CourseServiceImpl.class);
+
+	private static final Logger log = LoggerFactory.getLogger(CourseServiceImpl.class);
 
 	private CourseRepository courseRepository;
 
@@ -92,21 +92,21 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public List<CourseDto> getCoursesUserRegister(Long memberId) {
 		List<TempCourseEntity> entity = tempCourseRepository.findCoursesUserRegister(memberId);
-		//System.out.println(entity.size());
+		// System.out.println(entity.size());
 		return mapListTempEntityToDto(entity);
 	}
-	
+
 	@Override
 	public List<CourseDto> getCoursesUser(Long memberId, String status) {
 		String enable = "";
-		if(status.equals("1")) {
+		if (status.equals("1")) {
 			enable = "*";
-		}else {
+		} else {
 			enable = "1";
 		}
 		System.out.println(status);
 		System.out.println(enable);
-		List<TempCourseEntity> entity = tempCourseRepository.findCoursesUser(memberId, status ,enable);
+		List<TempCourseEntity> entity = tempCourseRepository.findCoursesUser(memberId, status, enable);
 		return mapListTempEntityToDto(entity);
 	}
 
@@ -115,20 +115,16 @@ public class CourseServiceImpl implements CourseService {
 		List<CourseEntity> entities = courseRepository.findCoursesMonk(memberId);
 		return mapListEntityToDto(entities);
 	}
-	
-	
-	
+
 	@Override
 	public List<CourseDto> getCourses() {
 		List<CourseEntity> entities = courseRepository.selectAll();
 		return mapListEntityToDto(entities);
 	}
 
-
 	/*
-	 * createCourse
-	 * this function for create course by admin.
-	 * */
+	 * createCourse this function for create course by admin.
+	 */
 	@Override
 	public CourseDto createCourse(CourseDto body) {
 		MemberDto member = memberService.getCurrentMember();
@@ -139,7 +135,7 @@ public class CourseServiceImpl implements CourseService {
 			return mapEntityToDto(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
-		return null;
+			return null;
 		}
 	}
 
@@ -168,7 +164,7 @@ public class CourseServiceImpl implements CourseService {
 		return null;
 
 	}
-	
+
 	@Override
 	public CourseDto getCourseMonk(Long id) {
 		CourseEntity entity = courseRepository.findById(id).get();
@@ -232,70 +228,70 @@ public class CourseServiceImpl implements CourseService {
 	public Integer countCourses() {
 		return courseRepository.countAllBycourseEnableIsTrue();
 	}
-	
+
 	@Override
 	public Integer countUserRegisterCourses(Long memberId) {
 		return courseRepository.countUserAllBycourseEnableIsTrue(memberId);
 	}
-	
+
 	@Override
-	public Integer countUserCourses(Long memberId,String status) {
+	public Integer countUserCourses(Long memberId, String status) {
 		String enable = "";
-		if(status.equals("1")) {
+		if (status.equals("1")) {
 			enable = "*";
-		}else {
+		} else {
 			enable = "1";
 		}
 		return courseRepository.countCourseByEnableIsTrueAndStatus(memberId, status, enable);
 	}
-	
+
 	@Override
 	public Integer countMonkCourses(Long memberId) {
 		return courseRepository.countCoursesTeacherAll(memberId);
 	}
-	
+
 	@Override
 	public List<CourseDto> getCoursesOutTime() {
 		List<CourseEntity> entity = courseRepository.getAllCourseOutTime();
 		return mapListEntityToDto(entity);
 	}
-	
+
 	@Override
 	public List<CourseDto> getCoursesSpecialApproveOutTime(Long memberId) {
 		List<CourseEntity> entity = courseRepository.getCourseSpecialApprove(memberId);
 		return mapListEntityToDto(entity);
 	}
-	
+
 	@Override
 	public List<CourseDto> getCoursesMemberHasCourseOutTime(Long memberId) {
 		List<CourseEntity> entity = courseRepository.getCourseMemberHasCourse(memberId);
 		return mapListEntityToDto(entity);
 	}
-	
+
 	@Override
 	public List<CourseDto> getCoursesOutTimeByMemberId(Long memberId) {
 		List<CourseEntity> entity = courseRepository.getCourseOutTimeByMemberId(memberId);
 		return mapListEntityToDto(entity);
 	}
-	
+
 	@Override
 	public List<CourseDto> getCoursesMemberToStudy(Long memberId) {
 		List<CourseEntity> entity = courseRepository.getCoursesMemberToStudy(memberId);
 		return mapListEntityToDto(entity);
 	}
-	
+
 	@Override
-	public List<CourseDto> getCourseOutTimeFromSpecialApproveIdByMemberId(Long memberId){
+	public List<CourseDto> getCourseOutTimeFromSpecialApproveIdByMemberId(Long memberId) {
 		List<CourseEntity> entity = courseRepository.getCourseSpecialApproveByMemberId(memberId);
 		return mapListEntityToDto(entity);
 	}
-	
+
 	@Override
-	public List<CourseDto> getCourseOutTimeFromSpecialApproveSuccess(Long memberId){
+	public List<CourseDto> getCourseOutTimeFromSpecialApproveSuccess(Long memberId) {
 		List<CourseEntity> entity = courseRepository.getCourseSpecialApproveSuccess(memberId);
 		return mapListEntityToDto(entity);
 	}
-	
+
 	@Override
 	public List<CourseDto> TeacherGetCoursesApprovalOutTime(Long memberId, int offset, int limit, String query) {
 
@@ -305,7 +301,7 @@ public class CourseServiceImpl implements CourseService {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Integer CountTeacherCoursesApprovalOutTime(Long memberId) {
 		Integer courses = courseRepository.countCoursesTeacherApprovalAllOutTime(memberId);
@@ -314,12 +310,12 @@ public class CourseServiceImpl implements CourseService {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void updateCourseToEnable(Long id) {
 		courseRepository.updateCourseToEnable(id);
 	}
-	
+
 	private List<CourseDto> mapListEntityToDto(List<CourseEntity> entities) {
 		List<CourseDto> listDto = new ArrayList<>();
 		if (!entities.isEmpty()) {
@@ -332,11 +328,11 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public CourseDto getCourseById(Long courseId){
+	public CourseDto getCourseById(Long courseId) {
 		CourseEntity entity = courseRepository.findById(courseId).get();
 		return mapEntityToDto(entity);
 	}
-	
+
 	private CourseDto mapEntityToDto(CourseEntity entity) {
 		CourseDto dto = new CourseDto();
 		CourseTeacherDto teacherDto = new CourseTeacherDto();
@@ -368,8 +364,8 @@ public class CourseServiceImpl implements CourseService {
 					dto.setMemberFname(entity.getCreateBy().getMemberFname());
 					dto.setMemberLname(entity.getCreateBy().getMemberLname());
 				}
-				if(entity.getCourseTeacher() != null) {
-					for(CourseTeacherEntity teacher : entity.getCourseTeacher()) {
+				if (entity.getCourseTeacher() != null) {
+					for (CourseTeacherEntity teacher : entity.getCourseTeacher()) {
 						teacherDto.setMemberId(teacher.getMemberId());
 						teacherList.add(teacherDto.getMemberId());
 					}
@@ -443,8 +439,8 @@ public class CourseServiceImpl implements CourseService {
 			System.out.println("end = " + courseNew.getEndDate());
 			System.out.println("endOld = " + courseOld.getCourseEndDate());
 			String datetest = "2019-12-12";
-			Date date1=new SimpleDateFormat("dd-MM-yyyy").parse(datetest);  
-			System.out.println("datetest ="+datetest);
+			Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(datetest);
+			System.out.println("datetest =" + datetest);
 			courseOld.setCourseLastUpdate(new Date());
 			courseOld.setCourseLocationId(courseNew.getLocationId());
 			entity = courseRepository.save(courseOld);
@@ -562,11 +558,11 @@ public class CourseServiceImpl implements CourseService {
 		return dto;
 	}
 
-	private CourseDto  mapEntityEditToDto(CourseEntity entity) {
+	private CourseDto mapEntityEditToDto(CourseEntity entity) {
 		List<MemberDto> teacherList = new ArrayList<>();
 		CourseDto dto = new CourseDto();
 		try {
- 			if (entity != null) {
+			if (entity != null) {
 				dto.setId(entity.getCourseId());
 				dto.setNo(entity.getCourseNo());
 				dto.setName(entity.getCourseName());
@@ -576,7 +572,7 @@ public class CourseServiceImpl implements CourseService {
 				dto.setLastUpdate(entity.getCourseLastUpdate());
 				dto.setLocationId(entity.getLocationId().getLocationId());
 				dto.setLocationName(entity.getLocationId().getLocationName());
-				
+
 //				if (entity.getCourseTransportTempleId() != null) {
 //					dto.setTransportTempleId(entity.getTransportTempleEntity().getTransportationTimeId());
 //					dto.setTransportTempleName(entity.getTransportTempleEntity().getTranName());
@@ -588,8 +584,7 @@ public class CourseServiceImpl implements CourseService {
 //					dto.setTransportTempleTimePickUp(null);
 //					dto.setTransportTempleTimeSend(null);
 //				}
-				
-				
+
 				dto.setMemberId(entity.getCreateBy().getMemberId());
 				dto.setMemberFname(entity.getCreateBy().getMemberFname());
 				dto.setMemberLname(entity.getCreateBy().getMemberLname());
@@ -601,7 +596,7 @@ public class CourseServiceImpl implements CourseService {
 				}
 				dto.setTeacherList(teacherList);
 				dto.setDateList(courseScheduleService.getCourseScheduleList(entity.getCourseId()));
-				
+
 				return dto;
 			} else {
 				return null;
@@ -628,5 +623,5 @@ public class CourseServiceImpl implements CourseService {
 		}
 		return dto;
 	}
-	
+
 }
