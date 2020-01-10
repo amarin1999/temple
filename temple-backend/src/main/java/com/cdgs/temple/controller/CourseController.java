@@ -666,7 +666,6 @@ public class CourseController {
         ResponseDto<CourseDto> res = new ResponseDto<>();
         List<CourseDto> dto = new ArrayList<>();
         MemberDto member = memberService.getCurrentMember();
-
         try {
             if (member.getRoleName().equals("user")) {
                 // dto.add(courseService.getHistory(member.getId()));
@@ -675,7 +674,6 @@ public class CourseController {
                 // dto.add(courseService.getHistory(id));
                 dto = courseService.getHistory(id);
             }
-
             res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
             res.setData(dto);
             res.setCode(200);
@@ -687,7 +685,4 @@ public class CourseController {
             return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
     }
-    
-
-
 }

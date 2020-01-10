@@ -22,12 +22,12 @@ import com.cdgs.temple.util.ResponseDto;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/sensations")
 public class SensationsController {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(SensationsController.class);
-	
+
 	@Autowired
 	SensationService sensationService;
-	
+
 	@GetMapping(path = "")
 	@PreAuthorize("hasRole('admin') or hasRole('monk')")
 	public ResponseEntity<ResponseDto<SensationDto>> getAllSensations() {
@@ -45,7 +45,7 @@ public class SensationsController {
 				res.setCode(200);
 				return new ResponseEntity<ResponseDto<SensationDto>>(res, HttpStatus.OK);
 			}
-			
+
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());

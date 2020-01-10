@@ -27,9 +27,9 @@ import com.cdgs.temple.util.ResponseDto;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/forgetpass")
 public class ForgetPassController {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ForgetPassController.class);
-	
+
 	private ForgetPassService forgetPassService;
 	private MemberService memberService;
 
@@ -38,54 +38,54 @@ public class ForgetPassController {
 		this.forgetPassService = forgetPassService;
 		this.memberService = memberService;
 	}
-	
-    @PostMapping(path = "/")
-    public ResponseEntity<ResponseDto<MemberDto>> forgetPassword(@Valid @RequestBody ForgetPassDto body){
-    	ResponseDto<MemberDto> res = new ResponseDto<>();
-    	List<MemberDto> dto = new ArrayList<>();
-    	MemberDto member;
-    	MemberDto member2 = new MemberDto();
-    	try {
-    		Integer count = forgetPassService.countUser(body.getUsername(), body.getIdCard(), body.getPhoneNumber());
-    		if (count > 0) {
-    			member = memberService.getMemberByUserNameIdCardPhoneNumber(body);
-    			member2.setId(member.getId());
-    			dto.add(member2);
-    			res.setData(dto);
-    			res.setStringData(count.toString());
-    			res.setStringData(count.toString());
-    			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-    			res.setCode(200);
-    			return new ResponseEntity<>(res, HttpStatus.OK);
-    		}else {
-    			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-    			res.setCode(204);
-    			return new ResponseEntity<>(res, HttpStatus.OK);
-    		}
-    	} catch (Exception e) {
-    		log.error(e.getMessage());
-            res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-            res.setErrorMessage(e.getMessage());
-            res.setCode(400);
-    		return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
-    	}
-    }
-    
-    @PutMapping(path = "/")
-    public ResponseEntity<ResponseDto<MemberDto>> changePassword(@Valid @RequestBody MemberDto body) {
-    	ResponseDto<MemberDto> res = new ResponseDto<>();
-    	try {
-    		memberService.changePasswordMember(body);
-    		res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+
+	@PostMapping(path = "/")
+	public ResponseEntity<ResponseDto<MemberDto>> forgetPassword(@Valid @RequestBody ForgetPassDto body) {
+		ResponseDto<MemberDto> res = new ResponseDto<>();
+		List<MemberDto> dto = new ArrayList<>();
+		MemberDto member;
+		MemberDto member2 = new MemberDto();
+		try {
+			Integer count = forgetPassService.countUser(body.getUsername(), body.getIdCard(), body.getPhoneNumber());
+			if (count > 0) {
+				member = memberService.getMemberByUserNameIdCardPhoneNumber(body);
+				member2.setId(member.getId());
+				dto.add(member2);
+				res.setData(dto);
+				res.setStringData(count.toString());
+				res.setStringData(count.toString());
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setCode(200);
+				return new ResponseEntity<>(res, HttpStatus.OK);
+			} else {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setCode(204);
+				return new ResponseEntity<>(res, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PutMapping(path = "/")
+	public ResponseEntity<ResponseDto<MemberDto>> changePassword(@Valid @RequestBody MemberDto body) {
+		ResponseDto<MemberDto> res = new ResponseDto<>();
+		try {
+			memberService.changePasswordMember(body);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
-    	} catch (Exception e) {
-    		log.error(e.getMessage());
-    		res.setErrorMessage(e.getMessage());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			res.setErrorMessage(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setCode(400);
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
-    }
+	}
 
 }

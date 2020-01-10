@@ -20,16 +20,15 @@ public class ForgetPassEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7701296893488454698L;
-	
-	
+
 	@Id
 	@Column(name = "member_username")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long memberUsername;
-	
+
 	@Column(name = "member_id_card")
 	private String memberIdCard;
-	
+
 	@Column(name = "member_tel")
 	private String memberTel;
 
@@ -57,7 +56,7 @@ public class ForgetPassEntity implements Serializable {
 		this.memberTel = memberTel;
 	}
 
-	//	@Id
+	// @Id
 //	@Column(name = "count")
 //	@GeneratedValue(strategy=GenerationType.IDENTITY)
 //	private Integer count;

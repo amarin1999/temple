@@ -1,4 +1,5 @@
 package com.cdgs.temple.entity;
+
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "members")
 
-@SecondaryTable(name = "gender" , pkJoinColumns = @PrimaryKeyJoinColumn(name = "gender_id"))
+@SecondaryTable(name = "gender", pkJoinColumns = @PrimaryKeyJoinColumn(name = "gender_id"))
 // pkJoinColumns = @PrimaryKeyJoinColumn(name = "gender_id",referencedColumnName = "member_gender_id")
 public class MapEntity implements Serializable {
 
@@ -31,8 +32,8 @@ public class MapEntity implements Serializable {
 	@Id
 	@Column(name = "member_gender_id")
 	private Long memberGenderId;
-	
-	@Column(name = "gender_name",table = "gender")
+
+	@Column(name = "gender_name", table = "gender")
 	private String genderName;
 
 	public Long getMemberId() {
@@ -81,7 +82,4 @@ public class MapEntity implements Serializable {
 				+ ", memberGenderId=" + memberGenderId + ", genderName=" + genderName + "]";
 	}
 
-	
-	
-	
 }

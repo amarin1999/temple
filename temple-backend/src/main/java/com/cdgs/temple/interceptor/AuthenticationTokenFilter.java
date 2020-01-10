@@ -24,7 +24,8 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	@Qualifier("jwtUserDetailsServiceImpl")
 	private UserDetailsService userDetailsService;
-	@Autowired private JwtTokenUtil jwtTokenUntil;
+	@Autowired
+	private JwtTokenUtil jwtTokenUntil;
 
 	@Value("${jwt.header}")
 	private String tokenHeader;
@@ -33,24 +34,25 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		String authToken = request.getHeader(this.tokenHeader);
-		if(authToken != null && authToken.length() > 7) {
+		if (authToken != null && authToken.length() > 7) {
 			authToken = authToken.replace("Bearer ", "");
 		}
 
 		String username = jwtTokenUntil.getUsernameFromToken(authToken);
 
-		if(username!=null && SecurityContextHolder.getContext().getAuthentication() == null) {
+		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 			boolean isValid = jwtTokenUntil.validateToken(authToken, userDetails);
-			if(isValid) {
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+			if (isValid) {
+				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+						userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authentication);
-				
+
 			}
 		}
 		filterChain.doFilter(request, response);
-		
+
 	}
 
 }

@@ -4,16 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 
 public class GraduatedDto implements Serializable {
-    private static final long serialVersionUID = -8570567971745607790L;
+	private static final long serialVersionUID = -8570567971745607790L;
 
-    private Long uId;
-    private Long cId;
-    private Long mhcId;
-    private String cName;
-    private String fullname;
-    private char status;
-    private List<MemberHasCourseStatus> mhcList;
-    
+	private Long uId;
+	private Long cId;
+	private Long mhcId;
+	private String cName;
+	private String fullname;
+	private char status;
+	private List<MemberHasCourseStatus> mhcList;
 
 	public List<MemberHasCourseStatus> getMhcList() {
 		return mhcList;
@@ -24,52 +23,52 @@ public class GraduatedDto implements Serializable {
 	}
 
 	public Long getuId() {
-        return uId;
-    }
+		return uId;
+	}
 
-    public void setuId(Long uId) {
-        this.uId = uId;
-    }
+	public void setuId(Long uId) {
+		this.uId = uId;
+	}
 
-    public Long getcId() {
-        return cId;
-    }
+	public Long getcId() {
+		return cId;
+	}
 
-    public void setcId(Long cId) {
-        this.cId = cId;
-    }
+	public void setcId(Long cId) {
+		this.cId = cId;
+	}
 
-    public Long getMhcId() {
-        return mhcId;
-    }
+	public Long getMhcId() {
+		return mhcId;
+	}
 
-    public void setMhcId(Long mhcId) {
-        this.mhcId = mhcId;
-    }
+	public void setMhcId(Long mhcId) {
+		this.mhcId = mhcId;
+	}
 
-    public String getcName() {
-        return cName;
-    }
+	public String getcName() {
+		return cName;
+	}
 
-    public void setcName(String cName) {
-        this.cName = cName;
-    }
+	public void setcName(String cName) {
+		this.cName = cName;
+	}
 
-    public String getFullname() {
-        return fullname;
-    }
+	public String getFullname() {
+		return fullname;
+	}
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
 
-    public char getStatus() {
-        return status;
-    }
+	public char getStatus() {
+		return status;
+	}
 
-    public void setStatus(char status) {
-        this.status = status;
-    }
+	public void setStatus(char status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
@@ -77,6 +76,4 @@ public class GraduatedDto implements Serializable {
 				+ fullname + ", status=" + status + ", mhcList=" + mhcList + "]";
 	}
 
-
-    
 }

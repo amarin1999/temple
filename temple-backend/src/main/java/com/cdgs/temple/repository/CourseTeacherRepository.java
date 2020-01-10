@@ -11,22 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdgs.temple.entity.CourseTeacherEntity;
 
-
 @Repository
-public interface CourseTeacherRepository extends CrudRepository<CourseTeacherEntity, Long>{
-	
-	
+public interface CourseTeacherRepository extends CrudRepository<CourseTeacherEntity, Long> {
+
 //	@Query( value = "select courses_teacher.course_id ,course_teacher.memberId from courses_teacher"
 //			+ " inner join members_has_courses on members_has_courses.course_id = courses_teacher.course_id WHERE members_has_courses.member_id = :id"
 //			,nativeQuery = true)
 //	List<CourseTeacherEntity> findCourseTeacherByMemberId(@Param("id") Long memberId);
-	
+
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM courses_teacher WHERE course_id = :courseId" ,nativeQuery = true)
+	@Query(value = "DELETE FROM courses_teacher WHERE course_id = :courseId", nativeQuery = true)
 	void deleteCourseTeachers(@Param("courseId") Long courseId);
 
 	List<CourseTeacherEntity> findAllByCourseId(Long courseId);
-
 
 }

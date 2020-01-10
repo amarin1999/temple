@@ -16,8 +16,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "transportations")
 @Embeddable
-public class TransportationEntity implements Serializable{
-	
+public class TransportationEntity implements Serializable {
+
 	/**
 	 * 
 	 */
@@ -25,22 +25,22 @@ public class TransportationEntity implements Serializable{
 
 	@Id
 	@Column(name = "tran_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long transportationId;
 
 	@Column(name = "tran_name")
 	private String transportationName;
-	
+
 	@Column(name = "tran_time_id")
 	private Long transportationTimeId;
-	
+
 	@Column(name = "course_id")
 	private Long transportationCoursesId;
 
 	@OneToOne
 	@JoinColumn(name = "tran_time_id", insertable = false, updatable = false)
 	private TransportationTimeEntity transportationTimeEntity;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "course_id", insertable = false, updatable = false)
 	private CourseEntity coursesEntity;
@@ -92,7 +92,5 @@ public class TransportationEntity implements Serializable{
 	public void setTransportationCoursesId(Long transportationCoursesId) {
 		this.transportationCoursesId = transportationCoursesId;
 	}
-	
-	
 
 }

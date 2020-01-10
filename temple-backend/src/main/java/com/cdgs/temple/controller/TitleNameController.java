@@ -29,9 +29,9 @@ import com.cdgs.temple.util.ResponseDto;
 @RequestMapping("/v1/titlenames")
 
 public class TitleNameController {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(TitleNameController.class);
-	
+
 	@Autowired
 	TitleNameService titleNameService;
 
@@ -53,7 +53,7 @@ public class TitleNameController {
 		}
 
 	}
-	
+
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto<TitleNameDto>> putTitleName(@PathVariable("id") Long id) {
 		List<TitleNameDto> dto = new ArrayList<TitleNameDto>();
@@ -61,7 +61,7 @@ public class TitleNameController {
 		TitleNameDto titleName = new TitleNameDto();
 		try {
 			titleName = titleNameService.getTitleName(id);
-			if(titleName != null) {
+			if (titleName != null) {
 				dto.add(titleName);
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -75,7 +75,7 @@ public class TitleNameController {
 			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PostMapping(path = "")
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<ResponseDto<TitleNameDto>> postTitleName(@Valid @RequestBody TitleNameDto body) {
@@ -86,15 +86,16 @@ public class TitleNameController {
 		oldTitles = titleNameService.getTitleNames();
 		System.out.println("xx");
 		try {
-			for(TitleNameDto titles:oldTitles) {
-				if(titles.getName().equals(body.getName()) || titles.getDisplay().equals(body.getName())) {
+			for (TitleNameDto titles : oldTitles) {
+				if (titles.getName().equals(body.getName()) || titles.getDisplay().equals(body.getName())) {
 					throw new Exception("titleName is duplicate");
-				}else if(titles.getName().equals(body.getDisplay()) || titles.getDisplay().equals(body.getDisplay())) {
+				} else if (titles.getName().equals(body.getDisplay())
+						|| titles.getDisplay().equals(body.getDisplay())) {
 					throw new Exception("titleName is duplicate");
 				}
 			}
 			titleName = titleNameService.createTitleName(body);
-			if(titleName != null) {
+			if (titleName != null) {
 				dto.add(titleName);
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -108,18 +109,19 @@ public class TitleNameController {
 			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PutMapping(path = "/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public ResponseEntity<ResponseDto<TitleNameDto>> getTitleName(@PathVariable("id") Long id, @Valid @RequestBody TitleNameDto body) {
+	public ResponseEntity<ResponseDto<TitleNameDto>> getTitleName(@PathVariable("id") Long id,
+			@Valid @RequestBody TitleNameDto body) {
 		log.error(body.toString());
 		List<TitleNameDto> dto = new ArrayList<TitleNameDto>();
 		ResponseDto<TitleNameDto> res = new ResponseDto<TitleNameDto>();
 		TitleNameDto titleName = new TitleNameDto();
 		body.toString();
 		try {
-			titleName = titleNameService.updateTitleName(id,body);
-			if(titleName != null) {
+			titleName = titleNameService.updateTitleName(id, body);
+			if (titleName != null) {
 				dto.add(titleName);
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -133,7 +135,7 @@ public class TitleNameController {
 			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		}
 	}
-	
+
 	@DeleteMapping(path = "/{id}")
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<ResponseDto<TitleNameDto>> deleteTitleName(@PathVariable("id") Long id) {
@@ -141,14 +143,14 @@ public class TitleNameController {
 		boolean titleName;
 		try {
 			titleName = titleNameService.deleteTitleName(id);
-			if(titleName) {
+			if (titleName) {
 				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 				res.setCode(200);
 				log.info("deleteTitleName >> " + titleNameService.deleteTitleName(id));
-			}else {
+			} else {
 				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-				throw new Exception ("titleName is using");
-				
+				throw new Exception("titleName is using");
+
 			}
 			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
@@ -159,9 +161,5 @@ public class TitleNameController {
 			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
-	
-	
 
 }

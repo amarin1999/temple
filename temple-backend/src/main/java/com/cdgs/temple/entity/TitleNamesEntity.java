@@ -19,19 +19,17 @@ public class TitleNamesEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 3445764127909844707L;
-	
+
 	@Id
 	@Column(name = "title_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long titleId;
-	
+
 	@Column(name = "title_display", unique = true)
 	private String titleDisplay;
-	
+
 	@Column(name = "title_name", unique = true)
 	private String titleName;
-	
-	
 
 	public TitleNamesEntity() {
 		super();
@@ -67,8 +65,5 @@ public class TitleNamesEntity implements Serializable {
 	public void setTitleName(String titleName) {
 		this.titleName = titleName;
 	}
-	
-	
 
 }
-

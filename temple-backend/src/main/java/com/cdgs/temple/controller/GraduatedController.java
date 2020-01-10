@@ -27,42 +27,39 @@ import java.util.List;
 @RequestMapping("/v1/graduated")
 public class GraduatedController {
 	private static final Logger log = LoggerFactory.getLogger(GraduatedController.class);
-	
-    private MemberService memberService;
-    private GraduatedService graduatedService;
-    private GraduatedCourseService graduatedCourseService;
 
-    @Autowired
-    public GraduatedController(
-            MemberService memberService,
-            GraduatedService graduatedService,
-            GraduatedCourseService graduatedCourseService
-    ) {
-        this.memberService = memberService;
-        this.graduatedService = graduatedService;
-        this.graduatedCourseService = graduatedCourseService;
-    }
+	private MemberService memberService;
+	private GraduatedService graduatedService;
+	private GraduatedCourseService graduatedCourseService;
 
-    @GetMapping(path = "/{courseId}")
-    @PreAuthorize("hasRole('monk')")
-    public ResponseEntity<ResponseDto<GraduatedDto>> getAllStatus(@PathVariable("courseId") Long courseId) {
-        ResponseDto<GraduatedDto> res = new ResponseDto<>();
-        MemberDto member = memberService.getCurrentMember();
-        List<GraduatedDto> dto;
-        try {
-            dto = graduatedService.getAll(courseId, member.getId());
-            res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-            res.setData(dto);
-            res.setCode(200);
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        } catch (Exception e) {
-            res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-            res.setErrorMessage(e.getMessage());
-            res.setCode(400);
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
-        }
-    }
-    
+	@Autowired
+	public GraduatedController(MemberService memberService, GraduatedService graduatedService,
+			GraduatedCourseService graduatedCourseService) {
+		this.memberService = memberService;
+		this.graduatedService = graduatedService;
+		this.graduatedCourseService = graduatedCourseService;
+	}
+
+	@GetMapping(path = "/{courseId}")
+	@PreAuthorize("hasRole('monk')")
+	public ResponseEntity<ResponseDto<GraduatedDto>> getAllStatus(@PathVariable("courseId") Long courseId) {
+		ResponseDto<GraduatedDto> res = new ResponseDto<>();
+		MemberDto member = memberService.getCurrentMember();
+		List<GraduatedDto> dto;
+		try {
+			dto = graduatedService.getAll(courseId, member.getId());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@PutMapping(path = "")
 	@PreAuthorize("hasRole('monk')")
 	public ResponseEntity<ResponseDto<GraduatedDto>> Update(@Valid @RequestBody GraduatedDto body) {
@@ -75,7 +72,7 @@ public class GraduatedController {
 				bodydto.setcId(body.getcId());
 				bodydto.setMhcId(mhc.getMhcId());
 				bodydto.setStatus(mhc.getStatus());
-				System.out.println("body => " +bodydto.toString());
+				System.out.println("body => " + bodydto.toString());
 				graduatedService.update(bodydto, member.getId());
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -89,53 +86,51 @@ public class GraduatedController {
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-    @GetMapping(path = "")
-    @PreAuthorize("hasRole('monk')")
-    public ResponseEntity<ResponseDto<GraduatedCourseDto>> getAll(@RequestParam("query") String query,@RequestParam("limit") Long limit,@RequestParam("offset") Long offset) {
-    	System.out.println(query);
-        ResponseDto<GraduatedCourseDto> res = new ResponseDto<>();
-        MemberDto member = memberService.getCurrentMember();
-        List<GraduatedCourseDto> dto;
-        try {
-            dto = graduatedCourseService.getAll(query,member.getId(),limit,offset);
-            res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-            res.setData(dto);
-            res.setCode(200);
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        } catch (Exception e) {
-            res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-            res.setErrorMessage(e.getMessage());
-            res.setCode(400);
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
-        }
-    }
-    
-    
-    @GetMapping(value = "/count")
-    @PreAuthorize("hasRole('monk')")
-    public ResponseEntity<ResponseDto<ResponseCountDto>> CountTeacherCoursesApproval() {
-        ResponseDto<ResponseCountDto> res = new ResponseDto<>();
-        List<ResponseCountDto> listDto = new ArrayList<>();
-        ResponseCountDto dto = new ResponseCountDto();
-        int count;
-        MemberDto member = memberService.getCurrentMember();
-        try {
-            count = graduatedCourseService.countCourses(member.getId());
-            dto.setTotalRecord(count);
-            listDto.add(dto);
-            res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-            res.setData(listDto);
-            res.setCode(200);
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        } catch (Exception e) {
-            res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-            res.setErrorMessage(e.getMessage());
-            res.setCode(400);
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
-        }
-    }
-    
-    
+
+	@GetMapping(path = "")
+	@PreAuthorize("hasRole('monk')")
+	public ResponseEntity<ResponseDto<GraduatedCourseDto>> getAll(@RequestParam("query") String query,
+			@RequestParam("limit") Long limit, @RequestParam("offset") Long offset) {
+		System.out.println(query);
+		ResponseDto<GraduatedCourseDto> res = new ResponseDto<>();
+		MemberDto member = memberService.getCurrentMember();
+		List<GraduatedCourseDto> dto;
+		try {
+			dto = graduatedCourseService.getAll(query, member.getId(), limit, offset);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping(value = "/count")
+	@PreAuthorize("hasRole('monk')")
+	public ResponseEntity<ResponseDto<ResponseCountDto>> CountTeacherCoursesApproval() {
+		ResponseDto<ResponseCountDto> res = new ResponseDto<>();
+		List<ResponseCountDto> listDto = new ArrayList<>();
+		ResponseCountDto dto = new ResponseCountDto();
+		int count;
+		MemberDto member = memberService.getCurrentMember();
+		try {
+			count = graduatedCourseService.countCourses(member.getId());
+			dto.setTotalRecord(count);
+			listDto.add(dto);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(listDto);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
 
 }

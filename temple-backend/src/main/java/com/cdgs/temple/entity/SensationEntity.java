@@ -13,26 +13,25 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sensations")
 @Embeddable
-public class SensationEntity implements Serializable{
+public class SensationEntity implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3971704619188825868L;
-	
-	@Id
-    @Column(name = "sense_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long senseId;
 
-    @Column(name = "sense_expected")
-    private String senseExpected;
-    
-    @Column(name = "sense_experience")
-    private String senseExprience;
-    
-    
-    public long getSenseId() {
+	@Id
+	@Column(name = "sense_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long senseId;
+
+	@Column(name = "sense_expected")
+	private String senseExpected;
+
+	@Column(name = "sense_experience")
+	private String senseExprience;
+
+	public long getSenseId() {
 		return senseId;
 	}
 
@@ -55,5 +54,5 @@ public class SensationEntity implements Serializable{
 	public void setSenseExprience(String senseExprience) {
 		this.senseExprience = senseExprience;
 	}
-	
+
 }
