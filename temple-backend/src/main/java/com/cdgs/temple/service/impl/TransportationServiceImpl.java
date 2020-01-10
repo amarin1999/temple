@@ -18,27 +18,62 @@ import com.cdgs.temple.service.TransportationService;
 
 @Service
 public class TransportationServiceImpl implements TransportationService {
-
-	private static final Logger log = LoggerFactory.getLogger(TransportationServiceImpl.class);
-
-	@Autowired(required = true)
-	TransportationRepository transportationRepository;
-
-	@Autowired(required = true)
-	TransportationTimeRepository transportationTimeRepository;
-
-	/**
-	 * getTransportationTempleName Description : this function get data of
-	 * Transportation. Params : - create : 07/01/2563 By Thunya Phanmetharit
-	 */
-	@Override
-	public List<TransportationDto> getTransportationTemple() {
-		List<TransportationEntity> transportationEntity = new ArrayList<TransportationEntity>();
-		try {
-			transportationEntity = transportationRepository.findTranTemple();
-		} catch (Exception e) {
-			log.error("TransportationServiceImpl >>> getTransportationTemple : " + e.getMessage());
-			e.printStackTrace();
+	
+	 private static final Logger log = LoggerFactory.getLogger(TransportationServiceImpl.class);
+	 
+	 @Autowired(required = true)
+	 TransportationRepository transportationRepository;
+	 
+	 @Autowired(required = true)
+	 TransportationTimeRepository transportationTimeRepository;
+	 
+	 /**
+	  * getTransportationTempleName 
+	  * Description : this function get data of Transportation.
+	  * Params : -
+	  * create : 07/01/2563 By Thunya Phanmetharit
+	  * */
+	 @Override
+	 public List<TransportationDto> getTransportationTemple() {
+		 List<TransportationEntity> transportationEntity = new ArrayList<TransportationEntity>(); 
+		 try {
+			 transportationEntity = transportationRepository.findTranTemple();
+	     } catch (Exception e) {
+	         log.error("TransportationServiceImpl >>> getTransportationTemple : " + e.getMessage());
+	         e.printStackTrace();
+	     }
+		 return mapListEntityToDto(transportationEntity);
+	 }	 
+	 
+	 /**
+	     * getTransportationName 
+	     * Description : this function get data of Transportation.
+	     * Params : -
+	     * create : 23/09/2562 By Korawit Ratyiam 
+	     * */
+	 public List<TransportationDto> getTransportationName(){
+		 List<TransportationEntity> transportationEntity = new ArrayList<TransportationEntity>(); 
+		 try {
+			 transportationEntity = transportationRepository.findTranTemple();
+	        } catch (Exception e) {
+	            log.error(e.getMessage());
+	        }
+	        return mapListEntityToDto(transportationEntity);
+	 }
+	 
+	 /**
+	     * createTransportation 
+	     * Description : this function insert data to DB.
+	     * Params : transporatation : TransporatationDto
+	     * create : 23/09/2562 By Korawit Ratyiam and Thunya Phanmetharit
+	     * */
+	 public TransportationDto createTransportation(TransportationDto transporatation) {
+		 TransportationEntity entity = new TransportationEntity();
+		 try {
+			 entity = transportationRepository.save(mapDtoToEntity(transporatation));
+		 }catch (Exception e) {
+			 log.error("CreateTransportation Error=>" + e.getMessage());
+			 e.printStackTrace();
 		}
 		return mapListEntityToDto(transportationEntity);
 	}
@@ -54,21 +89,50 @@ public class TransportationServiceImpl implements TransportationService {
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
-		return mapListEntityToDto(transportationEntity);
-	}
-
-	/**
-	 * createTransportation Description : this function insert data to DB. Params :
-	 * transporatation : TransporatationDto create : 23/09/2562 By Korawit Ratyiam
-	 * and Thunya Phanmetharit
-	 */
-	public TransportationDto createTransportation(TransportationDto transporatation) {
-		TransportationEntity entity = new TransportationEntity();
-		try {
-			entity = transportationRepository.save(mapDtoToEntity(transporatation));
-		} catch (Exception e) {
-			log.error("CreateTransportation Error=>" + e.getMessage());
-			e.printStackTrace();
+		 return mapEntityToDto(entity);
+	 }
+	 
+	 /**
+	     * updateTransportation 
+	     * Description : this function update data to DB in table transporatation and tran_time.
+	     * Params : id : Long, transporatation : TransporatationDto
+	     * create : 08/01/2563 By Waithaya Chouyanan
+	     * */
+	 public TransportationDto updateTransportationTemple (Long id,TransportationDto transportation) {
+		 TransportationEntity entity = new TransportationEntity();
+		 CourseEntity courseEntity = new CourseEntity();
+		 TransportationEntity tranEntity = new TransportationEntity();
+		 TransportationEntity tranEntityTemp = new TransportationEntity();
+		 TransportationTimeEntity tranTimeEntity = new TransportationTimeEntity();
+		 TransportationTimeEntity tranTimeEntityTemp = new TransportationTimeEntity();
+		 try {
+			 tranEntity = transportationRepository.findById(id).get();
+			 tranTimeEntityTemp.setTransportationTimeId(tranEntity.getTransportationTimeId());
+			 if (transportation.getTimePickUp() != null) {
+				 tranTimeEntityTemp.setTransportationTempleTimePickup(transportation.getTimePickUp());
+			 }
+			 if (transportation.getTimeSend() != null) {
+				 tranTimeEntityTemp.setTransportationTempleTimeSend(transportation.getTimeSend());
+			 }
+			 tranTimeEntity = transportationTimeRepository.save(tranTimeEntityTemp);
+			 tranEntityTemp = mapDtoToEntity(transportation);
+			 tranEntityTemp.setTransportationTimeEntity(tranTimeEntity);
+			 if (transportation.getCourseId() != null) {
+				 courseEntity.setCourseId(transportation.getCourseId());
+				 tranEntityTemp.setCoursesEntity(courseEntity);
+				 tranEntityTemp.setTransportationCoursesId(transportation.getCourseId());
+			 }
+			 if (transportation.getName() != null) {
+				 tranEntityTemp.setTransportationName(transportation.getName());
+			 }
+			 tranEntityTemp.setTransportationTimeId(tranTimeEntity.getTransportationTimeId());
+			 if (transportation.getCourseId() != null) {
+				 tranEntityTemp.setTransportationCoursesId(transportation.getCourseId());
+			 }
+			 entity = transportationRepository.save(tranEntityTemp);
+		 }catch (Exception e) {
+			 e.printStackTrace();
+			 log.error("UpdateTransportation Error=>" + e.getMessage());
 		}
 		return mapEntityToDto(entity);
 	}

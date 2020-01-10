@@ -256,7 +256,7 @@ export class CourseCreateComponent implements OnInit {
             status: 1,
             teacher: this.courseForm.get('teachers').value.map(res => res.id)
           };
-          console.log(course);
+          console.log('>>>>>'  + course.transportTempleId);
           this.courseService.createCourse(course).subscribe(res => {
             if (res['result'] === 'Success') {
               /* const index = this.courses.findIndex(course => course.id === this.courseId);

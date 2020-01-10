@@ -7,47 +7,47 @@ import java.util.List;
 
 public class CourseDto implements Serializable {
 
-	/**
-	 *
-	 */
+    /**
+     *
+     */
 	private static final long serialVersionUID = 234203082606309582L;
 
-	private Long id;
-	private Long no;
-	private String name;
-	private Date stDate;
-	private Date endDate;
-	private String detail;
-	private int conditionMin;
-	private Date createDate;
-	private Date lastUpdate;
-	private Long memberId;
-	private String memberFname;
-	private String memberLname;
-	private Long locationId;
-	private String locationName;
-	private String mhcStatus;
-	private String saStatus;
-	private String status;
-	private int canRegister;
-	private List<Long> teacher;
-	private List<MemberDto> teacherList;
-	private List<CourseScheduleDto> dateList;
-	private List<Date> date;
-	private Long transportTempleId;
-	private String transportTempleName;
-	private Date transportTempleTimePickUp;
-	private Date transportTempleTimeSend;
+    private Long id;
+    private Long no;
+    private String name;
+    private Date stDate;
+    private Date endDate;
+    private String detail;
+    private int conditionMin;
+    private Date createDate;
+    private Date lastUpdate;
+    private Long memberId;
+    private String memberFname;
+    private String memberLname;
+    private Long locationId;
+    private String locationName;
+    private String mhcStatus;
+    private String saStatus;
+    private String status;
+    private int canRegister;
+    private List<Long> teacher;
+    private List<MemberDto> teacherList;
+    private List<CourseScheduleDto> dateList;
+    private List<Date> date;
+    private Long transportTempleId;
+    private String transportTempleName;
+    private Date transportTempleTimePickUp;
+    private Date transportTempleTimeSend;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Long getNo() {
+    public Long getNo() {
 		return no;
 	}
 
