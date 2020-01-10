@@ -9,19 +9,19 @@ import com.cdgs.temple.repository.ForgetPassRepository;
 import com.cdgs.temple.service.ForgetPassService;
 
 @Service
-public class ForgetPassServiceImpl implements ForgetPassService{
-	
+public class ForgetPassServiceImpl implements ForgetPassService {
+
 	private static final Logger log = LoggerFactory.getLogger(ForgetPassService.class);
-	
+
 	private final ForgetPassRepository forgetpassRepository;
-	
+
 	@Autowired
 	public ForgetPassServiceImpl(ForgetPassRepository forgetpassRepository) {
 		this.forgetpassRepository = forgetpassRepository;
 	}
-	
+
 	@Override
-	public Integer countUser(String userName, String idCard, String phoneNumber){
+	public Integer countUser(String userName, String idCard, String phoneNumber) {
 		Integer count = null;
 		try {
 			count = forgetpassRepository.countUser(userName, idCard, phoneNumber);

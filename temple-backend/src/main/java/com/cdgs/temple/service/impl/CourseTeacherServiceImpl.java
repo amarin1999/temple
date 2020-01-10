@@ -13,15 +13,14 @@ import com.cdgs.temple.service.CourseTeacherService;
 
 @Service
 public class CourseTeacherServiceImpl implements CourseTeacherService {
-	
+
 	private final CourseTeacherRepository courseTeacherRepository;
-	 
+
 	@Autowired
-	public CourseTeacherServiceImpl(
-			CourseTeacherRepository courseTeacherRepository) {
+	public CourseTeacherServiceImpl(CourseTeacherRepository courseTeacherRepository) {
 		this.courseTeacherRepository = courseTeacherRepository;
 	}
-	
+
 	private List<CourseTeacherDto> mapEntityListToDtoList(List<CourseTeacherEntity> entities) {
 		List<CourseTeacherDto> dto = new ArrayList<CourseTeacherDto>();
 		for (CourseTeacherEntity entity : entities) {
@@ -29,23 +28,24 @@ public class CourseTeacherServiceImpl implements CourseTeacherService {
 		}
 		return dto;
 	}
-	
+
 	private CourseTeacherDto mapEntityToDto(CourseTeacherEntity entity) {
 		CourseTeacherDto dto = new CourseTeacherDto();
 		dto.setCourseId(entity.getCourseId());
 		dto.setMemberId(entity.getMemberId());
 		return dto;
 	}
+
 	private CourseTeacherEntity mapDtoToEntity(CourseTeacherDto dto) {
 		CourseTeacherEntity entity = new CourseTeacherEntity();
 		entity.setCourseId(dto.getCourseId());
 		entity.setMemberId(dto.getMemberId());
 		return entity;
 	}
-	
+
 	@Override
 	public List<CourseTeacherDto> getCourseTeacher() {
-		
+
 		return mapEntityListToDtoList((List<CourseTeacherEntity>) courseTeacherRepository.findAll());
 //		List<CourseTeacherEntity> entities = new ArrayList<>();
 //		List<CourseScheduleDto> dto = new ArrayList<>();
@@ -67,17 +67,17 @@ public class CourseTeacherServiceImpl implements CourseTeacherService {
 
 	@Override
 	public CourseTeacherDto createCourseTeacher(CourseTeacherDto body) {
-        CourseTeacherEntity entity = mapDtoToEntity(body);
-        try {
-            return mapEntityToDto(courseTeacherRepository.save(entity));
-        } catch (Exception e) {
-            return null;
-        }
+		CourseTeacherEntity entity = mapDtoToEntity(body);
+		try {
+			return mapEntityToDto(courseTeacherRepository.save(entity));
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
-	public CourseTeacherDto updateCourseTeacher(Long id,CourseTeacherDto body) {
-		
+	public CourseTeacherDto updateCourseTeacher(Long id, CourseTeacherDto body) {
+
 		return null;
 	}
 

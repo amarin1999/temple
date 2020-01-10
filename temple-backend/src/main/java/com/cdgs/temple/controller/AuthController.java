@@ -123,7 +123,7 @@ public class AuthController {
             res.setErrorMessage("Token is inValid");
             res.setCode(401);
             return new ResponseEntity<>(res, HttpStatus.UNAUTHORIZED);
-        }
-    }
+		}
+	}
 
 }

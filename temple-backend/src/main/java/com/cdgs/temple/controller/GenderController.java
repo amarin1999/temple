@@ -21,28 +21,28 @@ import com.cdgs.temple.util.ResponseDto;
 @RequestMapping("/v1/genders")
 public class GenderController {
 
-    @Autowired
-    GenderService genderService;
+	@Autowired
+	GenderService genderService;
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<ResponseDto<GenderDto>> getGenderById(@PathVariable("id") Long id) {
-        ResponseDto<GenderDto> res = new ResponseDto<>();
-        List<GenderDto> genders = new ArrayList<>();
-        GenderDto gender;
-        try {
-            gender = genderService.getGenderById(id);
-            if (!(gender == null)) {
-                genders.add(gender);
-            }
-            res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-            res.setData(genders);
-            res.setCode(200);
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        } catch (Exception e) {
-            res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-            res.setErrorMessage(e.getMessage());
-            res.setCode(400);
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
-        }
-    }
+	@GetMapping(path = "/{id}")
+	public ResponseEntity<ResponseDto<GenderDto>> getGenderById(@PathVariable("id") Long id) {
+		ResponseDto<GenderDto> res = new ResponseDto<>();
+		List<GenderDto> genders = new ArrayList<>();
+		GenderDto gender;
+		try {
+			gender = genderService.getGenderById(id);
+			if (!(gender == null)) {
+				genders.add(gender);
+			}
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(genders);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
 }

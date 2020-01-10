@@ -14,22 +14,22 @@ import com.cdgs.temple.repository.SensationRepository;
 import com.cdgs.temple.service.SensationService;
 
 @Service
-public class SensationServiceImpl implements SensationService{
-	
-private final SensationRepository sensationRepository;
+public class SensationServiceImpl implements SensationService {
+
+	private final SensationRepository sensationRepository;
 
 	private static final Logger log = LoggerFactory.getLogger(SensationServiceImpl.class);
-	
+
 	@Autowired
 	public SensationServiceImpl(SensationRepository sensationRepository) {
 		this.sensationRepository = sensationRepository;
 	}
-	
+
 	public SensationDto createSensation(SensationDto body) {
 		SensationEntity entity = new SensationEntity();
 		try {
-			if(body != null) {
-				entity = sensationRepository.save(mapDtoToEntity(body));	
+			if (body != null) {
+				entity = sensationRepository.save(mapDtoToEntity(body));
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -40,18 +40,18 @@ private final SensationRepository sensationRepository;
 	@Override
 	public List<SensationDto> getAllSensations() {
 		List<SensationEntity> entity = new ArrayList<SensationEntity>();
-		try { 
+		try {
 			entity = sensationRepository.findAll();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		return mapListEntityToDto(entity);
 	}
-	
+
 	private SensationDto mapEntityToDto(SensationEntity entity) {
 		SensationDto dto = new SensationDto();
 		try {
-			if(entity != null) {
+			if (entity != null) {
 				dto.setId(entity.getSenseId());
 				dto.setExpected(entity.getSenseExpected());
 				dto.setExperience(entity.getSenseExprience());
@@ -66,22 +66,22 @@ private final SensationRepository sensationRepository;
 		SensationEntity entity = new SensationEntity();
 		System.out.println(sense.toString());
 		try {
-			if(sense != null) {
+			if (sense != null) {
 				entity.setSenseId(sense.getId());
 				entity.setSenseExpected(sense.getExpected());
 				entity.setSenseExprience(sense.getExperience());
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		return entity;
-		
+
 	}
-	
+
 	private List<SensationDto> mapListEntityToDto(List<SensationEntity> entities) {
 		List<SensationDto> dtoList = new ArrayList<SensationDto>();
 		if (entities != null) {
-			for (SensationEntity entity : entities) { 
+			for (SensationEntity entity : entities) {
 				dtoList.add(mapEntityToDto(entity));
 			}
 		}

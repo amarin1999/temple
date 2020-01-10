@@ -1,6 +1,5 @@
 package com.cdgs.temple.entity;
 
-
 import java.io.Serializable;
 
 import javax.persistence.*;
@@ -14,7 +13,7 @@ public class CourseTeacherEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 8792828341834437997L;
-	
+
 	@Id
 	@Column(name = "course_id")
 	private Long courseId;
@@ -22,7 +21,7 @@ public class CourseTeacherEntity implements Serializable {
 	@Id
 	@Column(name = "member_id")
 	private Long memberId;
-	
+
 //	@OneToOne
 //    @JoinColumn(name = "member_id", insertable = false, updatable = false)
 //    private MemberEntity member;
@@ -56,9 +55,4 @@ public class CourseTeacherEntity implements Serializable {
 //		this.member = member;
 //	}
 
-
-	
-	
-	
-	
 }

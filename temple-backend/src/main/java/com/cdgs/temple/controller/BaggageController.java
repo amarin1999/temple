@@ -29,90 +29,85 @@ import com.cdgs.temple.util.ResponseDto;
 @RequestMapping("/v1/baggage")
 public class BaggageController {
 
-    private MemberService memberService;
-    private BaggageService baggageService;
+	private MemberService memberService;
+	private BaggageService baggageService;
 
-    @Autowired(required = false)
-    public BaggageController(MemberService memberService, BaggageService baggageService) {
-        this.memberService = memberService;
-        this.baggageService = baggageService;
-    }
+	@Autowired(required = false)
+	public BaggageController(MemberService memberService, BaggageService baggageService) {
+		this.memberService = memberService;
+		this.baggageService = baggageService;
+	}
 
-    @GetMapping(path = "")
-    @PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
-    public ResponseEntity<ResponseDto<BaggageDto>> getAll() {
-        List<BaggageDto> dto;
-        ResponseDto<BaggageDto> res = new ResponseDto<>();
-        MemberDto member = memberService.getCurrentMember();
+	@GetMapping(path = "")
+	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
+	public ResponseEntity<ResponseDto<BaggageDto>> getAll() {
+		List<BaggageDto> dto;
+		ResponseDto<BaggageDto> res = new ResponseDto<>();
+		MemberDto member = memberService.getCurrentMember();
 
-        try {
-            if (member.getRoleName().equals("admin") || member.getRoleName().equals("monk")) {
-                dto = baggageService.getAll();
-            } else {
-                dto = baggageService.getByMemberId(member.getId());
-            }
+		try {
+			if (member.getRoleName().equals("admin") || member.getRoleName().equals("monk")) {
+				dto = baggageService.getAll();
+			} else {
+				dto = baggageService.getByMemberId(member.getId());
+			}
 
-            res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-            res.setData(dto);
-            res.setCode(200);
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        } catch (Exception e) {
-            res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-            res.setErrorMessage(e.getMessage());
-            res.setCode(400);
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
-        }
-    }
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
 
-    @PostMapping(path = "")
-    @PreAuthorize("hasRole('admin')  or hasRole('monk')")
-    public ResponseEntity<ResponseDto<BaggageDto>> create(
-            @Valid @RequestBody BaggageDto body
-    ) {
-        ResponseDto<BaggageDto> res = new ResponseDto<>();
-        List<BaggageDto> baggage = new ArrayList<>();
-        BaggageDto dto;
-        try {
-            dto = baggageService.create(body);
-            baggage.add(dto);
-            res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-            res.setData(baggage);
-            res.setCode(200);
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        } catch (Exception e) {
-            res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-            res.setErrorMessage(e.getMessage());
-            res.setCode(400);
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
-        }
-    }
-    
-    @PutMapping(path = "/{id}")
-    @PreAuthorize("hasRole('admin')  or hasRole('monk')")
-    public ResponseEntity<ResponseDto<BaggageDto>> update(
-            @Valid @RequestBody BaggageDto body,
-            @PathVariable("id") Long id
-    ) {
-        ResponseDto<BaggageDto> res = new ResponseDto<>();
-        List<BaggageDto> baggage = new ArrayList<>();
-        BaggageDto dto;
-        try {
-            dto = baggageService.update(id,body);
-           
-            if (body != null) {
-                baggage.add(dto);
-            }
-            res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-            res.setData(baggage);
-            res.setCode(200);
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        } catch (Exception e) {
-            res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-            res.setErrorMessage(e.getMessage());
-            res.setCode(400);
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
-        }
-    }
-    
+	@PostMapping(path = "")
+	@PreAuthorize("hasRole('admin')  or hasRole('monk')")
+	public ResponseEntity<ResponseDto<BaggageDto>> create(@Valid @RequestBody BaggageDto body) {
+		ResponseDto<BaggageDto> res = new ResponseDto<>();
+		List<BaggageDto> baggage = new ArrayList<>();
+		BaggageDto dto;
+		try {
+			dto = baggageService.create(body);
+			baggage.add(dto);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(baggage);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PutMapping(path = "/{id}")
+	@PreAuthorize("hasRole('admin')  or hasRole('monk')")
+	public ResponseEntity<ResponseDto<BaggageDto>> update(@Valid @RequestBody BaggageDto body,
+			@PathVariable("id") Long id) {
+		ResponseDto<BaggageDto> res = new ResponseDto<>();
+		List<BaggageDto> baggage = new ArrayList<>();
+		BaggageDto dto;
+		try {
+			dto = baggageService.update(id, body);
+
+			if (body != null) {
+				baggage.add(dto);
+			}
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(baggage);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
 
 }

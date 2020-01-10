@@ -65,8 +65,6 @@ public class BaggageDto implements Serializable {
 		this.lastUpdate = lastUpdate;
 	}
 
-
-
 	public String getLocker() {
 		return Locker;
 	}

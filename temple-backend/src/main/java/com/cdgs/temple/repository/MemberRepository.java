@@ -13,9 +13,11 @@ import com.cdgs.temple.entity.MemberEntity;
 public interface MemberRepository extends CrudRepository<MemberEntity, Long> {
 
 	List<MemberEntity> findAll();
+
 	MemberEntity findByMemberUsername(String username);
+
 	List<MemberEntity> findAllByRole_RoleName(String roleName);
-	
+
 	@Query(value = "SELECT member_id, member_role_id, member_username, member_password, "
 			+ "member_title_id, member_gender_id, member_fname, member_lname, member_address, member_tel, "
 			+ "member_emergency_tel, member_email, member_register_date, member_last_update, member_job, member_other, member_other, member_blood, "
@@ -23,13 +25,10 @@ public interface MemberRepository extends CrudRepository<MemberEntity, Long> {
 			+ "member_id_card, member_age, member_ordian_number, member_ordian_date, member_postal_code "
 			+ "FROM temple.members;", nativeQuery = true)
 	List<MemberEntity> getAllUsersWithOutImg();
-	
-	@Query(value = "SELECT * "
-			+ "FROM members mb "
-			+ "WHERE 1=1 AND mb.member_username = :userName "
-			+ "AND mb.member_id_card = :idCard "
-			+ "AND mb.member_tel = :phoneNumber", nativeQuery = true)
-	MemberEntity getMemberByUserNameIdCardPhoneNumber(@Param("userName") String userName, @Param("idCard") String idCard, @Param("phoneNumber") String phoneNumber);
-	
-	
+
+	@Query(value = "SELECT * " + "FROM members mb " + "WHERE 1=1 AND mb.member_username = :userName "
+			+ "AND mb.member_id_card = :idCard " + "AND mb.member_tel = :phoneNumber", nativeQuery = true)
+	MemberEntity getMemberByUserNameIdCardPhoneNumber(@Param("userName") String userName,
+			@Param("idCard") String idCard, @Param("phoneNumber") String phoneNumber);
+
 }

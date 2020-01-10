@@ -26,14 +26,14 @@ import com.cdgs.temple.util.ResponseDto;
 @RequestMapping("/v1/historydharma")
 public class HistoryDharmaController {
 	private static final Logger log = LoggerFactory.getLogger(HistoryDharmaController.class);
-	
+
 	private final HistoryDharmaService historyDharmaService;
-	
+
 	@Autowired
 	public HistoryDharmaController(HistoryDharmaService historyDharmaService) {
 		this.historyDharmaService = historyDharmaService;
 	}
-	
+
 	@GetMapping(path = "")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
 	public ResponseEntity<ResponseDto<HistoryDharmaDto>> getAllHistoryDharma() {
@@ -52,10 +52,11 @@ public class HistoryDharmaController {
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PostMapping(path = "/getByMemberId")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
-	public ResponseEntity<ResponseDto<HistoryDharmaDto>> getHistoryDhamaByMemberId(@Valid @RequestBody HistoryDharmaDto body) {
+	public ResponseEntity<ResponseDto<HistoryDharmaDto>> getHistoryDhamaByMemberId(
+			@Valid @RequestBody HistoryDharmaDto body) {
 		List<HistoryDharmaDto> dto;
 		ResponseDto<HistoryDharmaDto> res = new ResponseDto<>();
 		try {
@@ -71,10 +72,11 @@ public class HistoryDharmaController {
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PutMapping(path = "")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
-	public ResponseEntity<ResponseDto<HistoryDharmaDto>> delHistoryDhamaById(@Valid @RequestBody List<HistoryDharmaDto> body) {
+	public ResponseEntity<ResponseDto<HistoryDharmaDto>> delHistoryDhamaById(
+			@Valid @RequestBody List<HistoryDharmaDto> body) {
 		ResponseDto<HistoryDharmaDto> res = new ResponseDto<>();
 		try {
 			if (body != null) {

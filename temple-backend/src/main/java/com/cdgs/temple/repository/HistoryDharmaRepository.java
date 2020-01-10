@@ -13,19 +13,17 @@ import org.springframework.stereotype.Repository;
 import com.cdgs.temple.entity.HistoryDharmaEntity;
 
 @Repository
-public interface HistoryDharmaRepository extends  CrudRepository<HistoryDharmaEntity, Long>{
-	
+public interface HistoryDharmaRepository extends CrudRepository<HistoryDharmaEntity, Long> {
+
 	List<HistoryDharmaEntity> findAll();
-	
-	@Query(value = "SELECT * "
-			+ "FROM history_dharma "
+
+	@Query(value = "SELECT * " + "FROM history_dharma "
 			+ "WHERE history_dharma_member_id = :memberId", nativeQuery = true)
 	List<HistoryDharmaEntity> getHistoryDhamaByMemberId(@Param("memberId") Long memberId);
-	
+
 	@Modifying
 	@Transactional
-	@Query(value = "DELETE FROM history_dharma "
-			+ "WHERE history_dharma_id = :delId", nativeQuery = true)
+	@Query(value = "DELETE FROM history_dharma " + "WHERE history_dharma_id = :delId", nativeQuery = true)
 	Integer delHistoryDhamaById(@Param("delId") Long delId);
 
 }

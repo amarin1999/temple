@@ -42,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return mapListEntityToDto(memberEntities);
 	}
-	
+
 	@Override
 	public List<MemberDto> getAllUsersWithOutImg() {
 		List<MemberEntity> memberEntities = new ArrayList<>();
@@ -73,30 +73,30 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDto createMember(MemberDto member) {
-		
+
 		MemberEntity memberData = mapDtoToEntity(member);
-		MemberEntity entity ;
-		if(memberData.getMemberRoleId() == null) {
+		MemberEntity entity;
+		if (memberData.getMemberRoleId() == null) {
 			memberData.setMemberRoleId((long) 3);
 		} else {
-			memberData.setMemberRoleId((long)memberData.getMemberRoleId());
+			memberData.setMemberRoleId((long) memberData.getMemberRoleId());
 		}
 		memberData.setMemberPassword(bCryptPasswordEncoder.encode(memberData.getMemberPassword()));
 		entity = memberRepository.save(memberData);
-		//return mapEntityToDtoFnSave(entity);
+		// return mapEntityToDtoFnSave(entity);
 		return mapEntityToDto(entity);
 
 	}
 
 	@Override
-	public MemberDto updateMember(Long id, MemberDto member) {	
+	public MemberDto updateMember(Long id, MemberDto member) {
 		MemberEntity memberConvert = mapDtoToEntity(member);
 		MemberEntity entity = new MemberEntity();
-		
+
 		System.out.println(member.toString());
 
 		Optional<MemberEntity> memberEntity = memberRepository.findById(id);
-		if(!memberEntity.isPresent()) {
+		if (!memberEntity.isPresent()) {
 			return mapEntityToDto(memberEntity.get());
 		}
 		if (member.getImg() != null) {
@@ -107,37 +107,38 @@ public class MemberServiceImpl implements MemberService {
 		memberConvert.setMemberId(id);
 		memberConvert.setMemberUsername(memberEntity.get().getMemberUsername());
 		memberConvert.setMemberPassword(memberEntity.get().getMemberPassword());
-		
+
 		memberConvert.setMemberRoleId(memberEntity.get().getRole().getRoleId());
 
 		entity = memberRepository.save(memberConvert);
 		return mapEntityToDto(entity);
 
 	}
-	
+
 	@Override
 	public MemberDto getMemberByUserNameIdCardPhoneNumber(ForgetPassDto body) {
-		MemberEntity entity = memberRepository.getMemberByUserNameIdCardPhoneNumber(body.getUsername(), body.getIdCard(), body.getPhoneNumber());
+		MemberEntity entity = memberRepository.getMemberByUserNameIdCardPhoneNumber(body.getUsername(),
+				body.getIdCard(), body.getPhoneNumber());
 		return mapEntityToDto(entity);
 	}
-	
+
 	@Override
 	public MemberDto createMemberByAdmin(MemberDto member) {
 		MemberEntity memberData = mapDtoToEntity(member);
-		MemberEntity entity ;
-		//memberData.setMemberRoleId((long) member.getRoleId());
+		MemberEntity entity;
+		// memberData.setMemberRoleId((long) member.getRoleId());
 		memberData.setMemberPassword(bCryptPasswordEncoder.encode(memberData.getMemberPassword()));
 		entity = memberRepository.save(memberData);
 		return mapEntityToDto(entity);
 	}
-	
+
 	@Override
 	public MemberDto updateMemberByAdmin(Long id, MemberDto member) {
 		MemberEntity memberConvert = mapDtoToEntity(member);
-		MemberEntity entity ;
+		MemberEntity entity;
 
 		Optional<MemberEntity> memberEntity = memberRepository.findById(id);
-		if(!memberEntity.isPresent()) {
+		if (!memberEntity.isPresent()) {
 			return mapEntityToDto(memberEntity.get());
 		}
 
@@ -146,15 +147,15 @@ public class MemberServiceImpl implements MemberService {
 		memberConvert.setMemberPassword(memberEntity.get().getMemberPassword());
 		entity = memberRepository.save(memberConvert);
 		return mapEntityToDto(entity);
-		
+
 	}
-	
+
 	@Override
 	public MemberDto changePasswordMember(MemberDto body) {
 		MemberEntity entity;
 		MemberEntity memberData;
 		Optional<MemberEntity> memberEntity = memberRepository.findById(body.getId());
-		if(!memberEntity.isPresent()) {
+		if (!memberEntity.isPresent()) {
 			return mapEntityToDto(memberEntity.get());
 		}
 		memberData = memberEntity.get();
@@ -176,13 +177,13 @@ public class MemberServiceImpl implements MemberService {
 		entity.setMemberTitleId(member.getTitleId());
 		entity.setMemberIdCard(member.getIdCard());
 		entity.setMemberRoleId(member.getRoleId());
-		entity.setMemberId(member.getId());		
+		entity.setMemberId(member.getId());
 		entity.setMemberUsername(member.getUsername());
 		entity.setMemberPassword(member.getPassword());
 		entity.setMemberFname(member.getFname());
 		entity.setMemberLname(member.getLname());
 		entity.setMemberAddress(member.getAddress());
-		entity.setMemberTel(member.getTel());   
+		entity.setMemberTel(member.getTel());
 		entity.setMemberAge(member.getAge());
 		entity.setMemberPostalCode(member.getPostalCode());
 		entity.setOrdianNumber(member.getOrdianNumber());
@@ -244,27 +245,26 @@ public class MemberServiceImpl implements MemberService {
 			dto.setPostalCode(entity.getMemberPostalCode());
 			dto.setOrdianNumber(entity.getOrdianNumber());
 			dto.setOrdianDate(entity.getOrdianDate());
-			
+
 			dto.setGenderId(entity.getMemberGenderId());
-			if(entity.getGender() != null)
+			if (entity.getGender() != null)
 				dto.setGenderName(entity.getGender().getGenderName());
-			
+
 			dto.setTitleId(entity.getMemberTitleId());
-			if(entity.getTitleName() != null) {
+			if (entity.getTitleName() != null) {
 				dto.setTitleDisplay(entity.getTitleName().getTitleDisplay());
 				dto.setTitleName(entity.getTitleName().getTitleName());
 			}
-			
+
 			dto.setRoleId(entity.getMemberRoleId());
-			if(entity.getRole() != null)
+			if (entity.getRole() != null)
 				dto.setRoleName(entity.getRole().getRoleName());
-			
+
 			dto.setProvinceId(entity.getMemberProvinceId());
-			if(entity.getProvince() != null)
+			if (entity.getProvince() != null)
 				dto.setProvinceName(entity.getProvince().getProvinceName());
 		}
 		return dto;
 	}
-
 
 }

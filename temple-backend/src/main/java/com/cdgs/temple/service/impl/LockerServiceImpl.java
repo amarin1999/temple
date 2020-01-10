@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.cdgs.temple.dto.LockerDto;
 import com.cdgs.temple.entity.LockerEntity;
 
@@ -19,7 +18,7 @@ import com.cdgs.temple.service.LockerService;
 
 @Service
 public class LockerServiceImpl implements LockerService {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(LockerServiceImpl.class);
 
 	private LockerRepository lockerRepository;
@@ -67,24 +66,23 @@ public class LockerServiceImpl implements LockerService {
 	@Override
 	public LockerDto update(long lockerId, LockerDto data) {
 		LockerEntity entity = lockerRepository.findAllByLockerId(lockerId);
-		
+
 		if (entity != null) {
 			entity.setLockerNumber(data.getNumber());
 			entity.setLocationId(data.getLocationId());
 			entity.setLockerLastUpdate(LocalDateTime.now());
 			return mapEntityToDto(lockerRepository.save(entity));
-			
+
 		}
 		System.out.println("false");
 		return null;
-		
-		
+
 	}
 
 	@Override
 	public LockerDto delete(long lockerId) {
 		LockerEntity entity = lockerRepository.findAllByLockerId(lockerId);
-		if ( entity.getIsActive()=='0') {
+		if (entity.getIsActive() == '0') {
 			entity.setLockerLastUpdate(LocalDateTime.now());
 			entity.setEnable(false);
 			return mapEntityToDto(lockerRepository.save(entity));

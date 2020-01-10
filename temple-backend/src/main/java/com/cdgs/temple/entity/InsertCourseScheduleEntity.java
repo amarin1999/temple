@@ -9,33 +9,33 @@ import java.util.Date;
 @IdClass(InsertCourseScheduleEntity.class)
 public class InsertCourseScheduleEntity implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -470237690775417023L;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -470237690775417023L;
 
-    @Id
-    @Column(name = "course_id")
-    private Long courseId;
+	@Id
+	@Column(name = "course_id")
+	private Long courseId;
 
-    @Id
-    @Column(name = "course_schedule_date")
-    private Date courseScheduleDate;
+	@Id
+	@Column(name = "course_schedule_date")
+	private Date courseScheduleDate;
 
-    public Long getCourseId() {
-        return courseId;
-    }
+	public Long getCourseId() {
+		return courseId;
+	}
 
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
-    }
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
+	}
 
-    public Date getCourseScheduleDate() {
-        return courseScheduleDate;
-    }
+	public Date getCourseScheduleDate() {
+		return courseScheduleDate;
+	}
 
-    public void setCourseScheduleDate(Date courseScheduleDate) {
-        this.courseScheduleDate = courseScheduleDate;
-    }
+	public void setCourseScheduleDate(Date courseScheduleDate) {
+		this.courseScheduleDate = courseScheduleDate;
+	}
 
 }

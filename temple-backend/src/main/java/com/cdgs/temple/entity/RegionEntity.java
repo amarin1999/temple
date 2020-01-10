@@ -13,19 +13,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "region")
 @Embeddable
-public class RegionEntity implements Serializable{
+public class RegionEntity implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4920156610220202638L;
 
-	
 	@Id
 	@Column(name = "region_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long regionId;
-	
+
 	@Column(name = "region_name")
 	private String regionName;
 
@@ -44,5 +43,5 @@ public class RegionEntity implements Serializable{
 	public void setRegionName(String regionName) {
 		this.regionName = regionName;
 	}
-	
+
 }

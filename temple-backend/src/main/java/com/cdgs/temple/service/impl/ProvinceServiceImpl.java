@@ -15,12 +15,12 @@ import com.cdgs.temple.service.ProvinceService;
 
 @Service
 public class ProvinceServiceImpl implements ProvinceService {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ProvinceServiceImpl.class);
-	
+
 	@Autowired(required = true)
 	ProvinceRepository provinceRepository;
-	
+
 	public List<ProvinceDto> getProvince() {
 		List<ProvinceEntity> provinceEntities = new ArrayList<ProvinceEntity>();
 		try {
@@ -30,7 +30,7 @@ public class ProvinceServiceImpl implements ProvinceService {
 		}
 		return convListEntityToDto(provinceEntities);
 	}
-	
+
 	private List<ProvinceDto> convListEntityToDto(List<ProvinceEntity> entities) {
 		List<ProvinceDto> dtoList = new ArrayList<ProvinceDto>();
 		if (entities != null) {
@@ -40,7 +40,7 @@ public class ProvinceServiceImpl implements ProvinceService {
 		}
 		return dtoList;
 	}
-	
+
 	private ProvinceDto convEntityToDto(ProvinceEntity entity) {
 		ProvinceDto dto = new ProvinceDto();
 		try {
@@ -50,17 +50,16 @@ public class ProvinceServiceImpl implements ProvinceService {
 				dto.setRegionId(entity.getRegionId());
 				dto.setRegionName(entity.getRegion().getRegionName());
 			}
-			
+
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		return dto;
 	}
-	
+
 //	@Override
 //	public String toString() {
 //		return "ProvinceServiceImpl [provinceRepository=" provinceRepository + "]";
 //	}
-	
 
 }
