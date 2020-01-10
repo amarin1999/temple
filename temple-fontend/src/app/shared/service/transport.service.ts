@@ -31,7 +31,7 @@ export class TransportService {
   }
 
   getTranSportTemple() {
-    return this.http.get(ApiConstants.baseURl + `/transportations`)
+    return this.http.get(ApiConstants.baseURl + `/transportations/temple`)
       .pipe(
         map((res: any[]) => {
           return {
