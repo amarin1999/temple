@@ -72,10 +72,6 @@ public class CourseController {
 	@GetMapping(path = "/allmembers/{id}")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
 	public ResponseEntity<ResponseDto<MembersHasCourseDto>> getAllUsers(@PathVariable(value = "id") Long courseId) {
-		// @GetMapping(path = "/allmembers")
-		// @PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
-		// public ResponseEntity<ResponseDto<MembersHasCourseDto>>
-		// getAllUsers(@RequestParam("courseId") Long courseId) {
 		ResponseDto<MembersHasCourseDto> res = new ResponseDto<>();
 		try {
 			List<MembersHasCourseDto> memberHasCourse = membersHasCourseService.getMembersByCourse(courseId);

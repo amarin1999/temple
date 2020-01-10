@@ -50,7 +50,7 @@ public class TransportationServiceImpl implements TransportationService {
 	public List<TransportationDto> getTransportationName() {
 		List<TransportationEntity> transportationEntity = new ArrayList<TransportationEntity>();
 		try {
-			transportationEntity = transportationRepository.findTranTemple();
+			transportationEntity = transportationRepository.findAll();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
