@@ -365,7 +365,7 @@ public class CourseController {
         ResponseDto<CourseDto> res = new ResponseDto<>();
         List<CourseDto> courses = new ArrayList<>();
         CourseDto course;
-        TransportationDto tran ;
+        TransportationDto tran = new TransportationDto();
         CourseScheduleDto courseSchedule = new CourseScheduleDto();
         CourseTeacherDto courseTeacher = new CourseTeacherDto();
         TransportationDto transportationDto = new TransportationDto();
@@ -374,19 +374,19 @@ public class CourseController {
         try {
             course = courseService.createCourse(body);
             courseSchedule.setCourseId(course.getId());
-            try {
-            	long courseId = course.getTransportTempleId();
-            	System.out.println("courseId>>>" + courseId);
-            	if(body.getTransportTempleId() != null) {
-            		long tranId = body.getTransportTempleId();
-            		transportationDto.setCourseId(courseId);
-            		transportationDto.setId(tranId);
-            		tran = transportationService.updateTransportationTemple(tranId, transportationDto);
-				}
-            } catch (Exception e) {
-            	e.printStackTrace();
-            	log.error(e.getMessage());
-            }
+//            try {
+//            	long courseId = course.getTransportTempleId();
+//            	System.out.println("courseId>>>" + courseId);
+//            	if(body.getTransportTempleId() != null) {
+//            		long tranId = body.getTransportTempleId();
+//            		transportationDto.setCourseId(courseId);
+//            		transportationDto.setId(tranId);
+//            		tran = transportationService.updateTransportationTemple(tranId, transportationDto);
+//				}
+//            } catch (Exception e) {
+//            	e.printStackTrace();
+//            	log.error(e.getMessage());
+//            }
             //ตรวจสอบกรณีวันที่เท่ากัน / 1 วัน
             if(dateSt.compareTo(dateEnd) == 0){
             	courseSchedule.setCourseScheduleDate(body.getDate().get(0));
