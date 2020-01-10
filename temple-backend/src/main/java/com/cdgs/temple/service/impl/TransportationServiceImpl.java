@@ -54,7 +54,7 @@ public class TransportationServiceImpl implements TransportationService {
 	 public List<TransportationDto> getTransportationName(){
 		 List<TransportationEntity> transportationEntity = new ArrayList<TransportationEntity>(); 
 		 try {
-			 transportationEntity = transportationRepository.findAll();
+			 transportationEntity = transportationRepository.findTranTemple();
 	        } catch (Exception e) {
 	            log.error(e.getMessage());
 	        }
@@ -105,6 +105,7 @@ public class TransportationServiceImpl implements TransportationService {
 	     * */
 	 public TransportationDto updateTransportationTemple (Long id,TransportationDto transportation) {
 		 TransportationEntity entity = new TransportationEntity();
+		 CourseEntity courseEntity = new CourseEntity();
 		 TransportationEntity tranEntity = new TransportationEntity();
 		 TransportationEntity tranEntityTemp = new TransportationEntity();
 		 TransportationTimeEntity tranTimeEntity = new TransportationTimeEntity();
@@ -112,14 +113,27 @@ public class TransportationServiceImpl implements TransportationService {
 		 try {
 			 tranEntity = transportationRepository.findById(id).get();
 			 tranTimeEntityTemp.setTransportationTimeId(tranEntity.getTransportationTimeId());
-			 tranTimeEntityTemp.setTransportationTempleTimePickup(transportation.getTimePickUp());
-			 tranTimeEntityTemp.setTransportationTempleTimeSend(transportation.getTimeSend());
+			 if (transportation.getTimePickUp() != null) {
+				 tranTimeEntityTemp.setTransportationTempleTimePickup(transportation.getTimePickUp());
+			 }
+			 if (transportation.getTimeSend() != null) {
+				 tranTimeEntityTemp.setTransportationTempleTimeSend(transportation.getTimeSend());
+			 }
 			 tranTimeEntity = transportationTimeRepository.save(tranTimeEntityTemp);
 			 tranEntityTemp = mapDtoToEntity(transportation);
 			 tranEntityTemp.setTransportationTimeEntity(tranTimeEntity);
-			 tranEntityTemp.setTransportationName(transportation.getName());
+			 if (transportation.getCourseId() != null) {
+				 courseEntity.setCourseId(transportation.getCourseId());
+				 tranEntityTemp.setCoursesEntity(courseEntity);
+				 tranEntityTemp.setTransportationCoursesId(transportation.getCourseId());
+			 }
+			 if (transportation.getName() != null) {
+				 tranEntityTemp.setTransportationName(transportation.getName());
+			 }
 			 tranEntityTemp.setTransportationTimeId(tranTimeEntity.getTransportationTimeId());
-			 tranEntityTemp.setTransportationCoursesId(transportation.getCourseId());
+			 if (transportation.getCourseId() != null) {
+				 tranEntityTemp.setTransportationCoursesId(transportation.getCourseId());
+			 }
 			 entity = transportationRepository.save(tranEntityTemp);
 		 }catch (Exception e) {
 			 e.printStackTrace();

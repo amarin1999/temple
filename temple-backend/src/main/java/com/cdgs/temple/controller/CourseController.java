@@ -7,6 +7,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.cdgs.temple.dto.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,7 @@ import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.service.MembersHasCourseService;
 import com.cdgs.temple.service.SensationService;
 import com.cdgs.temple.service.SpecialApproveService;
+import com.cdgs.temple.service.TransportationService;
 import com.cdgs.temple.util.ResponseDto;
 
 @RestController
@@ -29,6 +33,9 @@ import com.cdgs.temple.util.ResponseDto;
 @RequestMapping("/v1/courses")
 public class CourseController {
 
+	private static final Logger log = LoggerFactory.getLogger(TransportationController.class);
+	
+	private TransportationService transportationService;
     private MemberService memberService;
     private CourseService courseService;
     private MembersHasCourseService membersHasCourseService;
@@ -358,13 +365,28 @@ public class CourseController {
         ResponseDto<CourseDto> res = new ResponseDto<>();
         List<CourseDto> courses = new ArrayList<>();
         CourseDto course;
+        TransportationDto tran ;
         CourseScheduleDto courseSchedule = new CourseScheduleDto();
         CourseTeacherDto courseTeacher = new CourseTeacherDto();
+        TransportationDto transportationDto = new TransportationDto();
         Date dateSt = body.getDate().get(0);
     	Date dateEnd = body.getDate().get(1);
         try {
             course = courseService.createCourse(body);
             courseSchedule.setCourseId(course.getId());
+            try {
+            	long courseId = course.getTransportTempleId();
+            	System.out.println("courseId>>>" + courseId);
+            	if(body.getTransportTempleId() != null) {
+            		long tranId = body.getTransportTempleId();
+            		transportationDto.setCourseId(courseId);
+            		transportationDto.setId(tranId);
+            		tran = transportationService.updateTransportationTemple(tranId, transportationDto);
+				}
+            } catch (Exception e) {
+            	e.printStackTrace();
+            	log.error(e.getMessage());
+            }
             //ตรวจสอบกรณีวันที่เท่ากัน / 1 วัน
             if(dateSt.compareTo(dateEnd) == 0){
             	courseSchedule.setCourseScheduleDate(body.getDate().get(0));

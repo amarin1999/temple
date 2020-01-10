@@ -7,6 +7,7 @@ import java.util.List;
 import com.cdgs.temple.dto.*;
 import com.cdgs.temple.entity.*;
 import com.cdgs.temple.repository.TempCourseRepository;
+import com.cdgs.temple.repository.TransportationRepository;
 import com.cdgs.temple.service.CourseScheduleService;
 
 import org.slf4j.Logger;
@@ -339,6 +340,7 @@ public class CourseServiceImpl implements CourseService {
 	
 	private CourseDto mapEntityToDto(CourseEntity entity) {
 		CourseDto dto = new CourseDto();
+		TransportationDto dtoTran = new TransportationDto();
 		CourseTeacherDto teacherDto = new CourseTeacherDto();
 		List<Long> teacherList = new ArrayList<>();
 		try {

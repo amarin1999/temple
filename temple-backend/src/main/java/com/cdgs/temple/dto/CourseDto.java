@@ -10,7 +10,7 @@ public class CourseDto implements Serializable {
     /**
      *
      */
-    private static final long serialVersionUID = 234203082606309582L;
+	private static final long serialVersionUID = 234203082606309582L;
 
     private Long id;
     private Long no;
