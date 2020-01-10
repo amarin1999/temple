@@ -25,14 +25,15 @@ Intern Department ADD-CDGs Team.
 
 -  Spring Boot
 -  Java
--  Spring Boot (from Market ecilpse Spring tool 4)
+-  Spring Tool (from Market ecilpse Spring tool 4)
+-  Connect Database port 3306 (Default) [Password&&Username: root] 
 -  ...
 
 ## Install Develop
 
--  1. Install path java And marven in PC Environment
--  2. Install angular CLI
--  3. Install MySql server version 5.5
--  4. Import Database
--  5. Run backend (Terminal)  $mvn spring-boot:run
--  6. Run frontend (Terminal) $ng s -o
+1. Install path java And marven in PC Environment
+2. Install angular CLI
+3. Install MySql server version 5.5
+4. Import Database
+5. Run backend (Terminal)  $mvn spring-boot:run
+6. Run frontend (Terminal) $ng s -o
