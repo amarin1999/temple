@@ -136,6 +136,7 @@ public class CourseServiceImpl implements CourseService {
 			return mapEntityToDto(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("createCourse>>> " + e.getMessage());
 			return null;
 		}
 	}
