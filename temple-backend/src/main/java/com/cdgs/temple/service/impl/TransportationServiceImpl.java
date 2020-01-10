@@ -87,6 +87,9 @@ public class TransportationServiceImpl implements TransportationService {
 		TransportationTimeEntity tranTimeEntityTemp = new TransportationTimeEntity();
 		try {
 			tranEntity = transportationRepository.findById(id).get();
+			if (tranEntity.getTransportationTimeEntity() != null) {
+				tranTimeEntityTemp = transportationTimeRepository.findById(tranEntity.getTransportationTimeEntity().getTransportationTimeId()).get();
+			}
 			tranTimeEntityTemp.setTransportationTimeId(tranEntity.getTransportationTimeId());
 			if (transportation.getTimePickUp() != null) {
 				tranTimeEntityTemp.setTransportationTempleTimePickup(transportation.getTimePickUp());
@@ -104,6 +107,8 @@ public class TransportationServiceImpl implements TransportationService {
 			}
 			if (transportation.getName() != null) {
 				tranEntityTemp.setTransportationName(transportation.getName());
+			} else {
+				tranEntityTemp.setTransportationName(tranEntity.getTransportationName());
 			}
 			tranEntityTemp.setTransportationTimeId(tranTimeEntity.getTransportationTimeId());
 			if (transportation.getCourseId() != null) {
