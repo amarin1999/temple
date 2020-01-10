@@ -8,18 +8,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "transportations")
 @Embeddable
 public class TransportationEntity implements Serializable{
-
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -8609326581235221457L;
+
 	@Id
 	@Column(name = "tran_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -28,8 +31,19 @@ public class TransportationEntity implements Serializable{
 	@Column(name = "tran_name")
 	private String transportationName;
 	
-	@Column(name = "tran_status")
-	private boolean transportationStatus = true;
+	@Column(name = "tran_time_id")
+	private Long transportationTimeId;
+	
+	@Column(name = "course_id")
+	private Long transportationCoursesId;
+
+	@OneToOne
+	@JoinColumn(name = "tran_time_id", insertable = false, updatable = false)
+	private TransportationTimeEntity transportationTimeEntity;
+	
+	@ManyToOne
+	@JoinColumn(name = "course_id", insertable = false, updatable = false)
+	private CourseEntity coursesEntity;
 
 	public Long getTransportationId() {
 		return transportationId;
@@ -47,13 +61,38 @@ public class TransportationEntity implements Serializable{
 		this.transportationName = transportationName;
 	}
 
-	public boolean isTransportationStatus() {
-		return transportationStatus;
+	public TransportationTimeEntity getTransportationTimeEntity() {
+		return transportationTimeEntity;
 	}
 
-	public void setTransportationStatus(boolean transportationStatus) {
-		this.transportationStatus = transportationStatus;
+	public void setTransportationTimeEntity(TransportationTimeEntity transportationTimeEntity) {
+		this.transportationTimeEntity = transportationTimeEntity;
+	}
+
+	public CourseEntity getCoursesEntity() {
+		return coursesEntity;
+	}
+
+	public void setCoursesEntity(CourseEntity coursesEntity) {
+		this.coursesEntity = coursesEntity;
+	}
+
+	public Long getTransportationTimeId() {
+		return transportationTimeId;
+	}
+
+	public void setTransportationTimeId(Long transportationTimeId) {
+		this.transportationTimeId = transportationTimeId;
+	}
+
+	public Long getTransportationCoursesId() {
+		return transportationCoursesId;
+	}
+
+	public void setTransportationCoursesId(Long transportationCoursesId) {
+		this.transportationCoursesId = transportationCoursesId;
 	}
 	
 	
+
 }

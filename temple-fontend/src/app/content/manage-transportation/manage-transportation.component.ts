@@ -82,16 +82,19 @@ export class ManageTransportationComponent implements OnInit {
       res => {
         this.transportTemple = res['data'];
         this.transportTemple = this.transportTemple.map( data => {
+            console.log('name', data.name);
 
-          return { id : data.id , name: data.name , timePickUp : data.timePickUp , timeSend: data.timeSend }
+            return { id: data.id , name: data.name , timePickUp: data.timePickUp , timeSend: data.timeSend }
         });
     });
   }
 
   public save() {
         this.transportation.name = this.newTransportation;
-        this.transportation.timePickUp = new Date(this.timePickUp).getTime();
-        this.transportation.timeSend = new Date(this.timeSend).getTime();
+        if (this.timePickUp !== null && this.timeSend !== null) {
+            this.transportation.timePickUp = new Date(this.timePickUp).getTime();
+            this.transportation.timeSend = new Date(this.timeSend).getTime();
+        }
         const checkArry = this.transport.filter(
             res => res.name === this.transportation.name
         );
@@ -103,33 +106,6 @@ export class ManageTransportationComponent implements OnInit {
             });
             return;
         }
-        if (this.tabIndex === 0) {
-            this.transportationService
-                .createTransportationTemple(this.transportation)
-                .subscribe(
-                    res => {
-                        if (res['status'] === 'Success') {
-                            this.messageService.add({
-                                severity: 'success',
-                                summary: 'ข้อความจากระบบ',
-                                detail:
-                                    'ดำเนินการเพิ่มการเดินทาง:  ' + res['data'][0].name + '  สำเร็จ'
-                            });
-                            this.getTransportationTemple();
-                            this.initTransportation();
-                        }
-                    },
-                    e => {
-                        console.log(e);
-                        // this.messageService.clear;
-                        this.messageService.add({
-                            severity: 'error',
-                            summary: 'ข้อความจากระบบ',
-                            detail: 'ดำเนินการไม่สำเร็จ'
-                        });
-                    }
-                );
-        } else {
             this.transportationService
                 .createTransportation(this.transportation)
                 .subscribe(
@@ -143,6 +119,7 @@ export class ManageTransportationComponent implements OnInit {
                                     'ดำเนินการเพิ่มการเดินทาง: ' + res['data']['name'] + ' สำเร็จ'
                             });
                             this.getTransportation();
+                            this.getTransportationTemple();
                             this.initTransportation();
                         }
                     },
@@ -156,7 +133,6 @@ export class ManageTransportationComponent implements OnInit {
                         });
                     }
                 );
-        }
         this.clear();
     }
 
@@ -173,14 +149,12 @@ export class ManageTransportationComponent implements OnInit {
             0 ||
             this.transportation.name === this.newTransportation
         ) {
-            this.transportation.name = this.newTransportation;
-            this.transportation.timePickUp = this.timePickUp;
-            this.transportation.timeSend = this.timeSend;
-            this.transportation.status = this.status;
-
+            // this.transportation.status = this.status;
+            
             if (this.tabIndex === 0) {
-                console.log(this.transportation);
-
+                this.transportation.name = this.newTransportation;
+                this.transportation.timePickUp = this.timePickUp;
+                this.transportation.timeSend = this.timeSend;
                 this.transportationService
                     .updateTransportationTemple(this.transportation)
                     .subscribe(
@@ -208,8 +182,10 @@ export class ManageTransportationComponent implements OnInit {
                         }
                     );
             } else {
-                this.transportationService
-                    .updateTransportation(this.transportation)
+                this.transportation.name = this.newTransportation;
+                this.transportation.timePickUp = null;
+                this.transportation.timeSend = null;
+                this.transportationService.updateTransportation(this.transportation)
                     .subscribe(
                         res => {
                             if (res['status'] === 'Success') {
@@ -272,7 +248,7 @@ export class ManageTransportationComponent implements OnInit {
                             }
                         },
                         (e) => {
-                            console.log(e['error']['errorMessage']);
+                            // console.log(e['error']['errorMessage']);
                             if (e['error']['errorMessage'] === 'transportationTemple is using') {
                                 this.messageService.add({
                                     severity: 'error',
@@ -347,8 +323,7 @@ export class ManageTransportationComponent implements OnInit {
         this.displayDialog = false;
         this.transportation = {
             id: null,
-            name: '',
-            status: null
+            name: '' 
         };
         this.timePickUp = null;
         this.timeSend = null;

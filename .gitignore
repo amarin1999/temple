@@ -6,3 +6,5 @@ temple-backend/.settings/
 temple-backend/.sts4-cache/
 temple-fontend/dist/
 temple-fontend/.vscode/
+temple-backend/.idea/
+temple-backend/demo/

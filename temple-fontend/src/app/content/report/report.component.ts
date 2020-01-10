@@ -11,6 +11,7 @@ import { CourseService } from '../courses/shared/course.service';
 export class ReportComponent implements OnInit {
 
   cols: any[];
+  data: any;
   filteredCourse: any[];
   public course: any[];
 
@@ -28,6 +29,13 @@ export class ReportComponent implements OnInit {
       { label: 'ออกรายงาน', routerLink: '/report' },
     ]);
 
+    this.data = [
+      { female: '0', male: '0', non: '0', temple: '0', myself: '0', new: '0', bkk: '0', other: '0', sakon: '0', other2: '0', north: '0', east: '0', west: '0', south: '0' },
+      { female: '0', male: '0', non: '0', temple: '0', myself: '0', new: '0', bkk: '0', other: '0', sakon: '0', other2: '0', north: '0', east: '0', west: '0', south: '0' },
+      { female: '0', male: '0', non: '0', temple: '0', myself: '0', new: '0', bkk: '0', other: '0', sakon: '0', other2: '0', north: '0', east: '0', west: '0', south: '0' },
+      { female: '0', male: '0', non: '0', temple: '0', myself: '0', new: '0', bkk: '0', other: '0', sakon: '0', other2: '0', north: '0', east: '0', west: '0', south: '0' },
+      { female: '0', male: '0', non: '0', temple: '0', myself: '0', new: '0', bkk: '0', other: '0', sakon: '0', other2: '0', north: '0', east: '0', west: '0', south: '0' }
+    ];
     this.cols = [
       { field: 'gender', header: 'เพศ' },
       {field: 'transportation', header: 'การเดินทาง' },
@@ -42,6 +50,7 @@ export class ReportComponent implements OnInit {
         return {id : data.id, name: data.name}
       }
     );
+    // console.log('course', this.course);
   },
   err => {
     console.log(err['error']['message']);
@@ -67,6 +76,15 @@ export class ReportComponent implements OnInit {
       }
     }
     return filtered;
+  }
+
+  onSelect(data) {
+
+  }
+  onClear(event) {
+    if (event.data == null) {
+      // console.log('data');
+    }
   }
 
 

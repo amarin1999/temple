@@ -16,7 +16,6 @@ public class TempleApiApplication implements CommandLineRunner {
 	
 	@Autowired
 	DataSource dataSource;
-	
 	public static void main(String[] args) {
 		SpringApplication.run(TempleApiApplication.class, args);
 	}
@@ -26,6 +25,14 @@ public class TempleApiApplication implements CommandLineRunner {
 		System.out.println("Datasources: "+ dataSource);
 		HikariDataSource dataSoxe = (HikariDataSource)dataSource;
 		System.out.println("Datasource: "+ dataSoxe.getMaximumPoolSize());
+		System.out.println("JdbcUrl: "+ dataSoxe.getJdbcUrl());
+		System.out.println("Username: "+ dataSoxe.getUsername());
+		System.out.println("Password: "+ dataSoxe.getPassword());
+		System.out.println();
+		System.out.println("============================================================================================");
+		System.out.println("API Started...");
+		System.out.println("============================================================================================");
+		System.out.println();
 	}
 
 }
