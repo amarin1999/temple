@@ -211,14 +211,12 @@ export class CourseCreateComponent implements OnInit {
     if (!this.courseForm.valid ) {
         this.subscribeInputMessageWaring();
         console.log(this.courseForm.get('transportTemple').errors);
-        
     } else {
       this.confirmationService.confirm({
         message: 'ยืนยันการสร้างคอร์ส',
         header: 'สร้างคอร์สใหม่',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-
           const date = this.courseForm.get('date').value;
           const stDate = formatDate(date[0], 'yyyy-MM-dd', 'th');
           let endDate = '';
