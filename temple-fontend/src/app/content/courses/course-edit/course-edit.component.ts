@@ -112,8 +112,8 @@ export class CourseEditComponent implements OnInit {
             return {
               id: res.id,
               name: res.titleDisplay + res.fname + ' ' + res.lname
-            }
-          })
+            };
+          });
           // console.log(this.teachers);
         }
       },
@@ -143,7 +143,7 @@ export class CourseEditComponent implements OnInit {
             id: data.id,
             name: data.name + ' เวลารับ : ' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
               ' เวลาส่ง : ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
-          }
+          };
         });
       },
       error => {
@@ -158,7 +158,7 @@ export class CourseEditComponent implements OnInit {
 
   private initNotice() {
     this.noticearr.map(res => {
-      this.notice.push({ id: res })
+      this.notice.push({ id: res });
     });
   }
 
@@ -175,7 +175,7 @@ export class CourseEditComponent implements OnInit {
           };
         });
         // console.log('Teachers = ' + teachers);
-        for (var i = 0; i < teachers.length; i++) {
+        for (let i = 0; i < teachers.length; i++) {
           this.obj.push(teachers[i]);
           // teacherLength= teachers.length
           // console.log(this.obj);
@@ -200,14 +200,16 @@ export class CourseEditComponent implements OnInit {
           id: res['data']['locationId'],
           name: res['data']['locationName']
         };
+        console.log('transportTempleList',res.data);
 
-        if (res['data']['transportTempleId'] != null) {
+        if (res['data']['transportation'] != null) {
           this.transportTempleList = {
             id: res['data']['transportTempleId'],
             name: res['data']['transportTempleName']
               + ' เวลารับ : ' + new Date(res['data']['transportTempleTimePickUp']).toLocaleTimeString('th-TH', this.optionTime)
               + ' เวลาส่ง : ' + new Date(res['data']['transportTempleTimeSend']).toLocaleTimeString('th-TH', this.optionTime)
           };
+          
         } else {
           this.transportTempleList = null;
         }
@@ -314,13 +316,13 @@ export class CourseEditComponent implements OnInit {
         // console.log(control.valid);
         if (!control.valid) {
           this.formError[field] = this.validationMessage[field].required;
-          if (field == 'courseName') {
+          if (field === 'courseName') {
             if (control.hasError('maxlength')) {
               // console.log('if' + field);
               this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
             }
           }
-          if (field == 'detail') {
+          if (field === 'detail') {
             if (control.hasError('maxlength')) {
               // console.log('if' + field);
               this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
@@ -334,15 +336,15 @@ export class CourseEditComponent implements OnInit {
   }
 
   filterTeacherMultiple(event) {
-    let query = event.query;
+    const query = event.query;
     this.filteredTeacher = this.filterTeacher(query, this.teachers);
   }
 
   filterTeacher(query, teachers: any): any[] {
-    let filtered: any[] = [];
+    const filtered: any[] = [];
     for (let i = 0; i < teachers.length; i++) {
-      let teacher = teachers[i]
-      if ((teacher.name).toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      const teacher = teachers[i];
+      if ((teacher.name).toLowerCase().indexOf(query.toLowerCase()) === 0) {
         filtered.push(teacher);
       }
     }
@@ -363,7 +365,7 @@ export class CourseEditComponent implements OnInit {
     Object.keys(this.formEdit.controls).forEach(key => {
       const control = this.formEdit.get(key);
       control.clearValidators();
-      if (key == 'courseName' || key == 'detail') {
+      if (key === 'courseName' || key === 'detail') {
         control.setValidators([Validators.required, Validators.maxLength(255)]);
       } else {
         control.setValidators(Validators.required);
