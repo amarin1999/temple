@@ -6,16 +6,33 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.cdgs.temple.dto.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.cdgs.temple.dto.ApprovalCoursesDto;
+import com.cdgs.temple.dto.CourseDto;
+import com.cdgs.temple.dto.CourseScheduleDto;
+import com.cdgs.temple.dto.CourseTeacherDto;
+import com.cdgs.temple.dto.MemberDto;
+import com.cdgs.temple.dto.MembersHasCourseDto;
+import com.cdgs.temple.dto.ResponseCountDto;
+import com.cdgs.temple.dto.SensationDto;
+import com.cdgs.temple.dto.SpecialApproveDto;
+import com.cdgs.temple.dto.TransportationDto;
 import com.cdgs.temple.entity.CourseEntity;
 import com.cdgs.temple.service.ApprovalCoursesService;
 import com.cdgs.temple.service.CourseScheduleService;
@@ -134,7 +151,8 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println("catch");
+			System.out.println("catch >> GetCourses");
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -368,9 +386,9 @@ public class CourseController {
 			course = courseService.createCourse(body);
 			courseSchedule.setCourseId(course.getId());
 			try {
-				if (body.getTransportTempleId() != null) {
+				if (body.getTransportation().getId() != null) {
 					transportationDto.setCourseId(course.getId());
-					transportationDto.setId(body.getTransportTempleId());
+					transportationDto.setId(body.getTransportation().getId());
 					transportationService.updateTransportationTemple(transportationDto.getId(), transportationDto);
 				}
 			} catch (Exception e) {

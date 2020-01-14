@@ -34,10 +34,7 @@ public class CourseDto implements Serializable {
     private List<MemberDto> teacherList;
     private List<CourseScheduleDto> dateList;
     private List<Date> date;
-    private Long transportTempleId;
-    private String transportTempleName;
-    private Date transportTempleTimePickUp;
-    private Date transportTempleTimeSend;
+    private TransportationDto transportation;
 
     public Long getId() {
         return id;
@@ -215,36 +212,12 @@ public class CourseDto implements Serializable {
 		this.teacherList = teacherList;
 	}
 
-	public Long getTransportTempleId() {
-		return transportTempleId;
+	public TransportationDto getTransportation() {
+		return transportation;
 	}
 
-	public void setTransportTempleId(Long transportTempleId) {
-		this.transportTempleId = transportTempleId;
-	}
-
-	public String getTransportTempleName() {
-		return transportTempleName;
-	}
-
-	public void setTransportTempleName(String transportTempleName) {
-		this.transportTempleName = transportTempleName;
-	}
-
-	public Date getTransportTempleTimePickUp() {
-		return transportTempleTimePickUp;
-	}
-
-	public void setTransportTempleTimePickUp(Date transportTempleTimePickUp) {
-		this.transportTempleTimePickUp = transportTempleTimePickUp;
-	}
-
-	public Date getTransportTempleTimeSend() {
-		return transportTempleTimeSend;
-	}
-
-	public void setTransportTempleTimeSend(Date transportTempleTimeSend) {
-		this.transportTempleTimeSend = transportTempleTimeSend;
+	public void setTransportation(TransportationDto transportation) {
+		this.transportation = transportation;
 	}
 
 	@Override
@@ -255,9 +228,7 @@ public class CourseDto implements Serializable {
 				+ ", memberLname=" + memberLname + ", locationId=" + locationId + ", locationName=" + locationName
 				+ ", mhcStatus=" + mhcStatus + ", saStatus=" + saStatus + ", status=" + status + ", canRegister="
 				+ canRegister + ", teacher=" + teacher + ", teacherList=" + teacherList + ", dateList=" + dateList
-				+ ", date=" + date + ", transportTempleId =" + transportTempleId + ", transportTempleName ="
-				+ transportTempleName + ", transportTempleTimePickUp =" + transportTempleTimePickUp
-				+ ", transportTempleTimeSend =" + transportTempleTimeSend + "]";
+				+ ", date=" + date + "]";
 	}
 
 }

@@ -1,14 +1,50 @@
 package com.cdgs.temple.entity;
 
 import java.io.Serializable;
-
-// import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+/**
+ * @created 13/01/2563
+ * @author PRAYOON SUNTORNKITI
+ *
+ */
+@SqlResultSetMapping(name = "findAllCourseEntityDataMapping", classes = {
+		@ConstructorResult(targetClass = CourseEntity.class, columns = {
+				@ColumnResult(name = "courseId", type = Long.class),
+				@ColumnResult(name = "courseNo", type = Long.class),
+				@ColumnResult(name = "courseName", type = String.class),
+				@ColumnResult(name = "courseStDate", type = Timestamp.class),
+				@ColumnResult(name = "courseEndDate", type = Timestamp.class),
+				@ColumnResult(name = "courseDetail", type = String.class),
+				@ColumnResult(name = "courseConditionMin", type = Integer.class),
+				@ColumnResult(name = "courseLocationId", type = Long.class),
+				@ColumnResult(name = "courseCreateBy", type = Long.class),
+				@ColumnResult(name = "courseCreateDate", type = Timestamp.class),
+				@ColumnResult(name = "courseLastUpdate", type = Timestamp.class),
+				@ColumnResult(name = "courseStatus", type = String.class),
+				@ColumnResult(name = "courseEnable", type = Boolean.class),
+				@ColumnResult(name = "locationName", type = String.class),
+				@ColumnResult(name = "transportationId", type = Long.class) 
+				}
+					) 
+		})
+  
+@NamedNativeQuery(name = "findAllCourseEntity", resultSetMapping = "findAllCourseEntityDataMapping", 
+	query = "SELECT c.course_id AS courseId, c.course_no AS courseNo, c.course_name AS courseName, "
+			+ "c.course_st_date AS courseStDate, c.course_end_date AS courseEndDate, c.course_detail AS courseDetail, "
+			+ "c.course_condition_min AS courseConditionMin , c.course_location_id AS courseLocationId, c.course_create_by AS courseCreateBy, "
+			+ "c.course_create_date AS courseCreateDate, c.course_last_update AS courseLastUpdate, c.course_status AS courseStatus, "
+			+ "c.course_enable AS courseEnable, l.location_name AS locationName, t.tran_id AS transportationId "
+			+ "FROM courses c "
+			+ "LEFT JOIN locations l ON c.course_location_id = l.location_id "
+			+ "LEFT JOIN transportations t ON c.course_id = t.course_id "
+			+ "LEFT JOIN transportations_time tt ON t.tran_time_id = tt.tran_time_id ")
 
 @Entity
 @Table(name = "courses")
@@ -19,6 +55,32 @@ public class CourseEntity implements Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = 1615306482250637476L;
+
+	public CourseEntity() {
+		super();
+	}
+	
+	public CourseEntity(Long courseId, Long courseNo, String courseName, Date courseStDate, Date courseEndDate,
+			String courseDetail, Integer courseConditionMin, Long courseLocationId, Long courseCreateBy,
+			Date courseCreateDate, Date courseLastUpdate , String courseStatus,	Boolean courseEnable,
+			String locationName,Long transportationId) {
+		this.courseId = courseId;
+		this.courseNo = courseNo;
+		this.courseName = courseName;
+		this.courseStDate = courseStDate;
+		this.courseEndDate = courseEndDate;
+		this.courseDetail = courseDetail;
+		this.courseConditionMin = courseConditionMin;
+		this.courseLocationId = courseLocationId;
+		this.courseCreateBy = courseCreateBy;
+		this.courseCreateDate = courseCreateDate;
+		this.courseLastUpdate = courseLastUpdate;
+		this.courseStatus = courseStatus;
+		this.courseEnable = courseEnable;
+		this.locationName = locationName;
+		this.transportationId = transportationId;
+		
+	}
 
 	@Id
 	@Column(name = "course_id")
@@ -41,7 +103,7 @@ public class CourseEntity implements Serializable {
 	private String courseDetail;
 
 	@Column(name = "course_condition_min")
-	private int courseConditionMin;
+	private Integer courseConditionMin;
 
 	@Column(name = "course_location_id")
 	private Long courseLocationId;
@@ -61,7 +123,7 @@ public class CourseEntity implements Serializable {
 	private String courseStatus;
 
 	@Column(name = "course_enable")
-	private boolean courseEnable = true;
+	private Boolean courseEnable = true;
 
 	@ManyToOne
 	@JoinColumn(name = "course_create_by", insertable = false, updatable = false)
@@ -71,20 +133,17 @@ public class CourseEntity implements Serializable {
 	@JoinColumn(name = "course_location_id", insertable = false, updatable = false)
 	private LocationEntity locationId;
 
-//    @Column(name = "transportation_temple_name")
-//    private String transportTempleName;
-//    
-//    @Column(name = "transportation_temple_time_pickup")
-//    private LocalDateTime transportTempleTimePickUp; 
-//    
-//    @Column(name = "transportation_temple_time_send")
-//    private LocalDateTime transportTempleTimeSend;
+	@Transient
+	private Long transportationId;
+	
+	@Transient
+	private String locationName;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "course_id", insertable = false, updatable = false)
 	private List<CourseScheduleEntity> courseSchdule;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "course_id", insertable = false, updatable = false)
 	private List<CourseTeacherEntity> courseTeacher;
 
@@ -128,11 +187,11 @@ public class CourseEntity implements Serializable {
 		this.courseDetail = courseDetail;
 	}
 
-	public int getCourseConditionMin() {
+	public Integer getCourseConditionMin() {
 		return courseConditionMin;
 	}
 
-	public void setCourseConditionMin(int courseConditionMin) {
+	public void setCourseConditionMin(Integer courseConditionMin) {
 		this.courseConditionMin = courseConditionMin;
 	}
 
@@ -184,11 +243,11 @@ public class CourseEntity implements Serializable {
 		this.locationId = locationId;
 	}
 
-	public boolean isCourseEnable() {
+	public Boolean isCourseEnable() {
 		return courseEnable;
 	}
 
-	public void setCourseEnable(boolean courseEnable) {
+	public void setCourseEnable(Boolean courseEnable) {
 		this.courseEnable = courseEnable;
 	}
 
@@ -224,4 +283,20 @@ public class CourseEntity implements Serializable {
 		this.courseStatus = courseStatus;
 	}
 
+	public Long getTransportationId() {
+		return transportationId;
+	}
+
+	public void setTransportationId(Long transportationId) {
+		this.transportationId = transportationId;
+	}
+
+	public String getLocationName() {
+		return locationName;
+	}
+	
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
 }
+

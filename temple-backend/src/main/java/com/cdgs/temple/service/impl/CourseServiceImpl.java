@@ -4,16 +4,24 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import com.cdgs.temple.dto.*;
-import com.cdgs.temple.entity.*;
-import com.cdgs.temple.repository.TempCourseRepository;
-import com.cdgs.temple.repository.TransportationRepository;
-import com.cdgs.temple.service.CourseScheduleService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.cdgs.temple.dto.CourseDto;
+import com.cdgs.temple.dto.CourseScheduleDto;
+import com.cdgs.temple.dto.CourseTeacherDto;
+import com.cdgs.temple.dto.MemberDto;
+import com.cdgs.temple.dto.MembersHasCourseDto;
+import com.cdgs.temple.dto.TransportationDto;
+import com.cdgs.temple.entity.CourseEntity;
+import com.cdgs.temple.entity.CourseScheduleEntity;
+import com.cdgs.temple.entity.CourseTeacherEntity;
+import com.cdgs.temple.entity.MembersHasCourseEntity;
+import com.cdgs.temple.entity.TempCourseEntity;
 import com.cdgs.temple.repository.CourseRepository;
 import com.cdgs.temple.repository.CourseScheduleRepository;
 import com.cdgs.temple.repository.CourseTeacherRepository;
@@ -21,10 +29,11 @@ import com.cdgs.temple.repository.GraduatedRepository;
 import com.cdgs.temple.repository.LocationRepository;
 import com.cdgs.temple.repository.MembersHasCourseRepository;
 import com.cdgs.temple.repository.SpecialApproveRepository;
+import com.cdgs.temple.repository.TempCourseRepository;
+import com.cdgs.temple.service.CourseScheduleService;
 import com.cdgs.temple.service.CourseService;
-
 import com.cdgs.temple.service.MemberService;
-import org.springframework.transaction.annotation.Transactional;
+import com.cdgs.temple.service.TransportationService;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -51,12 +60,15 @@ public class CourseServiceImpl implements CourseService {
 
 	private CourseScheduleService courseScheduleService;
 
+	private TransportationService transportationService;
+
 	@Autowired
 	public CourseServiceImpl(CourseRepository courseRepository, MembersHasCourseRepository membersHasCourseRepository,
 			CourseScheduleRepository courseScheduleRepository, MemberService memberService,
 			TempCourseRepository tempCourseRepository, SpecialApproveRepository specialApproveRepository,
 			GraduatedRepository graduatedRepository, LocationRepository locationRepository,
-			CourseTeacherRepository courseTeacherRepository, CourseScheduleService courseScheduleService) {
+			CourseTeacherRepository courseTeacherRepository, CourseScheduleService courseScheduleService,
+			TransportationService transportationService) {
 
 		this.courseRepository = courseRepository;
 		this.membersHasCourseRepository = membersHasCourseRepository;
@@ -68,6 +80,7 @@ public class CourseServiceImpl implements CourseService {
 		this.locationRepository = locationRepository;
 		this.courseTeacherRepository = courseTeacherRepository;
 		this.courseScheduleService = courseScheduleService;
+		this.transportationService = transportationService;
 
 	}
 
@@ -119,7 +132,7 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public List<CourseDto> getCourses() {
-		List<CourseEntity> entities = courseRepository.selectAll();
+		List<CourseEntity> entities = courseRepository.findAllCourseEntity();
 		return mapListEntityToDto(entities);
 	}
 
@@ -160,7 +173,7 @@ public class CourseServiceImpl implements CourseService {
 			CourseEntity entity = courseRepository.findById(id).get();
 			return mapEntityEditToDto(entity);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error("getCourse >>>> " + e.getMessage());
 			e.printStackTrace();
 		}
 		return null;
@@ -337,8 +350,8 @@ public class CourseServiceImpl implements CourseService {
 
 	private CourseDto mapEntityToDto(CourseEntity entity) {
 		CourseDto dto = new CourseDto();
-		TransportationDto dtoTran = new TransportationDto();
 		CourseTeacherDto teacherDto = new CourseTeacherDto();
+		TransportationDto transportationDto = new TransportationDto();
 		List<Long> teacherList = new ArrayList<>();
 		try {
 			if (entity != null) {
@@ -352,16 +365,17 @@ public class CourseServiceImpl implements CourseService {
 				dto.setStatus(entity.getCourseStatus());
 				dto.setCreateDate(entity.getCourseCreateDate());
 				dto.setLastUpdate(entity.getCourseLastUpdate());
+				if (entity.getLocationName() != null) {
+					dto.setLocationName(entity.getLocationName());
+				}
 				if (entity.getLocationId() != null) {
 					dto.setLocationId(entity.getLocationId().getLocationId());
 					dto.setLocationName(entity.getLocationId().getLocationName());
 				}
-//				if (entity.getTransportTempleEntity() != null) {
-//					dto.setTransportTempleId(entity.getTransportTempleEntity().getTransportationTimeId());
-//					dto.setTransportTempleName(entity.getTransportTem);
-//					dto.setTransportTempleTimePickUp(entity.getTransportTempleEntity().getTransportationTempleTimePickup());
-//					dto.setTransportTempleTimeSend(entity.getTransportTempleEntity().getTransportationTempleTimeSend());
-//				}
+				if (entity.getTransportationId() != null) {
+					transportationDto = transportationService.getTransportationByCourseId(entity.getCourseId());
+					dto.setTransportation(transportationDto);
+				}
 				if (entity.getCreateBy() != null) {
 					dto.setMemberId(entity.getCreateBy().getMemberId());
 					dto.setMemberFname(entity.getCreateBy().getMemberFname());
@@ -414,7 +428,7 @@ public class CourseServiceImpl implements CourseService {
 			dto.setSaStatus(entity.getSaStatus());
 			dto.setMhcStatus(entity.getMhcStatus());
 			dto.setCanRegister(entity.getCanRegister());
-			dto.setTransportTempleId(entity.getTransportTempleId());
+//			dto.setTransportTempleId(entity.getTransportTempleId());
 		} else {
 			dto = null;
 		}
@@ -455,8 +469,8 @@ public class CourseServiceImpl implements CourseService {
 				}
 			}
 
-			entity.setCourseTeacher(courseTeacherRepository.findAllByCourseId(id));
-			entity.setCourseSchdule(courseScheduleRepository.findAllByCourseId(id));
+//			entity.setCourseTeacher(courseTeacherRepository.findAllByCourseId(id));
+//			entity.setCourseSchdule(courseScheduleRepository.findAllByCourseId(id));
 
 			return mapEntityEditToDto(entity);
 
@@ -489,7 +503,7 @@ public class CourseServiceImpl implements CourseService {
 			for (MemberDto teacher : list) {
 				entity.setCourseId(courseId);
 				entity.setMemberId(teacher.getId());
-				// entity.setMember(memberRepository.findById(teacher.getId()).get());
+//				 entity.setMember(memberRepository.findById(teacher.getId()).get());
 				entities.add(entity);
 			}
 		}
@@ -564,6 +578,7 @@ public class CourseServiceImpl implements CourseService {
 	private CourseDto mapEntityEditToDto(CourseEntity entity) {
 		List<MemberDto> teacherList = new ArrayList<>();
 		CourseDto dto = new CourseDto();
+		TransportationDto transportationDto = new TransportationDto();
 		try {
 			if (entity != null) {
 				dto.setId(entity.getCourseId());
@@ -576,17 +591,10 @@ public class CourseServiceImpl implements CourseService {
 				dto.setLocationId(entity.getLocationId().getLocationId());
 				dto.setLocationName(entity.getLocationId().getLocationName());
 
-//				if (entity.getCourseTransportTempleId() != null) {
-//					dto.setTransportTempleId(entity.getTransportTempleEntity().getTransportationTimeId());
-//					dto.setTransportTempleName(entity.getTransportTempleEntity().getTranName());
-//					dto.setTransportTempleTimePickUp(entity.getTransportTempleEntity().getTransportationTempleTimePickup());
-//					dto.setTransportTempleTimeSend(entity.getTransportTempleEntity().getTransportationTempleTimeSend());
-//				} else {
-//					dto.setTransportTempleId(null);
-//					dto.setTransportTempleName(null);
-//					dto.setTransportTempleTimePickUp(null);
-//					dto.setTransportTempleTimeSend(null);
-//				}
+				if (entity.getTransportationId() != null) {
+					transportationDto.setId(entity.getTransportationId());
+					dto.setTransportation(transportationDto);
+				}
 
 				dto.setMemberId(entity.getCreateBy().getMemberId());
 				dto.setMemberFname(entity.getCreateBy().getMemberFname());
@@ -594,10 +602,10 @@ public class CourseServiceImpl implements CourseService {
 				dto.setStDate(entity.getCourseStDate());
 				dto.setEndDate(entity.getCourseEndDate());
 
-				for (CourseTeacherEntity courseTeacher : entity.getCourseTeacher()) {
-					teacherList.add(memberService.getMember(courseTeacher.getMemberId()));
-				}
-				dto.setTeacherList(teacherList);
+//				for (CourseTeacherEntity courseTeacher : entity.getCourseTeacher()) {
+//					teacherList.add(memberService.getMember(courseTeacher.getMemberId()));
+//				}
+//				dto.setTeacherList(teacherList);
 				dto.setDateList(courseScheduleService.getCourseScheduleList(entity.getCourseId()));
 
 				return dto;
