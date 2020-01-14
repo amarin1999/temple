@@ -90,7 +90,7 @@
                                 {{rowData['locationName']}}
                             </td>
                             <td>
-                                <div *ngIf="rowData['transportation']['name'] != null ; else nullValue">
+                                <div *ngIf="rowData['transportation'] != null ; else nullValue">
                                     {{rowData['transportation']['name']}} <br>
                                     เวลารับ : {{rowData['transportation']['timePickUp'] | date: "HH:mm"}} <br> เวลาส่ง :
                                     {{rowData['transportation']['timeSend'] | date: "HH:mm"}}
