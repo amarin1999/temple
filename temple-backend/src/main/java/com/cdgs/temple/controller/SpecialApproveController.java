@@ -31,7 +31,7 @@ public class SpecialApproveController {
 
 	@Autowired
 	public SpecialApproveController(SpecialApproveService specialApproveService, MemberService memberService,
-									CourseService courseService, CourseScheduleService courseScheduleService) {
+			CourseService courseService, CourseScheduleService courseScheduleService) {
 		this.specialApproveService = specialApproveService;
 		this.memberService = memberService;
 		this.courseService = courseService;
@@ -57,7 +57,7 @@ public class SpecialApproveController {
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping(path = "outTime/{courseId}")
 	@PreAuthorize("hasRole('monk')")
 	public ResponseEntity<ResponseDto<SpecialApproveDto>> GetAllOutTime(@PathVariable("courseId") Long courseId) {
@@ -79,14 +79,15 @@ public class SpecialApproveController {
 	}
 
 	@GetMapping(path = "/outTime")
-	public ResponseEntity<ResponseDto<CourseDto>> getCourseOutTimeByMemberId(@RequestParam("approveType") String approveType){
+	public ResponseEntity<ResponseDto<CourseDto>> getCourseOutTimeByMemberId(
+			@RequestParam("approveType") String approveType) {
 		MemberDto member = memberService.getCurrentMember();
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> listDto = new ArrayList<>();
 		try {
-			if(approveType.equals("Wait")) {
+			if (approveType.equals("Wait")) {
 				listDto = courseService.getCourseOutTimeFromSpecialApproveIdByMemberId(member.getId());
-			}else {
+			} else {
 				listDto = courseService.getCourseOutTimeFromSpecialApproveSuccess(member.getId());
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -99,7 +100,7 @@ public class SpecialApproveController {
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PostMapping(path = "")
 	@PreAuthorize("hasRole('user')")
 	public ResponseEntity<ResponseDto<SpecialApproveDto>> Create(@Valid @RequestBody SpecialApproveDto body) {
@@ -108,10 +109,10 @@ public class SpecialApproveController {
 		SpecialApproveDto dto;
 		MemberDto member = memberService.getCurrentMember();
 		try {
-        	body.setMemberId(member.getId());
-        	body.setStatus("2");
+			body.setMemberId(member.getId());
+			body.setStatus("2");
 			dto = specialApproveService.create(body);
-			if(dto == null) {
+			if (dto == null) {
 				throw new Exception("เงื่อนไขการสมัครไม่ถูกต้อง");
 			}
 			specialApproves.add(dto);
@@ -147,20 +148,21 @@ public class SpecialApproveController {
 			if (body.getStatus().equals("1")) {
 				for (SpecialApproveDto dto : listDto) {
 					courseService.updateCourseToEnable(dto.getCourseId());
-					specialApprovesDto = specialApproveService.getByCourseIdAndMemberId(dto.getCourseId(), dto.getMemberId());
+					specialApprovesDto = specialApproveService.getByCourseIdAndMemberId(dto.getCourseId(),
+							dto.getMemberId());
 					/**
 					 * in Time = null ,out Time != null
 					 */
-					if(specialApprovesDto != null) {
+					if (specialApprovesDto != null) {
 						courseDto = courseService.getCourse(specialApprovesDto.getCourseId());
 						courseSchedule.setCourseId(specialApprovesDto.getCourseId());
-						
-		                courseSchedule.setCourseScheduleDate(courseDto.getStDate());
-		                courseScheduleService.createCourseSchedule(courseSchedule);
-		                courseSchedule.setCourseScheduleDate(courseDto.getEndDate());
-		                courseScheduleService.createCourseSchedule(courseSchedule);
+
+						courseSchedule.setCourseScheduleDate(courseDto.getStDate());
+						courseScheduleService.createCourseSchedule(courseSchedule);
+						courseSchedule.setCourseScheduleDate(courseDto.getEndDate());
+						courseScheduleService.createCourseSchedule(courseSchedule);
 					}
-					
+
 					RegisterCourse(dto);
 				}
 			}
@@ -177,22 +179,23 @@ public class SpecialApproveController {
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PutMapping(path = "/outTime")
 	@PreAuthorize("hasRole('user') OR hasRole('monk')")
-	public ResponseEntity<ResponseDto<SpecialApproveDto>> cancelApproveOutTime(@RequestParam("courseId") Long courseId){
+	public ResponseEntity<ResponseDto<SpecialApproveDto>> cancelApproveOutTime(
+			@RequestParam("courseId") Long courseId) {
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
 		SpecialApproveDto dto = new SpecialApproveDto();
 		MemberDto member = memberService.getCurrentMember();
 		try {
 			dto = specialApproveService.getApproveByCourseIdAndMemberId(courseId, member.getId());
 			if (specialApproveService.cancelApproveOutTime(dto.getSpecialApproveId())) {
-                res.setResult("Success");
-                res.setCode(200);
-                return new ResponseEntity<>(res, HttpStatus.OK);
+				res.setResult("Success");
+				res.setCode(200);
+				return new ResponseEntity<>(res, HttpStatus.OK);
 			} else {
-                res.setResult("Fail");
-                return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+				res.setResult("Fail");
+				return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());

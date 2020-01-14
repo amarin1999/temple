@@ -5,17 +5,17 @@ import java.util.List;
 import com.cdgs.temple.dto.SpecialApproveDto;
 
 public interface SpecialApproveService {
-    List<SpecialApproveDto> getAll(Long memberId, Long courseId);
+	List<SpecialApproveDto> getAll(Long memberId, Long courseId);
 
-    SpecialApproveDto getById(Long memberId, Long id);
+	SpecialApproveDto getById(Long memberId, Long id);
 
-    SpecialApproveDto create(SpecialApproveDto body);
+	SpecialApproveDto create(SpecialApproveDto body);
 
-    SpecialApproveDto delete(Long courseId, Long memberId);
+	SpecialApproveDto delete(Long courseId, Long memberId);
 
-    SpecialApproveDto update(SpecialApproveDto body, Long id);
+	SpecialApproveDto update(SpecialApproveDto body, Long id);
 
-    boolean approve(SpecialApproveDto data);
+	boolean approve(SpecialApproveDto data);
 
 	SpecialApproveDto getApproveByCourseIdAndMemberId(Long courseId, Long memberId);
 

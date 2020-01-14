@@ -4,34 +4,36 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cdgs.temple.entity.MembersHasCourseEntity;
-import com.cdgs.temple.entity.TempSpecialApproveEntity;
-import com.cdgs.temple.repository.MembersHasCourseRepository;
-import com.cdgs.temple.repository.TempSpecialApproveRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdgs.temple.dto.SensationDto;
 import com.cdgs.temple.dto.SpecialApproveDto;
+import com.cdgs.temple.entity.MembersHasCourseEntity;
 import com.cdgs.temple.entity.SpecialApproveEntity;
+import com.cdgs.temple.entity.TempSpecialApproveEntity;
+import com.cdgs.temple.repository.MembersHasCourseRepository;
 import com.cdgs.temple.repository.SpecialApproveRepository;
+import com.cdgs.temple.repository.TempSpecialApproveRepository;
 import com.cdgs.temple.service.SensationService;
 import com.cdgs.temple.service.SpecialApproveService;
 
 @Service
-public class SpecialApproveServiceImpl implements SpecialApproveService{
+public class SpecialApproveServiceImpl implements SpecialApproveService {
+
+	private static final Logger log = LoggerFactory.getLogger(SpecialApproveServiceImpl.class);
 
 	private SpecialApproveRepository specialApproveRepository;
 	private TempSpecialApproveRepository tempSpecialApproveRepository;
 	private MembersHasCourseRepository membersHasCourseRepository;
 	private SensationService sensationService;
+
 	@Autowired
-	public SpecialApproveServiceImpl (
-			SpecialApproveRepository specialApproveRepository,
+	public SpecialApproveServiceImpl(SpecialApproveRepository specialApproveRepository,
 			TempSpecialApproveRepository tempSpecialApproveRepository,
-			MembersHasCourseRepository membersHasCourseRepository,
-			SensationService sensationService
-	) {
+			MembersHasCourseRepository membersHasCourseRepository, SensationService sensationService) {
 		this.specialApproveRepository = specialApproveRepository;
 		this.tempSpecialApproveRepository = tempSpecialApproveRepository;
 		this.membersHasCourseRepository = membersHasCourseRepository;
@@ -52,26 +54,28 @@ public class SpecialApproveServiceImpl implements SpecialApproveService{
 	public SpecialApproveDto create(SpecialApproveDto body) {
 		SensationDto tempSensation = new SensationDto();
 		SensationDto sensation = new SensationDto();
-		
+
 		tempSensation.setId(body.getSenseId());
-    	tempSensation.setExpected(body.getExpected());
-    	tempSensation.setExperience(body.getExperience());
-    	sensation = sensationService.createSensation(tempSensation);
-    	body.setSenseId(sensation.getId());
-    	
+		tempSensation.setExpected(body.getExpected());
+		tempSensation.setExperience(body.getExperience());
+		sensation = sensationService.createSensation(tempSensation);
+		body.setSenseId(sensation.getId());
+
 		SpecialApproveEntity entity = mapDtoToEntity(body);
 
 		try {
 			return mapEntityToDto(specialApproveRepository.save(entity));
 		} catch (Exception e) {
-			return null;
+			log.error(e.getMessage());
 		}
+		return null;
 	}
 
 	@Override
 	public SpecialApproveDto delete(Long courseId, Long memberId) {
-		SpecialApproveEntity data = specialApproveRepository.findByCourseIdAndMemberIdAndStatus(courseId, memberId, "2");
-		if(data != null) {
+		SpecialApproveEntity data = specialApproveRepository.findByCourseIdAndMemberIdAndStatus(courseId, memberId,
+				"2");
+		if (data != null) {
 			data.setSpaStatus("3");
 			data.setLastUpdate(LocalDateTime.now());
 			return mapEntityToDto(specialApproveRepository.save(data));
@@ -81,8 +85,9 @@ public class SpecialApproveServiceImpl implements SpecialApproveService{
 
 	@Override
 	public SpecialApproveDto update(SpecialApproveDto body, Long memberId) {
-		SpecialApproveEntity data = specialApproveRepository.fetchBySaIdAndMemberId(body.getSpecialApproveId(), memberId);
-		if(data != null && !body.getStatus().equals("2") && !body.getStatus().equals("3")) {
+		SpecialApproveEntity data = specialApproveRepository.fetchBySaIdAndMemberId(body.getSpecialApproveId(),
+				memberId);
+		if (data != null && !body.getStatus().equals("2") && !body.getStatus().equals("3")) {
 			data.setSpaStatus(body.getStatus());
 			data.setLastUpdate(LocalDateTime.now());
 			return mapEntityToDto(specialApproveRepository.save(data));
@@ -97,17 +102,17 @@ public class SpecialApproveServiceImpl implements SpecialApproveService{
 		mhc.setCourseId(data.getCourseId());
 		mhc.setMhcStatus('2');
 		mhc.setSenseId(data.getSenseId());
-		if (membersHasCourseRepository.save(mhc) != null){
+		if (membersHasCourseRepository.save(mhc) != null) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
 	public SpecialApproveDto getApproveByCourseIdAndMemberId(Long courseId, Long memberId) {
-		return mapEntityToDto(specialApproveRepository.findByCourseIdAndMemberId(courseId,memberId));
+		return mapEntityToDto(specialApproveRepository.findByCourseIdAndMemberId(courseId, memberId));
 	}
-	
+
 	@Override
 	public Boolean cancelApproveOutTime(Long specialApproveId) {
 		try {
@@ -117,18 +122,18 @@ public class SpecialApproveServiceImpl implements SpecialApproveService{
 			return false;
 		}
 	}
-	
+
 	@Override
 	public List<SpecialApproveDto> getMemberOutTime(Long memberId, Long courseId) {
 		return mapTempEntityListToDto(tempSpecialApproveRepository.getMemberOutTime(memberId, courseId));
 	}
-	
+
 	@Override
-	public SpecialApproveDto getByCourseIdAndMemberId(Long courseId,Long memberId) {
+	public SpecialApproveDto getByCourseIdAndMemberId(Long courseId, Long memberId) {
 		return mapEntityToDto(specialApproveRepository.getByCourseIdAndMemberId(courseId, memberId));
 	}
 
-	private List<SpecialApproveDto> mapEntityListToDto(List<SpecialApproveEntity> entities){
+	private List<SpecialApproveDto> mapEntityListToDto(List<SpecialApproveEntity> entities) {
 		List<SpecialApproveDto> dto = new ArrayList<>();
 		for (SpecialApproveEntity entity : entities) {
 			dto.add(mapEntityToDto(entity));
@@ -176,6 +181,7 @@ public class SpecialApproveServiceImpl implements SpecialApproveService{
 		entity.setMemberId(dto.getMemberId());
 		entity.setSpaStatus(dto.getStatus());
 		entity.setSenseId(dto.getSenseId());
+		entity.setTranId(dto.getTransportationId());
 		return entity;
 	}
 
