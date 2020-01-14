@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -40,10 +39,10 @@ public class TransportationEntity implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "tran_time_id", insertable = false, updatable = false)
 	private TransportationTimeEntity transportationTimeEntity;
-
-	@ManyToOne
-	@JoinColumn(name = "course_id", insertable = false, updatable = false)
-	private CourseEntity coursesEntity;
+//
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "course_id", insertable = false, updatable = false)
+//	private CourseEntity coursesEntity;
 
 	public Long getTransportationId() {
 		return transportationId;
@@ -69,13 +68,13 @@ public class TransportationEntity implements Serializable {
 		this.transportationTimeEntity = transportationTimeEntity;
 	}
 
-	public CourseEntity getCoursesEntity() {
-		return coursesEntity;
-	}
-
-	public void setCoursesEntity(CourseEntity coursesEntity) {
-		this.coursesEntity = coursesEntity;
-	}
+//	public CourseEntity getCoursesEntity() {
+//		return coursesEntity;
+//	}
+//
+//	public void setCoursesEntity(CourseEntity coursesEntity) {
+//		this.coursesEntity = coursesEntity;
+//	}
 
 	public Long getTransportationTimeId() {
 		return transportationTimeId;
