@@ -18,5 +18,7 @@ public interface TransportationService {
 	List<TransportationDto> getTransportationTemple();
 
 	Boolean deleteTransportationTemple(Long id);
+	
+	TransportationDto getTransportationByCourseId(Long courseId);
 
 }

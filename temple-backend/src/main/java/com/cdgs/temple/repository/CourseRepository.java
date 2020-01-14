@@ -61,11 +61,12 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 			+ "ORDER BY c.course_st_date,c.course_id ", nativeQuery = true)
 	List<CourseEntity> findCoursesMonk(@Param("memberId") Long memberId);
 
-	@Query(value = "SELECT c.*, l.location_name, t.tran_name, tt.tran_time_pickup, tt.tran_time_send FROM courses c "
-			+ "LEFT JOIN locations l ON c.course_location_id = l.location_id "
-			+ "LEFT JOIN transportations t ON c.course_id = t.course_id "
-			+ "LEFT JOIN transportations_time tt ON t.tran_time_id = tt.tran_time_id ", nativeQuery = true)
-	List<CourseEntity> selectAll();
+//	@Query(value = "SELECT c.*, l.location_name, t.tran_id FROM courses c "
+//			+ "LEFT JOIN locations l ON c.course_location_id = l.location_id "
+//			+ "LEFT JOIN transportations t ON c.course_id = t.course_id "
+//			+ "LEFT JOIN transportations_time tt ON t.tran_time_id = tt.tran_time_id ", nativeQuery = true )
+	@Query(nativeQuery = true, name = "findAllCourseEntity" )
+	List<CourseEntity> findAllCourseEntity();
 
 	@Query(value = "SELECT c.*" + "		FROM courses c" + "		WHERE  c.course_no = '0'"
 			+ "		ORDER BY c.course_id", nativeQuery = true)

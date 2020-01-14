@@ -39,16 +39,16 @@ export class CourseCreateComponent implements OnInit {
   @Output() closeDisplayCreateDialog = new EventEmitter();
 
   courseForm = new FormGroup(
-      {
-        courseName: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-        detail: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-        location: new FormControl('', Validators.required),
-        date: new FormControl('', Validators.required),
-        conditionMin: new FormControl('', Validators.required),
-        teachers: new FormControl('', Validators.required),
-        transportTemple: new FormControl(null)
-      }
-    );
+    {
+      courseName: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+      detail: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+      location: new FormControl('', Validators.required),
+      date: new FormControl('', Validators.required),
+      conditionMin: new FormControl('', Validators.required),
+      teachers: new FormControl('', Validators.required),
+      transportTemple: new FormControl(null)
+    }
+  );
 
   public formError = {
     courseName: '',
@@ -107,13 +107,13 @@ export class CourseCreateComponent implements OnInit {
     ]);
     this.courseService.getTeachers().subscribe(
       res => {
-        if (res.status == 'Success') {
+        if (res.status === 'Success') {
           this.teachers = res['data'].map(res => {
             return {
               id: res.id,
               name: res.titleDisplay + res.fname + ' ' + res.lname
-            }
-          })
+            };
+          });
           // console.log(this.teachers);
 
         }
@@ -126,7 +126,7 @@ export class CourseCreateComponent implements OnInit {
 
     // ----------- Get List of Location -------------
     this.locationService.getLocation().subscribe(
-      res => { 
+      res => {
         if (res.status === 'Success') {
           this.locations = res.data;
 
@@ -139,14 +139,15 @@ export class CourseCreateComponent implements OnInit {
     );
 
     // ------------ Get List of Transportation Temple ------------
-    this.optionTime = {hour: '2-digit', minute: '2-digit'};
+    this.optionTime = { hour: '2-digit', minute: '2-digit' };
     this.transportTempleService.getTranSportTemple().subscribe(
       res => {
-        this.transport = res['data'].map( data => {
-          return {  id: data.id ,
-                    name: data.name + ' เวลารับ : ' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
-                     ' เวลาส่ง : ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
-          }
+        this.transport = res['data'].map(data => {
+          return {
+            id: data.id,
+            name: data.name + ' เวลารับ : ' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
+              ' เวลาส่ง : ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
+          };
         });
       },
       error => {
@@ -156,7 +157,7 @@ export class CourseCreateComponent implements OnInit {
 
     const currentYear = this.pipe.transform(Date.now(), 'yyyy');
     const startYear = parseInt(currentYear) + 5;
-    this.yearRange = currentYear + ':' + startYear ;
+    this.yearRange = currentYear + ':' + startYear;
   }
 
   private initNotice() {
@@ -170,47 +171,47 @@ export class CourseCreateComponent implements OnInit {
    * ตรวจสอบค่าที่รับเข้ามาใหม่ในกรณีกรอกข้อมูลไม่ครบถ้วน
    */
   subscribeInputMessageWaring() {
-      this.courseForm
-        .valueChanges
-        .pipe(
-          debounceTime(500),
-          distinctUntilChanged()
-        ).subscribe(() => this.waringMessage());
-        this.waringMessage();
-    }
+    this.courseForm
+      .valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged()
+      ).subscribe(() => this.waringMessage());
+    this.waringMessage();
+  }
 
   waringMessage() {
     if (!this.formError) {
       return;
     }
-      for (const field of Object.keys(this.formError)) {
-        this.formError[field] = '';
-        const control = this.courseForm.get(field);
-        if (control && this.validationMessage[field]) {
-          if (!control.valid) {
-            this.formError[field] = this.validationMessage[field].required;
-            if (field == 'courseName') {
-              if (control.hasError('maxlength')) {
-                this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
-              }
+    for (const field of Object.keys(this.formError)) {
+      this.formError[field] = '';
+      const control = this.courseForm.get(field);
+      if (control && this.validationMessage[field]) {
+        if (!control.valid) {
+          this.formError[field] = this.validationMessage[field].required;
+          if (field === 'courseName') {
+            if (control.hasError('maxlength')) {
+              this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
             }
-            if (field == 'detail' ){
-              if (control.hasError('maxlength')) {
-                this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
-              }
-            }
-          } else {
-            this.formLengthError[field] = '';
           }
+          if (field === 'detail') {
+            if (control.hasError('maxlength')) {
+              this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
+            }
+          }
+        } else {
+          this.formLengthError[field] = '';
         }
       }
+    }
   }
 
   onSubmit() {
     this.setValidate();
-    if (!this.courseForm.valid ) {
-        this.subscribeInputMessageWaring();
-        console.log(this.courseForm.get('transportTemple').errors);
+    if (!this.courseForm.valid) {
+      this.subscribeInputMessageWaring();
+      console.log(this.courseForm.get('transportTemple').errors);
     } else {
       this.confirmationService.confirm({
         message: 'ยืนยันการสร้างคอร์ส',
@@ -226,7 +227,7 @@ export class CourseCreateComponent implements OnInit {
             datesort = date.map(res => formatDate(res, 'yyyy-MM-dd', 'th')).sort();
           } else {
             endDate = stDate;
-            for (let i = 0 ; i < 2; i++) {
+            for (let i = 0; i < 2; i++) {
               datesort.push(stDate);
             }
           }
@@ -235,7 +236,7 @@ export class CourseCreateComponent implements OnInit {
           // console.log('datesort =' + datesort);
           // console.log('TEACHERS =' + this.courseForm.get('teachers').value.map(res => res.id));
 
-          if(this.courseForm.get('transportTemple').value == null){
+          if (this.courseForm.get('transportTemple').value == null) {
             this.transportTempleId = null;
           } else {
             this.transportTempleId = this.courseForm.get('transportTemple').value.id;
@@ -246,7 +247,7 @@ export class CourseCreateComponent implements OnInit {
             name: this.courseForm.get('courseName').value,
             detail: this.courseForm.get('detail').value,
             locationId: this.courseForm.get('location').value.id,
-            transportTempleId: this.transportTempleId,
+            transportation: {id: this.transportTempleId},
             conditionMin: this.courseForm.get('conditionMin').value.id,
             date: datesort,
             stDate: stDate,
@@ -254,7 +255,7 @@ export class CourseCreateComponent implements OnInit {
             status: 1,
             teacher: this.courseForm.get('teachers').value.map(res => res.id)
           };
-          console.log('>>>>>'  + course.transportTempleId);
+          console.log('>>>>>' + course.transportation);
           this.courseService.createCourse(course).subscribe(res => {
             if (res['result'] === 'Success') {
               /* const index = this.courses.findIndex(course => course.id === this.courseId);
@@ -276,7 +277,7 @@ export class CourseCreateComponent implements OnInit {
           });
         },
         reject: () => {
-          this.msgs = [{severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการสร้างคอร์ส'}];
+          this.msgs = [{ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการสร้างคอร์ส' }];
           this.onCancle(this.msgs);
         }
       });
@@ -291,17 +292,17 @@ export class CourseCreateComponent implements OnInit {
    * autosearch ของผู้สอน
    */
   filterTeacherMultiple(event) {
-    let query = event.query;
+    const query = event.query;
     this.filteredTeacher = this.filterTeacher(query, this.teachers);
     // console.log(this.filteredTeacher);
-    
+
   }
 
-  filterTeacher(query, teachers: any): any[] {   
-    let filtered: any[] = [];
+  filterTeacher(query, teachers: any): any[] {
+    const filtered: any[] = [];
     for (let i = 0; i < teachers.length; i++) {
-      let teacher = teachers[i]
-      if ((teacher.name).toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      const teacher = teachers[i];
+      if ((teacher.name).toLowerCase().indexOf(query.toLowerCase()) === 0) {
         filtered.push(teacher);
       }
     }
@@ -311,24 +312,23 @@ export class CourseCreateComponent implements OnInit {
   onCancle(message) {
     this.closeDisplayCreateDialog.emit(message);
     this.courseForm.reset();
-        Object.values(this.courseForm.controls).forEach(df => {
-          df.markAsPristine();
-          df.setValidators(null);
-          df.updateValueAndValidity();
-        });
+    Object.values(this.courseForm.controls).forEach(df => {
+      df.markAsPristine();
+      df.setValidators(null);
+      df.updateValueAndValidity();
+    });
   }
 
   setValidate() {
-      Object.keys(this.courseForm.controls).forEach(key => {
-        const control = this.courseForm.get(key);
-        control.clearValidators();
-        if (key == 'courseName' || key == 'detail') {
-          control.setValidators([Validators.required, Validators.maxLength(255)]);
-        } else if(key != 'transportTemple') {
-          control.setValidators(Validators.required);
-        }
-        control.updateValueAndValidity();
-      });
-}
-
+    Object.keys(this.courseForm.controls).forEach(key => {
+      const control = this.courseForm.get(key);
+      control.clearValidators();
+      if (key === 'courseName' || key === 'detail') {
+        control.setValidators([Validators.required, Validators.maxLength(255)]);
+      } else if (key !== 'transportTemple') {
+        control.setValidators(Validators.required);
+      }
+      control.updateValueAndValidity();
+    });
+  }
 }

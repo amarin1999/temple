@@ -101,8 +101,8 @@ public class TransportationServiceImpl implements TransportationService {
 			tranEntityTemp = mapDtoToEntity(transportation);
 			tranEntityTemp.setTransportationTimeEntity(tranTimeEntity);
 			if (transportation.getCourseId() != null) {
-				courseEntity.setCourseId(transportation.getCourseId());
-				tranEntityTemp.setCoursesEntity(courseEntity);
+//				courseEntity.setCourseId(transportation.getCourseId());
+//				tranEntityTemp.setCoursesEntity(courseEntity);
 				tranEntityTemp.setTransportationCoursesId(transportation.getCourseId());
 			}
 			if (transportation.getName() != null) {
@@ -182,6 +182,21 @@ public class TransportationServiceImpl implements TransportationService {
 	}
 
 	/**
+	 * gettransportationByCourseId Description : this function is SELECT transportation data By course ID
+	 * Params : course Id create : 13/01/2563 By Waithaya Chouyanan
+	 */
+	@Override
+	public TransportationDto getTransportationByCourseId(Long courseId) {
+		TransportationEntity entity = new TransportationEntity();
+		try {
+			entity = transportationRepository.findByCourseId(courseId);
+		} catch (Exception e) {
+			log.error("getTransportationByCourseId >> " + e.getMessage());
+		}
+		return mapEntityToDto(entity);
+	}
+	
+	/**
 	 * mapListEntityToDto Description : this function is mapping list data of Entity
 	 * to Dto. Params : id : Long, transporatation : TransporatationDto create :
 	 * 23/09/2562 By Korawit Ratyiam
@@ -210,9 +225,9 @@ public class TransportationServiceImpl implements TransportationService {
 				dto.setTimePickUp(entity.getTransportationTimeEntity().getTransportationTempleTimePickup());
 				dto.setTimeSend(entity.getTransportationTimeEntity().getTransportationTempleTimeSend());
 			}
-			if (entity.getCoursesEntity() != null) {
-				dto.setCourseId(entity.getCoursesEntity().getCourseId());
-			}
+//			if (entity.getCoursesEntity() != null) {
+//				dto.setCourseId(entity.getCoursesEntity().getCourseId());
+//			}
 		}
 		return dto;
 	}
@@ -233,12 +248,13 @@ public class TransportationServiceImpl implements TransportationService {
 			entity.setTransportationTimeId(dto.getTranTimeId());
 		}
 		if (dto.getCourseId() != null) {
-			courseEntity.setCourseId(dto.getCourseId());
-			entity.setCoursesEntity(courseEntity);
+//			courseEntity.setCourseId(dto.getCourseId());
+//			entity.setCoursesEntity(courseEntity);
 			entity.setTransportationCoursesId(dto.getCourseId());
 		}
 		return entity;
 	}
+	
 
 	/**
 	 * mapOptionToentity Description : this function is mapping data of Optional to

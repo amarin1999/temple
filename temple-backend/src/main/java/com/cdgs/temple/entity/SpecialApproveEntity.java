@@ -11,47 +11,54 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-
 
 @Entity
 @Table(name = "special_approve")
 @Embeddable
-public class SpecialApproveEntity implements Serializable{
+public class SpecialApproveEntity implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4780915762853262556L;
-	
+
 	@Id
 	@Column(name = "special_approve_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long specialApproveId;
-	
+
 	@Column(name = "member_id")
 	private Long memberId;
-	
+
 	@Column(name = "course_id")
 	private Long courseId;
-	
+
 	@Column(name = "spa_detail")
 	private String spaDetail;
-	
+
 	@Column(name = "spa_status")
 	private String spaStatus;
-	
+
 	@Column(name = "create_date")
 	@CreationTimestamp
 	private LocalDateTime createDate;
-	
+
 	@Column(name = "last_update")
 	@CreationTimestamp
 	private LocalDateTime lastUpdate;
-	
+
 	@Column(name = "sense_id")
 	private Long senseId;
+
+	@Column(name = "tran_id")
+	private Long tranId;
+
+	@ManyToOne
+	@JoinColumn(name = "tran_id", insertable = false, updatable = false)
+	private TransportationEntity transpotation;
 
 	public Long getSpecialApproveId() {
 		return specialApproveId;
@@ -116,4 +123,21 @@ public class SpecialApproveEntity implements Serializable{
 	public void setSenseId(Long senseId) {
 		this.senseId = senseId;
 	}
+
+	public Long getTranId() {
+		return tranId;
+	}
+
+	public void setTranId(Long tranId) {
+		this.tranId = tranId;
+	}
+
+	public TransportationEntity getTranspotation() {
+		return transpotation;
+	}
+
+	public void setTranspotation(TransportationEntity transpotation) {
+		this.transpotation = transpotation;
+	}
+
 }

@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationService, LazyLoadEvent, MenuItem, MessageService} from 'primeng/api';
-import {Course} from 'src/app/shared/interfaces/course';
-import {CourseService} from '../courses/shared/course.service';
-import {BreadcrumbService} from 'src/app/shared/service/breadcrumb.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {of} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ConfirmationService, LazyLoadEvent, MenuItem, MessageService } from 'primeng/api';
+import { Course } from 'src/app/shared/interfaces/course';
+import { CourseService } from '../courses/shared/course.service';
+import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { CourseCreateComponent } from '../courses/course-create/course-create.component';
 import { CourseEditComponent } from '../courses/course-edit/course-edit.component';
 
@@ -27,7 +27,7 @@ export class ManageCourseComponent implements OnInit {
   public displayCreateDialog = false;
   public displayEditDialog = false;
   public courseId: number;
-  @ViewChild('CourseEdit') CourseEdit:CourseEditComponent; 
+  @ViewChild('CourseEdit') CourseEdit: CourseEditComponent;
 
   constructor(
     private courseService: CourseService,
@@ -45,16 +45,16 @@ export class ManageCourseComponent implements OnInit {
     this.getTotalRecord();
 
     this.cols = [
-      {field: 'createDate', header: 'วันที่สร้าง'},
-      {field: 'lastUpdate', header: 'วันที่แก้ไขล่าสุด'},
-      {field: 'name', header: 'ชื่อคอร์ส'},
-      {field: 'locationName', header: 'สถานที่'},
-      {field: 'transportTemple', header: 'การเดินทางของวัด'},
-      {field: 'conditionMin', header: 'หมายเหตุ'},
+      { field: 'createDate', header: 'วันที่สร้าง' },
+      { field: 'lastUpdate', header: 'วันที่แก้ไขล่าสุด' },
+      { field: 'name', header: 'ชื่อคอร์ส' },
+      { field: 'locationName', header: 'สถานที่' },
+      { field: 'transportTemple', header: 'การเดินทางของวัด' },
+      { field: 'conditionMin', header: 'หมายเหตุ' },
     ];
 
     this.breadCrumbService.setPath([
-      {label: 'จัดการคอร์ส', routerLink: '/manageCourse'},
+      { label: 'จัดการคอร์ส', routerLink: '/manageCourse' },
     ]);
     this.loading = true;
   }
@@ -71,7 +71,7 @@ export class ManageCourseComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         // console.log(this);
-        this.messageService.add({severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการปิดคอร์สสำเร็จ'});
+        this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการปิดคอร์สสำเร็จ' });
         // this.courseService.deleteCourse(id).subscribe(function (res) {
         //   if (res['status'] === 'Success') {
         //     this.courses = res['data'];
@@ -79,7 +79,7 @@ export class ManageCourseComponent implements OnInit {
         // });
       },
       reject: () => {
-        this.messageService.add({severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการปิดคอร์ส'});
+        this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการปิดคอร์ส' });
       }
     });
   }
@@ -94,14 +94,14 @@ export class ManageCourseComponent implements OnInit {
 
   private getData() {
     this.courseService.getCourses()
-    .subscribe(res => {
-      if (res['status'] === 'Success') {
-        this.courses = res['data'];
-        this.loading = false;
-      }
-      console.log(this.courses);
-    });
-    
+      .subscribe(res => {
+        if (res['status'] === 'Success') {
+          this.courses = res['data'];
+          this.loading = false;
+        }
+        console.log(this.courses);
+      });
+
   }
 
   public onRowSelect(e) {
@@ -111,7 +111,7 @@ export class ManageCourseComponent implements OnInit {
 
   public closeCreateDialog(e) {
     this.displayCreateDialog = false;
-    if(e != null){
+    if (e != null) {
       this.messageService.add(e[0]);
     }
     this.getData();
@@ -120,7 +120,7 @@ export class ManageCourseComponent implements OnInit {
 
   public closeEditDialog(e) {
     this.displayEditDialog = false;
-    if(e != null){
+    if (e != null) {
       this.messageService.add(e[0]);
     }
     this.getData();
