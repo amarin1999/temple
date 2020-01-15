@@ -14,3 +14,4 @@ temple-backend/.sts4-cache
 .sonarlint/
 RemoteSystemsTempFiles/
 temple-backend/bin
+temple-backend/TempleAPI.iml
