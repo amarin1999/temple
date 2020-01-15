@@ -22,5 +22,4 @@ public interface ApprovalCoursesRepository extends CrudRepository<ApprovalCourse
 			+ "ORDER BY c.course_id " + "limit :offset , :limit", nativeQuery = true)
 	List<ApprovalCoursesEntity> getAll(@Param("query") String query, @Param("monkId") Long monkId,
 			@Param("limit") int limit, @Param("offset") int offset);
-
 }
