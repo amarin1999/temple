@@ -50,7 +50,6 @@ export class ApprovalFormComponent implements OnInit {
     this.courseId = this.route.snapshot.paramMap.get('id')
     this.courseType = this.route.snapshot.queryParamMap.get('type');
     this.initMember();
-
     this.nameCourse = this.route.snapshot.queryParamMap.get('course');
     
 

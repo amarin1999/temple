@@ -23,7 +23,10 @@ export class ListCourseApproveComponent implements OnInit {
   public loadingOutTime: boolean;
   public selectedCourse: Course;
   public courseId: string;
-
+  public title: string;
+  url: string;
+  goToCourse: string;
+  public methodLazyLoad: string;
   constructor(
     private approvalService: ApprovalService,
     private messageService: MessageService,
@@ -31,6 +34,7 @@ export class ListCourseApproveComponent implements OnInit {
     private breadCrumbService: BreadcrumbService,
     private router: Router,
   ) {
+    this.url = this.router.url;
   }
 
   ngOnInit() {
@@ -40,24 +44,34 @@ export class ListCourseApproveComponent implements OnInit {
     this.setBreadCrumb();
     this.getTotalRecord();
     this.getTotalRecordOutTime();
+    this.setData();
+
+  }
+  setData() {
+    if(this.isOutTime()){
+      this.title = 'จัดการอนุมัติพิเศษ';
+      this.methodLazyLoad = 'loadData($event)';
+    }else{
+      this.title = 'จัดการอนุมัตินอกเวลา';
+      this.methodLazyLoad = 'loadDataOutTime($event)';
+    }
   }
 
   public loadData(e: LazyLoadEvent) {
     // console.log(e);
     let query = '';
-    if (e.globalFilter) {
+    if (this.isOutTime()) {
+      if (e.globalFilter) {
       query = e.globalFilter;
     }
     this.getData(e.first, e.rows, query);
-  }
-
-  public loadDataOutTime(e: LazyLoadEvent) {
-    // console.log(e);
-    let query = '';
+  } else {
     if (e.globalFilter) {
       query = e.globalFilter;
     }
     this.getDataOutTime(e.first, e.rows, query);
+  }
+    
   }
 
   private setColumn() {
@@ -72,6 +86,14 @@ export class ListCourseApproveComponent implements OnInit {
     this.breadCrumbService.setPath([
       {label: 'การอนุมัติ', routerLink: '/approval'},
     ]);
+  }
+
+  private isOutTime(): boolean {
+    if (this.url === '/approval') {
+      return true;
+    } else if (this.url === '/approvalCourseOutTime') {
+      return false;
+    }
   }
 
   onRowSelect(e) {
@@ -92,22 +114,24 @@ export class ListCourseApproveComponent implements OnInit {
     ).subscribe(res => {
       // console.log(res);
       if (res['status'] === 'Success') {
-        this.courses = res['data'];
+        this.courses = [...res['data']];
+        console.log(this.courses);
         this.loading = false;
       }
     });
   }
 
   private getDataOutTime(first = 0, rows = 5, query: string = '') {
-    this.loadingOutTime = true;
+    this.loading = true;
     of([first, rows, query]).pipe(
       switchMap(([firstCon, rowsCon, queryCon]: [number, number, string]) =>
         this.approvalService.getCoursesApprovalOutTime(firstCon, rowsCon, queryCon))
     ).subscribe(res => {
       // console.log(res);
       if (res['status'] === 'Success') {
-        this.coursesOutTime = res['data'];
-        this.loadingOutTime = false;
+        this.courses = [...res['data']];
+        console.log(this.courses);
+         this.loading = false;
       }
     });
   }
@@ -127,4 +151,5 @@ export class ListCourseApproveComponent implements OnInit {
       }
     });
   }
+
 }
