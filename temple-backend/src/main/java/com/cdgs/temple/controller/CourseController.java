@@ -198,7 +198,7 @@ public class CourseController {
 	@GetMapping(value = "/approve")
 	@PreAuthorize("hasRole('monk')")
 	public ResponseEntity<ResponseDto<ApprovalCoursesDto>> TeacherGetCoursesApproval(@RequestParam("offset") int offset,
-			@RequestParam("limit") int limit, @RequestParam("query") String query, @RequestParam("spa_status") String spaStatus) {
+			@RequestParam("limit") int limit, @RequestParam("query") String query) {
 		ResponseDto<ApprovalCoursesDto> res = new ResponseDto<>();
 		List<ApprovalCoursesDto> dto;
 		MemberDto member = memberService.getCurrentMember();
