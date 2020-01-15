@@ -310,9 +310,21 @@ public class CourseController {
 		try {
 			if (member.getRoleName().equals("user")) {
                 courseDto = courseService.getCourseUser(member.getId(), id);
+                if ( courseDto.getTransportation() == null) {
+                	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
+                	if (courseDto.getTransportation().getId() == null ) {
+                		courseDto.setTransportation(null);
+                	}
+                }
                 courseDtoList.add(courseDto);
 			} else {
                 courseDto = courseService.getCourse(id);
+                if ( courseDto.getTransportation() == null) {
+                	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
+                	if (courseDto.getTransportation().getId() == null ) {
+                		courseDto.setTransportation(null);
+                	}
+                }
                 courseDtoList.add(courseDto);
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());

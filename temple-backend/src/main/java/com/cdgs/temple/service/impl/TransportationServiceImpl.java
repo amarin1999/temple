@@ -43,6 +43,18 @@ public class TransportationServiceImpl implements TransportationService {
 		return mapListEntityToDto(transportationEntity);
 	}
 	
+	@Override
+	public TransportationDto getTransportationById(Long id) {
+		TransportationEntity entity = new TransportationEntity();
+		try {
+			entity = transportationRepository.findById(id).get();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("getTransportationById >>> " + e.getMessage());
+		}
+		return mapEntityToDto(entity);
+	}
+	
 	public List<TransportationDto> getTransportationTemple(Long courseId) {
 		List<TransportationEntity> transportationEntity = new ArrayList<TransportationEntity>();
 		try {
