@@ -114,7 +114,7 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 			@Param("limit") int limit, @Param("query") String query);
 
 	@Query(value = "SELECT COUNT(*) total_record FROM ("
-			+ "SELECT c.course_id FROM courses c INNER JOIN courses_teacher ct ON c.course_id=ct.course_id INNER JOIN special_approve sa ON c.course_id=sa.course_id WHERE 1=1 AND ct.member_id=:memberId AND sa.spa_status='2' AND c.course_status='0' GROUP BY c.course_id) t1", nativeQuery = true)
+			+ "SELECT c.course_id FROM courses c INNER JOIN courses_teacher ct ON c.course_id=ct.course_id INNER JOIN special_approve sa ON c.course_id=sa.course_id WHERE 1=1 AND ct.member_id=:memberId AND sa.spa_status='4' AND c.course_status='0' GROUP BY c.course_id) t1", nativeQuery = true)
 	Integer countCoursesTeacherApprovalAllOutTime(@Param("memberId") Long memberId);
 
 	@Modifying
