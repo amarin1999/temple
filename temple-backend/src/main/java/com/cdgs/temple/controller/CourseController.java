@@ -122,6 +122,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
