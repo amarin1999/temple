@@ -45,9 +45,6 @@ public class TempCourseEntity implements Serializable {
 	@Column(name = "course_create_by")
 	private Long courseCreateBy;
 
-	@Column(name = "course_transportation_temple_id")
-	private Long transportTempleId;
-
 	@Column(name = "course_create_date")
 	@CreationTimestamp
 	private Date courseCreateDate;

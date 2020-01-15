@@ -113,7 +113,6 @@ public class CourseController {
 		MemberDto member = memberService.getCurrentMember();
 		try {
 			if (status.equals("0")) {
-
 				dto = courseService.getCoursesUserRegister(member.getId());
 			} else {
 				dto = courseService.getCoursesUser(member.getId(), status);
