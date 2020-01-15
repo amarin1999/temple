@@ -1,7 +1,0 @@
-//                                listHospital.stream().filter(hosital -> {
-//                                    return hosital.getHospitalname().equals(dataSearch);
-//                                });
-//
-//                                Log.d(">>>>",listHospital.stream().filter(hosital -> {
-//                                    return hosital.getHospitalname().contentEquals(dataSearch);
-//                                })+"<<<<");
