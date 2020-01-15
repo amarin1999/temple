@@ -125,25 +125,7 @@ const routes: Routes = [
             }
           },
         ]
-      },
-      {
-        path: 'approvalCourseOutTime',
-        children: [
-          {
-            path: '',
-            component: ApprovalComponent,
-          },
-          {
-            path: ':id',
-            component: ApprovalFormComponent,
-            data: {
-              urlback: '/OutTime/',
-              messageback: 'อนุมัติพิเศษ'
-            }
-          },
-        ]
-      },
-      {
+      }, {
         path: 'storage',
         component: ManageStorageComponent
       },

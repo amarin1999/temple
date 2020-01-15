@@ -80,7 +80,7 @@ export class ApprovalService {
     return this.http.get(`${ApiConstants.baseURl}/courses/approve/outTime?query=${query}&offset=${first}&limit=${rows}`).pipe(
       map(res => ({
         status: res['result'],
-        data: [...res['data']]
+        data: res['data']
       }))
     );
   }

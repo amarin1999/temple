@@ -1,8 +1,7 @@
 <ngx-spinner></ngx-spinner>
 <div class="wrapper-menu">
     <div class="ui-g">
-        <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12" [routerLink]="['/profile',userId]"
-            *ngIf="showHomeMenu('user','monk')">
+        <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12" [routerLink]="['/profile',userId]" *ngIf="showHomeMenu('user','monk')">
             <div class="menu-card">
                 <div class="ui-g">
                     <div class="ui-g-12 ui-lg-12 ui-md-4 ui-sm-4 ">
@@ -75,8 +74,7 @@
                 </div>
             </div>
         </div>
-        <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12" [routerLink]="['/manageCourseForMonk']"
-            *ngIf="showHomeMenu('monk')">
+        <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12" [routerLink]="['/manageCourseForMonk']" *ngIf="showHomeMenu('monk')">
             <div class="menu-card">
                 <div class="ui-g">
                     <div class="ui-g-12 ui-lg-12 ui-md-4 ui-sm-4 ">
@@ -185,8 +183,7 @@
                 </div>
             </div>
         </div>
-        <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12" [routerLink]="['/courseOutTime']"
-            *ngIf="showHomeMenu('user') && total >= 5">
+        <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12" [routerLink]="['/courseOutTime']" *ngIf="showHomeMenu('user') && total >= 5">
             <div class="menu-card">
                 <div class="ui-g">
                     <div class="ui-g-12 ui-lg-12 ui-md-4 ui-sm-4 ">
@@ -222,18 +219,6 @@
                 </div>
             </div>
         </div>
-        <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12" [routerLink]="['/approvalCourseOutTime']"
-            *ngIf="showHomeMenu('monk') ">
-            <div class="menu-card">
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-lg-12 ui-md-4 ui-sm-4 ">
-                        <img class="img-menu" src="./assets/images/hourglass.png" alt>
-                    </div>
-                    <div class="ui-g-12 ui-lg-12 ui-md-8 ui-sm-8">
-                        <div class="text-center">อนุมัตินอกเวลา</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
