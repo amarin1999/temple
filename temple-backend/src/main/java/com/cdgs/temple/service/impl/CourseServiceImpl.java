@@ -602,10 +602,10 @@ public class CourseServiceImpl implements CourseService {
 				dto.setStDate(entity.getCourseStDate());
 				dto.setEndDate(entity.getCourseEndDate());
 
-//				for (CourseTeacherEntity courseTeacher : entity.getCourseTeacher()) {
-//					teacherList.add(memberService.getMember(courseTeacher.getMemberId()));
-//				}
-//				dto.setTeacherList(teacherList);
+				for (CourseTeacherEntity courseTeacher : entity.getCourseTeacher()) {
+					teacherList.add(memberService.getMember(courseTeacher.getMemberId()));
+				}
+				dto.setTeacherList(teacherList);
 				dto.setDateList(courseScheduleService.getCourseScheduleList(entity.getCourseId()));
 
 				return dto;
