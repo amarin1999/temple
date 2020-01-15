@@ -45,9 +45,6 @@ public class TempCourseEntity implements Serializable {
 	@Column(name = "course_create_by")
 	private Long courseCreateBy;
 
-	@Column(name = "course_transportation_temple_id")
-	private Long transportTempleId;
-
 	@Column(name = "course_create_date")
 	@CreationTimestamp
 	private Date courseCreateDate;
@@ -56,7 +53,7 @@ public class TempCourseEntity implements Serializable {
 	@CreationTimestamp
 	private Date courseLastUpdate;
 	
-	@Column(name = "")
+//	@Column(name = "")
 
 	@ManyToOne
 	@JoinColumn(name = "course_create_by", insertable = false, updatable = false)
@@ -205,14 +202,6 @@ public class TempCourseEntity implements Serializable {
 
 	public void setCanRegister(int canRegister) {
 		this.canRegister = canRegister;
-	}
-
-	public Long getTransportTempleId() {
-		return transportTempleId;
-	}
-
-	public void setTransportTempleId(Long transportTempleId) {
-		this.transportTempleId = transportTempleId;
 	}
 
 }
