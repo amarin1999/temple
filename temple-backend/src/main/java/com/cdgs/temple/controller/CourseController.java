@@ -304,16 +304,19 @@ public class CourseController {
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
 	public ResponseEntity<ResponseDto<CourseDto>> getCoursesById(@PathVariable("id") Long id) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
-		List<CourseDto> dto = new ArrayList<>();
 		MemberDto member = memberService.getCurrentMember();
+        CourseDto courseDto = new CourseDto();
+        List<CourseDto> courseDtoList = new ArrayList<>();
 		try {
 			if (member.getRoleName().equals("user")) {
-				dto.add(courseService.getCourseUser(member.getId(), id));
+                courseDto = courseService.getCourseUser(member.getId(), id);
+                courseDtoList.add(courseDto);
 			} else {
-				dto.add(courseService.getCourse(id));
+                courseDto = courseService.getCourse(id);
+                courseDtoList.add(courseDto);
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setData(dto);
+            res.setData(courseDtoList);
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {

@@ -42,6 +42,17 @@ public class TransportationServiceImpl implements TransportationService {
 		}
 		return mapListEntityToDto(transportationEntity);
 	}
+	
+	public List<TransportationDto> getTransportationTemple(Long courseId) {
+		List<TransportationEntity> transportationEntity = new ArrayList<TransportationEntity>();
+		try {
+			transportationEntity = transportationRepository.findTranTempleAndCourseId(courseId);
+		} catch (Exception e) {
+			log.error("TransportationServiceImpl >>> getTransportationTemple : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return mapListEntityToDto(transportationEntity);
+	}
 
 	/**
 	 * getTransportationName Description : this function get data of Transportation.

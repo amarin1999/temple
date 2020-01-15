@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS `temple`;
 CREATE DATABASE  IF NOT EXISTS `temple` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `temple`;
 -- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)

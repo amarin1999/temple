@@ -15,10 +15,12 @@ public interface TransportationService {
 
 	Boolean deleteTransportation(Long id, TransportationDto transportation);
 
-	List<TransportationDto> getTransportationTemple();
+	List<TransportationDto> getTransportationTemple(Long courseId);
 
 	Boolean deleteTransportationTemple(Long id);
 	
 	TransportationDto getTransportationByCourseId(Long courseId);
+
+	List<TransportationDto> getTransportationTemple();
 
 }
