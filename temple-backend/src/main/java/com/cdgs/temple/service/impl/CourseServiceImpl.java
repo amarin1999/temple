@@ -410,6 +410,7 @@ public class CourseServiceImpl implements CourseService {
 
 	private CourseDto mapTempEntityToDto(TempCourseEntity entity) {
 		CourseDto dto = new CourseDto();
+		TransportationDto transportationDto = new TransportationDto();
 		if (entity != null) {
 			dto.setId(entity.getCourseId());
 			dto.setNo(entity.getCourseNo());
@@ -429,6 +430,10 @@ public class CourseServiceImpl implements CourseService {
 			dto.setSaStatus(entity.getSaStatus());
 			dto.setMhcStatus(entity.getMhcStatus());
 			dto.setCanRegister(entity.getCanRegister());
+			if (entity.getTransportTempleId() != null) {
+				transportationDto = transportationService.getTransportationByCourseId(entity.getCourseId());
+				dto.setTransportation(transportationDto);
+			}
 //			dto.setTransportTempleId(entity.getTransportTempleId());
 		} else {
 			dto = null;
@@ -440,7 +445,20 @@ public class CourseServiceImpl implements CourseService {
 	public CourseDto updateCourse(Long id, CourseDto courseNew) {
 		CourseEntity courseOld = courseRepository.findById(id).get();
 		CourseEntity entity;
+		TransportationDto transportationDtoOld = new TransportationDto();
+		TransportationDto transportationDtoNew = new TransportationDto();
 		try {
+			if (courseNew.getTransportation().getId() != null) {
+				transportationDtoOld = transportationService.getTransportationByCourseId(id);
+				if (transportationDtoOld.getId() != null) {
+					transportationDtoOld.setCourseId(null);
+					transportationService.updateTransportationTemple(transportationDtoOld.getId(), transportationDtoOld);
+				}
+				transportationDtoNew = transportationService.getTransportationById(courseNew.getTransportation().getId());
+				transportationDtoNew.setCourseId(id);
+				transportationService.updateTransportationTemple(transportationDtoNew.getId(), transportationDtoNew);
+
+			}
 			System.out.println("st1 = " + courseNew.getStDate());
 
 			// set update name, detail, location

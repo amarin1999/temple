@@ -6,9 +6,11 @@ import { formatDate, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '../../location/location.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, count } from 'rxjs/operators';
 import { TransportService } from 'src/app/shared/service/transport.service';
 import { TransportationTemple } from 'src/app/shared/interfaces/transportation-temple';
+import { Spinner } from 'primeng/primeng';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-course-edit',
@@ -98,7 +100,8 @@ export class CourseEditComponent implements OnInit {
     private transportTempleService: TransportService,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    public spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -134,23 +137,6 @@ export class CourseEditComponent implements OnInit {
       }
     );
 
-    // ------------ Get List of Transportation Temple ------------
-    this.optionTime = { hour: '2-digit', minute: '2-digit' };
-    this.transportTempleService.getTranSportTemple().subscribe(
-      res => {
-        this.transport = res['data'].map(data => {
-          return {
-            id: data.id,
-            name: data.name + ' เวลารับ : ' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
-              ' เวลาส่ง : ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
-          };
-        });
-      },
-      error => {
-        console.log(error['error']['errorMessage']);
-      }
-    );
-
     const currentYear = this.pipe.transform(Date.now(), 'yyyy');
     const startYear = parseInt(currentYear) + 5;
     this.yearRange = currentYear + ':' + startYear;
@@ -164,6 +150,7 @@ export class CourseEditComponent implements OnInit {
 
   settingForm(id) {
     this.courseId = id;
+    this.getTransportationTempleList(id);
     this.courseService.getCourseByid(id)
       .subscribe(res => {
         /*var result = [];
@@ -200,38 +187,52 @@ export class CourseEditComponent implements OnInit {
           id: res['data']['locationId'],
           name: res['data']['locationName']
         };
-        console.log('transportTempleList',res.data);
-
-        if (res['data']['transportation'] != null) {
-          this.transportTempleList = {
-            id: res['data']['transportTempleId'],
-            name: res['data']['transportTempleName']
-              + ' เวลารับ : ' + new Date(res['data']['transportTempleTimePickUp']).toLocaleTimeString('th-TH', this.optionTime)
-              + ' เวลาส่ง : ' + new Date(res['data']['transportTempleTimeSend']).toLocaleTimeString('th-TH', this.optionTime)
+        let tranTempSelect = null;
+        if (res['data']['transportation'] !== null) {
+          tranTempSelect = {
+            id: res['data']['transportation'].id,
+            name: res['data']['transportation'].name
+              + ' เวลารับ : ' + new Date(res['data']['transportation'].timePickUp).toLocaleTimeString('th-TH', this.optionTime)
+              + ' เวลาส่ง : ' + new Date(res['data']['transportation'].timeSend).toLocaleTimeString('th-TH', this.optionTime)
           };
-          
-        } else {
-          this.transportTempleList = null;
         }
-        // console.log(transportTemple);
         this.formEdit.controls['courseName'].setValue(res['data']['name']);
         this.formEdit.controls['detail'].setValue(res['data']['detail']);
         this.formEdit.controls['location'].setValue(location);
         this.formEdit.controls['teachers'].patchValue(teachers);
         this.formEdit.controls['date'].patchValue(date);
         this.formEdit.controls['conditionMin'].setValue({ id: '' + (res['data']['conditionMin']) });
-        this.formEdit.controls['transportTemple'].setValue(this.transportTempleList);
+        this.formEdit.controls['transportTemple'].setValue(tranTempSelect);
 
       },
         err => console.log(err['error']['errorMessage'])
       );
   }
 
+  // ------------ Get List of Transportation Temple ------------
+  getTransportationTempleList(id) {
+    this.optionTime = { hour: '2-digit', minute: '2-digit' };
+    this.transportTempleService.getTranSportTemple(id).subscribe(
+      res => {
+        this.transport = res['data'].map(data => {
+          return {
+            id: data.id,
+            name: data.name + ' เวลารับ : ' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
+              ' เวลาส่ง : ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
+          };
+        });
+      },
+      error => {
+        console.log(error['error']['errorMessage']);
+      }
+    );
+  }
 
   onSubmit() {
     this.setValidate();
     if (!this.formEdit.valid) {
       this.subscribeInputMessageWaring();
+      console.log(this.formEdit.get('transportTemple').errors);
     } else {
       this.confirmationService.confirm({
         message: 'ยืนยันการแก้ไขคอร์ส',
@@ -258,7 +259,10 @@ export class CourseEditComponent implements OnInit {
           // const lastUpdate = formatDate(Date.now(), 'yyyy-MM-dd hh:mm:ss', 'en');
           // console.log(this.obj);
           // console.log('datesort' + datesort);
-
+          let transportTempleId = null;
+          if (this.formEdit.get('transportTemple').value !== null) {
+            transportTempleId = this.formEdit.get('transportTemple').value.id;
+          }
           const course = {
             name: this.formEdit.get('courseName').value,
             detail: this.formEdit.get('detail').value,
@@ -269,9 +273,9 @@ export class CourseEditComponent implements OnInit {
             endDate: endDate,
             // lastUpdate: lastUpdate,
             teacher: this.formEdit.get('teachers').value.map(res => res.id),
-            transportTempleId: this.formEdit.get('transportTemple').value.id
+            // tslint:disable-next-line: max-line-length
+            transportation: {id: transportTempleId},
           };
-          console.log(course);
 
           this.courseService.editCourse(id, course).subscribe(res => {
             if (res['result'] === 'Success') {
@@ -284,8 +288,8 @@ export class CourseEditComponent implements OnInit {
           });
         },
         reject: () => {
-          this.msgs = [{ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการแก้ไขคอร์ส' }];
-          this.onCancle(this.msgs);
+          // this.msgs = [{ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการแก้ไขคอร์ส' }];
+          // this.onCancle(this.msgs);
         }
       });
     }
@@ -312,8 +316,6 @@ export class CourseEditComponent implements OnInit {
       this.formError[field] = '';
       const control = this.formEdit.get(field);
       if (control && this.validationMessage[field]) {
-        // console.log(field);
-        // console.log(control.valid);
         if (!control.valid) {
           this.formError[field] = this.validationMessage[field].required;
           if (field === 'courseName') {
@@ -367,7 +369,7 @@ export class CourseEditComponent implements OnInit {
       control.clearValidators();
       if (key === 'courseName' || key === 'detail') {
         control.setValidators([Validators.required, Validators.maxLength(255)]);
-      } else {
+      } else if (key !== 'transportTemple') {
         control.setValidators(Validators.required);
       }
       control.updateValueAndValidity();
