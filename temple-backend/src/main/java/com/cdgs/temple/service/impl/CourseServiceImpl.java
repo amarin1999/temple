@@ -430,10 +430,10 @@ public class CourseServiceImpl implements CourseService {
 			dto.setSaStatus(entity.getSaStatus());
 			dto.setMhcStatus(entity.getMhcStatus());
 			dto.setCanRegister(entity.getCanRegister());
-			if (entity.getTransportTempleId() != null) {
-				transportationDto = transportationService.getTransportationByCourseId(entity.getCourseId());
-				dto.setTransportation(transportationDto);
-			}
+//			if (entity.getTransportationId() != null) {
+//				transportationDto = transportationService.getTransportationByCourseId(entity.getCourseId());
+//				dto.setTransportation(transportationDto);
+//			}
 //			dto.setTransportTempleId(entity.getTransportTempleId());
 		} else {
 			dto = null;
@@ -488,8 +488,8 @@ public class CourseServiceImpl implements CourseService {
 				}
 			}
 
-//			entity.setCourseTeacher(courseTeacherRepository.findAllByCourseId(id));
-//			entity.setCourseSchdule(courseScheduleRepository.findAllByCourseId(id));
+			entity.setCourseTeacher(courseTeacherRepository.findAllByCourseId(id));
+			entity.setCourseSchdule(courseScheduleRepository.findAllByCourseId(id));
 
 			return mapEntityEditToDto(entity);
 
