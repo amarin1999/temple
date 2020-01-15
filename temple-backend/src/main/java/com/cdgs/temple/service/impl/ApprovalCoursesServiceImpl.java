@@ -18,8 +18,8 @@ public class ApprovalCoursesServiceImpl implements ApprovalCoursesService {
 	ApprovalCoursesRepository approvalCoursesRepository;
 
 	@Override
-	public List<ApprovalCoursesDto> getApprovalCourses(String query, Long monkId, int limit, int offset) {
-		List<ApprovalCoursesEntity> listAppCourse = approvalCoursesRepository.getAll(query, monkId, limit, offset);
+	public List<ApprovalCoursesDto> getApprovalCourses(String query, Long monkId, int limit, int offset, String spaStatus) {
+		List<ApprovalCoursesEntity> listAppCourse = approvalCoursesRepository.getAll(query, monkId, limit, offset, spaStatus);
 		List<ApprovalCoursesDto> listAppDto = mapListEntityToListDto(listAppCourse);
 		return listAppDto;
 
