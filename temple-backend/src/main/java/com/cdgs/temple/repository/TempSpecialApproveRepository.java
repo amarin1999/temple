@@ -9,13 +9,15 @@ import java.util.List;
 
 public interface TempSpecialApproveRepository extends CrudRepository<TempSpecialApproveEntity, Long> {
 
-    @Query(value = "SELECT sa.special_approve_id,sa.member_id,sa.spa_detail, CONCAT(t.title_name,m.member_fname,' ',m.member_lname) AS display_name, "
-    		+ "tr.tran_id, tr.tran_name AS transportation "
+	//แก้ ใหม่นะ ผูก special approve กับ transportations เข้าด้วยกัน
+    @Query(value = "SELECT sa.special_approve_id,sa.member_id,sa.spa_detail, "
+    		+ "CONCAT(t.title_name,m.member_fname,' ',m.member_lname) as display_name "
+    		+ ", ts.tran_name as transportation " //ตรงนี้อย่าซนนะ
     		+ "FROM special_approve sa "
-    		+ "INNER JOIN transportations tr ON sa.tran_id=tr.tran_id "
     		+ "INNER JOIN courses_teacher ct ON sa.course_id=ct.course_id "
     		+ "INNER JOIN members m ON sa.member_id=m.member_id "
     		+ "INNER JOIN title_names t ON m.member_title_id=t.title_id "
+    		+ "INNER JOIN transportations ts ON sa.tran_id=ts.tran_id "
     		+ "WHERE sa.spa_status='2' AND ct.member_id=:memberId AND sa.course_id=:courseId", nativeQuery = true)
     List<TempSpecialApproveEntity> getAll(@Param("memberId") Long memberId, @Param("courseId") Long courseId);
 
