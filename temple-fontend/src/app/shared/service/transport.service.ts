@@ -30,8 +30,19 @@ export class TransportService {
       );
   }
 
-  getTranSportTemple() {
-    return this.http.get(ApiConstants.baseURl + `/transportations/temple`)
+  getTranSportTemple(id) {
+    if (id !== null) {
+      return this.http.get(ApiConstants.baseURl + `/transportations/temple/${id}`)
+        .pipe(
+          map((res: any[]) => {
+            return {
+              status: res['result'],
+              data: res['data']
+            };
+          })
+        );
+    } else if ( id === null ) {
+      return this.http.get(ApiConstants.baseURl + `/transportations/temple/`)
       .pipe(
         map((res: any[]) => {
           return {
@@ -40,6 +51,7 @@ export class TransportService {
           };
         })
       );
+    }
   }
 
   getTranSportToEdit() {
@@ -91,7 +103,7 @@ export class TransportService {
   }
 
   updateTransportation(transportation: Transportation) {
-    console.log('transportation',transportation);
+    console.log('transportation', transportation);
     return this.http.put(`${ApiConstants.baseURl}/transportations/${transportation.id}`, transportation)
       .pipe(
         map(res => {
