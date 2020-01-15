@@ -35,10 +35,7 @@ export class ApprovalFormComponent implements OnInit {
   ngOnInit() {
     this.option = '2';
     this.fieldId = 'specialApproveId'
-    this.breadCrumbService.setPath([
-      { label: 'จัดการอนุมัติพิเศษ', routerLink: '/approval' },
-      { label: 'อนุมัติพิเศษผู้เรียน' },
-    ]);
+    this.setBreadCrumb();
 
     this.cols = [
       { field: 'displayName', header: 'ชื่อ-นามสกุล' },
@@ -54,7 +51,14 @@ export class ApprovalFormComponent implements OnInit {
     
 
   }
+  setBreadCrumb(){
+    if(this.courseType==='OutTime'){
+      this.breadCrumbService.setPath([{ label: 'การอนุมัตินอกเวลา', routerLink: '/approvalCourseOutTime' },{ label: 'อนุมัติผู้เรียนนอกเวลา' }]);
+    }else{
+      this.breadCrumbService.setPath([{ label: 'การอนุมัติพิเศษ', routerLink: '/approval' },{ label: 'อนุมัติผู้เรียนพิเศษ' }]);
+    }
 
+  }
   initMember() {
     // console.log(this.courseType)
     if (this.courseType === 'OutTime') {

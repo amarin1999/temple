@@ -26,6 +26,7 @@ export class ListCourseApproveComponent implements OnInit {
   public title: string;
   url: string;
   goToCourse: string;
+  textBreadCrumb;
   public methodLazyLoad: string;
   constructor(
     private approvalService: ApprovalService,
@@ -83,8 +84,12 @@ export class ListCourseApproveComponent implements OnInit {
   }
 
   private setBreadCrumb() {
-    this.breadCrumbService.setPath([
-      {label: 'การอนุมัติ', routerLink: '/approval'},
+    if(this.isOutTime){
+      this.textBreadCrumb = {label: 'การอนุมัติพิเศษ', routerLink: '/approval'};
+     }else {
+      this.textBreadCrumb = {label: 'การอนุมัตินอกเวลา', routerLink: '/approvalCourseOutTime'};
+     }
+    this.breadCrumbService.setPath([{...this.textBreadCrumb}
     ]);
   }
 
@@ -98,13 +103,13 @@ export class ListCourseApproveComponent implements OnInit {
 
   onRowSelect(e) {
     // console.log(e);
+    if(this.isOutTime()){
     this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=InTime`);
+    }else{
+      this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=OutTime`);
+    }
   }
 
-  onRowSelectOutTime(e) {
-    // console.log(e);
-    this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=OutTime`);
-  }
 
   private getData(first = 0, rows = 5, query: string = '') {
     this.loading = true;
