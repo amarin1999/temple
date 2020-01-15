@@ -55,7 +55,7 @@ export class TransportService {
   }
 
   getTranSportTempleToEdit(id: number) {
-    return this.http.get(`${ApiConstants.baseURl}/transportations/templeMonk/${id}`)
+    return this.http.get(`${ApiConstants.baseURl}/transportations/templeRegister/${id}`)
       .pipe(
         map((res) => {
           return {

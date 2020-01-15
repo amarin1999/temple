@@ -484,7 +484,7 @@ export class CoursesListComponent implements OnInit {
         this.optionTime = { hour: '2-digit', minute: '2-digit' };
         combineLatest(
           this.transportation.getTranSportToEdit(),
-          this.transportation.getTranSportTempleToEdit(this.transportId)
+          this.transportation.getTranSportTempleToEdit(this.courseId)
         ).subscribe(([tranSport, tranSportTemple]) => {
           this.transports = [
             ...tranSport.data,
@@ -498,7 +498,7 @@ export class CoursesListComponent implements OnInit {
                     'th-TH',
                     this.optionTime
                   ) +
-                  ' เวลา: ' +
+                  ' เวลาส่ง: ' +
                   new Date(data.timeSend).toLocaleTimeString(
                     'th-TH',
                     this.optionTime

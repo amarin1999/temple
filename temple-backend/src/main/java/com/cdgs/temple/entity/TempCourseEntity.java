@@ -56,7 +56,7 @@ public class TempCourseEntity implements Serializable {
 	@CreationTimestamp
 	private Date courseLastUpdate;
 	
-	@Column(name = "")
+//	@Column(name = "")
 
 	@ManyToOne
 	@JoinColumn(name = "course_create_by", insertable = false, updatable = false)
