@@ -12,10 +12,14 @@ public interface TransportationService {
 	TransportationDto updateTransportation(Long id, TransportationDto transportation);
 
 	TransportationDto updateTransportationTemple(Long id, TransportationDto transportation);
+	
+	TransportationDto getTransportationById(Long id);
 
 	Boolean deleteTransportation(Long id, TransportationDto transportation);
 
 	List<TransportationDto> getTransportationTemple(Long courseId);
+	
+	List<TransportationDto> getTransportationTempleRegister(Long courseId);
 
 	Boolean deleteTransportationTemple(Long id);
 	

@@ -113,7 +113,6 @@ public class CourseController {
 		MemberDto member = memberService.getCurrentMember();
 		try {
 			if (status.equals("0")) {
-
 				dto = courseService.getCoursesUserRegister(member.getId());
 			} else {
 				dto = courseService.getCoursesUser(member.getId(), status);
@@ -310,9 +309,21 @@ public class CourseController {
 		try {
 			if (member.getRoleName().equals("user")) {
                 courseDto = courseService.getCourseUser(member.getId(), id);
+                if ( courseDto.getTransportation() == null) {
+                	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
+                	if (courseDto.getTransportation().getId() == null ) {
+                		courseDto.setTransportation(null);
+                	}
+                }
                 courseDtoList.add(courseDto);
 			} else {
                 courseDto = courseService.getCourse(id);
+                if ( courseDto.getTransportation() == null) {
+                	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
+                	if (courseDto.getTransportation().getId() == null ) {
+                		courseDto.setTransportation(null);
+                	}
+                }
                 courseDtoList.add(courseDto);
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());

@@ -66,6 +66,25 @@ public class TransportationController {
 			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
 		}
 	}
+	
+	@GetMapping(path = "/templeRegister/{id}")
+	public ResponseEntity<ResponseDto<TransportationDto>> getTransportationTempleRegister(@PathVariable("id") Long courseId) {
+		List<TransportationDto> templeDto = new ArrayList<>();
+		ResponseDto<TransportationDto> res = new ResponseDto<TransportationDto>();
+		try {
+			templeDto = transportationService.getTransportationTempleRegister(courseId);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(templeDto);
+			res.setCode(200);
+			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	/**
 	 * postTransporatation Description : this controller insert data of
