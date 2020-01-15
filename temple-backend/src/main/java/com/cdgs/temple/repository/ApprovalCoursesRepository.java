@@ -16,10 +16,11 @@ public interface ApprovalCoursesRepository extends CrudRepository<ApprovalCourse
 			+ ", COUNT(sa.member_id) as total_member " + "FROM courses c "
 			+ "INNER JOIN courses_teacher  ct on  ct.course_id = c.course_id "
 			+ "INNER JOIN special_approve sa ON c.course_id=sa.course_id "
-			+ "where 1=1 AND ct.member_id = :monkId  AND sa.spa_status= :spa_status " + "AND (CASE WHEN :query <> '' "
+			+ "where 1=1 AND ct.member_id = :monkId  AND sa.spa_status='2' " + "AND (CASE WHEN :query <> '' "
 			+ "THEN (c.course_name LIKE CONCAT('%',:query,'%') " + "OR c.course_detail LIKE CONCAT('%',:query,'%') "
 			+ "OR c.course_condition_min LIKE CONCAT('%',:query,'%')) ELSE 1 END) " + "GROUP BY c.course_id "
 			+ "ORDER BY c.course_id " + "limit :offset , :limit", nativeQuery = true)
 	List<ApprovalCoursesEntity> getAll(@Param("query") String query, @Param("monkId") Long monkId,
-			@Param("limit") int limit, @Param("offset") int offset, @Param("spa_status") String spaStatus);
+			@Param("limit") int limit, @Param("offset") int offset);
+
 }

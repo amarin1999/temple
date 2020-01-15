@@ -22,7 +22,6 @@ import com.cdgs.temple.entity.CourseScheduleEntity;
 import com.cdgs.temple.entity.CourseTeacherEntity;
 import com.cdgs.temple.entity.MembersHasCourseEntity;
 import com.cdgs.temple.entity.TempCourseEntity;
-import com.cdgs.temple.entity.TransportationEntity;
 import com.cdgs.temple.repository.CourseRepository;
 import com.cdgs.temple.repository.CourseScheduleRepository;
 import com.cdgs.temple.repository.CourseTeacherRepository;
@@ -532,7 +531,6 @@ public class CourseServiceImpl implements CourseService {
 
 	private MembersHasCourseEntity mapDtoToEntity(MembersHasCourseDto body) {
 		MembersHasCourseEntity entity = new MembersHasCourseEntity();
-		TransportationEntity tran = new TransportationEntity();
 		if (body != null) {
 			entity.setMembersHasCourseId(body.getMembersHasCourseId());
 			entity.setCourseId(body.getCourseId());
@@ -540,8 +538,7 @@ public class CourseServiceImpl implements CourseService {
 			entity.setRegisterDate(body.getRegisterDate());
 			entity.setSenseId(body.getSenseId());
 			entity.setMhcStatus(body.getStatus());
-			tran.setTransportationId(body.getTransportationId());
-			entity.setTranId(tran);
+			entity.setTranId(body.getTransportationId());
 		}
 		return entity;
 	}

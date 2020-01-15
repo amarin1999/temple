@@ -38,9 +38,8 @@ public class MembersHasCourseEntity implements Serializable {
 	@Column(name = "sense_id")
 	private long senseId;
 
-	@ManyToOne
-	@JoinColumn(name = "tran_id")
-	private TransportationEntity tranId;
+	@Column(name = "tran_id")
+	private long tranId;
 
 	@OneToOne
 	@JoinColumn(name = "course_id", insertable = false, updatable = false)
@@ -106,11 +105,11 @@ public class MembersHasCourseEntity implements Serializable {
 		this.senseId = senseId;
 	}
 
-	public TransportationEntity getTranId() {
+	public long getTranId() {
 		return tranId;
 	}
 
-	public void setTranId(TransportationEntity tranId) {
+	public void setTranId(long tranId) {
 		this.tranId = tranId;
 	}
 
