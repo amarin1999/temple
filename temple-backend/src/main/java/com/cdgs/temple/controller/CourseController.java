@@ -197,8 +197,8 @@ public class CourseController {
 
 	@GetMapping(value = "/approve")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<ApprovalCoursesDto>> TeacherGetCoursesApproval(@RequestParam("offset") int offset,
-			@RequestParam("limit") int limit, @RequestParam("query") String query, @RequestParam("spa_status") String spaStatus) {
+	public ResponseEntity<ResponseDto<ApprovalCoursesDto>> TeacherGetCoursesApproval(@RequestParam("offset") int offset, @RequestParam("limit") int limit, 
+			@RequestParam("query") String query) {
 		ResponseDto<ApprovalCoursesDto> res = new ResponseDto<>();
 		List<ApprovalCoursesDto> dto;
 		MemberDto member = memberService.getCurrentMember();
@@ -208,7 +208,7 @@ public class CourseController {
 			System.out.println(limit);
 			// เปลี่ยนไปใช้ ApprovalCourses จากเดิม Course (TeacherGetCoursesApproval)
 			// เพิ่มจำนวนนักเรียนในแต่ละคอร์ส
-			dto = approvalCoursesService.getApprovalCourses(query, member.getId(), limit, offset, spaStatus);
+			dto = approvalCoursesService.getApprovalCourses(query, member.getId(), limit, offset);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
