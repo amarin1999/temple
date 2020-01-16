@@ -349,13 +349,13 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.courseService.getCourseByid(courseId).toPromise()
       .then(res => {
         this.transportId = res['data']['transportTempleId'];
-        console.log(this.transportId);
+        console.log(this.courseId);
         if (this.transportId !== null) {
           // combineLatest for process 2 service before subscribe
           this.optionTime = { hour: '2-digit', minute: '2-digit' };
           combineLatest(
             this.transportation.getTranSportToEdit(),
-            this.transportation.getTranSportTempleToEdit(this.transportId)
+            this.transportation.getTranSportTempleToEdit(this.courseId)
           ).subscribe(([tranSport, tranSportTemple]) => {
             this.transports = [
               ...tranSport.data,
