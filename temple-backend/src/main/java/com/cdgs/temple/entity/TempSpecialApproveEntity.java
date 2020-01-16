@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class TempSpecialApproveEntity implements Serializable {
@@ -15,9 +16,17 @@ public class TempSpecialApproveEntity implements Serializable {
 	private long memberId;
 	private String spaDetail;
 	private String displayName;
+	
+	@Transient
 	private String courseName;
+	
+	@Transient
 	private String courseDetail;
+	
+	@Transient
 	private Date courseStDate;
+	
+	@Transient
 	private Date courseEndDate;
 	private String transportation;
 
