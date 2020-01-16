@@ -6,6 +6,8 @@ import com.cdgs.temple.dto.ApprovalCoursesDto;
 
 public interface ApprovalCoursesService {
 
-	public List<ApprovalCoursesDto> getApprovalCourses(String query, Long monkId, int limit, int offset, String spaStatus);
+//	public List<ApprovalCoursesDto> getApprovalCourses(String query, Long monkId, int limit, int offset, String spaStatus);
+
+	List<ApprovalCoursesDto> getApprovalCourses(String query, Long monkId, int limit, int offset);
 
 }
