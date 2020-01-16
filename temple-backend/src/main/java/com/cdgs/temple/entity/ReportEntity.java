@@ -4,15 +4,16 @@
 //
 //import javax.persistence.Embeddable;
 //import javax.persistence.Entity;
+//import javax.persistence.Table;
 //
 //@Entity
+//@Table()
 //@Embeddable
+//
 //public class ReportEntity implements Serializable{
 //
 //	/**
 //	 * 
 //	 */
-//	private static final long serialVersionUID = 5218040759577439311L;
-//
-//	
+//	private static final long serialVersionUID = 1L;
 //}
