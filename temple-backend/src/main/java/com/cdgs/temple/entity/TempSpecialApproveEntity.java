@@ -15,6 +15,7 @@ public class TempSpecialApproveEntity implements Serializable {
 	private long memberId;
 	private String spaDetail;
 	private String displayName;
+	private String courseName;
 	private String courseDetail;
 	private Date courseStDate;
 	private Date courseEndDate;
@@ -50,6 +51,14 @@ public class TempSpecialApproveEntity implements Serializable {
 
 	public void setSpaDetail(String spaDetail) {
 		this.spaDetail = spaDetail;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 
 	public String getCourseDetail() {

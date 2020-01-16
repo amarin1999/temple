@@ -168,6 +168,7 @@ public class SpecialApproveServiceImpl implements SpecialApproveService {
 		dto.setMemberId(entity.getMemberId());
 		dto.setDetail(entity.getSpaDetail());
 		dto.setDisplayName(entity.getDisplayName());
+		dto.setCourseName(entity.getCourseName());
 		dto.setCourseDetail(entity.getCourseDetail());
 		dto.setStDate(entity.getCourseStDate());
 		dto.setEndDate(entity.getCourseEndDate());
