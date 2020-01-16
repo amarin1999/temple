@@ -14,6 +14,7 @@ public class SpecialApproveDto implements Serializable {
 	private List<Long> spaId;
 	private long memberId;
 	private long courseId;
+	private String courseDetail;
 	private String detail;
 	private String status;
 	private LocalDateTime createDate;
@@ -53,6 +54,14 @@ public class SpecialApproveDto implements Serializable {
 
 	public void setCourseId(long courseId) {
 		this.courseId = courseId;
+	}
+
+	public String getCourseDetail() {
+		return courseDetail;
+	}
+
+	public void setCourseDetail(String courseDetail) {
+		this.courseDetail = courseDetail;
 	}
 
 	public String getDetail() {

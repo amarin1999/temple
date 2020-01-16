@@ -1,6 +1,7 @@
 package com.cdgs.temple.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,8 +13,11 @@ public class TempSpecialApproveEntity implements Serializable {
 	@Id
 	private long specialApproveId;
 	private long memberId;
-	private String displayName;
 	private String spaDetail;
+	private String displayName;
+	private String courseDetail;
+	private Date courseStDate;
+	private Date courseEndDate;
 	private String transportation;
 
 	public long getSpecialApproveId() {
@@ -46,6 +50,30 @@ public class TempSpecialApproveEntity implements Serializable {
 
 	public void setSpaDetail(String spaDetail) {
 		this.spaDetail = spaDetail;
+	}
+
+	public String getCourseDetail() {
+		return courseDetail;
+	}
+
+	public void setCourseDetail(String courseDetail) {
+		this.courseDetail = courseDetail;
+	}
+
+	public Date getCourseStDate() {
+		return courseStDate;
+	}
+
+	public void setCourseStDate(Date courseStDate) {
+		this.courseStDate = courseStDate;
+	}
+
+	public Date getCourseEndDate() {
+		return courseEndDate;
+	}
+
+	public void setCourseEndDate(Date courseEndDate) {
+		this.courseEndDate = courseEndDate;
 	}
 
 	public String getTransportation() {
