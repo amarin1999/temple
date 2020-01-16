@@ -99,7 +99,7 @@ export class ManageCourseComponent implements OnInit {
           this.courses = res['data'];
           this.loading = false;
         }
-        console.log(this.courses);
+        // console.log(this.courses);
       });
 
   }
