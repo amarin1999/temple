@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuItem, MessageService, ConfirmationService, LazyLoadEvent} from 'primeng/api';
-import {ApprovalService} from '../approval.service';
-import {BreadcrumbService} from '../../../shared/service/breadcrumb.service';
-import {Course} from '../../../shared/interfaces/course';
-import {of} from 'rxjs';
-import {switchMap, tap} from 'rxjs/operators';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { MenuItem, MessageService, ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ApprovalService } from '../approval.service';
+import { BreadcrumbService } from '../../../shared/service/breadcrumb.service';
+import { Course } from '../../../shared/interfaces/course';
+import { of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-course-approve',
@@ -70,16 +70,15 @@ export class ListCourseApproveComponent implements OnInit {
     if (e.globalFilter) {
       query = e.globalFilter;
     }
-    this.getDataOutTime(e.first, e.rows, query);
   }
     
   }
 
   private setColumn() {
     this.cols = [
-      {field: 'name', header: 'ชื่อคอร์ส'},
-      {field: 'conditionMin', header: 'หมายเหตุ'},
-      {field: 'detail', header: 'รายละเอียด'},
+      { field: 'name', header: 'ชื่อคอร์ส' },
+      { field: 'conditionMin', header: 'หมายเหตุ' },
+      { field: 'detail', header: 'รายละเอียด' },
     ];
   }
 
@@ -120,7 +119,6 @@ export class ListCourseApproveComponent implements OnInit {
       // console.log(res);
       if (res['status'] === 'Success') {
         this.courses = [...res['data']];
-        console.log(this.courses);
         this.loading = false;
       }
     });
@@ -134,9 +132,8 @@ export class ListCourseApproveComponent implements OnInit {
     ).subscribe(res => {
       // console.log(res);
       if (res['status'] === 'Success') {
-        this.courses = [...res['data']];
-        console.log(this.courses);
-         this.loading = false;
+        this.coursesOutTime = [...res['data']];
+        this.loadingOutTime = false;
       }
     });
   }

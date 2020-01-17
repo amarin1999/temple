@@ -113,7 +113,6 @@ public class CourseController {
 		MemberDto member = memberService.getCurrentMember();
 		try {
 			if (status.equals("0")) {
-
 				dto = courseService.getCoursesUserRegister(member.getId());
 			} else {
 				dto = courseService.getCoursesUser(member.getId(), status);
@@ -123,6 +122,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -197,8 +197,8 @@ public class CourseController {
 
 	@GetMapping(value = "/approve")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<ApprovalCoursesDto>> TeacherGetCoursesApproval(@RequestParam("offset") int offset,
-			@RequestParam("limit") int limit, @RequestParam("query") String query) {
+	public ResponseEntity<ResponseDto<ApprovalCoursesDto>> TeacherGetCoursesApproval(@RequestParam("offset") int offset, @RequestParam("limit") int limit, 
+			@RequestParam("query") String query) {
 		ResponseDto<ApprovalCoursesDto> res = new ResponseDto<>();
 		List<ApprovalCoursesDto> dto;
 		MemberDto member = memberService.getCurrentMember();
@@ -304,16 +304,31 @@ public class CourseController {
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
 	public ResponseEntity<ResponseDto<CourseDto>> getCoursesById(@PathVariable("id") Long id) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
-		List<CourseDto> dto = new ArrayList<>();
 		MemberDto member = memberService.getCurrentMember();
+        CourseDto courseDto = new CourseDto();
+        List<CourseDto> courseDtoList = new ArrayList<>();
 		try {
 			if (member.getRoleName().equals("user")) {
-				dto.add(courseService.getCourseUser(member.getId(), id));
+                courseDto = courseService.getCourseUser(member.getId(), id);
+                if ( courseDto.getTransportation() == null) {
+                	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
+                	if (courseDto.getTransportation().getId() == null ) {
+                		courseDto.setTransportation(null);
+                	}
+                }
+                courseDtoList.add(courseDto);
 			} else {
-				dto.add(courseService.getCourse(id));
+                courseDto = courseService.getCourse(id);
+                if ( courseDto.getTransportation() == null) {
+                	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
+                	if (courseDto.getTransportation().getId() == null ) {
+                		courseDto.setTransportation(null);
+                	}
+                }
+                courseDtoList.add(courseDto);
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setData(dto);
+            res.setData(courseDtoList);
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {

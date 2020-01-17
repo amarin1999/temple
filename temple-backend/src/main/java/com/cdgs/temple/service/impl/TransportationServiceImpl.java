@@ -42,6 +42,59 @@ public class TransportationServiceImpl implements TransportationService {
 		}
 		return mapListEntityToDto(transportationEntity);
 	}
+	
+	@Override
+	public List<TransportationDto> getTransportationTempleForCreateCourse() {
+		List<TransportationEntity> transportationEntity = new ArrayList<TransportationEntity>();
+		try {
+			transportationEntity = transportationRepository.findTranTempleForCreateCourse();
+		} catch (Exception e) {
+			log.error("TransportationServiceImpl >>> getTransportationTemple : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return mapListEntityToDto(transportationEntity);
+	}
+	
+	@Override
+	public TransportationDto getTransportationById(Long id) {
+		TransportationEntity entity = new TransportationEntity();
+		try {
+			entity = transportationRepository.findById(id).get();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("getTransportationById >>> " + e.getMessage());
+		}
+		return mapEntityToDto(entity);
+	}
+	
+	public List<TransportationDto> getTransportationTemple(Long courseId) {
+		List<TransportationEntity> transportationEntity = new ArrayList<TransportationEntity>();
+		try {
+			transportationEntity = transportationRepository.findTranTempleAndCourseId(courseId);
+		} catch (Exception e) {
+			log.error("TransportationServiceImpl >>> getTransportationTemple : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return mapListEntityToDto(transportationEntity);
+	}
+	
+	/**
+	 * getTransportationTemple
+	 * Description : this function get data of Transportation Temple Course.
+	 * Params : courseId 
+	 * create : 15/01/2563
+	 * By Natthakit Suk-on
+	 */
+	public List<TransportationDto> getTransportationTempleRegister(Long courseId) {
+		List<TransportationEntity> transportationEntity = new ArrayList<TransportationEntity>();
+		try {
+			transportationEntity = transportationRepository.findTranTempleAndCourseIdRegister(courseId);
+		} catch (Exception e) {
+			log.error("TransportationServiceImpl >>> getTransportationTemple : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return mapListEntityToDto(transportationEntity);
+	}
 
 	/**
 	 * getTransportationName Description : this function get data of Transportation.

@@ -34,6 +34,7 @@ export class CoursesListComponent implements OnInit {
   public studyingcourses: Course[];
   public values: Course[] = [];
   public cols: any[];
+  public cols2: any[];
   public menu: MenuItem[];
   public displayApproveDialog = false;
   public displayRegisterDialog = false;
@@ -149,6 +150,11 @@ export class CoursesListComponent implements OnInit {
       { field: 'name', header: 'ชื่อคอร์ส' },
       { field: 'locationName', header: 'สถานที่' },
       { field: 'conditionMin', header: 'หมายเหตุ' },
+      { field: 'status', header: 'สถานะ' }
+    ];
+    this.cols2 = [
+      { field: 'stDate', header: 'วันที่' },
+      { field: 'name', header: 'ชื่อคอร์ส' },
       { field: 'status', header: 'สถานะ' }
     ];
 
@@ -434,7 +440,7 @@ export class CoursesListComponent implements OnInit {
         this.optionTime = { hour: '2-digit', minute: '2-digit' };
         combineLatest(
           this.transportation.getTranSportToEdit(),
-          this.transportation.getTranSportTempleToEdit(this.transportId)
+          this.transportation.getTranSportTempleToEdit(this.courseId)
         ).subscribe(([tranSport, tranSportTemple]) => {
           this.transports = [
             ...tranSport.data,
@@ -484,7 +490,7 @@ export class CoursesListComponent implements OnInit {
         this.optionTime = { hour: '2-digit', minute: '2-digit' };
         combineLatest(
           this.transportation.getTranSportToEdit(),
-          this.transportation.getTranSportTempleToEdit(this.transportId)
+          this.transportation.getTranSportTempleToEdit(this.courseId)
         ).subscribe(([tranSport, tranSportTemple]) => {
           this.transports = [
             ...tranSport.data,
@@ -498,7 +504,7 @@ export class CoursesListComponent implements OnInit {
                     'th-TH',
                     this.optionTime
                   ) +
-                  ' เวลา: ' +
+                  ' เวลาส่ง: ' +
                   new Date(data.timeSend).toLocaleTimeString(
                     'th-TH',
                     this.optionTime
