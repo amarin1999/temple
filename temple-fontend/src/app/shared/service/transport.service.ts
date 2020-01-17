@@ -54,6 +54,18 @@ export class TransportService {
     }
   }
 
+  getTranSportTempleForCreateCourse(id) {
+    return this.http.get(ApiConstants.baseURl + `/transportations/templeForCreateCourse/`)
+      .pipe(
+        map((res: any[]) => {
+          return {
+            status: res['result'],
+            data: res['data']
+          };
+        })
+      );
+  }
+
   getTranSportToEdit() {
     return this.http.get(ApiConstants.baseURl + '/transportations')
       .pipe(

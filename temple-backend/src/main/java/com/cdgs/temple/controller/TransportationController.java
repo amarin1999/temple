@@ -214,6 +214,29 @@ public class TransportationController {
 		}
 	}
 	
+	/**
+	 * getTransportationTemple() This function for get transportation of temple
+	 * 
+	 */
+	@GetMapping(path = "/templeForCreateCourse")
+	public ResponseEntity<ResponseDto<TransportationDto>> getTransportationTempleForCreateCourse() {
+		List<TransportationDto> templeDto = new ArrayList<>();
+		ResponseDto<TransportationDto> res = new ResponseDto<TransportationDto>();
+		try {
+			templeDto = transportationService.getTransportationTempleForCreateCourse();
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(templeDto);
+			res.setCode(200);
+			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<TransportationDto>>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@GetMapping(path = "/temple/{id}")
 	public ResponseEntity<ResponseDto<TransportationDto>> getTransportationTemple(@PathVariable("id") Long courseId) {
 		List<TransportationDto> templeDto = new ArrayList<>();

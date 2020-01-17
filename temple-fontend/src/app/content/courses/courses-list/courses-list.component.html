@@ -153,7 +153,7 @@
           <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
             <!-- <p-messages [value]="msgs"></p-messages> -->
             <p-toast [style]="{ marginTop: '80px' }"></p-toast>
-            <p-table #sdt [columns]="cols" [value]="studyingcourses" [paginator]="true" [rows]="5" [responsive]="true"
+            <p-table #sdt [columns]="cols2" [value]="studyingcourses" [paginator]="true" [rows]="5" [responsive]="true"
               selectionMode="single" [(selection)]="selectedCourse" (onRowSelect)="onRowSelect($event)"
               [totalRecords]="totalStudyRecords">
               <ng-template pTemplate="caption">
@@ -181,7 +181,7 @@
                       ariaLabelAsc="Activate to sort in ascending order">
                     </p-sortIcon>
                   </th>
-                  <th pSortableColumn="location" class="ui-p-5">
+                  <!-- <th pSortableColumn="location" class="ui-p-5">
                     สถานที่
                     <p-sortIcon field="location" ariaLabel="Activate to sort"
                       ariaLabelDesc="Activate to sort in descending order"
@@ -194,7 +194,7 @@
                       ariaLabelDesc="Activate to sort in descending order"
                       ariaLabelAsc="Activate to sort in ascending order">
                     </p-sortIcon>
-                  </th>
+                  </th> -->
                   <th class="ui-p-6">
                     สถานะ
                   </th>
@@ -216,7 +216,7 @@
                         ">
                         {{ rowData['name'] }}
                       </div>
-                      <div *ngIf="
+                      <!-- <div *ngIf="
                           rowData[col.field] == rowData['locationName'] &&
                           col.field == 'locationName'
                         " style="text-align: center">
@@ -227,7 +227,7 @@
                           col.field == 'conditionMin'
                         " style="text-align: center">
                         ต้องผ่านอย่างน้อย {{ rowData['conditionMin'] }} คอร์ส
-                      </div>
+                      </div> -->
                       <div *ngIf="
                           rowData[col.field] == rowData['status'] &&
                           col.field == 'status'

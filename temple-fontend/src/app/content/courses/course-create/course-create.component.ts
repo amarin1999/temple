@@ -140,7 +140,7 @@ export class CourseCreateComponent implements OnInit {
 
     // ------------ Get List of Transportation Temple ------------
     this.optionTime = { hour: '2-digit', minute: '2-digit' };
-    this.transportTempleService.getTranSportTemple(null).subscribe(
+    this.transportTempleService.getTranSportTempleForCreateCourse(null).subscribe(
       res => {
         this.transport = res['data'].map(data => {
           return {
