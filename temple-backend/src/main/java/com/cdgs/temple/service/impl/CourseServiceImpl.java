@@ -457,7 +457,12 @@ public class CourseServiceImpl implements CourseService {
 				transportationDtoNew = transportationService.getTransportationById(courseNew.getTransportation().getId());
 				transportationDtoNew.setCourseId(id);
 				transportationService.updateTransportationTemple(transportationDtoNew.getId(), transportationDtoNew);
-
+			} else if (courseNew.getTransportation().getId() == null) {
+				transportationDtoOld = transportationService.getTransportationByCourseId(id);
+				if (transportationDtoOld.getId() != null) {
+					transportationDtoOld.setCourseId(null);
+					transportationService.updateTransportationTemple(transportationDtoOld.getId(), transportationDtoOld);
+				}
 			}
 			System.out.println("st1 = " + courseNew.getStDate());
 
