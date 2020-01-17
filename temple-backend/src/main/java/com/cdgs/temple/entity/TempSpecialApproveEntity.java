@@ -21,7 +21,6 @@ public class TempSpecialApproveEntity implements Serializable {
 	private String displayName;
 	
 	@Transient
-	@Basic(optional=false)
 	private String courseName;
 	
 	@Transient
