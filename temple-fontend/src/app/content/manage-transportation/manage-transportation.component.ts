@@ -4,6 +4,7 @@ import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { Transportation } from 'src/app/shared/interfaces/transportation';
 import { combineLatest } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'app-manage-transportation',
@@ -31,7 +32,8 @@ export class ManageTransportationComponent implements OnInit {
         private breadCrumbService: BreadcrumbService,
         private confirmationService: ConfirmationService,
         private transportationService: TransportService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        public spinner: NgxSpinnerService
     ) { }
 
   ngOnInit() {
@@ -60,12 +62,16 @@ export class ManageTransportationComponent implements OnInit {
     this.displayDialog = true;
     this.newTransportation = '';
   }
-
   getTransportation() {
-    this.transportationService.getTranSportToEdit().subscribe(
-      res => {
+      this.spinner.show();
+    this.transportationService.getTranSportToEdit().toPromise()
+    .then(res => {
         this.transport = res['data'];
-    });
+    }).catch(err => {
+        console.log(err['error']['errorMessage']);
+    }).finally(() =>
+        this.spinner.hide()
+    );
     // combineLatest for process 2 service before subscribe
     // combineLatest(
     //   this.transportationService.getTranSportToEdit(),
