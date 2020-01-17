@@ -16,4 +16,5 @@ public interface MembersHasCourseService {
 	Long countForPassCourses(Long memberId);
 
 	List<MembersHasCourseDto> getMembersByCourse(Long courseId);
+	
 }
