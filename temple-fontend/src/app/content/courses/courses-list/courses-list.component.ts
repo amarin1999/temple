@@ -34,6 +34,7 @@ export class CoursesListComponent implements OnInit {
   public studyingcourses: Course[];
   public values: Course[] = [];
   public cols: any[];
+  public cols2: any[];
   public menu: MenuItem[];
   public displayApproveDialog = false;
   public displayRegisterDialog = false;
@@ -149,6 +150,11 @@ export class CoursesListComponent implements OnInit {
       { field: 'name', header: 'ชื่อคอร์ส' },
       { field: 'locationName', header: 'สถานที่' },
       { field: 'conditionMin', header: 'หมายเหตุ' },
+      { field: 'status', header: 'สถานะ' }
+    ];
+    this.cols2 = [
+      { field: 'stDate', header: 'วันที่' },
+      { field: 'name', header: 'ชื่อคอร์ส' },
       { field: 'status', header: 'สถานะ' }
     ];
 
