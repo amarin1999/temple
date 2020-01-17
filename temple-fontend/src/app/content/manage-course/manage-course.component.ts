@@ -28,6 +28,7 @@ export class ManageCourseComponent implements OnInit {
   public displayEditDialog = false;
   public courseId: number;
   @ViewChild('CourseEdit') CourseEdit: CourseEditComponent;
+  @ViewChild('CourseCreate') CourseCreate: CourseCreateComponent;
 
   constructor(
     private courseService: CourseService,
@@ -57,6 +58,11 @@ export class ManageCourseComponent implements OnInit {
       { label: 'จัดการคอร์ส', routerLink: '/manageCourse' },
     ]);
     this.loading = true;
+  }
+
+  createCourse() {
+    this.CourseCreate.getTransport();
+    this.displayCreateDialog = true;
   }
 
   editCourse(id) {

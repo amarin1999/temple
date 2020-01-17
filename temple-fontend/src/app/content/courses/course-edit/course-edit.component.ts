@@ -20,7 +20,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class CourseEditComponent implements OnInit {
 
   public msgs: any;
-  public noticearr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+  public noticearr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
   public notice: Array<any> = [];
   public locations: Location[];
   public transport: TransportationTemple[];
@@ -267,7 +267,7 @@ export class CourseEditComponent implements OnInit {
             name: this.formEdit.get('courseName').value,
             detail: this.formEdit.get('detail').value,
             locationId: this.formEdit.get('location').value.id,
-            conditionMin: parseInt(this.formEdit.get('conditionMin').value.id),
+            conditionMin: this.formEdit.get('conditionMin').value.id,
             date: datesort,
             stDate: stDate,
             endDate: endDate,
