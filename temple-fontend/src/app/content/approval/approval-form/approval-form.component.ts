@@ -22,7 +22,7 @@ export class ApprovalFormComponent implements OnInit {
   // @Input() msgs: Message[] = [];
   public courseId: string;
   public nameCourse: string;
-  public btnrej:boolean;
+  public btnrej: boolean;
   public courseType: String;
   constructor(
     private breadCrumbService: BreadcrumbService,
@@ -34,28 +34,28 @@ export class ApprovalFormComponent implements OnInit {
 
   ngOnInit() {
     this.option = '2';
-    this.fieldId = 'specialApproveId'
+    this.fieldId = 'specialApproveId';
+    this.courseId = this.route.snapshot.paramMap.get('id');
+    this.courseType = this.route.snapshot.queryParamMap.get('type');
+    this.initMember();
+    this.nameCourse = this.route.snapshot.queryParamMap.get('course');
     this.setBreadCrumb();
 
     this.cols = [
       { field: 'displayName', header: 'ชื่อ-นามสกุล' },
-      {field: 'transportationName', header:'การเดินทาง'},
-      { field: 'detail', header: 'คำขออนุมัติพิเศษ'},
-      { field: 'checked', header: ''}
+      { field: 'transportationName', header: 'การเดินทาง' },
+      { field: 'detail', header: 'คำขออนุมัติพิเศษ' },
+      { field: 'checked', header: '' }
     ];
 
-    this.courseId = this.route.snapshot.paramMap.get('id')
-    this.courseType = this.route.snapshot.queryParamMap.get('type');
-    this.initMember();
-    this.nameCourse = this.route.snapshot.queryParamMap.get('course');
+    // console.log(this.courseType);
     
-
   }
-  setBreadCrumb(){
-    if(this.courseType==='OutTime'){
-      this.breadCrumbService.setPath([{ label: 'การอนุมัตินอกเวลา', routerLink: '/approvalCourseOutTime' },{ label: 'อนุมัติผู้เรียนนอกเวลา' }]);
-    }else{
-      this.breadCrumbService.setPath([{ label: 'การอนุมัติพิเศษ', routerLink: '/approval' },{ label: 'อนุมัติผู้เรียนพิเศษ' }]);
+  setBreadCrumb() {
+    if (this.courseType === 'OutTime') {
+      this.breadCrumbService.setPath([{ label: 'การอนุมัตินอกเวลา', routerLink: '/approvalCourseOutTime' }, { label: 'อนุมัติผู้เรียนนอกเวลา' }]);
+    } else {
+      this.breadCrumbService.setPath([{ label: 'การอนุมัติพิเศษ', routerLink: '/approval' }, { label: 'อนุมัติผู้เรียนพิเศษ' }]);
     }
 
   }
@@ -68,7 +68,7 @@ export class ApprovalFormComponent implements OnInit {
             // console.log(res);
             this.member = res['data'];
             if (this.member.length === 0) {
-              this.member = [{displayName:"ไม่มีข้อมูล"}]
+              this.member = [{ displayName: "ไม่มีข้อมูล" }]
             }
           }
         });
@@ -78,7 +78,7 @@ export class ApprovalFormComponent implements OnInit {
           if (res['status'] === 'Success') {
             this.member = res['data'];
             if (this.member.length === 0) {
-              this.member = [{displayName:"ไม่มีข้อมูล"}]
+              this.member = [{ displayName: "ไม่มีข้อมูล" }]
             }
           }
         });
@@ -93,20 +93,20 @@ export class ApprovalFormComponent implements OnInit {
       header: 'การอนุมัติพิเศษ',
       accept: () => {
         this.approvalService.approveStudents(e)
-      .subscribe((res) => {
-        // console.log(res);
-        if (res['status'] === 'Success') {
-          this.initMember();
-          this.messageServise.add({ severity: 'success', summary: 'ข้อความจากระบบ' , detail:  'ดำเนินการ'+ message +'อนุมัติพิเศษสำเร็จ' });
-        } else {
-          this.btnrej = false;
-          this.messageServise.add({ severity: 'error', summary: 'ข้อความจากระบบ' , detail: 'ดำเนินการ'+ message + 'อนุมัติพิเศษไม่สำเร็จ' });
-        }
-      });
+          .subscribe((res) => {
+            // console.log(res);
+            if (res['status'] === 'Success') {
+              this.initMember();
+              this.messageServise.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการ' + message + 'อนุมัติพิเศษสำเร็จ' });
+            } else {
+              this.btnrej = false;
+              this.messageServise.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการ' + message + 'อนุมัติพิเศษไม่สำเร็จ' });
+            }
+          });
       },
       reject: () => {
         this.btnrej = false;
-        this.messageServise.add({severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการ'+message +'อนุมัติพิเศษ'});
+        this.messageServise.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการ' + message + 'อนุมัติพิเศษ' });
       }
     });
   }

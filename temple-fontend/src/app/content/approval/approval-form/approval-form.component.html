@@ -1,16 +1,28 @@
 <div class="container">
     <div class="ui-g">
-        <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-            <div style="text-align:center">
-                <h1>{{title}} {{nameCourse}}</h1>
+        <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12"> 
+              <div style="text-align: center">
+                <h1>{{nameCourse}}</h1>
             </div>
         </div>
         <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
             <div class="line"></div>
         </div>
+        <ng-container *ngIf="courseType === 'InTime'">
         <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
             <app-list-allow [cols]="cols" [member]="member" [option]='option' (listData)="showDialog($event)" [fieldId]='fieldId'></app-list-allow>
         </div>
+    </ng-container>
+    <ng-container *ngIf="courseType === 'OutTime'">
+        <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+            <app-approve-out-time 
+            [cols]="cols" [member]="member" [option]='option' (listData)="showDialog($event)" [fieldId]='fieldId'
+            >
+            <!-- [cols]="cols" [member]="member" [option]='option' (listData)="showDialog($event)" [fieldId]='fieldId' -->
+            </app-approve-out-time>
+        </div>
+    </ng-container>
+
 
     </div>
 </div>
