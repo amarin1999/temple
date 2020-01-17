@@ -49,10 +49,10 @@ export class ListCourseApproveComponent implements OnInit {
 
   }
   setData() {
-    if (this.isOutTime()) {
+    if(this.isOutTime()){
       this.title = 'จัดการอนุมัติพิเศษ';
       this.methodLazyLoad = 'loadData($event)';
-    } else {
+    }else{
       this.title = 'จัดการอนุมัตินอกเวลา';
       this.methodLazyLoad = 'loadDataOutTime($event)';
     }
@@ -63,15 +63,16 @@ export class ListCourseApproveComponent implements OnInit {
     let query = '';
     if (this.isOutTime()) {
       if (e.globalFilter) {
-        query = e.globalFilter;
-      }
-      this.getData(e.first, e.rows, query);
-    } else {
-      if (e.globalFilter) {
-        query = e.globalFilter;
-      }
+      query = e.globalFilter;
     }
-
+    this.getData(e.first, e.rows, query);
+  } else {
+    if (e.globalFilter) {
+      query = e.globalFilter;
+    }
+    this.getDataOutTime(e.first, e.rows, query);
+  }
+    
   }
 
   private setColumn() {
@@ -83,12 +84,12 @@ export class ListCourseApproveComponent implements OnInit {
   }
 
   private setBreadCrumb() {
-    if (this.isOutTime) {
-      this.textBreadCrumb = { label: 'การอนุมัติพิเศษ', routerLink: '/approval' };
-    } else {
-      this.textBreadCrumb = { label: 'การอนุมัตินอกเวลา', routerLink: '/approvalCourseOutTime' };
-    }
-    this.breadCrumbService.setPath([{ ...this.textBreadCrumb }
+    if(this.isOutTime){
+      this.textBreadCrumb = {label: 'การอนุมัติพิเศษ', routerLink: '/approval'};
+     }else {
+      this.textBreadCrumb = {label: 'การอนุมัตินอกเวลา', routerLink: '/approvalCourseOutTime'};
+     }
+    this.breadCrumbService.setPath([{...this.textBreadCrumb}
     ]);
   }
 
@@ -102,9 +103,9 @@ export class ListCourseApproveComponent implements OnInit {
 
   onRowSelect(e) {
     // console.log(e);
-    if (this.isOutTime()) {
-      this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=InTime`);
-    } else {
+    if(this.isOutTime()){
+    this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=InTime`);
+    }else{
       this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=OutTime`);
     }
   }
@@ -132,8 +133,8 @@ export class ListCourseApproveComponent implements OnInit {
     ).subscribe(res => {
       // console.log(res);
       if (res['status'] === 'Success') {
-        this.coursesOutTime = [...res['data']];
-        this.loadingOutTime = false;
+        this.courses = [...res['data']];
+        this.loading = false;
       }
     });
   }
