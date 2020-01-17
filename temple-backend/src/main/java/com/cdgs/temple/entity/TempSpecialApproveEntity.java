@@ -3,9 +3,12 @@ package com.cdgs.temple.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+
+import org.springframework.data.annotation.Immutable;
 
 @Entity
 public class TempSpecialApproveEntity implements Serializable {
@@ -18,6 +21,7 @@ public class TempSpecialApproveEntity implements Serializable {
 	private String displayName;
 	
 	@Transient
+	@Basic(optional=false)
 	private String courseName;
 	
 	@Transient
