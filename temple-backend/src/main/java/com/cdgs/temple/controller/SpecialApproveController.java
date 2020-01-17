@@ -47,9 +47,15 @@ public class SpecialApproveController {
 		try {
 			dto = specialApproveService.getAll(member.getId(), courseId);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setData(dto);
-			res.setCode(200);
-			return new ResponseEntity<>(res, HttpStatus.OK);
+			if (dto.size() > 0) {
+				res.setData(dto);
+				res.setCode(200);
+				return new ResponseEntity<>(res, HttpStatus.OK);
+			} else {
+				res.setCode(204);
+				return new ResponseEntity<>(res, HttpStatus.NO_CONTENT);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
