@@ -10,6 +10,7 @@ public class ReportDto implements Serializable {
 	private static final long serialVersionUID = 8200068162138826880L;
 
 	private Long coursesId;
+	private String coursesName;
 	private Long genderMale;
 	private Long genderFemale;
 	/*** gender that not specified. * */
@@ -26,7 +27,8 @@ public class ReportDto implements Serializable {
 	private Long south;
 	private Long east;
 	private Long western;
-
+	
+	
 	public Long getCoursesId() {
 		return coursesId;
 	}
@@ -34,7 +36,14 @@ public class ReportDto implements Serializable {
 	public void setCoursesId(Long coursesId) {
 		this.coursesId = coursesId;
 	}
+	
+	public String getCoursesName() {
+		return coursesName;
+	}
 
+	public void setCoursesName(String coursesName) {
+		this.coursesName = coursesName;
+	}
 	public Long getGenderMale() {
 		return genderMale;
 	}
