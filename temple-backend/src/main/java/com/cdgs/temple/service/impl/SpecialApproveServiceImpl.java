@@ -14,6 +14,7 @@ import com.cdgs.temple.dto.SpecialApproveDto;
 import com.cdgs.temple.entity.MembersHasCourseEntity;
 import com.cdgs.temple.entity.SpecialApproveEntity;
 import com.cdgs.temple.entity.TempSpecialApproveEntity;
+import com.cdgs.temple.entity.TransportationEntity;
 import com.cdgs.temple.repository.MembersHasCourseRepository;
 import com.cdgs.temple.repository.SpecialApproveRepository;
 import com.cdgs.temple.repository.TempSpecialApproveRepository;
@@ -97,11 +98,14 @@ public class SpecialApproveServiceImpl implements SpecialApproveService {
 
 	@Override
 	public boolean approve(SpecialApproveDto data) {
+		TransportationEntity tranEntity = new TransportationEntity();
 		MembersHasCourseEntity mhc = new MembersHasCourseEntity();
 		mhc.setMemberId(data.getMemberId());
 		mhc.setCourseId(data.getCourseId());
 		mhc.setMhcStatus('2');
 		mhc.setSenseId(data.getSenseId());
+		tranEntity.setTransportationId(data.getTransportationId());
+		mhc.setTranId(tranEntity);
 		if (membersHasCourseRepository.save(mhc) != null) {
 			return true;
 		}
@@ -159,6 +163,7 @@ public class SpecialApproveServiceImpl implements SpecialApproveService {
 		dto.setMemberId(entity.getMemberId());
 		dto.setStatus(entity.getSpaStatus());
 		dto.setSenseId(entity.getSenseId());
+		dto.setTransportationId(entity.getTranId());
 		return dto;
 	}
 
