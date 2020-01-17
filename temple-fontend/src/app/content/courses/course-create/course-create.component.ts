@@ -138,23 +138,6 @@ export class CourseCreateComponent implements OnInit {
       }
     );
 
-    // ------------ Get List of Transportation Temple ------------
-    this.optionTime = { hour: '2-digit', minute: '2-digit' };
-    this.transportTempleService.getTranSportTempleForCreateCourse(null).subscribe(
-      res => {
-        this.transport = res['data'].map(data => {
-          return {
-            id: data.id,
-            name: data.name + ' เวลารับ : ' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
-              ' เวลาส่ง : ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
-          };
-        });
-      },
-      error => {
-        console.log(error['error']['errorMessage']);
-      }
-    );
-
     const currentYear = this.pipe.transform(Date.now(), 'yyyy');
     const startYear = parseInt(currentYear) + 5;
     this.yearRange = currentYear + ':' + startYear;
@@ -207,6 +190,28 @@ export class CourseCreateComponent implements OnInit {
     }
   }
 
+  // ------------ Get List of Transportation Temple ------------
+  /**
+   * getAllTransportationTemple
+   */
+  public getTransport() {
+    this.optionTime = { hour: '2-digit', minute: '2-digit' };
+    this.transportTempleService.getTranSportTempleForCreateCourse(null).subscribe(
+      res => {
+        this.transport = res['data'].map(data => {
+          return {
+            id: data.id,
+            name: data.name + ' เวลารับ : ' + new Date(data.timePickUp).toLocaleTimeString('th-TH', this.optionTime) +
+              ' เวลาส่ง : ' + new Date(data.timeSend).toLocaleTimeString('th-TH', this.optionTime)
+          };
+        });
+      },
+      error => {
+        console.log(error['error']['errorMessage']);
+      }
+    );
+  }
+
   onSubmit() {
     this.setValidate();
     if (!this.courseForm.valid) {
@@ -247,7 +252,7 @@ export class CourseCreateComponent implements OnInit {
             name: this.courseForm.get('courseName').value,
             detail: this.courseForm.get('detail').value,
             locationId: this.courseForm.get('location').value.id,
-            transportation: {id: this.transportTempleId},
+            transportation: { id: this.transportTempleId },
             conditionMin: this.courseForm.get('conditionMin').value.id,
             date: datesort,
             stDate: stDate,
