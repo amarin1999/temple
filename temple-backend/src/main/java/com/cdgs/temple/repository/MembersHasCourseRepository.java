@@ -33,4 +33,5 @@ public interface MembersHasCourseRepository extends CrudRepository<MembersHasCou
 	List<MembersHasCourseEntity> findAllByMemberIdAndStatus(Long memberId, char status);
 
 	List<MembersHasCourseEntity> findAllByCourseId(Long courseId);
+	
 }

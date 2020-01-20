@@ -9,6 +9,19 @@ import javax.persistence.Id;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.SqlResultSetMapping;
 
+@SqlResultSetMapping(name = "getCourseNameMapping", classes = {
+		@ConstructorResult(targetClass = ReportGenEntity.class, columns = {
+				@ColumnResult(name = "courseId", type = Long.class),
+				@ColumnResult(name = "courseName", type = String.class)
+		})
+})
+
+@NamedNativeQuery(name = "findCourseName", resultSetMapping = "getCourseNameMapping",
+query = "SELECT c.course_id AS courseId, c.course_name AS courseName " + 
+		"FROM members_has_courses mhc " + 
+		"LEFT JOIN courses c " + 
+		"ON mhc.course_id = c.course_id " + 
+		"GROUP BY c.course_id")
 
 @SqlResultSetMapping(name = "getDataReportDataMapping", classes = {
 		@ConstructorResult(targetClass = ReportGenEntity.class, columns = {
@@ -33,11 +46,11 @@ import javax.persistence.SqlResultSetMapping;
 
 @NamedNativeQuery(name = "getAllDataReport", resultSetMapping = "getDataReportDataMapping",
 		query = "SELECT c.course_id AS courseId, c.course_name AS courseName, "
-				+ "COUNT(CASE WHEN g.gender_id = '2' THEN 'หญิง' END) AS genderM, "
-				+ "COUNT(CASE WHEN g.gender_id = '2' THEN 'หญิง' END) AS genderF, "
-				+ "COUNT(CASE WHEN g.gender_id = '3' THEN 'อื่นๆ' END) AS genderOther, "
-				+ "COUNT(CASE WHEN t.tran_time_id is Null THEN 'อื่นๆ' END) AS transSelf, "
-				+ "COUNT(CASE WHEN t.tran_time_id is NOT Null THEN 'อื่นๆ' END) AS transTemple, "
+				+ "COUNT(CASE WHEN g.gender_id = '1' THEN 1 ELSE NULL END) AS genderM, "
+				+ "COUNT(CASE WHEN g.gender_id = '2' THEN 1 ELSE NULL END) AS genderF, "
+				+ "COUNT(CASE WHEN g.gender_id = '3' THEN 1 ELSE NULL END) AS genderOther, "
+				+ "COUNT(CASE WHEN t.tran_time_id is Null THEN 1 ELSE NULL END) AS transSelf, "
+				+ "COUNT(CASE WHEN t.tran_time_id is NOT Null THEN 1 ELSE NULL END) AS transTemple, "
 				+ "COUNT(CASE WHEN (SELECT COUNT(*) FROM members_has_courses mhcs WHERE mhcs.mhc_status IN ('0','1') AND mhcs.member_id = mhc.member_id) > 0 THEN NULL ELSE 1 END) as newStudent, "
 				+ "COUNT(CASE WHEN p.province_id = 69 AND r.region_id = '4' THEN 1 ELSE NULL END) as bangkok, "
 				+ "COUNT(CASE WHEN p.province_id != 69 AND r.region_id = '4' THEN 1 ELSE NULL END) as center, "
@@ -58,11 +71,11 @@ import javax.persistence.SqlResultSetMapping;
 
 @NamedNativeQuery(name = "getDataReportByCourseId", resultSetMapping = "getDataReportDataMapping",
 query = "SELECT c.course_id AS courseId, c.course_name AS courseName, "
-		+ "COUNT(CASE WHEN g.gender_id = '2' THEN 'หญิง' END) AS genderM, "
-		+ "COUNT(CASE WHEN g.gender_id = '2' THEN 'หญิง' END) AS genderF, "
-		+ "COUNT(CASE WHEN g.gender_id = '3' THEN 'อื่นๆ' END) AS genderOther, "
-		+ "COUNT(CASE WHEN t.tran_time_id is Null THEN 'อื่นๆ' END) AS transSelf, "
-		+ "COUNT(CASE WHEN t.tran_time_id is NOT Null THEN 'อื่นๆ' END) AS transTemple, "
+		+ "COUNT(CASE WHEN g.gender_id = '1' THEN 1 ELSE NULL END) AS genderM, "
+		+ "COUNT(CASE WHEN g.gender_id = '2' THEN 1 ELSE NULL END) AS genderF, "
+		+ "COUNT(CASE WHEN g.gender_id = '3' THEN 1 ELSE NULL END) AS genderOther, "
+		+ "COUNT(CASE WHEN t.tran_time_id is Null THEN 1 ELSE NULL END) AS transSelf, "
+		+ "COUNT(CASE WHEN t.tran_time_id is NOT Null THEN 1 ELSE NULL END) AS transTemple, "
 		+ "COUNT(CASE WHEN (SELECT COUNT(*) FROM members_has_courses mhcs WHERE mhcs.mhc_status IN ('0','1') AND mhcs.member_id = mhc.member_id) > 0 THEN NULL ELSE 1 END) as newStudent, "
 		+ "COUNT(CASE WHEN p.province_id = 69 AND r.region_id = '4' THEN 1 ELSE NULL END) as bangkok, "
 		+ "COUNT(CASE WHEN p.province_id != 69 AND r.region_id = '4' THEN 1 ELSE NULL END) as center, "
@@ -110,6 +123,15 @@ public class ReportGenEntity implements Serializable {
 		this.west = west;
 		this.south = south;
 	}
+	
+	
+	public ReportGenEntity(Long courseId, String courseName) {
+		super();
+		this.courseId = courseId;
+		this.courseName = courseName;
+	}
+
+
 	@Id
 	private Long courseId;
 	private String courseName;

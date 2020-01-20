@@ -27,6 +27,18 @@ public class ReportGenServiceImpl implements ReportGenService {
 	}
 
 	@Override
+	public List<ReportGenDto> findCourseName() {
+		List<ReportGenEntity> reportGenEntities = new ArrayList<>();
+		try {
+			reportGenEntities = reportGenRepository.findCourseName();
+		} catch (Exception e) {
+			log.error("findCourseName >>>> " + e.getMessage());
+			e.printStackTrace();
+		}
+		return mapListEntityToDto(reportGenEntities);
+	}
+	
+	@Override
 	public List<ReportGenDto> getAllDataReport() {
 		List<ReportGenEntity> reportGenEntities = new ArrayList<>();
 		try {
@@ -93,5 +105,6 @@ public class ReportGenServiceImpl implements ReportGenService {
 		return dto;
 		
 	}
+
 
 }

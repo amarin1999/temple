@@ -88,8 +88,7 @@ export class ManageTransportationComponent implements OnInit {
       res => {
         this.transportTemple = res['data'];
         this.transportTemple = this.transportTemple.map( data => {
-            console.log('name', data.name);
-
+            // console.log('name', data.name);
             return { id: data.id , name: data.name , timePickUp: data.timePickUp , timeSend: data.timeSend }
         });
     });

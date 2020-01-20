@@ -50,7 +50,7 @@ public class MembersHasCoursesServiceImpl implements MembersHasCourseService {
 	public List<MembersHasCourseDto> getMembersByCourse(Long courseId) {
 		return mapListEntityToDto(memberHasCourseRepository.findAllByCourseId(courseId));
 	}
-
+	
 	private List<MembersHasCourseDto> mapListEntityToDto(List<MembersHasCourseEntity> entities) {
 		List<MembersHasCourseDto> listDto = new ArrayList<>();
 		if (!entities.isEmpty()) {

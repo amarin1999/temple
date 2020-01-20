@@ -3,8 +3,6 @@ package com.cdgs.temple.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +36,7 @@ public class ReportGenController {
 		ResponseDto<ReportGenDto> res = new ResponseDto<ReportGenDto>();
 		try {
 			dto = reportGenService.getAllDataReport();
+			
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			if (dto == null || dto.size() <= 0) {
 				res.setCode(204);
@@ -65,6 +64,36 @@ public class ReportGenController {
 		try {
 			dto = reportGenService.getDataReportByCourseId(courseId);
 			System.out.println(dto.size());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			if (dto == null || dto.size() <= 0) {
+				res.setCode(204);
+				return new ResponseEntity<ResponseDto<ReportGenDto>>(res, HttpStatus.NO_CONTENT);
+			} else {
+				res.setData(dto);
+				res.setCode(200);
+				return new ResponseEntity<ResponseDto<ReportGenDto>>(res, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			e.printStackTrace();
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<ReportGenDto>>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	/**
+	 * Function: getCourseName() this function for get Course name to show in dropdown.
+	 * parameter: -
+	 * */
+	@GetMapping(path = "/courseNamelist")
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<ResponseDto<ReportGenDto>> getCourseName() {
+		List<ReportGenDto> dto = new ArrayList<>();
+		ResponseDto<ReportGenDto> res = new ResponseDto<ReportGenDto>();
+		try {
+			dto = reportGenService.findCourseName();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			if (dto == null || dto.size() <= 0) {
 				res.setCode(204);
