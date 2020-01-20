@@ -84,16 +84,16 @@ public class MembersHasCoursesServiceImpl implements MembersHasCourseService {
 	 * gettransportationByCourseId Description : this function is SELECT transportation data By course ID and member ID
 	 * Params : course Id create : 13/01/2563 By Natthakit Suk-on
 	 */
-	@Override
-	public TransportationDto getTransportationByCourseId(Long courseId, Long memberId) {
-		TransportationEntity entity = new TransportationEntity();
-		try {
-			entity = memberHasCourseRepository.findTranTempleAndCourseIdMemberId(courseId, memberId);
-		} catch (Exception e) {
-			log.error("getTransportationByCourseId >> " + e.getMessage());
-		}
-		return mapEntityToDto(entity);
-	}
+//	@Override
+//	public TransportationDto getTransportationByCourseId(Long courseId, Long memberId) {
+//		TransportationEntity entity = new TransportationEntity();
+//		try {
+//			entity = memberHasCourseRepository.findTranTempleAndCourseIdMemberId(courseId, memberId);
+//		} catch (Exception e) {
+//			log.error("getTransportationByCourseId >> " + e.getMessage());
+//		}
+//		return mapEntityToDto(entity);
+//	}
 	
 	private TransportationDto mapEntityToDto(TransportationEntity entity) {
 		TransportationDto dto = new TransportationDto();

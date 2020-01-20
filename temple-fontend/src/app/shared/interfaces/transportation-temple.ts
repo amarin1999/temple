@@ -1,7 +1,7 @@
 export interface TransportationTemple {
     id?: number;
     name?: string;
-    status?: boolean;
+    tranTimeId?: number;
     timePickUp?: number;
     timeSend?: number;
 }

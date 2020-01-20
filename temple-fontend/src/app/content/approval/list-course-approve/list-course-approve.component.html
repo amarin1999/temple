@@ -23,7 +23,6 @@
                   </div>
                 </div>
               </div>
-
             </ng-template>
             <ng-template pTemplate="header" let-columns>
               <tr>
@@ -33,7 +32,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
-              <tr [pSelectableRow]="rowData">
+              <tr [pSelectableRow]="rowData" *ngIf="rowData.numberOfMembers > 0">
                 <td *ngFor="let col of columns">
                   <span class="ui-column-title">{{col.header}}</span>
                   {{col.field == "conditionMin" ? "ผ่านการเรียนมาอย่างน้อย " + rowData[col.field] + " คอร์ส" : rowData[col.field]}}
@@ -89,7 +88,6 @@
               </p-tabPanel>
           </p-tabView> -->
         </div>
-
       </div>
     </div>
   </div>
