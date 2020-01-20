@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdgs.temple.entity.MembersHasCourseEntity;
+import com.cdgs.temple.entity.TransportationEntity;
 
 @Repository
 @Transactional(readOnly = true)
@@ -34,4 +35,10 @@ public interface MembersHasCourseRepository extends CrudRepository<MembersHasCou
 
 	List<MembersHasCourseEntity> findAllByCourseId(Long courseId);
 	
+//	@Query(value = "SELECT t.tran_name, tt.tran_time_pickup, tt.tran_time_send FROM members_has_courses mh "
+//			+ "LEFT JOIN transportations t ON mh.tran_id=t.tran_id "
+//			+ "LEFT JOIN transportations_time tt ON t.tran_time_id=tt.tran_time_id "
+//			+ "WHERE mh.member_id = :memberId "
+//			+ "AND mh.course_id = :courseId", nativeQuery = true)
+//	TransportationEntity findTranTempleAndCourseIdMemberId(@Param("courseId") Long courseId, @Param("memberId") Long memberId);
 }

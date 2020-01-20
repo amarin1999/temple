@@ -84,7 +84,7 @@ export class ListCourseApproveComponent implements OnInit {
 
   private setBreadCrumb() {
     this.breadCrumbService.setPath([
-      { label: 'การอนุมัติ', routerLink: '/approval' },
+      { label: 'จัดการอนุมัติพิเศษ', routerLink: '/approval' },
     ]);
   }
 
@@ -114,7 +114,11 @@ export class ListCourseApproveComponent implements OnInit {
     ).subscribe(res => {
       // console.log(res);
       if (res['status'] === 'Success') {
-        this.courses = [...res['data']];
+        if (res['status'] !== [] || res['status'] !== null) {
+          this.courses = [...res['data']];
+        } else {
+          this.courses = null;
+        }
         this.loading = false;
       }
     });

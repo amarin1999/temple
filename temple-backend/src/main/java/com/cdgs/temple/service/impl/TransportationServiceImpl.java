@@ -307,6 +307,12 @@ public class TransportationServiceImpl implements TransportationService {
 		}
 		return entity;
 	}
+
+	@Override
+	public TransportationDto getTransportationTempleMember(Long courseId, Long memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 	/**

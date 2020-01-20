@@ -311,10 +311,8 @@ public class CourseController {
 			if (member.getRoleName().equals("user")) {
                 courseDto = courseService.getCourseUser(member.getId(), id);
                 if ( courseDto.getTransportation() == null) {
+                	System.out.println("hi");
                 	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
-                	if (courseDto.getTransportation().getId() == null ) {
-                		courseDto.setTransportation(null);
-                	}
                 }
                 courseDtoList.add(courseDto);
 			} else {
