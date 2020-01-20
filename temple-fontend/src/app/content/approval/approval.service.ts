@@ -87,7 +87,7 @@ export class ApprovalService {
 
   approveStudents(data) {
     const req = {
-      spaId: data.spaId,
+      spaId: data.member ? data.member : data.spaId,
       courseId: data.courseId,
       status: data.status
     };
