@@ -8,7 +8,7 @@
       </div>
       <div class="ui-g-12 ui-lg-3 ui-md-6 ">
         <span>
-          <!-- ชื่อ-นามสกุล  -->{{(detail) ? detail.displayName: ''}}
+          <!-- ชื่อ-นามสกุล  -->{{(detail.displayName) ? detail.displayName: 'ไม่มีข้อมูล'}}
         </span>
       </div>
       <div class="ui-g-5 ui-lg-3 ui-md-6">
@@ -16,7 +16,7 @@
       </div>
       <div class="ui-g-7 ui-lg-3 ui-md-6">
         <span>
-          <!-- -การเดินทาง -->{{(detail) ? detail.transportationName: ''}}
+          <!-- -การเดินทาง -->{{(detail.transportationName) ? detail.transportationName: 'ไม่มีข้อมูล'}}
         </span>
       </div>
       <div class="ui-g-5 ui-lg-3 ui-md-6">
@@ -24,7 +24,7 @@
       </div>
       <div class="ui-g-7 ui-lg-3 ui-md-6 ">
         <span>
-          <!-- รายละเอียด -->{{(detail) ? detail.courseDetail: ''}}
+          <!-- รายละเอียด -->{{(detail.courseDetail) ? detail.courseDetail: 'ไม่มีข้อมูล'}}
         </span>
       </div>
       <div class="ui-g-5 ui-lg-3 ui-md-6">
@@ -32,7 +32,8 @@
       </div>
       <div class="ui-g-7 ui-lg-3 md-6 ">
         <span>
-          <!-- วันเริ่มเรียน -->{{(detail) ? detail.stDate +' - '+ detail.endDate: ''}}
+          <!-- วันเริ่มเรียน --> {{(detail?.stDate) ? (detail.stDate | formatTHdate) : 'ไม่มีข้อมูล'}} -
+                        {{(detail?.endDate) ? (detail?.endDate | formatTHdate) : 'ไม่มีข้อมูล'}}
         </span>
       </div>
       <div class="ui-g-5 ui-lg-3 ui-md-6 ">
@@ -40,7 +41,7 @@
       </div>
       <div class="ui-g-7 ui-lg-3 ui-md-6">
         <span>
-          <!-- เหตุผล -->{{(detail) ? detail.detail: ''}}
+          <!-- เหตุผล -->{{(detail.detail) ? detail.detail: 'ไม่มีข้อมูล'}}
         </span>
       </div>
     </div>

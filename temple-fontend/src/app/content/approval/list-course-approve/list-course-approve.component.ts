@@ -107,7 +107,7 @@ export class ListCourseApproveComponent implements OnInit {
     if (this.isOutTime()) {
       this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=InTime`);
     } else {
-      this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=OutTime`);
+      this.router.navigateByUrl(`/approvalCourseOutTime/${e.data.id}?course=${e.data.name}&&type=OutTime`);
     }
   }
 
