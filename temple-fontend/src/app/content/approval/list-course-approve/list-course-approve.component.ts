@@ -27,6 +27,7 @@ export class ListCourseApproveComponent implements OnInit {
   url: string;
   goToCourse: string;
   textBreadCrumb;
+  dataOutTimeReport: string;
   public methodLazyLoad: string;
   constructor(
     private approvalService: ApprovalService,
@@ -51,10 +52,10 @@ export class ListCourseApproveComponent implements OnInit {
   setData() {
     if (this.isOutTime()) {
       this.title = 'จัดการอนุมัติพิเศษ';
-      this.methodLazyLoad = 'loadData($event)';
+
     } else {
       this.title = 'จัดการอนุมัตินอกเวลา';
-      this.methodLazyLoad = 'loadDataOutTime($event)';
+
     }
   }
 
@@ -84,7 +85,7 @@ export class ListCourseApproveComponent implements OnInit {
   }
 
   private setBreadCrumb() {
-    if (this.isOutTime) {
+    if (this.isOutTime()) {
       this.textBreadCrumb = { label: 'การอนุมัติพิเศษ', routerLink: '/approval' };
     } else {
       this.textBreadCrumb = { label: 'การอนุมัตินอกเวลา', routerLink: '/approvalCourseOutTime' };
@@ -121,6 +122,7 @@ export class ListCourseApproveComponent implements OnInit {
       if (res['status'] === 'Success') {
         this.courses = [...res['data']];
         this.loading = false;
+
       }
     });
   }
@@ -135,6 +137,7 @@ export class ListCourseApproveComponent implements OnInit {
       if (res['status'] === 'Success') {
         this.courses = [...res['data']];
         this.loading = false;
+        this.dataOutTimeReport = res['data'].length === 0 ? '( ไม่มีข้อมูล )' : '';
       }
     });
   }

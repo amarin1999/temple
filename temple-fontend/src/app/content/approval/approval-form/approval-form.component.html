@@ -17,7 +17,7 @@
         <ng-container *ngIf="courseType === 'OutTime'">
             <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
                 <app-approve-out-time [cols]="cols" [detail]="courseOutTime" [option]='option'
-                    (listData)="showDialog($event)" [fieldId]='fieldId'>
+                    (listData)="showDialogOutTime($event)" [fieldId]='fieldId'>
                     <!-- [cols]="cols" [member]="member" [option]='option' (listData)="showDialog($event)" [fieldId]='fieldId' -->
                 </app-approve-out-time>
             </div>

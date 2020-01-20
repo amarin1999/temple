@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { MemberApproval } from 'src/app/shared/interfaces/member-approval';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApprovalService } from '../approval.service';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -14,7 +14,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class ApprovalFormComponent implements OnInit {
 
   @Input() option: String;
-  courseOutTime: any[]
+  courseOutTime: any[] = [];
   @Input() member: MemberApproval[];
   @Input() cols: any[];
   @Input() fieldId: string;
@@ -29,7 +29,8 @@ export class ApprovalFormComponent implements OnInit {
     private route: ActivatedRoute,
     private approvalService: ApprovalService,
     private confirmationService: ConfirmationService,
-    private messageServise: MessageService
+    private messageServise: MessageService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -65,7 +66,7 @@ export class ApprovalFormComponent implements OnInit {
       this.approvalService.getMemberForApproveOutTime(+this.courseId)
         .subscribe(res => {
           console.log(res['data']['0']);
-          
+
           if (res['status'] === 'Success') {
             // console.log(res);
             this.courseOutTime = res['data']['0'];
@@ -114,5 +115,32 @@ export class ApprovalFormComponent implements OnInit {
       }
     });
   }
-
+  showDialogOutTime(e) {
+    console.log(e);
+    // เขียน api ตอบรับ outTime ใหม่
+    this.btnrej = true;
+    const message = e.status == '1' ? '' : 'ไม่';
+    this.confirmationService.confirm({
+      message: message + 'ต้องการอนุมัตนอกเวลา',
+      header: 'การอนุมัตินอกเวลา',
+      accept: () => {
+        this.approvalService.approveStudents(e)
+          .subscribe((res) => {
+            // console.log(res);
+            if (res['status'] === 'Success') {
+              this.initMember();
+              this.messageServise.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการ' + message + 'อนุมัตินอกสำเร็จ' });
+            } else {
+              this.btnrej = false;
+              this.messageServise.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการ' + message + 'อนุมัตินอกเวลาไม่สำเร็จ' });
+            }
+            this.router.navigateByUrl('/approvalCourseOutTime');
+          });
+      },
+      reject: () => {
+        this.btnrej = false;
+        this.messageServise.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการ' + message + 'อนุมัตินอกเวลา' });
+      }
+    });
+  }
 }

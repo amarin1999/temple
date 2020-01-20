@@ -1,7 +1,5 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { CourseService } from '../../courses/shared/course.service';
 
 @Component({
   selector: 'app-approve-out-time',
@@ -35,16 +33,12 @@ export class ApproveOutTimeComponent implements OnInit {
 
   public urlback: string;
   public messageback: string;
-  detailSend: any;
   constructor(
-    private route: ActivatedRoute,
-    private confirmationService: ConfirmationService,
-    private courseService: CourseService,
-    private messageService: MessageService
+    private route: ActivatedRoute
   ) {
   }
   ngOnInit() {
-    
+
     this.urlback = this.route.snapshot.data.urlback;
     this.messageback = 'กลับไปยังหน้า' + this.route.snapshot.data.messageback;
     this.courseId = this.route.snapshot.paramMap.get('id');
@@ -65,40 +59,44 @@ export class ApproveOutTimeComponent implements OnInit {
   sentData(status = null) {
     // this.messageService.clear();
     console.log(status);
-    
+
     this.check = false;
     let detailSend;
     // อนุมัติผ่านคอร์ส
     // '1' = pass '0' != pass
     if (this.option == '1') {
-      detailSend =  {
-          mhcId: this.detail[this.fieldId],
-          status: this.detail['checked'] ? '1' : ''
-        };
+      detailSend = {
+        mhcId: this.detail[this.fieldId],
+        status: this.detail['checked'] ? '1' : ''
+      };
 
       detailSend = {
         member: [...detailSend],
         courseId: this.courseId
       };
-      
+
       // อนุมัติพิเศษ
       // '1' = Approve '0' != ไม่Approve 
     } else if (this.option == '2') {
       console.log(this.detail);
-      
+      const { specialApproveId, courseId } = this.detail;
+      detailSend = { spaId: [specialApproveId], courseId, status};
+      console.log(detailSend);
+
       // detailSend = [...this.detail[this.fieldId]];
       // detailSend = {
       //   member: [
       //     ...detailSend
       //   ],
       //   courseId: this.courseId,
-        // status: this.status.status
-    //     status: status
-    //   };
-      
-    // }
-    // if (this.detailSend) {
-    //   this.listData.emit(detailSend);
+      // status: this.status.status
+      //     status: status
+      //   };
+
+      }
+      if (detailSend) {
+        this.listData.emit(detailSend);
+
     }
 
   }
