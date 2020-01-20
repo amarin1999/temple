@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 				@ColumnResult(name = "memberId", type = Long.class),
 				@ColumnResult(name = "spaDetail", type = String.class),
 				@ColumnResult(name = "displayName", type = String.class),
+				@ColumnResult(name = "courseId", type = Long.class),
 				@ColumnResult(name = "courseName", type = String.class),
 				@ColumnResult(name = "courseDetail", type = String.class),
 				@ColumnResult(name = "courseStDate", type = java.sql.Date.class),
@@ -28,7 +29,7 @@ import javax.persistence.Transient;
 @NamedNativeQuery(name = "findTempSpecialApproveOuttimeEntity", resultSetMapping = "findTempSpecialApproveOuttimeEntityDataMapping", query = "SELECT sa.special_approve_id AS specialApproveId, "
 		+ "sa.member_id AS memberId, sa.spa_detail AS spaDetail, "
 		+ "CONCAT(t.title_name,m.member_fname,' ',m.member_lname) AS displayName, "
-		+ "c.course_name AS courseName, c.course_detail AS courseDetail, "
+		+ "c.course_id AS courseId, c.course_name AS courseName, c.course_detail AS courseDetail, "
 		+ "c.course_st_date AS courseStDate, c.course_end_date AS courseEndDate, " + "ts.tran_name AS transportation "
 		+ "FROM special_approve sa "
 		+ "LEFT JOIN courses_teacher ct ON ct.course_id = sa.course_id AND ct.member_id =:memberId "
@@ -40,13 +41,16 @@ import javax.persistence.Transient;
 
 @Entity
 public class TempSpecialApproveEntity implements Serializable {
-	private static final long serialVersionUID = -4780915762853262556L;
+	private static final Long serialVersionUID = -4780915762853262556L;
 
 	@Id
-	private long specialApproveId;
-	private long memberId;
+	private Long specialApproveId;
+	private Long memberId;
 	private String spaDetail;
 	private String displayName;
+	
+	@Transient
+	private Long courseId;
 
 	@Transient
 	private String courseName;
@@ -67,33 +71,37 @@ public class TempSpecialApproveEntity implements Serializable {
 		super();
 	}
 
-	public TempSpecialApproveEntity(long specialApproveId, long memberId, String spaDetail, String displayName,
-			String courseName, String courseDetail, Date courseStDate, Date courseEndDate, String transportation) {
+	public TempSpecialApproveEntity(Long specialApproveId, Long memberId, String spaDetail, String displayName,
+			Long courseId, String courseName, String courseDetail, Date courseStDate, Date courseEndDate,
+			String transportation) {
 		super();
 		this.specialApproveId = specialApproveId;
 		this.memberId = memberId;
 		this.spaDetail = spaDetail;
 		this.displayName = displayName;
+		this.courseId = courseId;
 		this.courseName = courseName;
 		this.courseDetail = courseDetail;
 		this.courseStDate = courseStDate;
 		this.courseEndDate = courseEndDate;
 		this.transportation = transportation;
 	}
-	
-	public long getSpecialApproveId() {
+
+
+
+	public Long getSpecialApproveId() {
 		return specialApproveId;
 	}
 
-	public void setSpecialApproveId(long specialApproveId) {
+	public void setSpecialApproveId(Long specialApproveId) {
 		this.specialApproveId = specialApproveId;
 	}
 
-	public long getMemberId() {
+	public Long getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(long memberId) {
+	public void setMemberId(Long memberId) {
 		this.memberId = memberId;
 	}
 
@@ -111,6 +119,14 @@ public class TempSpecialApproveEntity implements Serializable {
 
 	public void setSpaDetail(String spaDetail) {
 		this.spaDetail = spaDetail;
+	}
+
+	public Long getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
 	}
 
 	public String getCourseName() {
