@@ -84,7 +84,7 @@ export class ListCourseApproveComponent implements OnInit {
 
   private setBreadCrumb() {
     this.breadCrumbService.setPath([
-      { label: 'การอนุมัติ', routerLink: '/approval' },
+      { label: 'จัดการอนุมัติพิเศษ', routerLink: '/approval' },
     ]);
   }
 

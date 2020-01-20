@@ -62,7 +62,7 @@ export class ApprovalFormComponent implements OnInit {
       this.approvalService.getMemberForApproveOutTime(+this.courseId)
         .subscribe(res => {
           if (res['status'] === 'Success') {
-            // console.log(res);
+            console.log(res);
             this.member = res['data'];
             if (this.member.length === 0) {
               this.member = [{ displayName: 'ไม่มีข้อมูล' }];
@@ -72,8 +72,15 @@ export class ApprovalFormComponent implements OnInit {
     } else {
       this.approvalService.getMemberForApprove(+this.courseId)
         .subscribe(res => {
-          if (res['status'] === 'Success') {
-            this.member = res['data'];
+          if (res !== null) {
+            if (res['status'] === 'Success') {
+              this.member = res['data'];
+              if (this.member.length === 0) {
+                this.member = [{ displayName: 'ไม่มีข้อมูล' }];
+              }
+            }
+          } else {
+            this.member = [];
             if (this.member.length === 0) {
               this.member = [{ displayName: 'ไม่มีข้อมูล' }];
             }
@@ -84,7 +91,8 @@ export class ApprovalFormComponent implements OnInit {
 
   showDialog(e) {
     this.btnrej = true;
-    const message = e.status === '1' ? '' : 'ไม่';
+    console.log('e', e);
+    const message = e.status === 1 ? '' : 'ไม่';
     this.confirmationService.confirm({
       message: message + 'ต้องการอนุมัตพิเศษ',
       header: 'การอนุมัติพิเศษ',
@@ -98,6 +106,7 @@ export class ApprovalFormComponent implements OnInit {
                 severity: 'success', summary: 'ข้อความจากระบบ',
                 detail: 'ดำเนินการ' + message + 'อนุมัติพิเศษสำเร็จ'
               });
+              this.initMember();
             } else {
               this.btnrej = false;
               this.messageServise.add({
