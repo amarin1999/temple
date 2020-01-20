@@ -553,6 +553,10 @@ export class CoursesListComponent implements OnInit {
     this.router.navigate(['/courses', course.id]);
   }
 
+  public onSelectCourse(id) {
+    this.router.navigate(['/courses', id]);
+  }
+
   // count graduated course
   private getGraduatedCourse() {
     this.courseService.getTotalRecord('1').subscribe(res => {

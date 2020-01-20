@@ -78,7 +78,6 @@
                   <td *ngFor="let col of columns">
                     <div>
                       <div style="height: 15px" *ngIf="rowData['mhcStatus'] == 2"></div>
-                      <!--<span class="ui-column-title">{{col.header}}</span>-->
                       <div *ngIf="rowData[col.field] == rowData['stDate']" style="text-align: center">
                         {{ rowData['stDate'] | formatTHdate }} -
                         {{ rowData['endDate'] | formatTHdate }}
@@ -151,10 +150,11 @@
         <div class="line"></div>
         <div class="ui-g">
           <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-            <!-- <p-messages [value]="msgs"></p-messages> -->
             <p-toast [style]="{ marginTop: '80px' }"></p-toast>
+            <!-- <p-table #sdt [columns]="cols2" [value]="studyingcourses" [paginator]="true" [rows]="5" [responsive]="true"
+              selectionMode="single" [(selection)]="selectedCourse"
+              [totalRecords]="totalStudyRecords"> -->
             <p-table #sdt [columns]="cols2" [value]="studyingcourses" [paginator]="true" [rows]="5" [responsive]="true"
-              selectionMode="single" [(selection)]="selectedCourse" (onRowSelect)="onRowSelect($event)"
               [totalRecords]="totalStudyRecords">
               <ng-template pTemplate="caption">
                 <div class="ui-g ui-fluid">
@@ -181,23 +181,10 @@
                       ariaLabelAsc="Activate to sort in ascending order">
                     </p-sortIcon>
                   </th>
-                  <!-- <th pSortableColumn="location" class="ui-p-5">
-                    สถานที่
-                    <p-sortIcon field="location" ariaLabel="Activate to sort"
-                      ariaLabelDesc="Activate to sort in descending order"
-                      ariaLabelAsc="Activate to sort in ascending order">
-                    </p-sortIcon>
-                  </th>
-                  <th pSortableColumn="conditionMin" class="ui-p-6">
-                    หมายเหตุ
-                    <p-sortIcon field="conditionMin" ariaLabel="Activate to sort"
-                      ariaLabelDesc="Activate to sort in descending order"
-                      ariaLabelAsc="Activate to sort in ascending order">
-                    </p-sortIcon>
-                  </th> -->
                   <th class="ui-p-6">
                     สถานะ
                   </th>
+                  <th></th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -205,7 +192,6 @@
                   <td *ngFor="let col of columns">
                     <div>
                       <div style="height: 15px"></div>
-                      <!--<span class="ui-column-title">{{col.header}}</span>-->
                       <div *ngIf="rowData[col.field] == rowData['stDate']" style="text-align: center">
                         {{ rowData['stDate'] | formatTHdate }} -
                         {{ rowData['endDate'] | formatTHdate }}
@@ -216,18 +202,6 @@
                         ">
                         {{ rowData['name'] }}
                       </div>
-                      <!-- <div *ngIf="
-                          rowData[col.field] == rowData['locationName'] &&
-                          col.field == 'locationName'
-                        " style="text-align: center">
-                        {{ rowData['locationName'] }}
-                      </div>
-                      <div *ngIf="
-                          rowData[col.field] == rowData['conditionMin'] &&
-                          col.field == 'conditionMin'
-                        " style="text-align: center">
-                        ต้องผ่านอย่างน้อย {{ rowData['conditionMin'] }} คอร์ส
-                      </div> -->
                       <div *ngIf="
                           rowData[col.field] == rowData['status'] &&
                           col.field == 'status'
@@ -236,6 +210,13 @@
                       </div>
                       <div style="height: 15px"></div>
                     </div>
+                  </td>
+                  <td>
+                    <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 btn-center">
+                        <button pButton type="button" label="รายละเอียด" (click)="onSelectCourse(rowData['id'])"
+                          class="ui-button-raised"></button>
+                    </div>
+                    <div style="height: 15px"></div>
                   </td>
                 </tr>
               </ng-template>
