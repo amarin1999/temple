@@ -13,7 +13,7 @@ export interface Course {
   memberLname?: string;
   locationId?: number;
   locationName?: string;
-  transportTemple?: TransportationTemple;
+  transportation?: TransportationTemple;
   status?: string;
   saStatus?: string;
   mhcStatus?: string;

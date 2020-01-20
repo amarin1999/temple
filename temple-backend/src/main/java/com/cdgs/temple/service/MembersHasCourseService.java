@@ -18,6 +18,6 @@ public interface MembersHasCourseService {
 
 	List<MembersHasCourseDto> getMembersByCourse(Long courseId);
 
-	TransportationDto getTransportationByCourseId(Long courseId, Long memberId);
+//	TransportationDto getTransportationByCourseId(Long courseId, Long memberId);
 	
 }
