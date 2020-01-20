@@ -9,5 +9,7 @@ public interface ReportGenService {
 	List<ReportGenDto> getAllDataReport();
 	
 	List<ReportGenDto> getDataReportByCourseId(Long CourseId);
+	
+	List<ReportGenDto> findCourseName();
 
 }

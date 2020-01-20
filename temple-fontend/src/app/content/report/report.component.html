@@ -5,14 +5,12 @@
     </div>
     <div class="line"></div><br>  
     <form [formGroup]="formReport">
-    <p-table [columns]="cols" [value]="data">
+    <p-table [columns]="cols" [value]="reportData">
         <ng-template pTemplate="caption">
           <div style="text-align:left;">
             <p-autoComplete formControlName="courses" placeholder="กรุณาเลือกชื่อคอร์ส"
             [suggestions]="filteredCourse" value="id" (completeMethod)="filterCourseMultiple($event)"
-            [minLength]="1" field="name" [dropdown]="true" >
-            <i class="fa fa-reset"></i>  
-            <!-- <i class="fa fa-reset" (click)="onClear()"></i>        -->
+            [minLength]="1" field="name" [dropdown]="true" (onSelect)="onSelect($event)" [type]="'search'" (onClear)="onClear($event)">
           </p-autoComplete>
           </div>
       </ng-template> 
@@ -46,22 +44,41 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData >
             <tr>
-                <td class="td2">{{rowData.female}}</td>
-               <td class="td1">{{rowData.female}}</td>
-               <td class="td1">{{rowData.male}}</td>
-               <td class="td1">{{rowData.non}}</td>
-               <td class="td2">{{rowData.temple}}</td>
-               <td class="td2">{{rowData.myself}}</td>
-               <td class="td1">{{rowData.new}}</td>
-               <td class="td3">{{rowData.bkk}}</td>
-               <td class="td3">{{rowData.other}}</td>
-               <td class="td3">{{rowData.sakon}}</td>
-               <td class="td3">{{rowData.other2}}</td>
-               <td class="td2">{{rowData.north}}</td>
-               <td class="td2">{{rowData.east}}</td>
-               <td class="td2">{{rowData.west}}</td>
-               <td class="td2">{{rowData.south}}</td>
-            </tr>
+              <td class="td2">{{rowData['coursesName']}}</td>
+               <td class="td1">{{rowData['genderFemale']}}</td>
+               <td class="td1">{{rowData['genderMale']}}</td>
+               <td class="td1">{{rowData['genderNotspec']}}</td>
+               <td class="td2">{{rowData['tranTemple']}}</td>
+               <td class="td2">{{rowData['transport']}}</td>
+               <td class="td1">{{rowData['newStudent']}}</td>
+               <td class="td3">{{rowData['bangkok']}}</td>
+               <td class="td3">{{rowData['central']}}</td>
+               <td class="td3">{{rowData['sakon']}}</td>
+               <td class="td3">{{rowData['northEast']}}</td>
+               <td class="td2">{{rowData['north']}}</td>
+               <td class="td2">{{rowData['east']}}</td>
+               <td class="td2">{{rowData['western']}}</td>
+               <td class="td2">{{rowData['south']}}</td>
+            </tr> 
+        </ng-template>
+        <ng-template pTemplate="footer" let-rowData>
+          <tr>
+            <td class="td2">รวม</td>
+               <td class="td1">{{count.genderFemale}}</td>
+               <td class="td1">{{count.genderMale}}</td>
+               <td class="td1">{{count.genderNotspec}}</td>
+               <td class="td2">{{count.tranTemple}}</td>
+               <td class="td2">{{count.transport}}</td>
+               <td class="td1">{{count.newStudent}}</td>
+               <td class="td3">{{count.bangkok}}</td>
+               <td class="td3">{{count.central}}</td>
+               <td class="td3">{{count.sakon}}</td>
+               <td class="td3">{{count.northEast}}</td>
+               <td class="td2">{{count.north}}</td>
+               <td class="td2">{{count.east}}</td>
+               <td class="td2">{{count.western}}</td>
+               <td class="td2">{{count.south}}</td>
+          </tr>
         </ng-template>
   </p-table>
   </form>
