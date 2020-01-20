@@ -1,60 +1,79 @@
 <div class="ui-g">
   <div class="ui-g-2">
-
   </div>
   <div class="ui-g-12 ui-lg-8 ui-md-12 set-display">
     <div class="ui-g-12 ui-lg-12 ui-md-12">
-      <div class="ui-g-12 ui-lg-3 ui-md-2 set-md-hd">
+      <div class="ui-g-12 ui-lg-3 ui-md-6">
         <span>ชื่อ-นามสกุล :</span>
       </div>
-      <div class="ui-g-12 ui-lg-3 ui-md-4 ">
+      <div class="ui-g-12 ui-lg-3 ui-md-6 ">
         <span>
-          <!-- ชื่อ-นามสกุล  -->นายทดสอบ
+          <!-- ชื่อ-นามสกุล  -->{{(detail) ? detail.displayName: ''}}
         </span>
       </div>
-      <div class="ui-g-5 ui-lg-3 ui-md-2 set-md-hd">
+      <div class="ui-g-5 ui-lg-3 ui-md-6">
         <span> การเดินทาง :</span>
       </div>
-      <div class="ui-g-7 ui-lg-3 ui-md-4">
+      <div class="ui-g-7 ui-lg-3 ui-md-6">
         <span>
-          <!-- -การเดินทาง -->การเดินทาง
+          <!-- -การเดินทาง -->{{(detail) ? detail.transportationName: ''}}
         </span>
       </div>
-      <div class="ui-g-5 ui-lg-3 ui-md-2 text-info">
+      <div class="ui-g-5 ui-lg-3 ui-md-6">
         <span>รายละเอียด :</span>
       </div>
-      <div class="ui-g-7 ui-lg-3 ui-md-4 ">
+      <div class="ui-g-7 ui-lg-3 ui-md-6 ">
         <span>
-          <!-- รายละเอียด -->รายละเอียด
+          <!-- รายละเอียด -->{{(detail) ? detail.courseDetail: ''}}
         </span>
       </div>
-      <div class="ui-g-5 ui-lg-3 ui-md-2 text-info">
-        <span>วันเริ่มเรียน :</span>
+      <div class="ui-g-5 ui-lg-3 ui-md-6">
+        <span>วันเรียน :</span>
       </div>
-      <div class="ui-g-7 ui-lg-3 ui-md-4 ">
+      <div class="ui-g-7 ui-lg-3 md-6 ">
         <span>
-          <!-- วันเริ่มเรียน -->วันเริ่มเรียน
+          <!-- วันเริ่มเรียน -->{{(detail) ? detail.stDate +' - '+ detail.endDate: ''}}
         </span>
       </div>
-      <div class="ui-g-5 ui-lg-3 ui-md-2 ui-sm-6 text-info">
+      <div class="ui-g-5 ui-lg-3 ui-md-6 ">
         <span>เหตุผล :</span>
       </div>
-      <div class="ui-g-7 ui-lg-3 ui-md-4 ui-sm-12  set-md-dt">
+      <div class="ui-g-7 ui-lg-3 ui-md-6">
         <span>
-          <!-- เหตุผล -->เหตุผล
+          <!-- เหตุผล -->{{(detail) ? detail.detail: ''}}
         </span>
       </div>
+    </div>
+  </div>
+  <div class="ui-g-2"></div>
+</div>
+
+
+<div class="ui-g">
+  <div class="ui-g-12">
+    <div style="float: right;">
+      <p-button *ngIf="showWhenApproveForm()" label="ไม่อนุมัติ" styleClass="button-reject " (onClick)=sentData(0)
+ ></p-button>
+      &nbsp;
+      <p-button label="อนุมัติ" styleClass="button-success" (onClick)=sentData(1)></p-button>
+
     </div>
   </div>
 </div>
 
 
-      <div class="ui-g"> 
-        <div class="ui-g-5"></div>
-        <div >
-            <p-button label="Click" ></p-button>
-            &nbsp;
-            <p-button label="Click" ></p-button>
-          </div>
-       
+
+
+<p-toast position="center" key="alertMessage" [modal]="true" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div style="text-align: center">
+      <h3>{{message.summary}}</h3>
+      <p>{{message.detail}}</p>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <button type="button" pButton [label]=messageback class="ui-button-success" [routerLink]=urlback></button>
       </div>
+    </div>
+  </ng-template>
+</p-toast>

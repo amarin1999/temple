@@ -14,10 +14,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class ApprovalFormComponent implements OnInit {
 
   @Input() option: String;
+  courseOutTime: any[]
   @Input() member: MemberApproval[];
   @Input() cols: any[];
   @Input() fieldId: string;
-  @Input() course: any[];
   @Output() listData;
   // @Input() msgs: Message[] = [];
   public courseId: string;
@@ -49,7 +49,7 @@ export class ApprovalFormComponent implements OnInit {
     ];
 
     // console.log(this.courseType);
-    
+
   }
   setBreadCrumb() {
     if (this.courseType === 'OutTime') {
@@ -64,11 +64,13 @@ export class ApprovalFormComponent implements OnInit {
     if (this.courseType === 'OutTime') {
       this.approvalService.getMemberForApproveOutTime(+this.courseId)
         .subscribe(res => {
+          console.log(res['data']['0']);
+          
           if (res['status'] === 'Success') {
             // console.log(res);
-            this.member = res['data'];
-            if (this.member.length === 0) {
-              this.member = [{ displayName: "ไม่มีข้อมูล" }]
+            this.courseOutTime = res['data']['0'];
+            if (this.courseOutTime.length === 0) {
+              this.courseOutTime = [{ displayName: "ไม่มีข้อมูล" }]
             }
           }
         });
@@ -86,6 +88,8 @@ export class ApprovalFormComponent implements OnInit {
   }
 
   showDialog(e) {
+    console.log(e);
+    // เขียน api ตอบรับ outTime ใหม่
     this.btnrej = true;
     const message = e.status == '1' ? '' : 'ไม่';
     this.confirmationService.confirm({

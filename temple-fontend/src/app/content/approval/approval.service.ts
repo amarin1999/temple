@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {map} from 'rxjs/operators';
-import {ApiConstants} from '../../shared/constants/ApiConstants';
-import {HttpClientService} from '../../shared/service/http-client.service';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { ApiConstants } from '../../shared/constants/ApiConstants';
+import { HttpClientService } from '../../shared/service/http-client.service';
 
 @Injectable({
   providedIn: 'root'
