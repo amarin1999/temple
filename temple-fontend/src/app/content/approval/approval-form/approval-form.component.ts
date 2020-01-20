@@ -22,7 +22,7 @@ export class ApprovalFormComponent implements OnInit {
   // @Input() msgs: Message[] = [];
   public courseId: string;
   public nameCourse: string;
-  public btnrej:boolean;
+  public btnrej: boolean;
   public courseType: String;
   constructor(
     private breadCrumbService: BreadcrumbService,
@@ -34,7 +34,7 @@ export class ApprovalFormComponent implements OnInit {
 
   ngOnInit() {
     this.option = '2';
-    this.fieldId = 'specialApproveId'
+    this.fieldId = 'specialApproveId';
     this.breadCrumbService.setPath([
       { label: 'จัดการอนุมัติพิเศษ', routerLink: '/approval' },
       { label: 'อนุมัติพิเศษผู้เรียน' },
@@ -42,17 +42,17 @@ export class ApprovalFormComponent implements OnInit {
 
     this.cols = [
       { field: 'displayName', header: 'ชื่อ-นามสกุล' },
-      {field: 'transportationName', header:'การเดินทาง'},
-      { field: 'detail', header: 'คำขออนุมัติพิเศษ'},
-      { field: 'checked', header: ''}
+      { field: 'transportationName', header: 'การเดินทาง' },
+      { field: 'detail', header: 'คำขออนุมัติพิเศษ' },
+      { field: 'checked', header: '' }
     ];
 
-    this.courseId = this.route.snapshot.paramMap.get('id')
+    this.courseId = this.route.snapshot.paramMap.get('id');
     this.courseType = this.route.snapshot.queryParamMap.get('type');
     this.initMember();
 
     this.nameCourse = this.route.snapshot.queryParamMap.get('course');
-    
+
 
   }
 
@@ -65,7 +65,7 @@ export class ApprovalFormComponent implements OnInit {
             // console.log(res);
             this.member = res['data'];
             if (this.member.length === 0) {
-              this.member = [{displayName:"ไม่มีข้อมูล"}]
+              this.member = [{ displayName: 'ไม่มีข้อมูล' }];
             }
           }
         });
@@ -75,7 +75,7 @@ export class ApprovalFormComponent implements OnInit {
           if (res['status'] === 'Success') {
             this.member = res['data'];
             if (this.member.length === 0) {
-              this.member = [{displayName:"ไม่มีข้อมูล"}]
+              this.member = [{ displayName: 'ไม่มีข้อมูล' }];
             }
           }
         });
@@ -84,26 +84,32 @@ export class ApprovalFormComponent implements OnInit {
 
   showDialog(e) {
     this.btnrej = true;
-    const message = e.status == '1' ? '' : 'ไม่';
+    const message = e.status === '1' ? '' : 'ไม่';
     this.confirmationService.confirm({
       message: message + 'ต้องการอนุมัตพิเศษ',
       header: 'การอนุมัติพิเศษ',
       accept: () => {
         this.approvalService.approveStudents(e)
-      .subscribe((res) => {
-        // console.log(res);
-        if (res['status'] === 'Success') {
-          this.initMember();
-          this.messageServise.add({ severity: 'success', summary: 'ข้อความจากระบบ' , detail:  'ดำเนินการ'+ message +'อนุมัติพิเศษสำเร็จ' });
-        } else {
-          this.btnrej = false;
-          this.messageServise.add({ severity: 'error', summary: 'ข้อความจากระบบ' , detail: 'ดำเนินการ'+ message + 'อนุมัติพิเศษไม่สำเร็จ' });
-        }
-      });
+          .subscribe((res) => {
+            // console.log(res);
+            if (res['status'] === 'Success') {
+              this.initMember();
+              this.messageServise.add({
+                severity: 'success', summary: 'ข้อความจากระบบ',
+                detail: 'ดำเนินการ' + message + 'อนุมัติพิเศษสำเร็จ'
+              });
+            } else {
+              this.btnrej = false;
+              this.messageServise.add({
+                severity: 'error', summary: 'ข้อความจากระบบ',
+                detail: 'ดำเนินการ' + message + 'อนุมัติพิเศษไม่สำเร็จ'
+              });
+            }
+          });
       },
       reject: () => {
         this.btnrej = false;
-        this.messageServise.add({severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการ'+message +'อนุมัติพิเศษ'});
+        this.messageServise.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการ' + message + 'อนุมัติพิเศษ' });
       }
     });
   }
