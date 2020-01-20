@@ -168,6 +168,9 @@ public class SpecialApproveServiceImpl implements SpecialApproveService {
 		dto.setMemberId(entity.getMemberId());
 		dto.setDetail(entity.getSpaDetail());
 		dto.setDisplayName(entity.getDisplayName());
+		if (null != entity.getCourseId()) {
+			dto.setCourseId(entity.getCourseId());
+		}
 		if (null != entity.getCourseName()) {
 			dto.setCourseName(entity.getCourseName());
 		}
