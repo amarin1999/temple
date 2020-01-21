@@ -70,7 +70,7 @@ export class ApprovalFormComponent implements OnInit {
           if (res['status'] === 'Success') {
             // console.log(res);
             this.courseOutTime = res['data']['0'];
-           
+
           }
         });
     } else {
@@ -92,7 +92,7 @@ export class ApprovalFormComponent implements OnInit {
     this.btnrej = true;
     const message = e.status == '1' ? '' : 'ไม่';
     this.confirmationService.confirm({
-      message: message + 'ต้องการอนุมัตพิเศษ',
+      message: message + 'ต้องการอนุมัติพิเศษ',
       header: 'การอนุมัติพิเศษ',
       accept: () => {
         this.approvalService.approveStudents(e)
@@ -119,20 +119,26 @@ export class ApprovalFormComponent implements OnInit {
     this.btnrej = true;
     const message = e.status == '1' ? '' : 'ไม่';
     this.confirmationService.confirm({
-      message: message + 'ต้องการอนุมัตนอกเวลา',
+      message: message + 'ต้องการอนุมัตินอกเวลา',
       header: 'การอนุมัตินอกเวลา',
       accept: () => {
         this.approvalService.approveStudents(e)
           .subscribe((res) => {
-            // console.log(res);
             if (res['status'] === 'Success') {
-              this.initMember();
-              this.messageServise.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการ' + message + 'อนุมัตินอกสำเร็จ' });
+              console.log(res);
+              this.messageServise.add({
+                severity: 'success',
+                key: 'ApproveAlertMessage',
+                sticky: true,
+                summary: 'ข้อความจากระบบ',
+                detail: 'แก้ไขข้อมูลส่วนตัวสำเร็จ'
+              });
+              // this.initMember();
             } else {
               this.btnrej = false;
               this.messageServise.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการ' + message + 'อนุมัตินอกเวลาไม่สำเร็จ' });
             }
-            this.router.navigateByUrl('/approvalCourseOutTime');
+
           });
       },
       reject: () => {

@@ -137,8 +137,8 @@ const routes: Routes = [
             path: ':id',
             component: ApprovalFormComponent,
             data: {
-              urlback: '/OutTime/',
-              messageback: 'อนุมัติพิเศษ'
+              urlback: '/approvalCourseOutTime/',
+              messageback: 'กลับสู่หน้าอนุมัตินอกเวลา'
             }
           },
         ]

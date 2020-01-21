@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-approve-out-time',
@@ -34,7 +35,7 @@ export class ApproveOutTimeComponent implements OnInit {
   public urlback: string;
   public messageback: string;
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute, private messageService: MessageService
   ) {
   }
   ngOnInit() {
@@ -80,7 +81,7 @@ export class ApproveOutTimeComponent implements OnInit {
     } else if (this.option == '2') {
       console.log(this.detail);
       const { specialApproveId, courseId } = this.detail;
-      detailSend = { spaId: [specialApproveId], courseId, status};
+      detailSend = { spaId: [specialApproveId], courseId, status };
       console.log(detailSend);
 
       // detailSend = [...this.detail[this.fieldId]];
@@ -93,9 +94,9 @@ export class ApproveOutTimeComponent implements OnInit {
       //     status: status
       //   };
 
-      }
-      if (detailSend) {
-        this.listData.emit(detailSend);
+    }
+    if (detailSend) {
+      this.listData.emit(detailSend);
 
     }
 

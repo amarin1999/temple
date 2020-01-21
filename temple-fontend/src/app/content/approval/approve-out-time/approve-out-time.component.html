@@ -1,59 +1,60 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
 <div class="ui-g">
   <div class="ui-g-2">
   </div>
-      <div class="ui-g-12 ui-lg-8">
-      <div class="ui-g-6 ui-lg-3 ui-md-6 text-right" >
-        <b>ชื่อ-นามสกุล :</b>
-      </div>
-      <div class="ui-g-6 ui-lg-3 ui-md-6  text-left">
-        <span>
-          <!-- ชื่อ-นามสกุล  -->{{(detail.displayName) ? detail.displayName: 'ไม่มีข้อมูล'}}
-        </span>
-      </div>
-      <div class="ui-g-6 ui-lg-3 ui-md-6 text-right" >
-        <b> การเดินทาง :</b>
-      </div>
-      <div class="ui-g-6 ui-lg-3 ui-md-6 text-left">
-        <span>
-          <!-- -การเดินทาง -->{{(detail.transportationName) ? detail.transportationName: 'ไม่มีข้อมูล'}}
-        </span>
-      </div>
-      <div class="ui-g-6 ui-lg-3 ui-md-6 text-right" >
-        <b>รายละเอียด :</b>
-      </div>
-      <div class="ui-g-6 ui-lg-3 ui-md-6  text-left">
-        <span>
-          <!-- รายละเอียด -->{{(detail.courseDetail) ? detail.courseDetail: 'ไม่มีข้อมูล'}}
-        </span>
-      </div>
-      <div class="ui-g-6 ui-lg-3 ui-md-6 text-right" >
-        <b>วันเรียน :</b>
-      </div>
-      <div class="ui-g-6 ui-lg-3 md-6  text-left">
-        <span>
-          <!-- วันเริ่มเรียน --> {{(detail?.stDate) ? (detail.stDate | formatTHdate) : 'ไม่มีข้อมูล'}} -
-                        {{(detail?.endDate) ? (detail?.endDate | formatTHdate) : 'ไม่มีข้อมูล'}}
-        </span>
-      </div>
-      <div class="ui-g-6 ui-lg-3 ui-md-6 text-right " >
-        <b>เหตุผล :</b>
-      </div>
-      <div class="ui-g-6 ui-lg-3 ui-md-6 text-left">
-        <span>
-          <!-- เหตุผล -->{{(detail.detail) ? detail.detail: 'ไม่มีข้อมูล'}}
-        </span>
-      </div>
+  <div class="ui-g-12 ui-lg-8">
+    <div class="ui-g-6 ui-lg-3 ui-md-6 text-right">
+      <b>ชื่อ-นามสกุล :</b>
+    </div>
+    <div class="ui-g-6 ui-lg-3 ui-md-6  text-left">
+      <span>
+        <!-- ชื่อ-นามสกุล  -->{{(detail.displayName) ? detail.displayName: 'ไม่มีข้อมูล'}}
+      </span>
+    </div>
+    <div class="ui-g-6 ui-lg-3 ui-md-6 text-right">
+      <b> การเดินทาง :</b>
+    </div>
+    <div class="ui-g-6 ui-lg-3 ui-md-6 text-left">
+      <span>
+        <!-- -การเดินทาง -->{{(detail.transportationName) ? detail.transportationName: 'ไม่มีข้อมูล'}}
+      </span>
+    </div>
+    <div class="ui-g-6 ui-lg-3 ui-md-6 text-right">
+      <b>รายละเอียด :</b>
+    </div>
+    <div class="ui-g-6 ui-lg-3 ui-md-6  text-left">
+      <span>
+        <!-- รายละเอียด -->{{(detail.courseDetail) ? detail.courseDetail: 'ไม่มีข้อมูล'}}
+      </span>
+    </div>
+    <div class="ui-g-6 ui-lg-3 ui-md-6 text-right">
+      <b>วันเรียน :</b>
+    </div>
+    <div class="ui-g-6 ui-lg-3 md-6  text-left">
+      <span>
+        <!-- วันเริ่มเรียน --> {{(detail?.stDate) ? (detail.stDate | formatTHdate) : 'ไม่มีข้อมูล'}} -
+        {{(detail?.endDate) ? (detail?.endDate | formatTHdate) : 'ไม่มีข้อมูล'}}
+      </span>
+    </div>
+    <div class="ui-g-6 ui-lg-3 ui-md-6 text-right ">
+      <b>เหตุผล :</b>
+    </div>
+    <div class="ui-g-6 ui-lg-3 ui-md-6 text-left">
+      <span>
+        <!-- เหตุผล -->{{(detail.detail) ? detail.detail: 'ไม่มีข้อมูล'}}
+      </span>
     </div>
   </div>
- 
+</div>
+
 
 
 <hr>
 <div class="ui-g">
   <div class="ui-g-12">
-    <div  class="content-center">
-      <p-button *ngIf="showWhenApproveForm()" label="ไม่อนุมัติ" styleClass="button-reject " (onClick)=sentData(0)
- ></p-button>
+    <div class="content-center">
+      <p-button *ngIf="showWhenApproveForm()" label="ไม่อนุมัติ" styleClass="button-reject " (onClick)=sentData(0)>
+      </p-button>
       &nbsp;
       <p-button label="อนุมัติ" styleClass="button-success" (onClick)=sentData(1)></p-button>
 
@@ -64,7 +65,8 @@
 
 
 
-<p-toast position="center" key="alertMessage" [modal]="true" [baseZIndex]="5000">
+<p-toast closable="false" position="center" key="ApproveAlertMessage" [modal]="true" 
+  [baseZIndex]="5000">
   <ng-template let-message pTemplate="message">
     <div style="text-align: center">
       <h3>{{message.summary}}</h3>
