@@ -3,7 +3,6 @@ package com.cdgs.temple.service;
 import java.util.List;
 
 import com.cdgs.temple.dto.MembersHasCourseDto;
-import com.cdgs.temple.dto.TransportationDto;
 
 public interface MembersHasCourseService {
 	List<MembersHasCourseDto> getMembersHasCourse();
@@ -18,6 +17,4 @@ public interface MembersHasCourseService {
 
 	List<MembersHasCourseDto> getMembersByCourse(Long courseId);
 
-//	TransportationDto getTransportationByCourseId(Long courseId, Long memberId);
-	
 }

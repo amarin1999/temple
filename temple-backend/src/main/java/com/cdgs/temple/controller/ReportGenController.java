@@ -88,7 +88,7 @@ public class ReportGenController {
 	 * parameter: -
 	 * */
 	@GetMapping(path = "/courseNamelist")
-	@PreAuthorize("hasRole('admin')")
+	@PreAuthorize("hasRole('admin') or hasRole('monk')")
 	public ResponseEntity<ResponseDto<ReportGenDto>> getCourseName() {
 		List<ReportGenDto> dto = new ArrayList<>();
 		ResponseDto<ReportGenDto> res = new ResponseDto<ReportGenDto>();

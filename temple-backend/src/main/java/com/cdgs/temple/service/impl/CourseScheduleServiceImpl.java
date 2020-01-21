@@ -121,13 +121,13 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
 		return dto;
 	}
 
-	private CourseScheduleEntity mapDtoToEntity(CourseScheduleDto dto) {
-		CourseScheduleEntity entity = new CourseScheduleEntity();
-		entity.setCourseId(dto.getCourseId());
-		entity.setCourseScheduleDate(dto.getCourseScheduleDate());
-
-		return entity;
-	}
+//	private CourseScheduleEntity mapDtoToEntity(CourseScheduleDto dto) {
+//		CourseScheduleEntity entity = new CourseScheduleEntity();
+//		entity.setCourseId(dto.getCourseId());
+//		entity.setCourseScheduleDate(dto.getCourseScheduleDate());
+//
+//		return entity;
+//	}
 
 	private InsertCourseScheduleEntity mapDtoToInsertEntity(CourseScheduleDto dto) {
 		InsertCourseScheduleEntity entity = new InsertCourseScheduleEntity();

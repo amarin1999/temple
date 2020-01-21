@@ -392,7 +392,6 @@ public class CourseController {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> courses = new ArrayList<>();
 		CourseDto course;
-		TransportationDto tran = new TransportationDto();
 		CourseScheduleDto courseSchedule = new CourseScheduleDto();
 		CourseTeacherDto courseTeacher = new CourseTeacherDto();
 		TransportationDto transportationDto = new TransportationDto();
@@ -447,7 +446,6 @@ public class CourseController {
 		CourseDto courseDto = new CourseDto();
 		CourseDto courseOutTimeDto = new CourseDto();
 		CourseTeacherDto courseTeacherDto = new CourseTeacherDto();
-		SpecialApproveDto specialApproveDto = new SpecialApproveDto();
 		List<CourseDto> listDto = new ArrayList<>();
 		MemberDto member = memberService.getCurrentMember();
 		try {
@@ -467,8 +465,7 @@ public class CourseController {
 			body.setCourseId(courseOutTimeDto.getId());
 			body.setStatus("4");
 			body.setMemberId(member.getId());
-			specialApproveDto = specialApproveService.create(body);
-
+			specialApproveService.create(body);
 			listDto.add(courseOutTimeDto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listDto);
