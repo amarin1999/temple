@@ -1,8 +1,5 @@
 package com.cdgs.temple.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,15 +38,15 @@ public class TransportationTimeServiceImpl implements TransportationTimeService 
 	 * mapListEntityToDto Description : this function is mapping list data of Entity
 	 * to Dto. create : 07/01/2563 By Thunya Phanmetharit
 	 */
-	private List<TransportationDto> mapListEntityToDto(List<TransportationTimeEntity> entities) {
-		List<TransportationDto> dtoList = new ArrayList<TransportationDto>();
-		if (entities != null) {
-			for (TransportationTimeEntity entity : entities) {
-				dtoList.add(mapEntityToDto(entity));
-			}
-		}
-		return dtoList;
-	}
+//	private List<TransportationDto> mapListEntityToDto(List<TransportationTimeEntity> entities) {
+//		List<TransportationDto> dtoList = new ArrayList<TransportationDto>();
+//		if (entities != null) {
+//			for (TransportationTimeEntity entity : entities) {
+//				dtoList.add(mapEntityToDto(entity));
+//			}
+//		}
+//		return dtoList;
+//	}
 
 	/**
 	 * mapDtoToEntity Description : this function is mapping data of Dto to Entity.

@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdgs.temple.dto.MembersHasCourseDto;
-import com.cdgs.temple.dto.TransportationDto;
 import com.cdgs.temple.entity.MembersHasCourseEntity;
-import com.cdgs.temple.entity.TransportationEntity;
 import com.cdgs.temple.repository.MembersHasCourseRepository;
 import com.cdgs.temple.service.MembersHasCourseService;
 
@@ -53,7 +51,12 @@ public class MembersHasCoursesServiceImpl implements MembersHasCourseService {
 
 	@Override
 	public List<MembersHasCourseDto> getMembersByCourse(Long courseId) {
-		return mapListEntityToDto(memberHasCourseRepository.findAllByCourseId(courseId));
+		try {
+			return mapListEntityToDto(memberHasCourseRepository.findAllByCourseId(courseId));
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return null;
 	}
 	
 	private List<MembersHasCourseDto> mapListEntityToDto(List<MembersHasCourseEntity> entities) {
@@ -95,22 +98,22 @@ public class MembersHasCoursesServiceImpl implements MembersHasCourseService {
 //		return mapEntityToDto(entity);
 //	}
 	
-	private TransportationDto mapEntityToDto(TransportationEntity entity) {
-		TransportationDto dto = new TransportationDto();
-		if (entity != null) {
-			dto.setId(entity.getTransportationId());
-			dto.setName(entity.getTransportationName());
-			if (entity.getTransportationTimeEntity() != null) {
-				dto.setTranTimeId(entity.getTransportationTimeEntity().getTransportationTimeId());
-				dto.setTimePickUp(entity.getTransportationTimeEntity().getTransportationTempleTimePickup());
-				dto.setTimeSend(entity.getTransportationTimeEntity().getTransportationTempleTimeSend());
-			}
-//			if (entity.getCoursesEntity() != null) {
-//				dto.setCourseId(entity.getCoursesEntity().getCourseId());
+//	private TransportationDto mapEntityToDto(TransportationEntity entity) {
+//		TransportationDto dto = new TransportationDto();
+//		if (entity != null) {
+//			dto.setId(entity.getTransportationId());
+//			dto.setName(entity.getTransportationName());
+//			if (entity.getTransportationTimeEntity() != null) {
+//				dto.setTranTimeId(entity.getTransportationTimeEntity().getTransportationTimeId());
+//				dto.setTimePickUp(entity.getTransportationTimeEntity().getTransportationTempleTimePickup());
+//				dto.setTimeSend(entity.getTransportationTimeEntity().getTransportationTempleTimeSend());
 //			}
-		}
-		return dto;
-	}
+////			if (entity.getCoursesEntity() != null) {
+////				dto.setCourseId(entity.getCoursesEntity().getCourseId());
+////			}
+//		}
+//		return dto;
+//	}
 
 	
 }

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cdgs.temple.dto.TransportationDto;
-import com.cdgs.temple.entity.CourseEntity;
 import com.cdgs.temple.entity.TransportationEntity;
 import com.cdgs.temple.entity.TransportationTimeEntity;
 import com.cdgs.temple.repository.TransportationRepository;
@@ -133,7 +132,6 @@ public class TransportationServiceImpl implements TransportationService {
 	 */
 	public TransportationDto updateTransportationTemple(Long id, TransportationDto transportation) {
 		TransportationEntity entity = new TransportationEntity();
-		CourseEntity courseEntity = new CourseEntity();
 		TransportationEntity tranEntity = new TransportationEntity();
 		TransportationEntity tranEntityTemp = new TransportationEntity();
 		TransportationTimeEntity tranTimeEntity = new TransportationTimeEntity();
@@ -292,7 +290,6 @@ public class TransportationServiceImpl implements TransportationService {
 	private TransportationEntity mapDtoToEntity(TransportationDto dto) {
 		TransportationEntity entity = new TransportationEntity();
 		TransportationTimeEntity tranTimeEntity = new TransportationTimeEntity();
-		CourseEntity courseEntity = new CourseEntity();
 		entity.setTransportationId(dto.getId());
 		entity.setTransportationName(dto.getName());
 		if (dto.getTimePickUp() != null && dto.getTimeSend() != null) {

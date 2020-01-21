@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdgs.temple.entity.MembersHasCourseEntity;
-import com.cdgs.temple.entity.TransportationEntity;
 
 @Repository
 @Transactional(readOnly = true)

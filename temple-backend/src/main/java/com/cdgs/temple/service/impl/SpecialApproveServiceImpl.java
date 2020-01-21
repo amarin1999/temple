@@ -137,13 +137,13 @@ public class SpecialApproveServiceImpl implements SpecialApproveService {
 		return mapEntityToDto(specialApproveRepository.getByCourseIdAndMemberId(courseId, memberId));
 	}
 
-	private List<SpecialApproveDto> mapEntityListToDto(List<SpecialApproveEntity> entities) {
-		List<SpecialApproveDto> dto = new ArrayList<>();
-		for (SpecialApproveEntity entity : entities) {
-			dto.add(mapEntityToDto(entity));
-		}
-		return dto;
-	}
+//	private List<SpecialApproveDto> mapEntityListToDto(List<SpecialApproveEntity> entities) {
+//		List<SpecialApproveDto> dto = new ArrayList<>();
+//		for (SpecialApproveEntity entity : entities) {
+//			dto.add(mapEntityToDto(entity));
+//		}
+//		return dto;
+//	}
 
 	private List<SpecialApproveDto> mapTempEntityListToDto(List<TempSpecialApproveEntity> entities) {
 		List<SpecialApproveDto> dto = new ArrayList<>();
