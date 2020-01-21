@@ -19,3 +19,9 @@
 .star{
     color: red;
 }
+.form-input>.ui-g-4{
+    text-align: right;
+}
+.form-input>.ui-g-8{
+    text-align: left;
+}

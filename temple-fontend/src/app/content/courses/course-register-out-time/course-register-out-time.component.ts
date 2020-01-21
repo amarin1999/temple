@@ -36,6 +36,10 @@ export class CourseRegisterOutTimeComponent implements OnInit {
   id: any;
   name: any;
 
+  // เอาไว้ใช้ใน calendar html 
+  year = new Date().getFullYear();
+  
+
   constructor(
     private breadCrumbService: BreadcrumbService,
     private courseService: CourseService,
@@ -87,8 +91,8 @@ export class CourseRegisterOutTimeComponent implements OnInit {
       {
         tranId: ['', Validators.required],
         date: ['', Validators.required],
-        expected: [''],
-        experience: [''],
+        expected: ['',Validators.required],
+        experience: ['',Validators.required],
         detail: ['', Validators.required]
       }
     );
