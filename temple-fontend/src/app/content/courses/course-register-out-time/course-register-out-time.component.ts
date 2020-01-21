@@ -17,7 +17,7 @@ import { TransportService } from 'src/app/shared/service/transport.service';
 @Component({
   selector: 'app-course-register-out-time',
   templateUrl: './course-register-out-time.component.html',
-  styleUrls: ['./course-register-out-time.component.scss']
+  styleUrls: ['./course-register-out-time.component.css']
 })
 export class CourseRegisterOutTimeComponent implements OnInit {
 
