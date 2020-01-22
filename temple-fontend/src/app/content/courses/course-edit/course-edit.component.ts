@@ -106,8 +106,7 @@ export class CourseEditComponent implements OnInit {
 
   ngOnInit() {
     this.initNotice();
-    /*     this.courseId = this.route.snapshot.paramMap.get('id');
-        console.log(this.courseId); */
+    /*     this.courseId = this.route.snapshot.paramMap.get('id');*/
     this.courseService.getTeachers().subscribe(
       res => {
         if (res.status === 'Success') {
@@ -117,7 +116,6 @@ export class CourseEditComponent implements OnInit {
               name: res.titleDisplay + res.fname + ' ' + res.lname
             };
           });
-          // console.log(this.teachers);
         }
       },
       error => {
@@ -161,16 +159,10 @@ export class CourseEditComponent implements OnInit {
             name: res['titleDisplay'] + res['fname'] + ' ' + res['lname'],
           };
         });
-        // console.log('Teachers = ' + teachers);
         for (let i = 0; i < teachers.length; i++) {
           this.obj.push(teachers[i]);
           // teacherLength= teachers.length
-          // console.log(this.obj);
-          // console.log(teachers);
         }
-        // console.log(this.obj.length);
-        // console.log('stDate = ' + res['data']['stDate']);
-        // console.log('endDate = ' + res['data']['endDate']);
         const dateJson = [];
         dateJson[0] = res['data']['stDate'];
         dateJson[1] = res['data']['endDate'];
@@ -181,7 +173,6 @@ export class CourseEditComponent implements OnInit {
         const date = [];
         date[0] = datecon;
         date[1] = datecon2;
-        // console.log('date', date);
 
         const location = {
           id: res['data']['locationId'],
@@ -240,8 +231,6 @@ export class CourseEditComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           const date2 = this.formEdit.get('date').value;
-          //  console.log('dateForm0 =' + date2[0]);
-          //  console.log('dateForm1 =' + date2[1]);
           const stDate = formatDate(date2[0], 'yyyy-MM-dd', 'th');
           let endDate = '';
           let datesort = [];
@@ -257,8 +246,6 @@ export class CourseEditComponent implements OnInit {
           }
           const id = this.courseId;
           // const lastUpdate = formatDate(Date.now(), 'yyyy-MM-dd hh:mm:ss', 'en');
-          // console.log(this.obj);
-          // console.log('datesort' + datesort);
           let transportTempleId = null;
           if (this.formEdit.get('transportTemple').value !== null) {
             transportTempleId = this.formEdit.get('transportTemple').value.id;
@@ -320,13 +307,11 @@ export class CourseEditComponent implements OnInit {
           this.formError[field] = this.validationMessage[field].required;
           if (field === 'courseName') {
             if (control.hasError('maxlength')) {
-              // console.log('if' + field);
               this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
             }
           }
           if (field === 'detail') {
             if (control.hasError('maxlength')) {
-              // console.log('if' + field);
               this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 255 ตัวอักษร';
             }
           }

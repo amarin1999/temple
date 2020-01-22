@@ -57,12 +57,10 @@ export class ApprovalFormComponent implements OnInit {
   }
 
   initMember() {
-    // console.log(this.courseType)
     if (this.courseType === 'OutTime') {
       this.approvalService.getMemberForApproveOutTime(+this.courseId)
         .subscribe(res => {
           if (res['status'] === 'Success') {
-            console.log(res);
             this.member = res['data'];
             if (this.member.length === 0) {
               this.member = [{ displayName: 'ไม่มีข้อมูล' }];
@@ -91,7 +89,6 @@ export class ApprovalFormComponent implements OnInit {
 
   showDialog(e) {
     this.btnrej = true;
-    console.log('e', e);
     const message = e.status === 1 ? '' : 'ไม่';
     this.confirmationService.confirm({
       message: message + 'ต้องการอนุมัตพิเศษ',
@@ -99,7 +96,6 @@ export class ApprovalFormComponent implements OnInit {
       accept: () => {
         this.approvalService.approveStudents(e)
           .subscribe((res) => {
-            // console.log(res);
             if (res['status'] === 'Success') {
               this.initMember();
               this.messageServise.add({

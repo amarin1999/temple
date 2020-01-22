@@ -92,11 +92,9 @@ export class ManageCourseForMonkComponent implements OnInit {
     );
   }
   private getTotalRecord() {
-    // console.log(this.status);
     this.courseService.getTotalRecord(this.status).subscribe(res => {
       if (res['status'] === 'Success') {
         this.totalRecords = res['data'][0]['totalRecord'];
-        // console.log(this.totalRecords);
 
       }
     });
@@ -104,7 +102,6 @@ export class ManageCourseForMonkComponent implements OnInit {
   private getData() {
         this.courseService.getCourses()
     .subscribe(res => {
-      // console.log(res);
       if (res['status'] === 'Success') {
         this.courses = res['data'];
       }
@@ -117,7 +114,7 @@ export class ManageCourseForMonkComponent implements OnInit {
   }
 
   public closeMessage(){
-    this.messageService.clear;
+    this.messageService.clear();
   }
 }
 

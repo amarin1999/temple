@@ -43,7 +43,6 @@ export class ReportService {
     .pipe(
       map((res: any[]) => {
         if (res !== null) {
-          console.log(res['result']);
           return {
             status: res['result'],
             data: res['data']

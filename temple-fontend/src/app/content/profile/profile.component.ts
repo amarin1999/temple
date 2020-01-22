@@ -69,9 +69,6 @@ export class ProfileComponent implements OnInit {
       res => {
         if (res.status === 'Success') {
           this.courseHisList = res.data;
-          console.log('historyDharma', res.data);
-        } else {
-          console.log('getHistoryDharmaByMemberId Fail');
         }
       },
       err => {
@@ -102,8 +99,6 @@ export class ProfileComponent implements OnInit {
       .subscribe(res => {
         if (res['status'] === 'Success') {
           this.graduatedcourses = res['data'];
-          // console.log('studycourse');
-          // console.log(this.graduatedcourses);
         }
       });
   }

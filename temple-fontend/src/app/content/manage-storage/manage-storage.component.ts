@@ -93,7 +93,6 @@ export class ManageStorageComponent implements OnInit {
     this.spinner.show();
     this.baggageService.getItem().toPromise()
       .then(res => {
-        // console.log(res);
         if (res['status'] === 'Success') {
           this.numberOfLocker = res['data'].map(res => {
             return {
@@ -162,9 +161,7 @@ export class ManageStorageComponent implements OnInit {
     };
     this.numberOfLocker = [...this.numberOfLocker, this.data];
     this.selectedNumber = this.numberOfLocker.filter(res => res.lockerId === event.lockerId)[0];
-    // console.log(this.numberOfLocker);
     this.selectedMember = this.members.filter(res => res.memberId === event.memberId)[0];
-    // console.log(this.selectedMember);
 
     this.selectedStatus = {
       val: event.status,
@@ -265,7 +262,6 @@ export class ManageStorageComponent implements OnInit {
         ...this.numberOfLocker.slice(index + 1)
       ];
     }
-    // console.log(this.numberOfLocker);
     this.selectedMember = null;
     this.selectedNumber = null;
     this.selectedStatus = null;
@@ -274,7 +270,6 @@ export class ManageStorageComponent implements OnInit {
 
 
   showDialogToAdd() {
-    // console.log(this.numberOfLocker);
     this.newBaggage = true;
     this.baggage = { lockerNumber: '', baggageId: '' };
     this.displayDialog = true;

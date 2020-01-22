@@ -19,7 +19,6 @@ export class CourseService {
 
   downloadFile(data){
     //เรียก spring-boot service
-    // console.log(ApiConstants.baseURl);
     const REQUEST_PARAMS = new HttpParams().set('fileName',data.fileName);
     const REQUEST_URI= ApiConstants.baseURl+'/excel/download';
     return this.https.get(REQUEST_URI, {

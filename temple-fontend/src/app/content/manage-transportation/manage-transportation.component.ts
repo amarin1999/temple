@@ -79,7 +79,6 @@ export class ManageTransportationComponent implements OnInit {
     // ).subscribe(
     //   ([tranSport , tranSportTemple]) => {
     //     this.transport = [...tranSport.data , ...tranSportTemple.data];
-    //     console.log(this.transport);
     //   }
     // );
   }
@@ -88,7 +87,6 @@ export class ManageTransportationComponent implements OnInit {
       res => {
         this.transportTemple = res['data'];
         this.transportTemple = this.transportTemple.map( data => {
-            // console.log('name', data.name);
             return { id: data.id , name: data.name , timePickUp: data.timePickUp , timeSend: data.timeSend }
         });
     });
@@ -116,7 +114,6 @@ export class ManageTransportationComponent implements OnInit {
                 .subscribe(
                     res => {
                         if (res['status'] === 'Success') {
-                            // console.log(res);
                             this.messageService.add({
                                 severity: 'success',
                                 summary: 'ข้อความจากระบบ',
@@ -129,8 +126,6 @@ export class ManageTransportationComponent implements OnInit {
                         }
                     },
                     e => {
-                        // console.log(e['error']['errorMessage'])
-                        // this.messageService.clear;
                         this.messageService.add({
                             severity: 'error',
                             summary: 'ข้อความจากระบบ',
@@ -148,7 +143,6 @@ export class ManageTransportationComponent implements OnInit {
             this.typeTran = this.transport;
         }
         // this.transportation.name = this.newTransportation;
-        // console.log(this.transportation)
         if (
             this.typeTran.findIndex(res => res.name === this.newTransportation) <
             0 ||
@@ -253,7 +247,6 @@ export class ManageTransportationComponent implements OnInit {
                             }
                         },
                         (e) => {
-                            // console.log(e['error']['errorMessage']);
                             if (e['error']['errorMessage'] === 'transportationTemple is using') {
                                 this.messageService.add({
                                     severity: 'error',

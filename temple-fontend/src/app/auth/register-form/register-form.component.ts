@@ -219,7 +219,6 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit() {
     // ----------------------------------------------
     // const email = this.registerForm.get('email');
-    // console.log(email.dirty);
     this.provinceService.getProvince().subscribe(
       res => {
         this.provinces = res.data;
@@ -236,7 +235,6 @@ export class RegisterFormComponent implements OnInit {
       { label: 'ลงทะเบียนสมาชิก', routerLink: '/users/create' }
     ]);
     this.urlback = this.route.snapshot.data.urlback;
-    // console.log(this.urlback);
     this.registerSuccess = false;
     this.showCancelMessage = false;
     this.setBack();
@@ -317,7 +315,6 @@ export class RegisterFormComponent implements OnInit {
     } else {
       this.submitMessage(e);
     }
-    // console.log('test');
   }
 
   /**
@@ -341,7 +338,6 @@ export class RegisterFormComponent implements OnInit {
       header: 'ข้อความแจ้งเตือน',
       accept: () => {
         this.actionAccept(type);
-        // console.log(type);
       },
       reject: () => { }
     });
@@ -358,7 +354,6 @@ export class RegisterFormComponent implements OnInit {
       }
       case 'submit': {
         this.spinner.show();
-        // console.log('submit');
         // const dataUser = this.onSave(this.registerForm.getRawValue());
         const provinceCode = this.registerForm.get('province').value;
         const titleCode = this.registerForm.get('titleName').value;
@@ -399,10 +394,8 @@ export class RegisterFormComponent implements OnInit {
           disease: this.registerForm.get('underlyDisease').value,
           blood: bloodGroup.value
         };
-        console.log(dataUser);
         this.manageUserService.createUser(dataUser).subscribe(
           res => {
-            console.log(res);
             if (res['status'] === 'Success') {
               this.showToast('alertMessage', 'สมัครสมาชิกสำเร็จ', 'success');
             } else {
@@ -426,7 +419,6 @@ export class RegisterFormComponent implements OnInit {
             }
           },
           err => {
-            console.log('err', err);
             if (err['error']['errorMessage'].includes('member_username_UNIQUE')) {
               this.showToast(
                 'alertMessage',
@@ -579,7 +571,6 @@ export class RegisterFormComponent implements OnInit {
       const titleName = titleNames[i];
       if (titleName.display.match(query)) {
         filtered.push(titleName);
-        // console.log(titleName.display);
       }
     }
     return filtered;
@@ -599,7 +590,6 @@ export class RegisterFormComponent implements OnInit {
   onGenderSelect(event: TitleName) {
     const gender = this.registerForm.get('titleName').value;
     // const newObject = {...event};
-    // console.log('from typing ' + event);
   }
 
   // ---------------- Profile Picture Fuction => Start. --------------

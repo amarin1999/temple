@@ -85,7 +85,6 @@ export class ManagePassCourseFormComponent implements OnInit {
       accept: () => {
         this.setMemberPassCourse(e)
           .subscribe((res) => {
-            // console.log(res);
             if (res['status'] === 'Success') {
               this.initMember();
               this.messageService.add({severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการอนุมัติการผ่านหลักสูตรสำเร็จ'});

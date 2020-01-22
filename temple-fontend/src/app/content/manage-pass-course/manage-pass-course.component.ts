@@ -62,7 +62,6 @@ export class ManagePassCourseComponent implements OnInit {
       switchMap(([firstCon, rowsCon, queryCon]: [number, number, string]) =>
         this.managePassCourse.getAllCourse(firstCon, rowsCon, queryCon))
     ).subscribe(res => {
-      // console.log(res);
       if (res['status'] === 'Success') {
         this.courses = res['data'];
         this.loading = false;
@@ -79,7 +78,6 @@ export class ManagePassCourseComponent implements OnInit {
   }
 
   public loadData(e: LazyLoadEvent) {
-    // console.log(e);
     let query = '';
     if (e.globalFilter) {
       query = e.globalFilter;

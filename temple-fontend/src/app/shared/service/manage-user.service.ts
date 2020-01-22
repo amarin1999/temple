@@ -40,7 +40,6 @@ export class ManageUserService {
       }
     }).pipe(
       map((res) => {
-        console.log(res);
         return {
           status: res['result'],
           data: res['data'][0]

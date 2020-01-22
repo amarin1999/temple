@@ -76,11 +76,9 @@ export class PersonalInfoService {
 
   getPersonalInfo(id: String) {
     if (id == '1') {
-      // console.log("test มานี");
       return this.personalData1;
     }
     else if (id == '2') {
-      // console.log("test สมชาย");
       return this.personalData2;
     }
     return null;
@@ -88,10 +86,10 @@ export class PersonalInfoService {
   getAllPersonalInfo() {
     return this.personalData.map((data) => {
       return {
-        id:data.personalId,
-        titleNameDisplay:data.titleNameDisplay,
-        fname:data.fname,
-        lname:data.lname
+        id: data.personalId,
+        titleNameDisplay: data.titleNameDisplay,
+        fname: data.fname,
+        lname: data.lname
       }
     })
   }

@@ -78,13 +78,7 @@ export class ManageCourseComponent implements OnInit {
       header: 'ยืนยันการปิดคอร์ส',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        // console.log(this);
         this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการปิดคอร์สสำเร็จ' });
-        // this.courseService.deleteCourse(id).subscribe(function (res) {
-        //   if (res['status'] === 'Success') {
-        //     this.courses = res['data'];
-        //   }
-        // });
       },
       reject: () => {
         this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการปิดคอร์ส' });
@@ -108,7 +102,6 @@ export class ManageCourseComponent implements OnInit {
           this.courses = res['data'];
           this.loading = false;
         }
-        // console.log(this.courses);
       }).catch(err =>
         console.log(err['error']['errorMessage'])
       ).finally(() => this.spinner.hide());
