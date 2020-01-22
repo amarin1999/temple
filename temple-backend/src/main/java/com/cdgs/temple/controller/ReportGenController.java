@@ -63,7 +63,6 @@ public class ReportGenController {
 		ResponseDto<ReportGenDto> res = new ResponseDto<ReportGenDto>();
 		try {
 			dto = reportGenService.getDataReportByCourseId(courseId);
-			System.out.println(dto.size());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			if (dto == null || dto.size() <= 0) {
 				res.setCode(204);
