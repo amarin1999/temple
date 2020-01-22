@@ -24,6 +24,8 @@ export class ReportComponent implements OnInit {
     courses: new FormControl('')
   });
   descript: string; // --- variable for description No data -----
+  courseCheck: any;
+  disabled: boolean = false;
 
 
   constructor(
@@ -63,39 +65,34 @@ export class ReportComponent implements OnInit {
           return {id : data.coursesId, name: data.coursesName};
         }
       );
+      this.getDataOfReport(null);
     } else {
-        this.course = null;
+        this.disabled = true;
+        this.course = [{status : null , data: null}];
+        this.descript = '(ไม่มีข้อมูลคอร์สเรียน)';
+        this.count = {
+          genderMale: 0,
+          genderFemale: 0,
+          /*** gender that not specified. * */
+          genderNotspec: 0,
+          tranTemple: 0,
+          transport: 0,
+          newStudent: 0,
+          bangkok: 0,
+          central: 0,
+          /*** จังหวัด สกลนคร * */
+          sakon: 0,
+          northEast: 0,
+          north: 0,
+          south: 0,
+          east: 0,
+          western: 0,
+      };
     }
   },
   err => {
     console.log(err['error']['message']);
   });
-
-  /* ------------- Get Data of Report to show on table --------------- */
-  // if (this.course !== undefined) {
-    this.getDataOfReport(null);
-  // } else {
-    // this.descript = '(ไม่มีข้อมูลคอร์สเรียน)';
-    // this.count = {
-    //   genderMale: 0,
-    //   genderFemale: 0,
-    //   /*** gender that not specified. * */
-    //   genderNotspec: 0,
-    //   tranTemple: 0,
-    //   transport: 0,
-    //   newStudent: 0,
-    //   bangkok: 0,
-    //   central: 0,
-    //   /*** จังหวัด สกลนคร * */
-    //   sakon: 0,
-    //   northEast: 0,
-    //   north: 0,
-    //   south: 0,
-    //   east: 0,
-    //   western: 0,
-    // };
-  // }
-
   }
  /***
   * ---------------getDataofReport(id):  Method for get Data for Report ------------------------

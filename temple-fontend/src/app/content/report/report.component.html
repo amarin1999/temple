@@ -17,7 +17,8 @@
             [dropdown]="true" 
             (onSelect)="onSelect($event)" 
             (onClear)="onClear($event)" 
-            [type]="'search'">
+            [type]="'search'"
+            [disabled]="disabled">
           </p-autoComplete>
           </div>
       </ng-template> 
@@ -71,20 +72,20 @@
         <ng-template pTemplate="footer" let-rowData>
           <tr>
             <td class="td2">รวม</td>
-               <td class="td1">{{count.genderFemale}}</td>
-               <td class="td1">{{count.genderMale}}</td>
-               <td class="td1">{{count.genderNotspec}}</td>
-               <td class="td2">{{count.tranTemple}}</td>
-               <td class="td2">{{count.transport}}</td>
-               <td class="td1">{{count.newStudent}}</td>
-               <td class="td3">{{count.bangkok}}</td>
-               <td class="td3">{{count.central}}</td>
-               <td class="td3">{{count.sakon}}</td>
-               <td class="td3">{{count.northEast}}</td>
-               <td class="td2">{{count.north}}</td>
-               <td class="td2">{{count.east}}</td>
-               <td class="td2">{{count.western}}</td>
-               <td class="td2">{{count.south}}</td>
+               <td class="td1">{{count?.genderFemale}}</td>
+               <td class="td1">{{count?.genderMale}}</td>
+               <td class="td1">{{count?.genderNotspec}}</td>
+               <td class="td2">{{count?.tranTemple}}</td>
+               <td class="td2">{{count?.transport}}</td>
+               <td class="td1">{{count?.newStudent}}</td>
+               <td class="td3">{{count?.bangkok}}</td>
+               <td class="td3">{{count?.central}}</td>
+               <td class="td3">{{count?.sakon}}</td>
+               <td class="td3">{{count?.northEast}}</td>
+               <td class="td2">{{count?.north}}</td>
+               <td class="td2">{{count?.east}}</td>
+               <td class="td2">{{count?.western}}</td>
+               <td class="td2">{{count?.south}}</td>
           </tr>
         </ng-template>
   </p-table>
