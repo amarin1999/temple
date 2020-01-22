@@ -51,7 +51,6 @@ export class ScheduleComponent implements OnInit {
     this.spinner.show();
     this.scheduleService.getSchedule().toPromise()
       .then(res => {
-        // console.log(res);
         if (res['status'] === 'Success') {
           res['data'].forEach(element => {
             // เซทค่าวันสุดท้ายใหม่ บวกเพิ่ม 1 วัน ในปฏิทิน
@@ -61,7 +60,6 @@ export class ScheduleComponent implements OnInit {
             this.newStartDate = new DatePipe('en-En').transform(element.start, 'yyyy-MM-dd');
             element.end = this.newEndDate;
             element.start = this.newStartDate;
-            // console.log(this.newEndDate);
           });
           this.events = res['data'];
         }
@@ -75,7 +73,6 @@ export class ScheduleComponent implements OnInit {
     this.spinner.show();
     this.scheduleService.getScheduleForMonk().toPromise()
       .then(res => {
-        // console.log(res);
         if (res['status'] === 'Success') {
           res['data'].forEach(element => {
             // เซทค่าวันสุดท้ายใหม่ บวกเพิ่ม 1 วัน ในปฏิทิน
@@ -85,10 +82,8 @@ export class ScheduleComponent implements OnInit {
             this.newStartDate = new DatePipe('en-En').transform(element.start, 'yyyy-MM-dd');
             element.end = this.newEndDate;
             element.start = this.newStartDate;
-            // console.log(this.newEndDate);
           });
           this.events = res['data'];
-          // console.log(this.events);
         }
       }).catch(err => {
         console.log('Error', err);

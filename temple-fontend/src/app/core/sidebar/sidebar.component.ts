@@ -26,7 +26,6 @@ export class SidebarComponent implements OnInit {
     this.sidebarService.sidebar().subscribe(res => this.openSideBar = res);
     this.authService.isLoggedIn().subscribe(res => this.isLoggedIn = res);
     this.authService.getRole().subscribe(res => this.role = res)
-    // console.log(this.role, 'role');
 
   }
 

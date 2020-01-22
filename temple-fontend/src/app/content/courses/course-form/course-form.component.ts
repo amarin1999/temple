@@ -43,7 +43,6 @@ export class CourseFormComponent implements OnInit {
     }
 
     save() {
-        // console.log(this.course);
         //this.courses = this.courseService.save(this.course .name);
         this.course = {};
         this.displayDialog = false;
@@ -58,9 +57,5 @@ export class CourseFormComponent implements OnInit {
         this.course = this.courses.filter(e => e.id == id)[0];
         this.displayDialog = true;
     }
-
-    // delete(id) {
-    //     this.courseService.delete(id);
-    // }
 
 }

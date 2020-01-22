@@ -114,7 +114,6 @@ export class CourseCreateComponent implements OnInit {
               name: res.titleDisplay + res.fname + ' ' + res.lname
             };
           });
-          // console.log(this.teachers);
 
         }
       },
@@ -216,7 +215,6 @@ export class CourseCreateComponent implements OnInit {
     this.setValidate();
     if (!this.courseForm.valid) {
       this.subscribeInputMessageWaring();
-      console.log(this.courseForm.get('transportTemple').errors);
     } else {
       this.confirmationService.confirm({
         message: 'ยืนยันการสร้างคอร์ส',
@@ -236,10 +234,6 @@ export class CourseCreateComponent implements OnInit {
               datesort.push(stDate);
             }
           }
-          // console.log('stDate =' + stDate);
-          // console.log('endDate =' + endDate);
-          // console.log('datesort =' + datesort);
-          // console.log('TEACHERS =' + this.courseForm.get('teachers').value.map(res => res.id));
 
           if (this.courseForm.get('transportTemple').value == null) {
             this.transportTempleId = null;
@@ -260,7 +254,6 @@ export class CourseCreateComponent implements OnInit {
             status: 1,
             teacher: this.courseForm.get('teachers').value.map(res => res.id)
           };
-          console.log('>>>>>' + course.transportation);
           this.courseService.createCourse(course).subscribe(res => {
             if (res['result'] === 'Success') {
               /* const index = this.courses.findIndex(course => course.id === this.courseId);
@@ -299,7 +292,6 @@ export class CourseCreateComponent implements OnInit {
   filterTeacherMultiple(event) {
     const query = event.query;
     this.filteredTeacher = this.filterTeacher(query, this.teachers);
-    // console.log(this.filteredTeacher);
 
   }
 

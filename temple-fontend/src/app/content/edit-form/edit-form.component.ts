@@ -230,9 +230,6 @@ export class EditFormComponent implements OnInit {
       res => {
         if (res.status === 'Success') {
           this.courseHisList = res.data;
-          console.log('historyDharma', res.data);
-        } else {
-          console.log('getHistoryDharmaByMemberId Fail');
         }
       },
       err => {
@@ -310,7 +307,6 @@ export class EditFormComponent implements OnInit {
     this.spinner.show();
     this.manageUserService.getUser(this.personalId).toPromise()
       .then(res => {
-        console.log('getUser', res);
         const titlename = {
           id: res['data']['titleId'],
           display: res['data']['titleDisplay'],
@@ -495,7 +491,6 @@ export class EditFormComponent implements OnInit {
 
 
   onSubmit(e) {
-    // console.log('onsubmit');
     let temp = 0;
     this.courseHisList.filter(e => {
       if (e.courseName === '' || e.courseName === null || e.location === '' || e.location === null) {
@@ -619,7 +614,6 @@ export class EditFormComponent implements OnInit {
     if (id === 1) {
       this.profileString = base64result;
       this.editForm.controls['imgProfile'].setValue(this.profileString);
-      // console.log(this.profileString);
     }
   }
 
@@ -646,10 +640,6 @@ export class EditFormComponent implements OnInit {
         this.formError[field] = this.validationMessage[field].required;
       }
     }
-  }
-
-  delPic() {
-    console.log('delpicprofile');
   }
 
   showClearConfirm() {
@@ -752,7 +742,6 @@ export class EditFormComponent implements OnInit {
             }
           }).catch(
             err => {
-              console.log(err);
               this.showToast(
                 'alertMessage',
                 'แก้ไขข้อมูลส่วนตัวไม่สำเร็จ',
@@ -808,7 +797,6 @@ export class EditFormComponent implements OnInit {
       const titleName = titleNames[i];
       if (titleName.display.match(query)) {
         filtered.push(titleName);
-        // console.log(titleName.display);
       }
     }
     return filtered;

@@ -143,7 +143,6 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.getMemberByCourseId();
     this.getCountGraduatedCourse();
     this.setUrl();
-    // console.log("id"+this.id);
   }
 
   ngOnDestroy() {
@@ -165,10 +164,8 @@ export class CourseComponent implements OnInit, OnDestroy {
   private setUrl() {
     this.previousUrl = this.pathService.setPreviousUrl();
     // get path ก่อนหน้า
-    // console.log('url ' + this.previousUrl);
     // ตรวจสอบเพิ่มในกรณีไม่มีการรรีเฟรชหน้าเดิม ทำการเก็บข้อมูล pre url
     if (this.previousUrl != null) {
-      // console.log('if' + this.previousUrl);
       localStorage.removeItem('preurl');
       localStorage.setItem('preurl', JSON.stringify(this.previousUrl));
     }
@@ -179,7 +176,6 @@ export class CourseComponent implements OnInit, OnDestroy {
     if (JSON.parse(localStorage.getItem('preurl')) != null) {
       this.url = JSON.parse(localStorage.getItem('preurl'));
     }
-    // console.log('this ' + this.url);
     if (this.role === 'monk') {
       this.title = 'ตารางสอน';
       this.detail = 'รายชื่อผู้เรียน';
@@ -276,7 +272,6 @@ export class CourseComponent implements OnInit, OnDestroy {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.spinner.show();
-        // console.log(this.specialApprove);
         this.courseService.approvalCourse(dataCourse).toPromise()
           .then((res) => {
             if (res['result'] === 'Success') {
@@ -313,7 +308,6 @@ export class CourseComponent implements OnInit, OnDestroy {
         this.spinner.show();
         this.courseService.cancelApprovalCourse(id).toPromise()
           .then((res) => {
-            // console.log(res);
             if (res['result'] === 'Success') {
               this.course.status = 'ยังไม่ได้ลงทะเบียน';
               this.course.canRegister = 1;
@@ -349,7 +343,6 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.courseService.getCourseByid(courseId).toPromise()
       .then(res => {
         this.transportId = res['data']['transportTempleId'];
-        console.log(this.courseId);
         if (this.transportId !== null) {
           // combineLatest for process 2 service before subscribe
           this.optionTime = { hour: '2-digit', minute: '2-digit' };
@@ -398,13 +391,10 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   private getData() {
-    // console.log(this.id);
-    // this.spinner.show();
+    this.spinner.show();
     this.route.params.pipe(switchMap(param =>
       this.courseService.getCourseByid(param.id).toPromise()
         .then(res => {
-          console.log('getdata  ');
-          console.log(res);
           if (res.status === 'Success') {
             this.course = res['data'];
             this.status = this.course.mhcStatus;
@@ -419,18 +409,15 @@ export class CourseComponent implements OnInit, OnDestroy {
   private getMemberByCourseId() {
     this.courseService.getUserByCourseId(this.id)
       .subscribe(res => {
-        // console.log(res);
         // tslint:disable-next-line: forin
         for (let key in res.data) {
-          // console.log(key, '=>', res.data[key]);
           this.memberIdList.push(res.data[key].memberId);
           this.totalMember = this.memberIdList.length;
           this.manageUserService.getMemberById(res.data[key].memberId).subscribe(res => {
-            // console.log(res);
 
             this.memberList.push(res);
           });
-        }  // console.log(this.totalMember);
+        }
       });
 
 
@@ -443,18 +430,15 @@ export class CourseComponent implements OnInit, OnDestroy {
         this.total = res['data'][0]['totalRecord'];
       }
     });
-    //   console.log(this.total);
   }
 
   createExcel() {
     this.excelService.createExcel(this.id).subscribe(res => {
       if (res['result'] === 'Success') {
-        // console.log(res['result'])
         this.downloadFile('temple.xls');
         this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการบันทึกไฟล์สำเร็จ', sticky: true });
       } else {
         this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการบันทึกไฟล์ไม่สำเร็จ', life: 5000 });
-        // console.log(res)
       }
     });
   }
@@ -502,8 +486,6 @@ export class CourseComponent implements OnInit, OnDestroy {
       if (control && !control.valid && this.validationAssignMessage[field]) {
         this.formAssignError[field] = this.validationAssignMessage[field].required;
         if (field !== 'transportation' && control.hasError('maxlength')) {
-          // console.log(field)
-          // console.log(control.hasError('maxlength'))
           this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 100 ตัวอักษร';
         } else {
           this.formLengthError[field] = '';
@@ -522,8 +504,6 @@ export class CourseComponent implements OnInit, OnDestroy {
       if (control && !control.valid && this.validationApproveMessage[field]) {
         this.formApproveError[field] = this.validationApproveMessage[field].required;
         if (field !== 'transportation' && control.hasError('maxlength')) {
-          // console.log(field)
-          // console.log(control.hasError('maxlength'))
           this.formLengthError[field] = '*ข้อความต้องมีตัวอักษรน้อยกว่า 100 ตัว';
         } else {
           this.formLengthError[field] = '';

@@ -108,8 +108,6 @@ export class LocationComponent implements OnInit {
         this.locationService.delete(id).toPromise()
           .then(res => {
             if (res['status'] === 'Success') {
-              console.log('res', res);
-
               this.locations.splice(index, 1);
               this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการลบสำเร็จ' });
               this.getLocation();

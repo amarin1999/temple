@@ -59,7 +59,6 @@ export class ListCourseApproveComponent implements OnInit {
   }
 
   public loadData(e: LazyLoadEvent) {
-    // console.log(e);
     let query = '';
     if (this.isOutTime()) {
       if (e.globalFilter) {
@@ -97,12 +96,10 @@ export class ListCourseApproveComponent implements OnInit {
   }
 
   onRowSelect(e) {
-    // console.log(e);
     this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=InTime`);
   }
 
   onRowSelectOutTime(e) {
-    // console.log(e);
     this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=OutTime`);
   }
 
@@ -112,7 +109,6 @@ export class ListCourseApproveComponent implements OnInit {
       switchMap(([firstCon, rowsCon, queryCon]: [number, number, string]) =>
         this.approvalService.getCoursesApproval(firstCon, rowsCon, queryCon))
     ).subscribe(res => {
-      // console.log(res);
       if (res['status'] === 'Success') {
         if (res['status'] !== [] || res['status'] !== null) {
           this.courses = [...res['data']];
@@ -130,7 +126,6 @@ export class ListCourseApproveComponent implements OnInit {
       switchMap(([firstCon, rowsCon, queryCon]: [number, number, string]) =>
         this.approvalService.getCoursesApprovalOutTime(firstCon, rowsCon, queryCon))
     ).subscribe(res => {
-      // console.log(res);
       if (res['status'] === 'Success') {
         this.coursesOutTime = [...res['data']];
         this.loadingOutTime = false;

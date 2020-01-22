@@ -54,7 +54,6 @@ export class CourseRegisterOutTimeComponent implements OnInit {
 
     this.http.get(ApiConstants.baseURl + `/transportations`)
     .subscribe(res =>{
-      // console.log(res);
       this.transportations = [...res['data']];
     } );
     this.breadCrumbService.setPath([
@@ -206,14 +205,12 @@ export class CourseRegisterOutTimeComponent implements OnInit {
       accept: () => {
         this.courseService.cancelApproveOutTime(courseId).subscribe(res => {
           if (res.status === 'Success') {
-            // console.log("ยกเลิกขออนุมัตินอกเวลาสำเร็จ");
             this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกขออนุมัตินอกเวลาสำเร็จ' });
             this.getDataCanRegis();
             this.getDataSpecialApproveWait();
             this.getDataSpecialApproveSuccess();
           } else {
             this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] });
-            // console.log(res);
           }
         });
       },
