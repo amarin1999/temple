@@ -291,7 +291,7 @@
                     </div>
                     <div class="ui-g">
                         <div class="ui-g-12 ui-lg-12 ui-md-12">
-                            <p-table [columns]="cols" [value]="graduatedcourses" [paginator]="true" [rows]="10"
+                            <p-table [columns]="cols" [value]="graduatedcourses" [paginator]="true" [rows]="3"
                                 (onRowSelect)="onRowSelect($event)" selectionMode="single" [responsive]="true"
                                 [(selection)]="selectedCourse" [totalRecords]="totalGraduatedRecords">
                                 <ng-template pTemplate="header" let-columns>
@@ -344,7 +344,7 @@
                     </p-header>
                     <div class="ui-g">
                         <div class="ui-g-12 ui-lg-12 ui-md-12">
-                            <p-table [columns]="cols" [value]="courseHisList" [paginator]="true" [rows]="10" [responsive]="true">
+                            <p-table [columns]="cols" [value]="courseHisList" [paginator]="true" [rows]="3" [responsive]="true">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th>
