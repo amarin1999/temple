@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CourseCreateComponent } from '../courses/course-create/course-create.component';
 import { CourseEditComponent } from '../courses/course-edit/course-edit.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-manage-course',
@@ -37,6 +38,7 @@ export class ManageCourseComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private messageService: MessageService,
+    public spinner: NgxSpinnerService
   ) {
   }
 
@@ -99,15 +101,17 @@ export class ManageCourseComponent implements OnInit {
   }
 
   private getData() {
-    this.courseService.getCourses()
-      .subscribe(res => {
+    this.spinner.show();
+    this.courseService.getCourses().toPromise()
+      .then(res => {
         if (res['status'] === 'Success') {
           this.courses = res['data'];
           this.loading = false;
         }
         // console.log(this.courses);
-      });
-
+      }).catch(err =>
+        console.log(err['error']['errorMessage'])
+      ).finally(() => this.spinner.hide());
   }
 
   public onRowSelect(e) {

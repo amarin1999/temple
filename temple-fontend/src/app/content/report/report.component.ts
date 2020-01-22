@@ -23,6 +23,7 @@ export class ReportComponent implements OnInit {
   formReport = new FormGroup({
     courses: new FormControl('')
   });
+  descript: string; // --- variable for description No data -----
 
 
   constructor(
@@ -34,7 +35,6 @@ export class ReportComponent implements OnInit {
     this.breadCrumbService.setPath([
       { label: 'ออกรายงาน', routerLink: '/report' },
     ]);
-    this.getDataOfReport(null);
 
     this.cols = [
       { field: 'coursesName', header: 'ชื่อคอร์ส'},
@@ -56,16 +56,45 @@ export class ReportComponent implements OnInit {
 
   // ----------------- get Course Name -------------------
   this.reportGenService.getCourseName().subscribe( res => {
-    this.course = res.data;
-    this.course = this.course.map(
-      data => {
-        return {id : data.coursesId, name: data.coursesName};
-      }
-    );
+    if (res.data !== null && res.status !== null) {
+      this.course = res.data;
+      this.course = this.course.map(
+        data => {
+          return {id : data.coursesId, name: data.coursesName};
+        }
+      );
+    } else {
+        this.course = null;
+    }
   },
   err => {
     console.log(err['error']['message']);
   });
+
+  /* ------------- Get Data of Report to show on table --------------- */
+  // if (this.course !== undefined) {
+    this.getDataOfReport(null);
+  // } else {
+    // this.descript = '(ไม่มีข้อมูลคอร์สเรียน)';
+    // this.count = {
+    //   genderMale: 0,
+    //   genderFemale: 0,
+    //   /*** gender that not specified. * */
+    //   genderNotspec: 0,
+    //   tranTemple: 0,
+    //   transport: 0,
+    //   newStudent: 0,
+    //   bangkok: 0,
+    //   central: 0,
+    //   /*** จังหวัด สกลนคร * */
+    //   sakon: 0,
+    //   northEast: 0,
+    //   north: 0,
+    //   south: 0,
+    //   east: 0,
+    //   western: 0,
+    // };
+  // }
 
   }
  /***
@@ -95,25 +124,24 @@ export class ReportComponent implements OnInit {
     this.reportGenService.getDataByCourseId(id).subscribe(
       res => {
         this.reportData = [...res['data']];
-        // console.log(this.reportData);
-        this.reportData.forEach((couse:Report) =>{
+        this.reportData.forEach((report: Report) => {
           this.count = {
-            genderMale: this.count.genderMale + couse.genderMale,
-            genderFemale: this.count.genderFemale + couse.genderFemale,
+            genderMale: this.count.genderMale + report.genderMale,
+            genderFemale: this.count.genderFemale + report.genderFemale,
             /*** gender that not specified. * */
-            genderNotspec: this.count.genderNotspec + couse.genderNotspec,
-            tranTemple: this.count.tranTemple + couse.tranTemple,
-            transport: this.count.transport + couse.transport,
-            newStudent: this.count.newStudent + couse.newStudent,
-            bangkok: this.count.bangkok + couse.bangkok,
-            central: this.count.central + couse.central,
+            genderNotspec: this.count.genderNotspec + report.genderNotspec,
+            tranTemple: this.count.tranTemple + report.tranTemple,
+            transport: this.count.transport + report.transport,
+            newStudent: this.count.newStudent + report.newStudent,
+            bangkok: this.count.bangkok + report.bangkok,
+            central: this.count.central + report.central,
             /*** จังหวัด สกลนคร * */
-            sakon: this.count.sakon + couse.sakon,
-            northEast: this.count.northEast + couse.northEast,
-            north: this.count.north + couse.north,
-            south: this.count.south + couse.south,
-            east: this.count.east + couse.east,
-            western: this.count.western + couse.western,
+            sakon: this.count.sakon + report.sakon,
+            northEast: this.count.northEast + report.northEast,
+            north: this.count.north + report.north,
+            south: this.count.south + report.south,
+            east: this.count.east + report.east,
+            western: this.count.western + report.western,
           }
         });
       }
@@ -148,14 +176,11 @@ export class ReportComponent implements OnInit {
     this.getDataOfReport(courseId);
   }
   onClear(event) {
-    if (event.data === null) {
+    if (!event.data) {
       this.getDataOfReport(null);
     }
   }
 
-  onReset(event) {
-    console.log(event);
-  }
 
 
 

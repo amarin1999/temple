@@ -2,15 +2,22 @@
   <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
     <div style="text-align:center">
       <h1>รายงานผู้สมัครอบรมคอร์สเรียน</h1>
+      {{descript}}
     </div>
     <div class="line"></div><br>  
     <form [formGroup]="formReport">
-    <p-table [columns]="cols" [value]="reportData">
+    <p-table [columns]="cols" [value]="reportData" [paginator]="true" [rows]="10"
+    [responsive]="true">
         <ng-template pTemplate="caption">
           <div style="text-align:left;">
-            <p-autoComplete formControlName="courses" placeholder="กรุณาเลือกชื่อคอร์ส"
-            [suggestions]="filteredCourse" value="id" (completeMethod)="filterCourseMultiple($event)"
-            [minLength]="1" field="name" [dropdown]="true" (onSelect)="onSelect($event)" [type]="'search'" (onClear)="onClear($event)">
+            <p-autoComplete appClearAutoComplete formControlName="courses" placeholder="กรุณาเลือกชื่อคอร์ส"
+            [suggestions]="filteredCourse" value="id" 
+            (completeMethod)="filterCourseMultiple($event)"
+            [minLength]="1" field="name" 
+            [dropdown]="true" 
+            (onSelect)="onSelect($event)" 
+            (onClear)="onClear($event)" 
+            [type]="'search'">
           </p-autoComplete>
           </div>
       </ng-template> 

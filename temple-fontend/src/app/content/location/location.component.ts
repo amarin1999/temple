@@ -3,6 +3,7 @@ import { Location } from '../../shared/interfaces/location';
 import { LocationService } from './location.service';
 import { MessageService, MenuItem, ConfirmationService } from 'primeng/api';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-location',
@@ -24,7 +25,8 @@ export class LocationComponent implements OnInit {
     private locationService: LocationService,
     private messageService: MessageService,
     private breadCrumbService: BreadcrumbService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    public spinner: NgxSpinnerService
   ) {
   }
 
@@ -146,12 +148,13 @@ export class LocationComponent implements OnInit {
   }
 
   getLocation() {
+    this.spinner.show();
     this.locationService.getLocation()
       .toPromise().then(res => {
         if (res['status'] === 'Success') {
           this.locations = res['data'];
         }
-      });
+      }).finally(() => this.spinner.hide());
   }
   // public searchData(event) {
   //   if (!event) {
