@@ -79,13 +79,6 @@ public class CourseController {
 		this.transportationService = transportationService;
 	}
 
-	// @GetMapping(path = "")
-	// @PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
-	// public ResponseEntity<List<CourseEntity>> getAllUsers() {
-	// List<CourseEntity> user = courseRepository.findAll();
-	// return new ResponseEntity<List<CourseEntity>>(user, HttpStatus.OK);
-	// }
-
 	@GetMapping(path = "/allmembers/{id}")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
 	public ResponseEntity<ResponseDto<MembersHasCourseDto>> getAllUsers(@PathVariable(value = "id") Long courseId) {
@@ -311,7 +304,6 @@ public class CourseController {
 			if (member.getRoleName().equals("user")) {
                 courseDto = courseService.getCourseUser(member.getId(), id);
                 if ( courseDto.getTransportation() == null) {
-                	System.out.println("hi");
                 	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
                 }
                 courseDtoList.add(courseDto);
