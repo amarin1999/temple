@@ -69,16 +69,16 @@ export class BaggagesComponent implements OnInit {
 
   private getData() {
     this.spinner.show();
-    this.baggageService.getItemAll().subscribe(
-      res => {
+    this.baggageService.getItemAll().toPromise()
+    .then(res => {
         if (res['status'] === 'Success') {
           this.items = res['data'];
           this.baggage = res['data'];
         }
-      },
-      (e) => console.log(e['message'])
-    );
-    this.spinner.hide();
+      }
+    ).catch(err => 
+      console.log(err['error']['errorMessage'])
+    ).finally(() => this.spinner.hide());
   }
 
   showEditButton(...role) {
