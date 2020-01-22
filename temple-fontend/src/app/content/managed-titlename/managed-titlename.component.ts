@@ -5,6 +5,7 @@ import { MenuItem, Message, ConfirmationService, MessageService } from 'primeng/
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-managed-titlename',
@@ -51,6 +52,7 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
     private breadCrumbService: BreadcrumbService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    public spinner: NgxSpinnerService
   ) {
   }
 
@@ -71,20 +73,20 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
   }
 
   getTitleName() {
-    this.titleNamesService.getTitleNamesV2()
-      .subscribe(
-        res => {
-          // console.log(res, 'names');
-          if (res['status'] === 'Success') {
-            this.titleNames = res['data'];
-            // this.msgs.push({severity:'success', summary:'ข้อความจากระบบ', detail:'การดำเนินการสำเร็จ'});
-          }
-        },
-        err => {
-          console.log(err['error']['errorMessage']);
-          // this.msgs.push({severity:'error', summary:'ข้อความจากระบบ', detail:'การดำเนินการสำเร็จ'});
+    this.spinner.show();
+    this.titleNamesService.getTitleNamesV2().toPromise()
+      .then(res => {
+        // console.log(res, 'names');
+        if (res['status'] === 'Success') {
+          this.titleNames = res['data'];
+          // this.msgs.push({severity:'success', summary:'ข้อความจากระบบ', detail:'การดำเนินการสำเร็จ'});
         }
-      );
+      }
+      ).catch(err => {
+        console.log(err['error']['errorMessage']);
+        // this.msgs.push({severity:'error', summary:'ข้อความจากระบบ', detail:'การดำเนินการสำเร็จ'});
+      }
+      ).finally(() => this.spinner.hide());
   }
 
   showDialogToAdd() {
