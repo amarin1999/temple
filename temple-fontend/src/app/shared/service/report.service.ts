@@ -15,20 +15,24 @@ export class ReportService {
       return this.http.get(ApiConstants.baseURl + `/report/${id}`)
       .pipe(
         map((res: any[]) => {
-          return {
-            status: res['result'],
-            data: res['data']
-          };
+          if (res !== null) {
+            return {
+              status: res['result'],
+              data: res['data']
+            };
+          }
         })
       );
     } else {
       return this.http.get(ApiConstants.baseURl + `/report`)
       .pipe(
         map((res: any[]) => {
-          return {
-            status: res['result'],
-            data: res['data']
-          };
+          if (res !== null) {
+            return {
+                    status: res['result'],
+                    data: res['data']
+            };
+          }
         })
       );
     }
@@ -38,10 +42,18 @@ export class ReportService {
     return this.http.get(ApiConstants.baseURl + `/report/courseNamelist`)
     .pipe(
       map((res: any[]) => {
-        return {
-          status: res['result'],
-          data: res['data']
-        };
+        if (res !== null) {
+          console.log(res['result']);
+          return {
+            status: res['result'],
+            data: res['data']
+          };
+        } else {
+            return {
+              status: null,
+              data: null
+            };
+          }
       })
     );
   }
