@@ -342,7 +342,7 @@ public class CourseController {
 
 //	@GetMapping(path = "/outTime")
 //	@PreAuthorize("hasRole('user')")
-//	public ResponseEntity<ResponseDto<CourseDto>> GetCoursesOutTime(
+//	public ResponseEntity<ResponseDto<CourseDto>> getCoursesOutTime(
 //			@RequestParam("courseOutTimeType") String courseOutTimeType) {
 //		ResponseDto<CourseDto> res = new ResponseDto<>();
 //		List<CourseDto> listCourseDto;
@@ -373,7 +373,7 @@ public class CourseController {
 
 	@GetMapping(path = "/outTime")
 	@PreAuthorize("hasRole('user')")
-	public ResponseEntity<ResponseDto<CourseDto>> GetCoursesOutTime() {
+	public ResponseEntity<ResponseDto<CourseDto>> getCoursesOutTime() {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> listCourseDto;
 		MemberDto member = memberService.getCurrentMember();
