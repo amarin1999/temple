@@ -73,7 +73,7 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 //			+ "		ORDER BY c.course_id", nativeQuery = true)
 
 	@Query(value = "SELECT c.* FROM courses c LEFT JOIN special_approve spa "
-			+ "ON spa.course_id = c.course_idLEFT JOIN members_has_courses mhc " + "ON mhc.course_id = c.course_id "
+			+ "ON spa.course_id = c.course_id LEFT JOIN members_has_courses mhc " + "ON mhc.course_id = c.course_id "
 			+ "WHERE c.course_id <> (c.course_no <> '0' AND c.course_create_by = '1' AND spa.spa_status = '4') "
 			+ "AND c.course_id NOT IN (SELECT sa.course_id FROM special_approve sa WHERE sa.spa_status <> '3') "
 			+ "AND c.course_id NOT IN (SELECT c.course_no FROM courses c "

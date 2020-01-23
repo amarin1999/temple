@@ -129,8 +129,8 @@ export class CourseService {
       ));
   }
 
-  getCoursesOutTimeCanRegis(courseOutTimeType: string) {
-    return this.http.get(`${ApiConstants.baseURl}/courses/outTime?courseOutTimeType=${courseOutTimeType}`).pipe(
+  getCoursesOutTimeCanRegis() {
+    return this.http.get(`${ApiConstants.baseURl}/courses/outTime`).pipe(
       map(res => {
         return {
           status: res['result'],
