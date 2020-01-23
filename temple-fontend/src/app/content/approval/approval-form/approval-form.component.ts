@@ -23,7 +23,7 @@ export class ApprovalFormComponent implements OnInit {
   public courseId: string;
   public nameCourse: string;
   public btnrej: boolean;
-  public courseType: String;
+  public courseType: string;
   constructor(
     private breadCrumbService: BreadcrumbService,
     private route: ActivatedRoute,
