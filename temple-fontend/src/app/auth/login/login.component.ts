@@ -48,8 +48,6 @@ export class LoginComponent implements OnInit {
         e.preventDefault();
         const username = this.form.get('username').value;
         const password = this.form.get('password').value;
-        // console.log(username, password);
-
         if (this.form.valid) {
             this.spinner.show();
             this.authService.login(username, password).toPromise().then(res => {

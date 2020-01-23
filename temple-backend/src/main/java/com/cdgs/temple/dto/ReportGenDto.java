@@ -2,7 +2,7 @@ package com.cdgs.temple.dto;
 
 import java.io.Serializable;
 
-public class ReportDto implements Serializable {
+public class ReportGenDto implements Serializable {
 
 	/**
 	 * 

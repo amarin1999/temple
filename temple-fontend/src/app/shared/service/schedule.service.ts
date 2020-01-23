@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {ApiConstants} from '../constants/ApiConstants';
-import {map} from 'rxjs/operators';
-import {HttpClientService} from './http-client.service';
+import { Injectable } from '@angular/core';
+import { ApiConstants } from '../constants/ApiConstants';
+import { map } from 'rxjs/operators';
+import { HttpClientService } from './http-client.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,7 @@ export class ScheduleService {
     return this.http.get(ApiConstants.baseURl + '/courses/schedule')
       .pipe(
         map(res => {
-          // console.log(res)
           return {
-            
             status: res['result'],
             data: res['data'].map(data => ({
               title: data['course']['courseName'],
@@ -37,8 +35,6 @@ export class ScheduleService {
     return this.http.get(ApiConstants.baseURl + '/courses/teacher_schedule')
       .pipe(
         map(res => {
-          // console.log(res['data']);
-
           return {
             status: res['result'],
             data: res['data'].map(data => ({

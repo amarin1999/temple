@@ -17,17 +17,19 @@ export class ApprovalService {
   getMemberForApprove(coursesId) {
     return this.http.get(`${ApiConstants.baseURl}/approve/${coursesId}`).pipe(
       map((res) => {
-        const data = res['data'].map((member) => {
-          const checked = member.status === '1';
+        if (res !== null) {
+          const data = res['data'].map((member) => {
+            const checked = member.status === '1';
+            return {
+              ...member,
+              checked: checked
+            };
+          });
           return {
-            ...member,
-            checked: checked
+            status: res['result'],
+            data: data,
           };
-        });
-        return {
-          status: res['result'],
-          data: data,
-        };
+        } else {return null;}
       })
     );
   }

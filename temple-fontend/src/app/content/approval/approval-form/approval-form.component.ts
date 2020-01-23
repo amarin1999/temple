@@ -49,7 +49,12 @@ export class ApprovalFormComponent implements OnInit {
       { field: 'checked', header: '' }
     ];
 
-    // console.log(this.courseType);
+    this.courseId = this.route.snapshot.paramMap.get('id');
+    this.courseType = this.route.snapshot.queryParamMap.get('type');
+    this.initMember();
+
+    this.nameCourse = this.route.snapshot.queryParamMap.get('course');
+
 
   }
   setBreadCrumb() {
@@ -61,25 +66,33 @@ export class ApprovalFormComponent implements OnInit {
 
   }
   initMember() {
-    // console.log(this.courseType)
     if (this.courseType === 'OutTime') {
       this.approvalService.getMemberForApproveOutTime(+this.courseId)
         .subscribe(res => {
           console.log(res['data']['0']);
 
           if (res['status'] === 'Success') {
-            // console.log(res);
-            this.courseOutTime = res['data']['0'];
-
+            this.member = res['data'];
+            //เพิ่ม If
+            if (this.member.length === 0) {
+              this.member = [{ displayName: 'ไม่มีข้อมูล' }];
+            }
           }
         });
     } else {
       this.approvalService.getMemberForApprove(+this.courseId)
         .subscribe(res => {
-          if (res['status'] === 'Success') {
-            this.member = res['data'];
+          if (res !== null) {
+            if (res['status'] === 'Success') {
+              this.member = res['data'];
+              if (this.member.length === 0) {
+                this.member = [{ displayName: 'ไม่มีข้อมูล' }];
+              }
+            }
+          } else {
+            this.member = [];
             if (this.member.length === 0) {
-              this.member = [{ displayName: "ไม่มีข้อมูล" }]
+              this.member = [{ displayName: 'ไม่มีข้อมูล' }];
             }
           }
         });
@@ -90,7 +103,7 @@ export class ApprovalFormComponent implements OnInit {
     console.log(e);
     // เขียน api ตอบรับ outTime ใหม่
     this.btnrej = true;
-    const message = e.status == '1' ? '' : 'ไม่';
+    const message = e.status === 1 ? '' : 'ไม่';
     this.confirmationService.confirm({
       message: message + 'ต้องการอนุมัติพิเศษ',
       header: 'การอนุมัติพิเศษ',

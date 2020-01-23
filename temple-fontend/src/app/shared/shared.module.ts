@@ -59,10 +59,12 @@ import {HttpClientService} from './service/http-client.service';
 
 import {PanelModule} from 'primeng/panel';
 import {ToggleButtonModule} from 'primeng/togglebutton';
+import { ClearAutoCompleteDirective } from './directive/clear-auto-complete.directive';
 
 @NgModule({
   declarations: [
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    ClearAutoCompleteDirective
   ],
   imports: [
     CommonModule,
@@ -122,6 +124,7 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
     PanelModule,
     TabViewModule,
     ToggleButtonModule,
+    ClearAutoCompleteDirective
   ],
   providers: [
     TitleNameService,

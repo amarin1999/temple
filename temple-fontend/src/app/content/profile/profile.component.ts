@@ -44,7 +44,6 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
     this.getData();
     this.getCoursesHistoryDharma();
     this.showRole = this.roleService.getUserRoleStatus();
@@ -62,7 +61,6 @@ export class ProfileComponent implements OnInit {
       { field: 'stDate', header: 'วันที่สำเร็จการอบรม' },
       { field: 'name', header: 'ชื่อคอร์ส' }
     ];
-    this.spinner.hide();
   }
 
   getCoursesHistoryDharma() {
@@ -71,9 +69,6 @@ export class ProfileComponent implements OnInit {
       res => {
         if (res.status === 'Success') {
           this.courseHisList = res.data;
-          console.log('historyDharma', res.data);
-        } else {
-          console.log('getHistoryDharmaByMemberId Fail');
         }
       },
       err => {
@@ -83,17 +78,18 @@ export class ProfileComponent implements OnInit {
   }
 
   getData() {
+    this.spinner.show();
     this.route.params.pipe(map(res => res.id)).subscribe(id => {
-      this.manageUser.getUser(id).subscribe(
-        res => {
+      this.manageUser.getUser(id).toPromise()
+      .then(res => {
           if (res['status'] === 'Success') {
             this.userData = res['data'];
           }
-        },
-        (err) => {
+        }
+      ).catch((err) => {
           console.log(err['error']['errorMessage']);
         }
-      );
+      ).finally(() => this.spinner.hide());
     });
   }
 
@@ -103,8 +99,6 @@ export class ProfileComponent implements OnInit {
       .subscribe(res => {
         if (res['status'] === 'Success') {
           this.graduatedcourses = res['data'];
-          // console.log('studycourse');
-          // console.log(this.graduatedcourses);
         }
       });
   }

@@ -60,7 +60,6 @@ export class ListCourseApproveComponent implements OnInit {
   }
 
   public loadData(e: LazyLoadEvent) {
-    // console.log(e);
     let query = '';
     if (this.isOutTime()) {
       if (e.globalFilter) {
@@ -118,9 +117,12 @@ export class ListCourseApproveComponent implements OnInit {
       switchMap(([firstCon, rowsCon, queryCon]: [number, number, string]) =>
         this.approvalService.getCoursesApproval(firstCon, rowsCon, queryCon))
     ).subscribe(res => {
-      // console.log(res);
       if (res['status'] === 'Success') {
-        this.courses = [...res['data']];
+        if (res['status'] !== [] || res['status'] !== null) {
+          this.courses = [...res['data']];
+        } else {
+          this.courses = null;
+        }
         this.loading = false;
 
       }
@@ -133,11 +135,10 @@ export class ListCourseApproveComponent implements OnInit {
       switchMap(([firstCon, rowsCon, queryCon]: [number, number, string]) =>
         this.approvalService.getCoursesApprovalOutTime(firstCon, rowsCon, queryCon))
     ).subscribe(res => {
-      // console.log(res);
       if (res['status'] === 'Success') {
         this.courses = [...res['data']];
         this.loading = false;
-        this.dataOutTimeReport = res['data'].length === 0 ? '( ไม่มีข้อมูล )' : '';
+        this.dataOutTimeReport = res['data'].length === 0 ? '( ไม่มีข้อมูลคำขออนุมัติพิเศษ )' : '';
       }
     });
   }

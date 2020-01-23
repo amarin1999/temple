@@ -20,6 +20,8 @@ public interface TransportationService {
 	List<TransportationDto> getTransportationTemple(Long courseId);
 	
 	List<TransportationDto> getTransportationTempleRegister(Long courseId);
+	
+	TransportationDto getTransportationTempleMember(Long courseId, Long memberId);
 
 	Boolean deleteTransportationTemple(Long id);
 	

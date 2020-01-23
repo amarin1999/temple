@@ -74,9 +74,7 @@ export class RePasswordComponent implements OnInit {
             this.subscribeInputMessageWaring();
         } else if (this.form.valid) {
             this.spinner.show();
-            // console.log('MemberData', this.forgetPassService.memberData.password);
             this.forgetPassService.changePassword(password).toPromise().then(res => {
-                console.log(res['data']);
                 if (res['result'] === 'Success') {
                     if (res['code'] === 200) {
                         // Do something

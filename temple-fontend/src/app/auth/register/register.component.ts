@@ -208,7 +208,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     // const email = this.registerForm.get('email');
-    // console.log(email.dirty);
     this.registerSuccess = false;
     this.showCancelMessage = false;
     this.setBack();
@@ -277,7 +276,6 @@ export class RegisterComponent implements OnInit {
     } else {
       this.submitMessage(e);
     }
-    // console.log('test');
   }
 
   /**
@@ -301,7 +299,6 @@ export class RegisterComponent implements OnInit {
       header: 'ข้อความแจ้งเตือน',
       accept: () => {
         this.actionAccept(type);
-        // console.log(type);
       },
       reject: () => { }
     });
@@ -318,7 +315,6 @@ export class RegisterComponent implements OnInit {
       }
       case 'submit': {
         this.spinner.show();
-        // console.log('submit');
         // const dataUser = this.onSave(this.registerForm.getRawValue());
         const provinceCode = this.registerForm.get('province').value;
         const titleCode = this.registerForm.get('titleName').value;
@@ -357,7 +353,6 @@ export class RegisterComponent implements OnInit {
           disease: this.registerForm.get('underlyDisease').value === '' ? null : this.registerForm.get('underlyDisease').value,
           blood: bloodGroup.value
         };
-        console.log(dataUser);
         this.manageUserService.createUser(dataUser).subscribe(
           res => {
             if (res['status'] === 'Success') {
@@ -383,7 +378,6 @@ export class RegisterComponent implements OnInit {
             }
           },
           err => {
-            console.log(err);
             if (err['error']['errorMessage'].includes('member_username_UNIQUE')) {
               this.showToast(
                 'alertMessage',
@@ -538,7 +532,6 @@ export class RegisterComponent implements OnInit {
       const titleName = titleNames[i];
       if (titleName.display.match(query)) {
         filtered.push(titleName);
-        //console.log(titleName.display);
       }
     }
     return filtered;
@@ -563,7 +556,6 @@ export class RegisterComponent implements OnInit {
   onGenderSelect(event: TitleName) {
     const gender = this.registerForm.get('titleName').value;
     // const newObject = {...event};
-    //console.log('from typing ' + event);
   }
 
   // ---------------- Profile Picture Fuction => Start. --------------

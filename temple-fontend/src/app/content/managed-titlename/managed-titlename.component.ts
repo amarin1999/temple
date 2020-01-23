@@ -5,6 +5,7 @@ import { MenuItem, Message, ConfirmationService, MessageService } from 'primeng/
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-managed-titlename',
@@ -51,6 +52,7 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
     private breadCrumbService: BreadcrumbService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    public spinner: NgxSpinnerService
   ) {
   }
 
@@ -71,20 +73,19 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
   }
 
   getTitleName() {
-    this.titleNamesService.getTitleNamesV2()
-      .subscribe(
-        res => {
-          // console.log(res, 'names');
-          if (res['status'] === 'Success') {
-            this.titleNames = res['data'];
-            // this.msgs.push({severity:'success', summary:'ข้อความจากระบบ', detail:'การดำเนินการสำเร็จ'});
-          }
-        },
-        err => {
-          console.log(err['error']['errorMessage']);
-          // this.msgs.push({severity:'error', summary:'ข้อความจากระบบ', detail:'การดำเนินการสำเร็จ'});
+    this.spinner.show();
+    this.titleNamesService.getTitleNamesV2().toPromise()
+      .then(res => {
+        if (res['status'] === 'Success') {
+          this.titleNames = res['data'];
+          // this.msgs.push({severity:'success', summary:'ข้อความจากระบบ', detail:'การดำเนินการสำเร็จ'});
         }
-      );
+      }
+      ).catch(err => {
+        console.log(err['error']['errorMessage']);
+        // this.msgs.push({severity:'error', summary:'ข้อความจากระบบ', detail:'การดำเนินการสำเร็จ'});
+      }
+      ).finally(() => this.spinner.hide());
   }
 
   showDialogToAdd() {
@@ -110,12 +111,10 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
               summary: 'ข้อความจากระบบ',
               detail: 'ดำเนินการเพิ่มสำเร็จ'
             });
-            // console.log(res);
             this.getTitleName();
           }
         },
           (e) => {
-            // console.log(e);
             this.messageService.add({
               severity: 'error', summary: 'ข้อความจากระบบ',
               detail: 'ดำเนินการบันทึกไม่สำเร็จ (คำนำหน้าชื่อหรือคำย่ออาจมีอยู่แล้ว)', life: 5000
@@ -161,11 +160,7 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
           }
         }
       });
-      // console.log(name);
-      // console.log(display);
-      //
       if (name || display) {
-        // console.log('Duplicate');
         this.duplicateTitle = true;
       } else {
         this.duplicateTitle = false;
@@ -174,8 +169,6 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
             if (res['status'] === 'Success') {
               this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ: ', detail: 'ดำเนินการแก้ไขคำนำหน้าสำเร็จ' });
               const index = this.titleNames.findIndex(e => e.id === res['data']['id']);
-              // console.log(res['data'], 'new');
-              // console.log(this.titleNames[index], 'old');
               this.titleNames[index] = res['data'];
             }
           }, (e) => {
@@ -195,7 +188,6 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
   setEditForm(id) {
     this.titleId = id;
     const titleName = this.titleNames.filter(e => e.id === id)[0];
-    // console.log(titleName);
     Object.keys(this.titlesForm.controls).forEach(key => {
       const control = this.titlesForm.get(key);
       if (key === 'titleName') {

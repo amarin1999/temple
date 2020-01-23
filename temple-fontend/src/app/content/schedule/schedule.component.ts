@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ScheduleService} from 'src/app/shared/service/schedule.service';
-import {BreadcrumbService} from '../../shared/service/breadcrumb.service';
+import { Component, OnInit } from '@angular/core';
+import { ScheduleService } from 'src/app/shared/service/schedule.service';
+import { BreadcrumbService } from '../../shared/service/breadcrumb.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { DatePipe } from '@angular/common';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-schedule',
@@ -13,7 +14,7 @@ export class ScheduleComponent implements OnInit {
   events: any[];
   newevents: any[];
   options: any;
-  title:String;
+  title: String;
   date: Date;
   newEndDate: any;
   newStartDate: any;
@@ -21,13 +22,14 @@ export class ScheduleComponent implements OnInit {
   constructor(
     private scheduleService: ScheduleService,
     private breadCrumbService: BreadcrumbService,
-    private authService:AuthService,
+    private authService: AuthService,
+    public spinner: NgxSpinnerService
   ) {
 
   }
 
   ngOnInit() {
-    if (this.authService.getRole().value === 'monk'){
+    if (this.authService.getRole().value === 'monk') {
       this.title = 'ตารางสอน';
       this.loadDataForMonk();
     } else if (this.authService.getRole().value === 'user') {
@@ -40,38 +42,15 @@ export class ScheduleComponent implements OnInit {
 
   private setPath() {
     this.breadCrumbService.setPath([
-      {label: `${this.title}` }
+      { label: `${this.title}` }
     ]);
   }
 
   private loadData() {
     // this.date.setDate( this.date.getDate() + 3 );
-    this.scheduleService.getSchedule()
-      .subscribe(res => {
-          // console.log(res);
-          if (res['status'] === 'Success') {
-            res['data'].forEach(element => {
-              // เซทค่าวันสุดท้ายใหม่ บวกเพิ่ม 1 วัน ในปฏิทิน
-              this.date = new Date(element.end);
-              this.date.setDate((this.date.getDate()) + 1);
-              this.newEndDate = new DatePipe('en-En').transform(this.date, 'yyyy-MM-dd');
-              this.newStartDate = new DatePipe('en-En').transform(element.start, 'yyyy-MM-dd');
-              element.end =  this.newEndDate;
-              element.start = this.newStartDate;
-              // console.log(this.newEndDate);
-            });
-            this.events = res['data'];
-          }
-        },
-        err => {
-          console.log('Error', err);
-        });
-  }
-
-  private loadDataForMonk() {
-    this.scheduleService.getScheduleForMonk()
-    .subscribe(res => {
-        // console.log(res);
+    this.spinner.show();
+    this.scheduleService.getSchedule().toPromise()
+      .then(res => {
         if (res['status'] === 'Success') {
           res['data'].forEach(element => {
             // เซทค่าวันสุดท้ายใหม่ บวกเพิ่ม 1 วัน ในปฏิทิน
@@ -79,17 +58,36 @@ export class ScheduleComponent implements OnInit {
             this.date.setDate((this.date.getDate()) + 1);
             this.newEndDate = new DatePipe('en-En').transform(this.date, 'yyyy-MM-dd');
             this.newStartDate = new DatePipe('en-En').transform(element.start, 'yyyy-MM-dd');
-            element.end =  this.newEndDate;
+            element.end = this.newEndDate;
             element.start = this.newStartDate;
-            // console.log(this.newEndDate);
           });
           this.events = res['data'];
-          // console.log(this.events);
         }
-      },
-      err => {
+      }).catch(err => {
         console.log('Error', err);
-      });
+      }
+      ).finally(() => this.spinner.hide());
+  }
+
+  private loadDataForMonk() {
+    this.spinner.show();
+    this.scheduleService.getScheduleForMonk().toPromise()
+      .then(res => {
+        if (res['status'] === 'Success') {
+          res['data'].forEach(element => {
+            // เซทค่าวันสุดท้ายใหม่ บวกเพิ่ม 1 วัน ในปฏิทิน
+            this.date = new Date(element.end);
+            this.date.setDate((this.date.getDate()) + 1);
+            this.newEndDate = new DatePipe('en-En').transform(this.date, 'yyyy-MM-dd');
+            this.newStartDate = new DatePipe('en-En').transform(element.start, 'yyyy-MM-dd');
+            element.end = this.newEndDate;
+            element.start = this.newStartDate;
+          });
+          this.events = res['data'];
+        }
+      }).catch(err => {
+        console.log('Error', err);
+      }).finally(() => this.spinner.hide());
   }
 
   private setOption() {

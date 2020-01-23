@@ -246,7 +246,6 @@ export class CoursesListComponent implements OnInit {
 
   public approvalCourse() {
     const transItem = this.approveFormCourse.get('transportation').value;
-    // console.log(transItem);
     const dataCourse = {
       courseId: this.courseId,
       transportationId: transItem.id,
@@ -254,7 +253,6 @@ export class CoursesListComponent implements OnInit {
       expected: this.approveFormCourse.get('expected').value,
       detail: this.approveFormCourse.get('detail').value
     };
-    // console.log(dataCourse);
     this.confirmationService.confirm({
       message: 'ยืนยันการขออนุมัติพิเศษ',
       header: 'ข้อความจากระบบ',
@@ -263,7 +261,6 @@ export class CoursesListComponent implements OnInit {
         this.spinner.show();
         this.courseService.approvalCourse(dataCourse).toPromise()
           .then(res => {
-            console.log(res);
             if (res['result'] === 'Success') {
               const index = this.courses.findIndex(
                 course => course.id === this.courseId
@@ -333,11 +330,9 @@ export class CoursesListComponent implements OnInit {
               this.values.push(element);
             }
           });
-          // console.log('course');
         }
         // this.values.sort((a,b) => a.name.localeCompare(b.name));
         this.courses = this.values;
-        // console.log(this.courses);
       }).catch(err => {
         console.log(err['error']['errorMessage']);
       }).finally(() => this.spinner.hide());
@@ -348,8 +343,6 @@ export class CoursesListComponent implements OnInit {
     this.courseService.getCoursesUser('2').subscribe(res => {
       if (res['status'] === 'Success') {
         this.studyingcourses = res['data'];
-        // console.log('studycourse');
-        // console.log(this.studyingcourses);
       }
     });
   }
@@ -382,7 +375,6 @@ export class CoursesListComponent implements OnInit {
         this.spinner.show();
         this.courseService.cancelApprovalCourse(id).toPromise()
           .then(res => {
-            // console.log(res);
             if (res['result'] === 'Success') {
               const index = this.courses.findIndex(course => course.id === id);
               const upd = this.courses[index];
@@ -434,7 +426,6 @@ export class CoursesListComponent implements OnInit {
     this.courseId = courseId;
     this.courseService.getCourseByid(courseId).subscribe(res => {
       this.transportId = res['data']['transportTempleId'];
-      console.log(this.transportId);
       if (this.transportId !== null) {
         // combineLatest for process 2 service before subscribe
         this.optionTime = { hour: '2-digit', minute: '2-digit' };
@@ -484,7 +475,6 @@ export class CoursesListComponent implements OnInit {
     this.courseId = courseId;
     this.courseService.getCourseByid(courseId).subscribe(res => {
       this.transportId = res['data']['transportTempleId'];
-      console.log(this.transportId);
       if (this.transportId !== null) {
         // combineLatest for process 2 service before subscribe
         this.optionTime = { hour: '2-digit', minute: '2-digit' };
@@ -553,6 +543,10 @@ export class CoursesListComponent implements OnInit {
     this.router.navigate(['/courses', course.id]);
   }
 
+  public onSelectCourse(id) {
+    this.router.navigate(['/courses', id]);
+  }
+
   // count graduated course
   private getGraduatedCourse() {
     this.courseService.getTotalRecord('1').subscribe(res => {
@@ -590,8 +584,6 @@ export class CoursesListComponent implements OnInit {
           field
         ].required;
         if (field !== 'transportation' && control.hasError('maxlength')) {
-          // console.log(field)
-          // console.log(control.hasError('maxlength'))
           this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 100 ตัวอักษร';
         } else {
           this.formLengthError[field] = '';
@@ -613,8 +605,6 @@ export class CoursesListComponent implements OnInit {
           field
         ].required;
         if (field !== 'transportation' && control.hasError('maxlength')) {
-          // console.log(field)
-          // console.log(control.hasError('maxlength'))
           this.formLengthError[field] = '**ข้อความต้องน้อยกว่า 100 ตัวอักษร';
         } else {
           this.formLengthError[field] = '';
@@ -633,7 +623,6 @@ export class CoursesListComponent implements OnInit {
   }
 
   onSubmitApprove(e) {
-    // console.log(e);
     this.setValidate(e);
     if (!this.approveFormCourse.valid) {
       this.subscribeInputMessageWaring(e);

@@ -7,6 +7,8 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+
+
 @Entity
 @Table(name = "members_has_courses")
 @Embeddable
@@ -34,7 +36,7 @@ public class MembersHasCourseEntity implements Serializable {
 	@Column(name = "register_date")
 	@CreationTimestamp
 	private LocalDateTime registerDate;
-
+	
 	@Column(name = "sense_id")
 	private long senseId;
 

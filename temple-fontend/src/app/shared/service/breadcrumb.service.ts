@@ -18,7 +18,6 @@ export class BreadcrumbService {
     }
 
     getPath(): BehaviorSubject<MenuItem[]> {
-        // console.log(this.items);
         return this.items;
     }
 

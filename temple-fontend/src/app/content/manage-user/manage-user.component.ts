@@ -50,23 +50,19 @@ export class ManageUserComponent implements OnInit {
   }
 
   deleteUser(id) {
-    // console.log(id);
     this.manageUser.deleteUser(id).toPromise()
-    .then(res => {
-      if (res['status'] === 'Success') {
-        const index = this.personal.findIndex(e => e.id === id);
-        // console.log(index);
-
-        this.personal = [
-          ...this.personal.slice(0, index),
-          ...this.personal.slice(index + 1)
-        ];
-      }
-    }).catch((e) => console.log(e['error']['errorMessage'])
-    ).finally(() => this.spinner.hide());
+      .then(res => {
+        if (res['status'] === 'Success') {
+          const index = this.personal.findIndex(e => e.id === id);
+          this.personal = [
+            ...this.personal.slice(0, index),
+            ...this.personal.slice(index + 1)
+          ];
+        }
+      }).catch((e) => console.log(e['error']['errorMessage'])
+      ).finally(() => this.spinner.hide());
   }
   public onRowSelect(e) {
-    // console.log(e);
     this.router.navigate(['/profile', e.data['id']]);
   }
 }

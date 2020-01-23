@@ -84,7 +84,6 @@ export class BaggageService {
   save(data) {
     return this.httpService.post(ApiConstants.baseURl + `/lockers`, data )
       .pipe(map(res => {
-        // console.log(res);
         return {
           status: res['result'],
           data: res['data']
@@ -96,7 +95,6 @@ export class BaggageService {
     return this.httpService.post(ApiConstants.baseURl + `/baggage`, data
     )
     .pipe(map(res => {
-      // console.log(res);
       return {
         status: res['result'],
         data: res['data'][0]
@@ -105,7 +103,6 @@ export class BaggageService {
   }
   updateStorage(id, data) {
     return this.httpService.put(ApiConstants.baseURl + `/baggage/${id}`, data).pipe(map(res => {
-      // console.log(res);
       return {
         status: res['result'],
         data: res['data'][0]

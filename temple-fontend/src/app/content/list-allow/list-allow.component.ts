@@ -80,7 +80,6 @@ export class ListAllowComponent implements OnInit {
     }else{
       this.disbtn = true;
     }
-    // console.log(obj);
     if (obj.length !== this.member.length) {
       this.check = false;
     } else {

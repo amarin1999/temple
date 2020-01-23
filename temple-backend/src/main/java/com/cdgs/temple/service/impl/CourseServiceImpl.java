@@ -1,6 +1,5 @@
 package com.cdgs.temple.service.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +17,6 @@ import com.cdgs.temple.dto.MemberDto;
 import com.cdgs.temple.dto.MembersHasCourseDto;
 import com.cdgs.temple.dto.TransportationDto;
 import com.cdgs.temple.entity.CourseEntity;
-import com.cdgs.temple.entity.CourseScheduleEntity;
 import com.cdgs.temple.entity.CourseTeacherEntity;
 import com.cdgs.temple.entity.MembersHasCourseEntity;
 import com.cdgs.temple.entity.TempCourseEntity;
@@ -410,7 +408,7 @@ public class CourseServiceImpl implements CourseService {
 
 	private CourseDto mapTempEntityToDto(TempCourseEntity entity) {
 		CourseDto dto = new CourseDto();
-		TransportationDto transportationDto = new TransportationDto();
+//		TransportationDto transportationDto = new TransportationDto();
 		if (entity != null) {
 			dto.setId(entity.getCourseId());
 			dto.setNo(entity.getCourseNo());
@@ -457,7 +455,12 @@ public class CourseServiceImpl implements CourseService {
 				transportationDtoNew = transportationService.getTransportationById(courseNew.getTransportation().getId());
 				transportationDtoNew.setCourseId(id);
 				transportationService.updateTransportationTemple(transportationDtoNew.getId(), transportationDtoNew);
-
+			} else if (courseNew.getTransportation().getId() == null) {
+				transportationDtoOld = transportationService.getTransportationByCourseId(id);
+				if (transportationDtoOld.getId() != null) {
+					transportationDtoOld.setCourseId(null);
+					transportationService.updateTransportationTemple(transportationDtoOld.getId(), transportationDtoOld);
+				}
 			}
 			System.out.println("st1 = " + courseNew.getStDate());
 
@@ -475,7 +478,7 @@ public class CourseServiceImpl implements CourseService {
 			System.out.println("end = " + courseNew.getEndDate());
 			System.out.println("endOld = " + courseOld.getCourseEndDate());
 			String datetest = "2019-12-12";
-			Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(datetest);
+//			Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(datetest);
 			System.out.println("datetest =" + datetest);
 			courseOld.setCourseLastUpdate(new Date());
 			courseOld.setCourseLocationId(courseNew.getLocationId());
@@ -502,33 +505,33 @@ public class CourseServiceImpl implements CourseService {
 		}
 	}
 
-	private List<CourseScheduleEntity> mapCourseScheduleListToEntities(Long id, List<CourseScheduleDto> dateList) {
-		List<CourseScheduleEntity> entities = new ArrayList<CourseScheduleEntity>();
-		CourseScheduleEntity entity = new CourseScheduleEntity();
-		if (dateList != null) {
-			for (CourseScheduleDto date : dateList) {
-				entity.setCourseId(id);
-				entity.setCourseScheduleDate(date.getCourseScheduleDate());
-				entities.add(entity);
-			}
-		}
-		return entities;
-	}
-
-	private List<CourseTeacherEntity> mapMemberListToTeacherEntity(Long courseId, List<MemberDto> list) {
-		List<CourseTeacherEntity> entities = new ArrayList<CourseTeacherEntity>();
-		CourseTeacherEntity entity = new CourseTeacherEntity();
-		if (list != null) {
-			for (MemberDto teacher : list) {
-				entity.setCourseId(courseId);
-				entity.setMemberId(teacher.getId());
-//				 entity.setMember(memberRepository.findById(teacher.getId()).get());
-				entities.add(entity);
-			}
-		}
-
-		return entities;
-	}
+//	private List<CourseScheduleEntity> mapCourseScheduleListToEntities(Long id, List<CourseScheduleDto> dateList) {
+//		List<CourseScheduleEntity> entities = new ArrayList<CourseScheduleEntity>();
+//		CourseScheduleEntity entity = new CourseScheduleEntity();
+//		if (dateList != null) {
+//			for (CourseScheduleDto date : dateList) {
+//				entity.setCourseId(id);
+//				entity.setCourseScheduleDate(date.getCourseScheduleDate());
+//				entities.add(entity);
+//			}
+//		}
+//		return entities;
+//	}
+//
+//	private List<CourseTeacherEntity> mapMemberListToTeacherEntity(Long courseId, List<MemberDto> list) {
+//		List<CourseTeacherEntity> entities = new ArrayList<CourseTeacherEntity>();
+//		CourseTeacherEntity entity = new CourseTeacherEntity();
+//		if (list != null) {
+//			for (MemberDto teacher : list) {
+//				entity.setCourseId(courseId);
+//				entity.setMemberId(teacher.getId());
+////				 entity.setMember(memberRepository.findById(teacher.getId()).get());
+//				entities.add(entity);
+//			}
+//		}
+//
+//		return entities;
+//	}
 
 	private CourseEntity convDtoToEntity(CourseDto course) {
 		CourseEntity entity = new CourseEntity();
@@ -577,24 +580,24 @@ public class CourseServiceImpl implements CourseService {
 		return dto;
 	}
 
-	private CourseScheduleEntity mapDtoToEntity(CourseScheduleDto body) {
-		CourseScheduleEntity entity = new CourseScheduleEntity();
-		if (body != null) {
-			entity.setCourseId(body.getCourseId());
-			entity.setCourseScheduleDate(body.getCourseScheduleDate());
-		}
-		return entity;
-	}
-
-	private CourseScheduleDto mapEntityToDto(CourseScheduleEntity body) {
-		CourseScheduleDto dto = new CourseScheduleDto();
-		if (body != null) {
-			dto.setCourseId(body.getCourseId());
-			dto.setCourseScheduleDate(body.getCourseScheduleDate());
-
-		}
-		return dto;
-	}
+//	private CourseScheduleEntity mapDtoToEntity(CourseScheduleDto body) {
+//		CourseScheduleEntity entity = new CourseScheduleEntity();
+//		if (body != null) {
+//			entity.setCourseId(body.getCourseId());
+//			entity.setCourseScheduleDate(body.getCourseScheduleDate());
+//		}
+//		return entity;
+//	}
+//
+//	private CourseScheduleDto mapEntityToDto(CourseScheduleEntity body) {
+//		CourseScheduleDto dto = new CourseScheduleDto();
+//		if (body != null) {
+//			dto.setCourseId(body.getCourseId());
+//			dto.setCourseScheduleDate(body.getCourseScheduleDate());
+//
+//		}
+//		return dto;
+//	}
 
 	private CourseDto mapEntityEditToDto(CourseEntity entity) {
 		List<MemberDto> teacherList = new ArrayList<>();
@@ -639,21 +642,21 @@ public class CourseServiceImpl implements CourseService {
 		}
 	}
 
-	private List<CourseScheduleDto> mapDateEntityListToDto(List<CourseScheduleEntity> courseSchduleList) {
-		List<CourseScheduleDto> dtoList = new ArrayList<>();
-		for (CourseScheduleEntity courseSchdule : courseSchduleList) {
-			dtoList.add(mapDateEntityToDto(courseSchdule));
-		}
-		return dtoList;
-	}
+//	private List<CourseScheduleDto> mapDateEntityListToDto(List<CourseScheduleEntity> courseSchduleList) {
+//		List<CourseScheduleDto> dtoList = new ArrayList<>();
+//		for (CourseScheduleEntity courseSchdule : courseSchduleList) {
+//			dtoList.add(mapDateEntityToDto(courseSchdule));
+//		}
+//		return dtoList;
+//	}
 
-	private CourseScheduleDto mapDateEntityToDto(CourseScheduleEntity courseSchdule) {
-		CourseScheduleDto dto = new CourseScheduleDto();
-		if (courseSchdule != null) {
-			dto.setCourseId(courseSchdule.getCourseId());
-			dto.setCourseScheduleDate(courseSchdule.getCourseScheduleDate());
-		}
-		return dto;
-	}
+//	private CourseScheduleDto mapDateEntityToDto(CourseScheduleEntity courseSchdule) {
+//		CourseScheduleDto dto = new CourseScheduleDto();
+//		if (courseSchdule != null) {
+//			dto.setCourseId(courseSchdule.getCourseId());
+//			dto.setCourseScheduleDate(courseSchdule.getCourseScheduleDate());
+//		}
+//		return dto;
+//	}
 
 }

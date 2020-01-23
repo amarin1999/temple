@@ -4,6 +4,7 @@ import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { Transportation } from 'src/app/shared/interfaces/transportation';
 import { combineLatest } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'app-manage-transportation',
@@ -31,7 +32,8 @@ export class ManageTransportationComponent implements OnInit {
         private breadCrumbService: BreadcrumbService,
         private confirmationService: ConfirmationService,
         private transportationService: TransportService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        public spinner: NgxSpinnerService
     ) { }
 
   ngOnInit() {
@@ -60,12 +62,16 @@ export class ManageTransportationComponent implements OnInit {
     this.displayDialog = true;
     this.newTransportation = '';
   }
-
   getTransportation() {
-    this.transportationService.getTranSportToEdit().subscribe(
-      res => {
+      this.spinner.show();
+    this.transportationService.getTranSportToEdit().toPromise()
+    .then(res => {
         this.transport = res['data'];
-    });
+    }).catch(err => {
+        console.log(err['error']['errorMessage']);
+    }).finally(() =>
+        this.spinner.hide()
+    );
     // combineLatest for process 2 service before subscribe
     // combineLatest(
     //   this.transportationService.getTranSportToEdit(),
@@ -73,7 +79,6 @@ export class ManageTransportationComponent implements OnInit {
     // ).subscribe(
     //   ([tranSport , tranSportTemple]) => {
     //     this.transport = [...tranSport.data , ...tranSportTemple.data];
-    //     console.log(this.transport);
     //   }
     // );
   }
@@ -82,8 +87,6 @@ export class ManageTransportationComponent implements OnInit {
       res => {
         this.transportTemple = res['data'];
         this.transportTemple = this.transportTemple.map( data => {
-            console.log('name', data.name);
-
             return { id: data.id , name: data.name , timePickUp: data.timePickUp , timeSend: data.timeSend }
         });
     });
@@ -111,7 +114,6 @@ export class ManageTransportationComponent implements OnInit {
                 .subscribe(
                     res => {
                         if (res['status'] === 'Success') {
-                            // console.log(res);
                             this.messageService.add({
                                 severity: 'success',
                                 summary: 'ข้อความจากระบบ',
@@ -124,8 +126,6 @@ export class ManageTransportationComponent implements OnInit {
                         }
                     },
                     e => {
-                        // console.log(e['error']['errorMessage'])
-                        // this.messageService.clear;
                         this.messageService.add({
                             severity: 'error',
                             summary: 'ข้อความจากระบบ',
@@ -143,7 +143,6 @@ export class ManageTransportationComponent implements OnInit {
             this.typeTran = this.transport;
         }
         // this.transportation.name = this.newTransportation;
-        // console.log(this.transportation)
         if (
             this.typeTran.findIndex(res => res.name === this.newTransportation) <
             0 ||
@@ -248,7 +247,6 @@ export class ManageTransportationComponent implements OnInit {
                             }
                         },
                         (e) => {
-                            // console.log(e['error']['errorMessage']);
                             if (e['error']['errorMessage'] === 'transportationTemple is using') {
                                 this.messageService.add({
                                     severity: 'error',

@@ -39,7 +39,6 @@ export class ForgetPassService {
       ...this.memberData[0],
       'password': password
     };
-    // console.log('body', body);
     return this.http.put(ApiConstants.baseURl + '/forgetpass/', body);
   }
 }
