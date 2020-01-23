@@ -72,11 +72,7 @@ export class ApprovalFormComponent implements OnInit {
           console.log(res['data']['0']);
 
           if (res['status'] === 'Success') {
-            this.member = res['data'];
-            //เพิ่ม If
-            if (this.member.length === 0) {
-              this.member = [{ displayName: 'ไม่มีข้อมูล' }];
-            }
+            this.courseOutTime = res['data']['0'];
           }
         });
     } else {

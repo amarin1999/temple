@@ -50,7 +50,7 @@ export class ListCourseApproveComponent implements OnInit {
 
   }
   setData() {
-    if (this.isOutTime()) {
+    if (this.isInTime()) {
       this.title = 'จัดการอนุมัติพิเศษ';
 
     } else {
@@ -61,7 +61,7 @@ export class ListCourseApproveComponent implements OnInit {
 
   public loadData(e: LazyLoadEvent) {
     let query = '';
-    if (this.isOutTime()) {
+    if (this.isInTime()) {
       if (e.globalFilter) {
         query = e.globalFilter;
       }
@@ -84,7 +84,7 @@ export class ListCourseApproveComponent implements OnInit {
   }
 
   private setBreadCrumb() {
-    if (this.isOutTime()) {
+    if (this.isInTime()) {
       this.textBreadCrumb = { label: 'การอนุมัติพิเศษ', routerLink: '/approval' };
     } else {
       this.textBreadCrumb = { label: 'การอนุมัตินอกเวลา', routerLink: '/approvalCourseOutTime' };
@@ -93,7 +93,7 @@ export class ListCourseApproveComponent implements OnInit {
     ]);
   }
 
-  private isOutTime(): boolean {
+  public isInTime(): boolean {
     if (this.url === '/approval') {
       return true;
     } else if (this.url === '/approvalCourseOutTime') {
@@ -103,7 +103,7 @@ export class ListCourseApproveComponent implements OnInit {
 
   onRowSelect(e) {
     // console.log(e);
-    if (this.isOutTime()) {
+    if (this.isInTime()) {
       this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=InTime`);
     } else {
       this.router.navigateByUrl(`/approvalCourseOutTime/${e.data.id}?course=${e.data.name}&&type=OutTime`);
@@ -124,6 +124,7 @@ export class ListCourseApproveComponent implements OnInit {
           this.courses = null;
         }
         this.loading = false;
+        console.log(this.courses);
 
       }
     });
@@ -139,6 +140,8 @@ export class ListCourseApproveComponent implements OnInit {
         this.courses = [...res['data']];
         this.loading = false;
         this.dataOutTimeReport = res['data'].length === 0 ? '( ไม่มีข้อมูลคำขออนุมัติพิเศษ )' : '';
+        console.log(this.courses);
+
       }
     });
   }
