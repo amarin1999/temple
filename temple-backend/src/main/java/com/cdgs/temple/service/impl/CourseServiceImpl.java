@@ -267,8 +267,8 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseDto> getCoursesOutTime() {
-		List<CourseEntity> entity = courseRepository.getAllCourseOutTime();
+	public List<CourseDto> getCoursesOutTime(Long memberId) {
+		List<CourseEntity> entity = courseRepository.getAllCourseOutTime(memberId);
 		return mapListEntityToDto(entity);
 	}
 
