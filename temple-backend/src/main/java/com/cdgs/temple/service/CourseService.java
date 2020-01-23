@@ -46,7 +46,7 @@ public interface CourseService {
 
 	List<CourseDto> getCoursesSpecialApproveOutTime(Long memberId);
 
-	List<CourseDto> getCoursesOutTime();
+	List<CourseDto> getCoursesOutTime(Long memberId);
 
 	List<CourseDto> getCoursesMemberHasCourseOutTime(Long memberId);
 

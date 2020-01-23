@@ -197,8 +197,8 @@ public class CourseController {
 
 	@GetMapping(value = "/approve")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<ApprovalCoursesDto>> TeacherGetCoursesApproval(@RequestParam("offset") int offset, @RequestParam("limit") int limit, 
-			@RequestParam("query") String query) {
+	public ResponseEntity<ResponseDto<ApprovalCoursesDto>> TeacherGetCoursesApproval(@RequestParam("offset") int offset,
+			@RequestParam("limit") int limit, @RequestParam("query") String query) {
 		ResponseDto<ApprovalCoursesDto> res = new ResponseDto<>();
 		List<ApprovalCoursesDto> dto;
 		MemberDto member = memberService.getCurrentMember();
@@ -305,30 +305,30 @@ public class CourseController {
 	public ResponseEntity<ResponseDto<CourseDto>> getCoursesById(@PathVariable("id") Long id) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		MemberDto member = memberService.getCurrentMember();
-        CourseDto courseDto = new CourseDto();
-        List<CourseDto> courseDtoList = new ArrayList<>();
+		CourseDto courseDto = new CourseDto();
+		List<CourseDto> courseDtoList = new ArrayList<>();
 		try {
 			if (member.getRoleName().equals("user")) {
-                courseDto = courseService.getCourseUser(member.getId(), id);
-                if ( courseDto.getTransportation() == null) {
-                	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
-                	if (courseDto.getTransportation().getId() == null ) {
-                		courseDto.setTransportation(null);
-                	}
-                }
-                courseDtoList.add(courseDto);
+				courseDto = courseService.getCourseUser(member.getId(), id);
+				if (courseDto.getTransportation() == null) {
+					courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
+					if (courseDto.getTransportation().getId() == null) {
+						courseDto.setTransportation(null);
+					}
+				}
+				courseDtoList.add(courseDto);
 			} else {
-                courseDto = courseService.getCourse(id);
-                if ( courseDto.getTransportation() == null) {
-                	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
-                	if (courseDto.getTransportation().getId() == null ) {
-                		courseDto.setTransportation(null);
-                	}
-                }
-                courseDtoList.add(courseDto);
+				courseDto = courseService.getCourse(id);
+				if (courseDto.getTransportation() == null) {
+					courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
+					if (courseDto.getTransportation().getId() == null) {
+						courseDto.setTransportation(null);
+					}
+				}
+				courseDtoList.add(courseDto);
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-            res.setData(courseDtoList);
+			res.setData(courseDtoList);
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
@@ -340,30 +340,51 @@ public class CourseController {
 		}
 	}
 
+//	@GetMapping(path = "/outTime")
+//	@PreAuthorize("hasRole('user')")
+//	public ResponseEntity<ResponseDto<CourseDto>> GetCoursesOutTime(
+//			@RequestParam("courseOutTimeType") String courseOutTimeType) {
+//		ResponseDto<CourseDto> res = new ResponseDto<>();
+//		List<CourseDto> listCourseDto;
+//		MemberDto member = memberService.getCurrentMember();
+//		try {
+//			if (courseOutTimeType.equals("Specialapprove")) {
+//				listCourseDto = courseService.getCoursesSpecialApproveOutTime(member.getId());
+//			} else if (courseOutTimeType.equals("MemberHasCourse")) {
+//				listCourseDto = courseService.getCoursesMemberHasCourseOutTime(member.getId());
+//			} else if (courseOutTimeType.equals("MemberHasOutTime")) {
+//				listCourseDto = courseService.getCoursesOutTimeByMemberId(member.getId());
+//			} else if (courseOutTimeType.equals("MemberHasToStudy")) {
+//				listCourseDto = courseService.getCoursesMemberToStudy(member.getId());
+//			} else {
+//				listCourseDto = courseService.getCoursesOutTime();
+//			}
+//			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+//			res.setData(listCourseDto);
+//			res.setCode(200);
+//			return new ResponseEntity<>(res, HttpStatus.OK);
+//		} catch (Exception e) {
+//			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+//			res.setErrorMessage(e.getMessage());
+//			res.setCode(200);
+//			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+//		}
+//	}
+
 	@GetMapping(path = "/outTime")
 	@PreAuthorize("hasRole('user')")
-	public ResponseEntity<ResponseDto<CourseDto>> GetCoursesOutTime(
-			@RequestParam("courseOutTimeType") String courseOutTimeType) {
+	public ResponseEntity<ResponseDto<CourseDto>> GetCoursesOutTime() {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> listCourseDto;
 		MemberDto member = memberService.getCurrentMember();
 		try {
-			if (courseOutTimeType.equals("Specialapprove")) {
-				listCourseDto = courseService.getCoursesSpecialApproveOutTime(member.getId());
-			} else if (courseOutTimeType.equals("MemberHasCourse")) {
-				listCourseDto = courseService.getCoursesMemberHasCourseOutTime(member.getId());
-			} else if (courseOutTimeType.equals("MemberHasOutTime")) {
-				listCourseDto = courseService.getCoursesOutTimeByMemberId(member.getId());
-			} else if (courseOutTimeType.equals("MemberHasToStudy")) {
-				listCourseDto = courseService.getCoursesMemberToStudy(member.getId());
-			} else {
-				listCourseDto = courseService.getCoursesOutTime();
-			}
+			listCourseDto = courseService.getCoursesOutTime(member.getId());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listCourseDto);
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(200);

@@ -490,7 +490,7 @@
   </div>
 </div>
 <!-- *** ใช้ Dialog แทน -->
-<p-dialog header="ข้อความแจ้งเตือน" [(visible)]="displaySystemMessage" [style]="{ width: auto }" [modal]="true">
+<p-dialog header="ข้อความแจ้งเตือน" [(visible)]="displaySystemMessage" [modal]="true">
   <div *ngFor="let item of detailWarning">{{ item }}</div>
 </p-dialog>
 <p-confirmDialog [style]="{ width: '50vw' }" #cd>

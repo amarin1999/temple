@@ -163,6 +163,8 @@ export class CourseRegisterOutTimeComponent implements OnInit {
           check = false;
         }
         this.courses = res[0]['data'].filter(res => res.enable === true);
+        console.log(this.courses);
+        
       }
     });
   }
