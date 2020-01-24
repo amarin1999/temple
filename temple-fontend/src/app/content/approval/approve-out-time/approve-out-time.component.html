@@ -1,5 +1,5 @@
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
-<div class="ui-g">
+<!-- <div class="ui-g">
   <div class="ui-g-2">
   </div>
   <div class="ui-g-12 ui-lg-8">
@@ -8,7 +8,7 @@
     </div>
     <div class="ui-g-6 ui-lg-3 ui-md-6  text-left">
       <span>
-        <!-- ชื่อ-นามสกุล  -->{{(detail.displayName) ? detail.displayName: 'ไม่มีข้อมูล'}}
+        {{(detail.displayName) ? detail.displayName: 'ไม่มีข้อมูล'}}
       </span>
     </div>
     <div class="ui-g-6 ui-lg-3 ui-md-6 text-right">
@@ -16,7 +16,7 @@
     </div>
     <div class="ui-g-6 ui-lg-3 ui-md-6 text-left">
       <span>
-        <!-- -การเดินทาง -->{{(detail.transportationName) ? detail.transportationName: 'ไม่มีข้อมูล'}}
+        {{(detail.transportationName) ? detail.transportationName: 'ไม่มีข้อมูล'}}
       </span>
     </div>
     <div class="ui-g-6 ui-lg-3 ui-md-6 text-right">
@@ -24,7 +24,7 @@
     </div>
     <div class="ui-g-6 ui-lg-3 ui-md-6  text-left">
       <span>
-        <!-- รายละเอียด -->{{(detail.courseDetail) ? detail.courseDetail: 'ไม่มีข้อมูล'}}
+         {{(detail.courseDetail) ? detail.courseDetail: 'ไม่มีข้อมูล'}}
       </span>
     </div>
     <div class="ui-g-6 ui-lg-3 ui-md-6 text-right">
@@ -32,7 +32,7 @@
     </div>
     <div class="ui-g-6 ui-lg-3 md-6  text-left">
       <span>
-        <!-- วันเริ่มเรียน --> {{(detail?.stDate) ? (detail.stDate | formatTHdate) : 'ไม่มีข้อมูล'}} -
+          {{(detail?.stDate) ? (detail.stDate | formatTHdate) : 'ไม่มีข้อมูล'}} -
         {{(detail?.endDate) ? (detail?.endDate | formatTHdate) : 'ไม่มีข้อมูล'}}
       </span>
     </div>
@@ -41,15 +41,50 @@
     </div>
     <div class="ui-g-6 ui-lg-3 ui-md-6 text-left">
       <span>
-        <!-- เหตุผล -->{{(detail.detail) ? detail.detail: 'ไม่มีข้อมูล'}}
+        {{(detail.detail) ? detail.detail: 'ไม่มีข้อมูล'}}
       </span>
     </div>
   </div>
-</div>
+</div> -->
+<div class="ui-g">
+  <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 ">
+      <div class="container" >
+          <p-card>
+              <div class="ui-g">
+                  <div class="ui-g-12 ui-lg-2 ui-md-2 ui-sm-12">
+                      <label><b>ชื่อ-นามสกุล </b></label></div>
+                  <div class="ui-g-12 ui-lg-10 ui-md-10 ui-sm-12 ">
+                    {{(detail.displayName) ? detail.displayName: 'ไม่มีข้อมูล'}}
+                  </div>
+                  <div class="ui-g-12 ui-lg- ui-md-2 ui-sm-12">
+                      <label><b>การเดินทาง</b></label></div>
+                  <div class="ui-g-12 ui-lg-10 ui-md-10 ui-sm-12 ">
+                    {{(detail.transportationName) ? detail.transportationName: 'ไม่มีข้อมูล'}}
+                  </div>
+                  <div class="ui-g-12 ui-lg- ui-md-2 ui-sm-12">
+                      <label><b>รายละเอียด</b></label></div>
+                  <div class="ui-g-12 ui-lg-10 ui-md-10 ui-sm-12 ">
+                    {{(detail.courseDetail) ? detail.courseDetail: 'ไม่มีข้อมูล'}}
+                  </div>
+                  <div class="ui-g-12 ui-lg-2 ui-md-2 ui-sm-12">
+                      <label><b>วันเรียน</b></label></div>
+                  <div class="ui-g-12 ui-lg-10 ui-md-10 ui-sm-12 ">
+                    {{(detail?.stDate) ? (detail.stDate | formatTHdate) : 'ไม่มีข้อมูล'}} -
+                    {{(detail?.endDate) ? (detail?.endDate | formatTHdate) : 'ไม่มีข้อมูล'}}                  
+                  </div>
 
+                  <div class="ui-g-12 ui-lg-2 ui-md-2 ui-sm-12">
+                      <label><b>เหตุผล</b></label></div>
+                  <div class="ui-g-12 ui-lg-10 ui-md-10 ui-sm-12 ">
+                    {{(detail.detail) ? detail.detail: 'ไม่มีข้อมูล'}}
 
+                  </div>
+                  </div>
+          </p-card>
+      </div>
 
-<hr>
+<br>
+
 <div class="ui-g">
   <div class="ui-g-12">
     <div class="content-center">

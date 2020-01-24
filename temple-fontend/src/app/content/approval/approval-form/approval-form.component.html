@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-            <div class="line"></div>
+            <div class="line" *ngIf="courseType === 'InTime'" ></div>
         </div>
         <ng-container *ngIf="courseType === 'InTime'">
             <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
