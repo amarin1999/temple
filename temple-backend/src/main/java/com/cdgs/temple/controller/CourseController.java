@@ -313,6 +313,7 @@ public class CourseController {
 								member.getId());
 						transportationDto = transportationService
 								.getTransportationById(specialApproveDto.getTransportationId());
+						System.out.println("ID >>> "+specialApproveDto.getTransportationId());
 					}
 					courseDto.setTransportation(transportationDto);
 				}
