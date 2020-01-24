@@ -304,12 +304,18 @@ public class CourseController {
 			if (member.getRoleName().equals("user")) {
 				courseDto = courseService.getCourseUser(member.getId(), id);
 				if (courseDto.getTransportation() == null) {
-					courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
-					if (courseDto.getTransportation().getId() == null) {
-						courseDto.setTransportation(null);
+					TransportationDto transportationDto = new TransportationDto();
+					if (courseDto.getNo() == Long.parseLong("0")) {
+						transportationDto = transportationService.getTransportationByCourseId(id);
+					} else {
+						SpecialApproveDto specialApproveDto = new SpecialApproveDto();
+						specialApproveDto = specialApproveService.getByCourseIdAndMemberId(courseDto.getId(),
+								member.getId());
+						transportationDto = transportationService
+								.getTransportationById(specialApproveDto.getTransportationId());
 					}
+					courseDto.setTransportation(transportationDto);
 				}
-				courseDtoList.add(courseDto);
 			} else {
 				courseDto = courseService.getCourse(id);
 				if (courseDto.getTransportation() == null) {
@@ -318,8 +324,8 @@ public class CourseController {
 						courseDto.setTransportation(null);
 					}
 				}
-				courseDtoList.add(courseDto);
 			}
+			courseDtoList.add(courseDto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(courseDtoList);
 			res.setCode(200);
