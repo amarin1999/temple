@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdgs.temple.entity.CourseTeacherEntity;
+import com.cdgs.temple.entity.MemberEntity;
 
 @Repository
 public interface CourseTeacherRepository extends CrudRepository<CourseTeacherEntity, Long> {
@@ -25,5 +26,4 @@ public interface CourseTeacherRepository extends CrudRepository<CourseTeacherEnt
 	void deleteCourseTeachers(@Param("courseId") Long courseId);
 
 	List<CourseTeacherEntity> findAllByCourseId(Long courseId);
-
 }

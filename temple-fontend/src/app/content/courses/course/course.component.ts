@@ -140,7 +140,7 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.paramMap.get('id');
     this.getData();
     this.authService.getRole().subscribe(res => this.role = res);
-    this.getMemberByCourseId();
+    // this.getMemberByCourseId();
     this.getCountGraduatedCourse();
     this.setUrl();
   }

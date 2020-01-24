@@ -31,4 +31,8 @@ public interface MemberRepository extends CrudRepository<MemberEntity, Long> {
 	MemberEntity getMemberByUserNameIdCardPhoneNumber(@Param("userName") String userName,
 			@Param("idCard") String idCard, @Param("phoneNumber") String phoneNumber);
 
+	@Query(value = "SELECT m.* " + "FROM courses_teacher ct " + "LEFT JOIN courses c " + "ON c.course_id = ct.course_id "
+			+ "LEFT JOIN members m " + "ON ct.member_id = m.member_id "
+			+ "WHERE c.course_id = :courseId", nativeQuery = true)
+	List<MemberEntity> getTeacherByCourseId(@Param("courseId") Long courseId);
 }

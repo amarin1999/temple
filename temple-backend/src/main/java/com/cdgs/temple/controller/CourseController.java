@@ -303,6 +303,7 @@ public class CourseController {
 		try {
 			if (member.getRoleName().equals("user")) {
 				courseDto = courseService.getCourseUser(member.getId(), id);
+				courseDto.setTeacherList(memberService.getAllUsersWithOutImg());
 				if (courseDto.getTransportation() == null) {
 					TransportationDto transportationDto = new TransportationDto();
 					if (courseDto.getNo() == Long.parseLong("0")) {
@@ -325,6 +326,17 @@ public class CourseController {
 					}
 				}
 			}
+			
+			List<MemberDto> listMemDto = memberService.getMemberByCourseId(courseDto.getId());
+			
+			List<Long> listTeacher = new ArrayList<>();
+			List<MemberDto> listTeacherDto = new ArrayList<>();
+			for(MemberDto memberDto : listMemDto) {
+				listTeacher.add(memberDto.getId());
+				listTeacherDto.add(memberDto);
+			}
+			courseDto.setTeacher(listTeacher);
+			courseDto.setTeacherList(listTeacherDto);
 			courseDtoList.add(courseDto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(courseDtoList);
