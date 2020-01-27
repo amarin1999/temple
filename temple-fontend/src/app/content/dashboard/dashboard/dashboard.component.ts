@@ -14,9 +14,11 @@ export class DashboardComponent implements OnInit {
   region: any;
   userId: string;
   role: string;
+  courseHistory: any;
   transportOptions: {};
   genderOptions: {};
   regionOptions: {};
+  courseHistoryOption: {};
   constructor(private dashBoard: DashboardService, private breadCrumbService: BreadcrumbService,private authService: AuthService) { }
 
   ngOnInit() {
@@ -30,13 +32,11 @@ export class DashboardComponent implements OnInit {
   }
   private setDataChart() {
     this.dashBoard.getDataChart().subscribe(res => {
-      console.log([res[0].transport[0]]);
-
       this.gender = {
         labels: ['ชาย', 'หญิง', 'ไม่ระบุ'],
         datasets: [
           {
-            data: res[0].region,
+            data: res[0].gender,
             backgroundColor: [
               '#36A2EB',
               '#FF6384',
@@ -89,6 +89,24 @@ export class DashboardComponent implements OnInit {
             ]
           }]
       }
+      this.courseHistory = {
+        labels: ['คอร์สที่ไม่ผ่านหลักสูตร (F)', 'คอร์สที่ผ่านหลักสูตร', 'คอร์สที่กำลังศึกษาอยู่'],
+        datasets: [
+          {
+            data: res[0].courseHistory,
+            backgroundColor: [
+              '#ff6d6d',
+              '#52DE22',
+              '#F3EF18'
+            ],
+            hoverBackgroundColor: [
+              '#ff6d6d',
+              '#52DE22',
+              '#F3EF18'
+            ]
+          }
+        ]
+      };
     });
 
     this.transportOptions = {
@@ -98,7 +116,7 @@ export class DashboardComponent implements OnInit {
         fontSize: 16,
         position: 'bottom'
       }
-    }
+    };
 
 
     this.genderOptions = {
@@ -108,7 +126,7 @@ export class DashboardComponent implements OnInit {
         fontSize: 16,
         position: 'bottom'
       }
-    }
+    };
 
     this.regionOptions = {
       title: {
@@ -117,7 +135,16 @@ export class DashboardComponent implements OnInit {
         fontSize: 16,
         position: 'bottom'
       }
+    };
+  this.courseHistoryOption = {
+    title: {
+        display: true,
+        text: 'คอร์สทั้งหมดที่ทำการสมัครเรียน',
+        fontSize: 16,
+        position: 'bottom'
     }
+  }
+
 
 
   };
@@ -130,12 +157,6 @@ export class DashboardComponent implements OnInit {
   }
   private getRole(){
     this.authService.getRole().subscribe(res => this.role = res);
-  }
-
-  private getCourseChart(){
-    this.dashBoard.getDataChart().subscribe(res => {
-      // console.log(res[4].courseHistory);
-     });
   }
   
 }

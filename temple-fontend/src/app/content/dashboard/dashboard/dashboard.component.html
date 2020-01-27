@@ -20,15 +20,16 @@
 </ng-container>
 
 <ng-container *ngIf="showDashboardRole('user')">
-        <div class="ui-g">
+        <div class="ui-g ">
                 <div class="ui-g-12 ui-md-12 ui-lg-12">
-                    <h1 style="text-align: center">Dashboard</h1>
+                    <h1 style="text-align: center">สรุปผลข้อมูลคอร์ส</h1>
                 </div>
                 <div class="ui-g-12 ui-md-12 ui-lg-12">
                     <div class="line"></div>
                 </div>
-                <div class="ui-g-12 ui-md-12 ui-lg-12 ">
-                    <p-chart type="pie" [data]="gender"></p-chart>
+                <div class="ui-g-12 ui-md-0 ui-lg-3"></div>
+                <div class="ui-g-6 ui-md-12 ui-lg-6 ">
+                    <p-chart type="pie" [data]="courseHistory" [options]="courseHistoryOption"></p-chart>
                 </div>
             </div>
 </ng-container>
