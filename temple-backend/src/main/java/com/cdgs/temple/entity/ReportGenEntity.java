@@ -84,6 +84,8 @@ import javax.persistence.SqlResultSetMapping;
 		+ "COUNT(CASE WHEN g.gender_id = '1' THEN 1 ELSE NULL END) AS genderM, "
 		+ "COUNT(CASE WHEN g.gender_id = '2' THEN 1 ELSE NULL END) AS genderF, "
 		+ "COUNT(CASE WHEN g.gender_id = '3' THEN 1 ELSE NULL END) AS genderOther, "
+		+ "COUNT(CASE WHEN t.tran_time_id is Null THEN 1 ELSE NULL END) AS transSelf, "
+		+ "COUNT(CASE WHEN t.tran_time_id is NOT Null THEN 1 ELSE NULL END) AS transTemple, "
 		+ "COUNT(CASE WHEN r.region_id = '4' THEN 1 ELSE NULL END) as center, "
 		+ "COUNT(CASE WHEN r.region_id = '2' THEN 1 ELSE NULL END) as northeast, "
 		+ "COUNT(CASE WHEN r.region_id = '1' THEN 1 ELSE NULL END) as north, "
@@ -92,6 +94,7 @@ import javax.persistence.SqlResultSetMapping;
 		+ "COUNT(CASE WHEN r.region_id = '6' THEN 1 ELSE NULL END) as south " + "FROM members_has_courses mhc "
 		+ "LEFT JOIN members m ON mhc.member_id = m.member_id " + "LEFT JOIN courses c ON mhc.course_id = c.course_id "
 		+ "LEFT JOIN gender g ON m.member_gender_id = g.gender_id "
+		+ "LEFT JOIN transportations t ON mhc.tran_id = t.tran_id "
 		+ "LEFT JOIN province p ON m.member_province_id = p.province_id "
 		+ "LEFT JOIN region r ON p.region_id = r.region_id ")
 
@@ -99,6 +102,8 @@ import javax.persistence.SqlResultSetMapping;
 		@ConstructorResult(targetClass = ReportGenEntity.class, columns = {
 				@ColumnResult(name = "genderM", type = Long.class), @ColumnResult(name = "genderF", type = Long.class),
 				@ColumnResult(name = "genderOther", type = Long.class),
+				@ColumnResult(name = "transSelf", type = Long.class),
+				@ColumnResult(name = "transTemple", type = Long.class),
 				@ColumnResult(name = "center", type = Long.class), @ColumnResult(name = "northeast", type = Long.class),
 				@ColumnResult(name = "north", type = Long.class), @ColumnResult(name = "east", type = Long.class),
 				@ColumnResult(name = "west", type = Long.class), @ColumnResult(name = "south", type = Long.class) }) })
@@ -137,12 +142,14 @@ public class ReportGenEntity implements Serializable {
 		this.courseName = courseName;
 	}
 
-	public ReportGenEntity(Long genderM, Long genderF, Long genderOther, Long center, Long northeast, Long north,
-			Long east, Long west, Long south) {
+	public ReportGenEntity(Long genderM, Long genderF, Long genderOther, Long transSelf, Long transTemple, Long center,
+			Long northeast, Long north, Long east, Long west, Long south) {
 		super();
 		this.genderM = genderM;
 		this.genderF = genderF;
 		this.genderOther = genderOther;
+		this.transSelf = transSelf;
+		this.transTemple = transTemple;
 		this.center = center;
 		this.northeast = northeast;
 		this.north = north;
