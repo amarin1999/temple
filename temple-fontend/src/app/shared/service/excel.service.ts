@@ -13,7 +13,7 @@ export class ExcelService {
     private httpService: HttpClientService
   ) { }
 
-  createExcel(courseId: String) {
+  createExcel(courseId: string) {
     return this.http.get(ApiConstants.baseURl + `/excel?courseId=${courseId}`);
   }
 }
