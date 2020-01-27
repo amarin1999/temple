@@ -3,7 +3,7 @@ import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { MemberApproval } from 'src/app/shared/interfaces/member-approval';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApprovalService } from '../approval.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -30,7 +30,9 @@ export class ApprovalFormComponent implements OnInit {
     private approvalService: ApprovalService,
     private confirmationService: ConfirmationService,
     private messageServise: MessageService,
-    private router: Router
+    private router: Router,
+    public spinner: NgxSpinnerService
+
   ) { }
 
   ngOnInit() {
@@ -98,6 +100,7 @@ export class ApprovalFormComponent implements OnInit {
   showDialog(e) {
     console.log(e);
     // เขียน api ตอบรับ outTime ใหม่
+    this.spinner.show();
     this.btnrej = true;
     const message = e.status === 1 ? '' : 'ไม่';
     this.confirmationService.confirm({
@@ -121,10 +124,12 @@ export class ApprovalFormComponent implements OnInit {
         this.messageServise.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการ' + message + 'อนุมัติพิเศษ' });
       }
     });
+    this.spinner.hide();
   }
   showDialogOutTime(e) {
     console.log(e);
     // เขียน api ตอบรับ outTime ใหม่
+    this.spinner.show();
     this.btnrej = true;
     const message = e.status == '1' ? '' : 'ไม่';
     this.confirmationService.confirm({
@@ -155,5 +160,6 @@ export class ApprovalFormComponent implements OnInit {
         this.messageServise.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการ' + message + 'อนุมัตินอกเวลา' });
       }
     });
+    this.spinner.hide();
   }
 }
