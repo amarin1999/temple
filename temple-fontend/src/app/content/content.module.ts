@@ -45,6 +45,7 @@ import {TabMenuModule} from 'primeng/tabmenu';
 import { Ng2ImgMaxModule } from 'ng2-img-max';
 import { ReportComponent } from './report/report.component';
 import { ApproveOutTimeComponent } from './approval/approve-out-time/approve-out-time.component';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 
 
 registerLocaleData(localeTh);
@@ -81,7 +82,8 @@ registerLocaleData(localeTh);
     ManageTransportationComponent,
     CourseRegisterOutTimeComponent,
     ReportComponent,
-    ApproveOutTimeComponent
+    ApproveOutTimeComponent,
+    DashboardComponent
   ],
   imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule , ThaiCalendarModule, TabMenuModule, Ng2ImgMaxModule],
   exports: [ContentComponent],

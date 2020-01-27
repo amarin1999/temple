@@ -26,6 +26,7 @@ import { ManageCourseForMonkComponent } from './manage-course-for-monk/manage-co
 import { ManageTransportationComponent } from './manage-transportation/manage-transportation.component'
 import { CourseRegisterOutTimeComponent } from './courses/course-register-out-time/course-register-out-time.component';
 import { ReportComponent } from './report/report.component';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -186,6 +187,9 @@ const routes: Routes = [
       {
         path: 'report',
         component: ReportComponent
+      },{
+        path: 'dashboard',
+        component: DashboardComponent
       }
     ]
   }];

@@ -27,6 +27,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "angular-cli": "^1.0.0-beta.28.3",
     "blueimp-canvas-to-blob": "^3.16.0",
+    "chart.js": "^2.9.3",
     "core-js": "^2.5.4",
     "file-saver": "^2.0.2",
     "fullcalendar": "^4.0.0-alpha.2",

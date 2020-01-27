@@ -9,28 +9,28 @@
       "projectType": "application",
       "prefix": "app",
       "schematics": {
-          "@schematics/angular:component": {
-              "styleext": "scss",
-              "spec": false
-          },
-          "@schematics/angular:class": {
-              "spec": false
-          },
-          "@schematics/angular:directive": {
-              "spec": false
-          },
-          "@schematics/angular:guard": {
-              "spec": false
-          },
-          "@schematics/angular:module": {
-              "spec": false
-          },
-          "@schematics/angular:pipe": {
-              "spec": false
-          },
-          "@schematics/angular:service": {
-              "spec": false
-          }
+        "@schematics/angular:component": {
+          "styleext": "scss",
+          "spec": false
+        },
+        "@schematics/angular:class": {
+          "spec": false
+        },
+        "@schematics/angular:directive": {
+          "spec": false
+        },
+        "@schematics/angular:guard": {
+          "spec": false
+        },
+        "@schematics/angular:module": {
+          "spec": false
+        },
+        "@schematics/angular:pipe": {
+          "spec": false
+        },
+        "@schematics/angular:service": {
+          "spec": false
+        }
       },
       "architect": {
         "build": {
@@ -46,6 +46,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/chart.js/dist/Chart.js",
               "src/styles.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/nova-light/theme.css",
