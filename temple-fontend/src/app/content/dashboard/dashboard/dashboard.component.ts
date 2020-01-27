@@ -12,21 +12,25 @@ export class DashboardComponent implements OnInit {
   gender: any;
   transport: any;
   region: any;
-
-  role: string;
   userId: string;
-  constructor(private dashBoard: DashboardService, private breadCrumbService: BreadcrumbService,
-    private authService: AuthService,
-
-    ) { }
+  role: string;
+  transportOptions: {};
+  genderOptions: {};
+  regionOptions: {};
+  constructor(private dashBoard: DashboardService, private breadCrumbService: BreadcrumbService,private authService: AuthService) { }
 
   ngOnInit() {
+    this.setDataChart();
+    this.setBreadCrumb();
     this.getUserId();
     this.getRole();
-    // console.log(this.role);
-    
+  }
+  private setBreadCrumb() {
+    this.breadCrumbService.setPath([{ label: 'สรุปผลข้อมูล', routerLink: '/dashboard' }]);
+  }
+  private setDataChart() {
     this.dashBoard.getDataChart().subscribe(res => {
-      console.log(res[0].transport);
+      console.log([res[0].transport[0]]);
 
       this.gender = {
         labels: ['ชาย', 'หญิง', 'ไม่ระบุ'],
@@ -34,31 +38,31 @@ export class DashboardComponent implements OnInit {
           {
             data: res[0].region,
             backgroundColor: [
-              '#FF6384',
               '#36A2EB',
+              '#FF6384',
               '#FFCE56'
             ],
             hoverBackgroundColor: [
-              '#FF6384',
               '#36A2EB',
+              '#FF6384',
               '#FFCE56'
             ]
           }]
       };
       this.transport = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: [''],
         datasets: [
           {
-            label: 'My First dataset',
+            label: 'การเดินทางของวัด',
             backgroundColor: '#42A5F5',
             borderColor: '#1E88E5',
-            data: [65, 59, 80, 81, 56, 55, 40]
+            data: [res[0].transport[0]]
           },
           {
-            label: 'My Second dataset',
+            label: 'การเดินทางของวัด',
             backgroundColor: '#9CCC65',
             borderColor: '#7CB342',
-            data: [28, 48, 40, 19, 86, 27, 90]
+            data: [res[0].transport[1]]
           }
         ]
       }
@@ -68,30 +72,55 @@ export class DashboardComponent implements OnInit {
           {
             data: res[0].region,
             backgroundColor: [
-              '#FF6384',
-              '#36A2EB',
-              '#FF6384',
-              '#36A2EB',
-              '#FF6384',
+              '#ff6d6d',
+              '#fff766',
+              '#5cff8a',
+              '#73fffa',
+              '#d16eff',
               '#36A2EB',
             ],
             hoverBackgroundColor: [
-              '#FF6384',
-              '#36A2EB',
-              '#FF6384',
-              '#36A2EB',
-              '#FF6384',
+              '#ff6d6d',
+              '#fff766',
+              '#5cff8a',
+              '#73fffa',
+              '#d16eff',
               '#36A2EB',
             ]
           }]
       }
     });
-    this.getCourseChart();
-  }
 
-  setBreadCrumb() {
-    this.breadCrumbService.setPath([{ label: 'สรุปผล', routerLink: '/dashboard' }]);
-  }
+    this.transportOptions = {
+      title: {
+        display: true,
+        text: 'ช่องทางการเดินทางของผู้เข้าอบรม',
+        fontSize: 16,
+        position: 'bottom'
+      }
+    }
+
+
+    this.genderOptions = {
+      title: {
+        display: true,
+        text: 'เพศของผู้เข้าอบรม',
+        fontSize: 16,
+        position: 'bottom'
+      }
+    }
+
+    this.regionOptions = {
+      title: {
+        display: true,
+        text: 'ภูมิภาคของผู้เข้าอบรม',
+        fontSize: 16,
+        position: 'bottom'
+      }
+    }
+
+
+  };
 
   showDashboardRole(...role) {
     return role.includes(this.role);
@@ -110,3 +139,4 @@ export class DashboardComponent implements OnInit {
   }
   
 }
+

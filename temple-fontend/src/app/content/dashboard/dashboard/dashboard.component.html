@@ -1,21 +1,22 @@
 <ng-container *ngIf="showDashboardRole('monk')">
-<div class="ui-g">
-    <div class="ui-g-12 ui-md-12 ui-lg-12">
-        <h1 style="text-align: center">Dashboard</h1>
-    </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-12">
-        <div class="line"></div>
-    </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-4 ">
-        <p-chart type="pie" [data]="gender"></p-chart>
-    </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-4">
-        <p-chart type="bar" [data]="transport"></p-chart>
-    </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-4">
-        <p-chart type="pie" [data]="region"></p-chart>
-    </div>
-</div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                <h1 style="text-align: center">สรุปผลข้อมูล</h1>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                <div class="line"></div>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-6 ">
+                <p-chart type="pie" [data]="gender" [options]="genderOptions"></p-chart>
+            </div>
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+                <p-chart type="bar" [data]="transport" [options]="transportOptions"></p-chart>
+            </div>
+            <div class="ui-g-12 ui-md-0 ui-lg-3"></div>
+            <div class="ui-g-12 ui-md-12 ui-lg-6">
+                <p-chart type="pie" [data]="region" [options]="regionOptions"></p-chart>
+            </div>
+        </div>
 </ng-container>
 
 <ng-container *ngIf="showDashboardRole('user')">
