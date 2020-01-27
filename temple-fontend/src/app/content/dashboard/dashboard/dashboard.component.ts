@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from 'src/app/shared/service/dashboard.service';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
+import { AuthService } from 'src/app/shared/service/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,9 +12,19 @@ export class DashboardComponent implements OnInit {
   gender: any;
   transport: any;
   region: any;
-  constructor(private dashBoard: DashboardService, private breadCrumbService: BreadcrumbService) { }
+
+  role: string;
+  userId: string;
+  constructor(private dashBoard: DashboardService, private breadCrumbService: BreadcrumbService,
+    private authService: AuthService,
+
+    ) { }
 
   ngOnInit() {
+    this.getUserId();
+    this.getRole();
+    // console.log(this.role);
+    
     this.dashBoard.getDataChart().subscribe(res => {
       console.log(res[0].transport);
 
@@ -75,10 +86,27 @@ export class DashboardComponent implements OnInit {
           }]
       }
     });
-
+    this.getCourseChart();
   }
+
   setBreadCrumb() {
     this.breadCrumbService.setPath([{ label: 'สรุปผล', routerLink: '/dashboard' }]);
   }
 
+  showDashboardRole(...role) {
+    return role.includes(this.role);
+  }
+  private getUserId(){
+    this.userId = localStorage.getItem('userId');
+  }
+  private getRole(){
+    this.authService.getRole().subscribe(res => this.role = res);
+  }
+
+  private getCourseChart(){
+    this.dashBoard.getDataChart().subscribe(res => {
+      // console.log(res[4].courseHistory);
+     });
+  }
+  
 }
