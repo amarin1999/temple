@@ -80,7 +80,7 @@ import javax.persistence.SqlResultSetMapping;
 		+ "LEFT JOIN region r ON p.region_id = r.region_id " + "WHERE 1=1 AND c.course_id = ? "
 		+ "GROUP BY c.course_id")
 
-@NamedNativeQuery(name = "getReportDashboardData", resultSetMapping = "getReportDashboardDataMapping", query = "SELECT "
+@NamedNativeQuery(name = "getReportDashboardMonkData", resultSetMapping = "getReportDashboardMonkDataMapping", query = "SELECT "
 		+ "COUNT(CASE WHEN g.gender_id = '1' THEN 1 ELSE NULL END) AS genderM, "
 		+ "COUNT(CASE WHEN g.gender_id = '2' THEN 1 ELSE NULL END) AS genderF, "
 		+ "COUNT(CASE WHEN g.gender_id = '3' THEN 1 ELSE NULL END) AS genderOther, "
@@ -98,7 +98,7 @@ import javax.persistence.SqlResultSetMapping;
 		+ "LEFT JOIN province p ON m.member_province_id = p.province_id "
 		+ "LEFT JOIN region r ON p.region_id = r.region_id ")
 
-@SqlResultSetMapping(name = "getReportDashboardDataMapping", classes = {
+@SqlResultSetMapping(name = "getReportDashboardMonkDataMapping", classes = {
 		@ConstructorResult(targetClass = ReportGenEntity.class, columns = {
 				@ColumnResult(name = "genderM", type = Long.class), @ColumnResult(name = "genderF", type = Long.class),
 				@ColumnResult(name = "genderOther", type = Long.class),
@@ -107,6 +107,18 @@ import javax.persistence.SqlResultSetMapping;
 				@ColumnResult(name = "center", type = Long.class), @ColumnResult(name = "northeast", type = Long.class),
 				@ColumnResult(name = "north", type = Long.class), @ColumnResult(name = "east", type = Long.class),
 				@ColumnResult(name = "west", type = Long.class), @ColumnResult(name = "south", type = Long.class) }) })
+
+@NamedNativeQuery(name = "getReportDashboardUserData", resultSetMapping = "getReportDashboardUserDataMapping", query = "SELECT "
+		+ "COUNT(CASE WHEN mhc.mhc_status = '0' THEN 1 ELSE NULL END) AS failCourse, "
+		+ "COUNT(CASE WHEN mhc.mhc_status = '1' THEN 1 ELSE NULL END) AS passCourse, "
+		+ "COUNT(CASE WHEN mhc.mhc_status = '2' THEN 1 ELSE NULL END) AS studyCourse " + "FROM members_has_courses mhc "
+				+ "WHERE mhc.member_id = :memberId")
+
+@SqlResultSetMapping(name = "getReportDashboardUserDataMapping", classes = {
+		@ConstructorResult(targetClass = ReportGenEntity.class, columns = {
+				@ColumnResult(name = "failCourse", type = Long.class),
+				@ColumnResult(name = "passCourse", type = Long.class),
+				@ColumnResult(name = "studyCourse", type = Long.class) }) })
 
 @Entity
 public class ReportGenEntity implements Serializable {
@@ -131,6 +143,9 @@ public class ReportGenEntity implements Serializable {
 	private Long east;
 	private Long west;
 	private Long south;
+	private Long failCourse;
+	private Long passCourse;
+	private Long studyCourse;
 
 	public ReportGenEntity() {
 		super();
@@ -156,6 +171,13 @@ public class ReportGenEntity implements Serializable {
 		this.east = east;
 		this.west = west;
 		this.south = south;
+	}
+
+	public ReportGenEntity(Long failCourse, Long passCourse, Long studyCourse) {
+		super();
+		this.failCourse = failCourse;
+		this.passCourse = passCourse;
+		this.studyCourse = studyCourse;
 	}
 
 	public ReportGenEntity(Long courseId, String courseName, Long genderM, Long genderF, Long genderOther,
@@ -308,4 +330,27 @@ public class ReportGenEntity implements Serializable {
 		this.south = south;
 	}
 
+	public Long getPassCourse() {
+		return passCourse;
+	}
+
+	public void setPassCourse(Long passCourse) {
+		this.passCourse = passCourse;
+	}
+
+	public Long getFailCourse() {
+		return failCourse;
+	}
+
+	public void setFailCourse(Long failCourse) {
+		this.failCourse = failCourse;
+	}
+
+	public Long getStudyCourse() {
+		return studyCourse;
+	}
+
+	public void setStudyCourse(Long studyCourse) {
+		this.studyCourse = studyCourse;
+	}
 }

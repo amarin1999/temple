@@ -27,8 +27,13 @@ public class ReportGenDto implements Serializable {
 	private Long south;
 	private Long east;
 	private Long western;
-	
-	
+	/*** คอร์สที่ไม่ผ่าน **/
+	private Long failCourse;
+	/*** คอร์สที่ผ่าน **/
+	private Long passCourse;
+	/*** คอร์สที่กำลังศึกษา **/
+	private Long studyCourse;
+
 	public Long getCoursesId() {
 		return coursesId;
 	}
@@ -36,7 +41,7 @@ public class ReportGenDto implements Serializable {
 	public void setCoursesId(Long coursesId) {
 		this.coursesId = coursesId;
 	}
-	
+
 	public String getCoursesName() {
 		return coursesName;
 	}
@@ -44,6 +49,7 @@ public class ReportGenDto implements Serializable {
 	public void setCoursesName(String coursesName) {
 		this.coursesName = coursesName;
 	}
+
 	public Long getGenderMale() {
 		return genderMale;
 	}
@@ -154,6 +160,30 @@ public class ReportGenDto implements Serializable {
 
 	public void setWestern(Long western) {
 		this.western = western;
+	}
+
+	public Long getFailCourse() {
+		return failCourse;
+	}
+
+	public void setFailCourse(Long failCourse) {
+		this.failCourse = failCourse;
+	}
+
+	public Long getPassCourse() {
+		return passCourse;
+	}
+
+	public void setPassCourse(Long passCourse) {
+		this.passCourse = passCourse;
+	}
+
+	public Long getStudyCourse() {
+		return studyCourse;
+	}
+
+	public void setStudyCourse(Long studyCourse) {
+		this.studyCourse = studyCourse;
 	}
 
 }

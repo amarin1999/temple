@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.cdgs.temple.entity.ReportGenEntity;
@@ -20,6 +21,9 @@ public interface ReportGenRepository extends CrudRepository<ReportGenEntity, Lon
 	@Query(nativeQuery = true, name = "findCourseName")
 	List<ReportGenEntity> findCourseName();
 	
-	@Query(nativeQuery = true, name = "getReportDashboardData")
-	ReportGenEntity getReportDashboardData();
+	@Query(nativeQuery = true, name = "getReportDashboardMonkData")
+	ReportGenEntity getReportDashboardMonkData();
+	
+	@Query(nativeQuery = true, name = "getReportDashboardUserData")
+	ReportGenEntity getReportDashboardUserData(@Param("memberId") Long memberId);
 }

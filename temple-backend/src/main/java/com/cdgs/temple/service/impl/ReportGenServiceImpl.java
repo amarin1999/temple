@@ -77,10 +77,22 @@ public class ReportGenServiceImpl implements ReportGenService {
 	}
 
 	@Override
-	public ReportGenDto getReportDashboardData() {
+	public ReportGenDto getReportDashboardMonkData() {
 		ReportGenEntity reportGenEntity = new ReportGenEntity();
 		try {
-			reportGenEntity = reportGenRepository.getReportDashboardData();
+			reportGenEntity = reportGenRepository.getReportDashboardMonkData();
+		} catch (Exception e) {
+			log.error("getAllDataReport >>>> " + e.getMessage());
+			e.printStackTrace();
+		}
+		return mapEntityToDto(reportGenEntity);
+	}
+
+	@Override
+	public ReportGenDto getReportDashboardUserData(Long memberId) {
+		ReportGenEntity reportGenEntity = new ReportGenEntity();
+		try {
+			reportGenEntity = reportGenRepository.getReportDashboardUserData(memberId);
 		} catch (Exception e) {
 			log.error("getAllDataReport >>>> " + e.getMessage());
 			e.printStackTrace();
@@ -126,6 +138,18 @@ public class ReportGenServiceImpl implements ReportGenService {
 				dto.setEast(entity.getEast());
 				dto.setWestern(entity.getWest());
 				dto.setSouth(entity.getSouth());
+
+				if (entity.getFailCourse() != null) {
+					dto.setFailCourse(entity.getFailCourse());
+				}
+
+				if (entity.getPassCourse() != null) {
+					dto.setPassCourse(entity.getPassCourse());
+				}
+
+				if (entity.getStudyCourse() != null) {
+					dto.setStudyCourse(entity.getStudyCourse());
+				}
 			}
 		} catch (Exception e) {
 			log.error("mapEntityToDto >>> " + e.getMessage());
