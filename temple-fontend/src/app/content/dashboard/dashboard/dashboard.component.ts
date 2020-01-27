@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
   data: any;
-  constructor() { }
+  constructor(    private breadCrumbService: BreadcrumbService,
+    ) { }
 
   ngOnInit() {
     this.data = {
@@ -27,6 +29,11 @@ export class DashboardComponent implements OnInit {
           ]
         }]
     };
+    this.setBreadCrumb();
+  }
+
+  setBreadCrumb(){
+    this.breadCrumbService.setPath([{ label: 'สรุปผล', routerLink: '/dashboard' }]);
   }
 
 }
