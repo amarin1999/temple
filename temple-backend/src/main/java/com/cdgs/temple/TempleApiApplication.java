@@ -12,8 +12,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @SpringBootApplication
 public class TempleApiApplication implements CommandLineRunner {
-
-	
 	@Autowired
 	DataSource dataSource;
 	public static void main(String[] args) {

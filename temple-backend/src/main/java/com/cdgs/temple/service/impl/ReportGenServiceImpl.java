@@ -2,7 +2,6 @@ package com.cdgs.temple.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,11 @@ import com.cdgs.temple.service.ReportGenService;
 
 @Service
 public class ReportGenServiceImpl implements ReportGenService {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ReportGenServiceImpl.class);
-	
+
 	private ReportGenRepository reportGenRepository;
-	
+
 	@Autowired
 	public ReportGenServiceImpl(ReportGenRepository reportGenRepository) {
 		super();
@@ -37,7 +36,7 @@ public class ReportGenServiceImpl implements ReportGenService {
 		}
 		return mapListEntityToDto(reportGenEntities);
 	}
-	
+
 	@Override
 	public List<ReportGenDto> getAllDataReport() {
 		List<ReportGenEntity> reportGenEntities = new ArrayList<>();
@@ -49,7 +48,7 @@ public class ReportGenServiceImpl implements ReportGenService {
 		}
 		return mapListEntityToDto(reportGenEntities);
 	}
-	
+
 	@Override
 	public List<ReportGenDto> getDataReportByCourseId(Long courseId) {
 		List<ReportGenEntity> reportGenEntities = new ArrayList<>();
@@ -61,8 +60,8 @@ public class ReportGenServiceImpl implements ReportGenService {
 		}
 		return mapListEntityToDto(reportGenEntities);
 	}
-	
-	private List<ReportGenDto> mapListEntityToDto (List<ReportGenEntity> entities) {
+
+	private List<ReportGenDto> mapListEntityToDto(List<ReportGenEntity> entities) {
 		List<ReportGenDto> dtoList = new ArrayList<>();
 		try {
 			if (entities != null) {
@@ -76,22 +75,52 @@ public class ReportGenServiceImpl implements ReportGenService {
 		}
 		return dtoList;
 	}
-	
-	private ReportGenDto mapEntityToDto (ReportGenEntity entity) {
+
+	@Override
+	public ReportGenDto getReportDashboardData() {
+		ReportGenEntity reportGenEntity = new ReportGenEntity();
+		try {
+			reportGenEntity = reportGenRepository.getReportDashboardData();
+		} catch (Exception e) {
+			log.error("getAllDataReport >>>> " + e.getMessage());
+			e.printStackTrace();
+		}
+		return mapEntityToDto(reportGenEntity);
+	}
+
+	private ReportGenDto mapEntityToDto(ReportGenEntity entity) {
 		ReportGenDto dto = new ReportGenDto();
 		try {
-			if(entity != null) {
-				dto.setCoursesId(entity.getCourseId());
-				dto.setCoursesName(entity.getCourseName());
+			if (entity != null) {
+				if (entity.getCourseId() != null) {
+					dto.setCoursesId(entity.getCourseId());
+				}
+				if (entity.getCourseId() != null) {
+					dto.setCoursesName(entity.getCourseName());
+				}
 				dto.setGenderMale(entity.getGenderM());
 				dto.setGenderFemale(entity.getGenderF());
 				dto.setGenderNotspec(entity.getGenderOther());
-				dto.setTransport(entity.getTransSelf());
-				dto.setTranTemple(entity.getTransTemple());
-				dto.setNewStudent(entity.getNewStudent());
-				dto.setBangkok(entity.getBangkok());
+
+				if (entity.getTransSelf() != null) {
+					dto.setTransport(entity.getTransSelf());
+				}
+				if (entity.getTransTemple() != null) {
+					dto.setTranTemple(entity.getTransTemple());
+				}
+				if (entity.getNewStudent() != null) {
+					dto.setNewStudent(entity.getNewStudent());
+				}
+				if (entity.getBangkok() != null) {
+					dto.setBangkok(entity.getBangkok());
+				}
+
 				dto.setCentral(entity.getCenter());
-				dto.setSakon(entity.getSakonnakhon());
+
+				if (entity.getSakonnakhon() != null) {
+					dto.setSakon(entity.getSakonnakhon());
+				}
+
 				dto.setNorthEast(entity.getNortheast());
 				dto.setNorth(entity.getNorth());
 				dto.setEast(entity.getEast());
@@ -103,8 +132,7 @@ public class ReportGenServiceImpl implements ReportGenService {
 			e.printStackTrace();
 		}
 		return dto;
-		
-	}
 
+	}
 
 }

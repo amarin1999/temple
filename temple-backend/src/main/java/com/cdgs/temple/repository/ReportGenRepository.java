@@ -19,5 +19,7 @@ public interface ReportGenRepository extends CrudRepository<ReportGenEntity, Lon
 	
 	@Query(nativeQuery = true, name = "findCourseName")
 	List<ReportGenEntity> findCourseName();
-
+	
+	@Query(nativeQuery = true, name = "getReportDashboardData")
+	ReportGenEntity getReportDashboardData();
 }
