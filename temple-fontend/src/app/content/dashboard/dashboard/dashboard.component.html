@@ -1,7 +1,17 @@
 <div class="ui-g">
-    <div class="ui-g-12 ui-md-12 ui-lg-12"><h1 style="text-align: center">Dashboard</h1 > </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-12"><div class="line"></div></div>
-    <div class="ui-g-12 ui-md-12 ui-lg-4 "><p-chart type="pie" [data]="data"></p-chart> </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-4"><p-chart type="bar" [data]="data"></p-chart> </div>
-    <div class="ui-g-12 ui-md-12 ui-lg-4"><p-chart type="pie" [data]="data"></p-chart> </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <h1 style="text-align: center">Dashboard</h1>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+        <div class="line"></div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4 ">
+        <p-chart type="pie" [data]="gender"></p-chart>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+        <p-chart type="bar" [data]="transport"></p-chart>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-4">
+        <p-chart type="pie" [data]="region"></p-chart>
+    </div>
 </div>

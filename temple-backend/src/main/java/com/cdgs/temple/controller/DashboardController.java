@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cdgs.temple.dto.MemberDto;
 import com.cdgs.temple.dto.ReportGenDto;
+import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.service.ReportGenService;
 import com.cdgs.temple.util.ResponseDto;
 
@@ -23,7 +25,7 @@ import com.cdgs.temple.util.ResponseDto;
 public class DashboardController {
 	@Autowired
 	private ReportGenService reportGenService;
-	
+
 	@GetMapping(path = "")
 	@PreAuthorize("hasRole('monk') or hasRole('user')")
 	public ResponseEntity<ResponseDto<ReportGenDto>> getAllUsers() {
