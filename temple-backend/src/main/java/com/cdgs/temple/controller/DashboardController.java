@@ -2,7 +2,6 @@ package com.cdgs.temple.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,7 @@ import com.cdgs.temple.util.ResponseDto;
 public class DashboardController {
 	private ReportGenService reportGenService;
 	private MemberService memberService;
-
+	
 	@Autowired
 	public DashboardController(ReportGenService reportGenService, MemberService memberService) {
 		super();
