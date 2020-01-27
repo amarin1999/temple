@@ -32,7 +32,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
-              <tr [pSelectableRow]="rowData" *ngIf="rowData.numberOfMembers > 0 || !isInTime()">
+              <tr [pSelectableRow]="rowData" *ngIf="isInTime()? rowData.numberOfMembers > 0: 'columns'">
                 <td *ngFor="let col of columns">
                 <span class="ui-column-title">{{col.header}}</span>
                   {{col.field == "conditionMin" ? "ผ่านการเรียนมาอย่างน้อย " + rowData[col.field] + " คอร์ส" : rowData[col.field]}}

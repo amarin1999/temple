@@ -140,7 +140,7 @@ export class ApprovalFormComponent implements OnInit {
                 key: 'ApproveAlertMessage',
                 sticky: true,
                 summary: 'ข้อความจากระบบ',
-                detail: 'แก้ไขข้อมูลส่วนตัวสำเร็จ'
+                detail: 'ดำเนินการเรียบร้อย'
               });
               // this.initMember();
             } else {
