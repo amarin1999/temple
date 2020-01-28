@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
             data: [res[0].transport[0]]
           },
           {
-            label: 'การเดินทางของวัด',
+            label: 'การเดินทางมาด้วยตนเอง',
             backgroundColor: '#9CCC65',
             borderColor: '#7CB342',
             data: [res[0].transport[1]]
