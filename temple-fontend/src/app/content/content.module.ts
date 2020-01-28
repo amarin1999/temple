@@ -47,6 +47,7 @@ import { ReportComponent } from './report/report.component';
 import { ApproveOutTimeComponent } from './approval/approve-out-time/approve-out-time.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { NotificationComponent } from './notification/notification.component';
+import { NotificationDetailComponent } from './notification/notification-detail/notification-detail.component';
 
 
 registerLocaleData(localeTh);
@@ -85,7 +86,8 @@ registerLocaleData(localeTh);
     ReportComponent,
     ApproveOutTimeComponent,
     DashboardComponent,
-    NotificationComponent
+    NotificationComponent,
+    NotificationDetailComponent
   ],
   imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule , ThaiCalendarModule, TabMenuModule, Ng2ImgMaxModule],
   exports: [ContentComponent],

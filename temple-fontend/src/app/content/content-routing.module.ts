@@ -27,6 +27,8 @@ import { ManageTransportationComponent } from './manage-transportation/manage-tr
 import { CourseRegisterOutTimeComponent } from './courses/course-register-out-time/course-register-out-time.component';
 import { ReportComponent } from './report/report.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { NotificationComponent } from './notification/notification.component';
+import { NotificationDetailComponent } from './notification/notification-detail/notification-detail.component';
 
 const routes: Routes = [
   {
@@ -190,6 +192,9 @@ const routes: Routes = [
       },{
         path: 'dashboard',
         component: DashboardComponent
+      },{
+        path: 'notification',
+        component: NotificationDetailComponent
       }
     ]
   }];
