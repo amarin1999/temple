@@ -84,3 +84,16 @@
 :host>>>.ui-toast .ui-toast-message {
     background: #f0e6ce;
 }
+
+.menu {
+    margin: 15%;
+}
+
+.wrapper-menu {
+    padding: 1.5em;
+    width: 100%;
+}
+
+.margin-bot{
+    margin-bottom: 1vh;
+}
