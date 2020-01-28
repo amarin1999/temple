@@ -22,3 +22,6 @@ label{
 .star{
     color: red;
 }
+p-table {
+    word-wrap: break-word;
+  }
