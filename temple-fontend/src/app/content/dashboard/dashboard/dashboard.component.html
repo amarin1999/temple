@@ -7,7 +7,7 @@
                 <div class="line"></div>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-6 ">
-                <p-chart type="doughnut" [data]="gender" [options]="genderOptions"></p-chart>
+                <p-chart type="doughnut" [data]="gender" [options]="genderOptions" ></p-chart>
             </div>
             <div class="ui-g-12 ui-md-12 ui-lg-6">
                 <p-chart type="doughnut" [data]="transport" [options]="transportOptions"></p-chart>
@@ -15,7 +15,7 @@
     
             <div class="ui-g-12 ui-md-0 ui-lg-3"></div>
             <div class="ui-g-12 ui-md-12 ui-lg-6">
-                <p-chart type="bar" [data]="region" [options]="regionOptions"></p-chart>
+                <p-chart type="bar" [data]="region" [options]="regionOptions" (onDataSelect)="selectData($event)"></p-chart>
             </div>
         </div>
 </ng-container>

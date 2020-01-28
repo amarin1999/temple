@@ -41,7 +41,7 @@ import { from } from "rxjs";
 import { CourseRegisterOutTimeComponent } from "./courses/course-register-out-time/course-register-out-time.component";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { ThaiCalendarModule } from '../shared/directive/thai-calendar/thai-calendar.module';
-import {TabMenuModule} from 'primeng/tabmenu';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { Ng2ImgMaxModule } from 'ng2-img-max';
 import { ReportComponent } from './report/report.component';
 import { ApproveOutTimeComponent } from './approval/approve-out-time/approve-out-time.component';
@@ -89,7 +89,7 @@ registerLocaleData(localeTh);
     NotificationComponent,
     NotificationDetailComponent
   ],
-  imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule , ThaiCalendarModule, TabMenuModule, Ng2ImgMaxModule],
+  imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule, ThaiCalendarModule, TabMenuModule, Ng2ImgMaxModule],
   exports: [ContentComponent],
   providers: [
     ConfirmationService,
@@ -99,4 +99,4 @@ registerLocaleData(localeTh);
     { provide: LOCALE_ID, useValue: "th" }
   ]
 })
-export class ContentModule {}
+export class ContentModule { }
