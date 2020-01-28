@@ -109,14 +109,12 @@ import javax.persistence.SqlResultSetMapping;
 				@ColumnResult(name = "west", type = Long.class), @ColumnResult(name = "south", type = Long.class) }) })
 
 @NamedNativeQuery(name = "getReportDashboardUserData", resultSetMapping = "getReportDashboardUserDataMapping", query = "SELECT "
-		+ "COUNT(CASE WHEN mhc.mhc_status = '0' THEN 1 ELSE NULL END) AS failCourse, "
 		+ "COUNT(CASE WHEN mhc.mhc_status = '1' THEN 1 ELSE NULL END) AS passCourse, "
 		+ "COUNT(CASE WHEN mhc.mhc_status = '2' THEN 1 ELSE NULL END) AS studyCourse " + "FROM members_has_courses mhc "
-				+ "WHERE mhc.member_id = :memberId")
+		+ "WHERE mhc.member_id = :memberId")
 
 @SqlResultSetMapping(name = "getReportDashboardUserDataMapping", classes = {
 		@ConstructorResult(targetClass = ReportGenEntity.class, columns = {
-				@ColumnResult(name = "failCourse", type = Long.class),
 				@ColumnResult(name = "passCourse", type = Long.class),
 				@ColumnResult(name = "studyCourse", type = Long.class) }) })
 
@@ -143,7 +141,6 @@ public class ReportGenEntity implements Serializable {
 	private Long east;
 	private Long west;
 	private Long south;
-	private Long failCourse;
 	private Long passCourse;
 	private Long studyCourse;
 
@@ -173,9 +170,8 @@ public class ReportGenEntity implements Serializable {
 		this.south = south;
 	}
 
-	public ReportGenEntity(Long failCourse, Long passCourse, Long studyCourse) {
+	public ReportGenEntity(Long passCourse, Long studyCourse) {
 		super();
-		this.failCourse = failCourse;
 		this.passCourse = passCourse;
 		this.studyCourse = studyCourse;
 	}
@@ -336,14 +332,6 @@ public class ReportGenEntity implements Serializable {
 
 	public void setPassCourse(Long passCourse) {
 		this.passCourse = passCourse;
-	}
-
-	public Long getFailCourse() {
-		return failCourse;
-	}
-
-	public void setFailCourse(Long failCourse) {
-		this.failCourse = failCourse;
 	}
 
 	public Long getStudyCourse() {

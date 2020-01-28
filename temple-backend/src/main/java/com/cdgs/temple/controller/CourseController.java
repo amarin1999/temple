@@ -50,7 +50,7 @@ import com.cdgs.temple.util.ResponseDto;
 @RequestMapping("/v1/courses")
 public class CourseController {
 
-	private static final Logger log = LoggerFactory.getLogger(TransportationController.class);
+	private static final Logger log = LoggerFactory.getLogger(CourseController.class);
 
 	private TransportationService transportationService;
 	private MemberService memberService;

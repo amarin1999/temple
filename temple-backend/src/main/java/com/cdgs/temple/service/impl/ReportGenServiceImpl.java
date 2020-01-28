@@ -139,10 +139,6 @@ public class ReportGenServiceImpl implements ReportGenService {
 				dto.setWestern(entity.getWest());
 				dto.setSouth(entity.getSouth());
 
-				if (entity.getFailCourse() != null) {
-					dto.setFailCourse(entity.getFailCourse());
-				}
-
 				if (entity.getPassCourse() != null) {
 					dto.setPassCourse(entity.getPassCourse());
 				}

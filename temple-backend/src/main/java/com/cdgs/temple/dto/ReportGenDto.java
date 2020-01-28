@@ -27,8 +27,6 @@ public class ReportGenDto implements Serializable {
 	private Long south;
 	private Long east;
 	private Long western;
-	/*** คอร์สที่ไม่ผ่าน **/
-	private Long failCourse;
 	/*** คอร์สที่ผ่าน **/
 	private Long passCourse;
 	/*** คอร์สที่กำลังศึกษา **/
@@ -160,14 +158,6 @@ public class ReportGenDto implements Serializable {
 
 	public void setWestern(Long western) {
 		this.western = western;
-	}
-
-	public Long getFailCourse() {
-		return failCourse;
-	}
-
-	public void setFailCourse(Long failCourse) {
-		this.failCourse = failCourse;
 	}
 
 	public Long getPassCourse() {
