@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
       const sumGender = (res[0].gender.reduce((dataGender, sum) => sum + dataGender));
       const sumTransport = (res[0].transport.reduce((dataTransport, sum) => sum + dataTransport));
       const sumRegion = (res[0].region.reduce((dataRegion, sum) => sum + dataRegion));
-      const sumCourse = (res[0].courseHistory.reduce((dataCourse, sum) => sum +dataCourse));
+      const sumCourse = (res[0].courseHistory.reduce((dataCourse, sum) => sum + dataCourse));
 
       this.gender = {
         labels: ['ชาย', 'หญิง', 'ไม่ระบุ'],
@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
           }]
       };
       this.transport = {
-        labels: ['การเดินทางของวัด' , 'การเดินทางมาด้วยตนเอง'],
+        labels: ['การเดินทางของวัด', 'การเดินทางมาด้วยตนเอง'],
         datasets: [
           {
             data: res[0].transport,
@@ -71,110 +71,122 @@ export class DashboardComponent implements OnInit {
           }
         ]
       },
-      this.region = {
-        labels: [''],
-        // 'กลาง', 'ตะวันออกเฉียงเหนือ', 'เหนือ', 'ใต้', 'ตะวันออก', 'ตะวันตก'
-        datasets: [
-          {
-            label: 'กลาง',
-            data: [res[0].region[0]],
-            backgroundColor: '#ff6d6d'
-          },
-          {
-            label: 'ตะวันออกเฉียงเหนือ',
-            data: [res[0].region[1]],
-            backgroundColor: '#fff766'
-          },
-          {
-            label: 'เหนือ',
-            data: [res[0].region[2]],
-            backgroundColor: '#5cff8a'
-          },
-          {
-            label: 'ใต้',
-            data: [res[0].region[3]],
-            backgroundColor: '#73fffa'
-          },
-          {
-            label: 'ตะวันออก',
-            data: [res[0].region[4]],
-            backgroundColor: '#d16eff'
-          },
-          {
-            label: 'ตะวันตก',
-            data: [res[0].region[5]],
-            backgroundColor: '#36A2EB'
-          }
-        ]
+        this.region = {
+          labels: [''],
+          // 'กลาง', 'ตะวันออกเฉียงเหนือ', 'เหนือ', 'ใต้', 'ตะวันออก', 'ตะวันตก'
+          datasets: [
+            {
+              label: 'กลาง',
+              data: [res[0].region[0]],
+              backgroundColor: '#ff6d6d'
+            },
+            {
+              label: 'ตะวันออกเฉียงเหนือ',
+              data: [res[0].region[1]],
+              backgroundColor: '#fff766'
+            },
+            {
+              label: 'เหนือ',
+              data: [res[0].region[2]],
+              backgroundColor: '#5cff8a'
+            },
+            {
+              label: 'ใต้',
+              data: [res[0].region[3]],
+              backgroundColor: '#73fffa'
+            },
+            {
+              label: 'ตะวันออก',
+              data: [res[0].region[4]],
+              backgroundColor: '#d16eff'
+            },
+            {
+              label: 'ตะวันตก',
+              data: [res[0].region[5]],
+              backgroundColor: '#36A2EB'
+            }
+          ]
         },
-      this.courseHistory = {
-  labels: ['คอร์สที่ไม่ผ่านหลักสูตร (F)', 'คอร์สที่ผ่านหลักสูตร', 'คอร์สที่กำลังศึกษาอยู่'],
-  datasets: [
-    {
-      data: res[0].courseHistory,
-      backgroundColor: [
-        '#ff6d6d',
-        '#52DE22',
-        '#F3EF18'
-      ],
-      hoverBackgroundColor: [
-        '#ff6d6d',
-        '#52DE22',
-        '#F3EF18'
-      ]
-    }
-  ]
-};
-this.transportOptions = {
-  title: {
-    display: true,
-    text: `ช่องทางการเดินทางของผู้เข้าอบรม (ทั้งหมด ${sumTransport} คน)`,
-    fontSize: 16,
-    position: 'bottom'
-  }
-};
+        this.courseHistory = {
+          labels: ['คอร์สที่ผ่านหลักสูตร', 'คอร์สที่กำลังศึกษาอยู่'],
+          datasets: [
+            {
+              data: res[0].courseHistory,
+              backgroundColor: [
+                '#52DE22',
+                '#F3EF18'
+              ],
+              hoverBackgroundColor: [
+                '#52DE22',
+                '#F3EF18'
+              ]
+            }
+          ]
+        };
+      this.transportOptions = {
+        title: {
+          display: true,
+          text: `ช่องทางการเดินทางของผู้เข้าอบรม (ทั้งหมด ${sumTransport} คน)`,
+          fontSize: 16,
+          position: 'bottom'
+        }
+      };
 
 
-this.genderOptions = {
-  title: {
-    display: true,
-    text: `เพศของผู้เข้าอบรม (ทั้งหมด ${sumGender} คน)`,
-    fontSize: 16,
-    position: 'bottom'
-  }
-};
+      this.genderOptions = {
+        title: {
+          display: true,
+          text: `เพศของผู้เข้าอบรม (ทั้งหมด ${sumGender} คน)`,
+          fontSize: 16,
+          position: 'bottom'
+        }
+      };
 
-this.regionOptions = {
-  title: {
-    display: true,
-    text: `ภูมิภาคของผู้เข้าอบรม (ทั้งหมด ${sumRegion} คน)`,
-    fontSize: 16,
-    position: 'bottom'
-  }
-};
-this.courseHistoryOption = {
-  title: {
-    display: true,
-    text: `คอร์สทั้งหมดที่ทำการสมัครเรียน (ทั้งหมด ${sumCourse} คอร์ส)`,
-    fontSize: 16,
-    position: 'bottom'
-  }
-}
+      this.regionOptions = {
+        title: {
+          display: true,
+          text: `ภูมิภาคของผู้เข้าอบรม (ทั้งหมด ${sumRegion} คน)`,
+          fontSize: 16,
+          position: 'bottom'
+        }
+      };
+      this.courseHistoryOption = {
+        title: {
+          display: true,
+          text: `คอร์สทั้งหมดที่ทำการสมัครเรียน (ทั้งหมด ${sumCourse} คอร์ส)`,
+          fontSize: 16,
+          position: 'bottom'
+        }
+      }
     });
 
 
 
   };
 
-showDashboardRole(...role) {
-  return role.includes(this.role);
-}
+  showDashboardRole(...role) {
+    return role.includes(this.role);
+  }
   private getUserId() {
-  this.userId = localStorage.getItem('userId');
-}
+    this.userId = localStorage.getItem('userId');
+  }
   private getRole() {
-  this.authService.getRole().subscribe(res => this.role = res);
-}
+    this.authService.getRole().subscribe(res => this.role = res);
+  }
+
+  selectData(e) {
+    // console.log(e.dataset);
+    // console.log(e.element);
+    // console.log(e.element._datasetIndex);
+    // if (e.element.__datasetIndex = 2) {
+      // console.log('two');
+    // }
+    // console.log(e.element._index);
+    // console.log(e);
+
+
+
+  }
 
 }
 

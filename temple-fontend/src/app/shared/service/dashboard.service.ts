@@ -14,12 +14,12 @@ export class DashboardService {
       map((res: {}) => {
         return res['data'].map(data => {
           const { tranTemple, transport, genderMale, genderFemale, genderNotspec, central, northEast, north, south, east, western ,
-            failCourse , passCourse, studyCourse } = data;
+            passCourse, studyCourse } = data;
           return {
             gender: [genderMale, genderFemale, genderNotspec],
             transport: [tranTemple, transport],
             region: [central, northEast, north, south, east, western],
-            courseHistory: [failCourse, passCourse, studyCourse]
+            courseHistory: [passCourse, studyCourse]
           }
         });
       })
