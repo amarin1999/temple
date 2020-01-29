@@ -11,38 +11,38 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cdgs.temple.dto.DashboardDto;
 import com.cdgs.temple.dto.MemberDto;
-import com.cdgs.temple.dto.ReportGenDto;
+import com.cdgs.temple.service.DashboardService;
 import com.cdgs.temple.service.MemberService;
-import com.cdgs.temple.service.ReportGenService;
 import com.cdgs.temple.util.ResponseDto;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/dashboard")
 public class DashboardController {
-	private ReportGenService reportGenService;
+	private DashboardService dashboardService;
 	private MemberService memberService;
 	
 	@Autowired
-	public DashboardController(ReportGenService reportGenService, MemberService memberService) {
+	public DashboardController(DashboardService dashboardService, MemberService memberService) {
 		super();
-		this.reportGenService = reportGenService;
+		this.dashboardService = dashboardService;
 		this.memberService = memberService;
 	}
 
 	@GetMapping(path = "")
 	@PreAuthorize("hasRole('monk') or hasRole('user')")
-	public ResponseEntity<ResponseDto<ReportGenDto>> getAllUsers() {
-		ResponseDto<ReportGenDto> res = new ResponseDto<>();
+	public ResponseEntity<ResponseDto<DashboardDto>> getAllUsers() {
+		ResponseDto<DashboardDto> res = new ResponseDto<>();
 		try {
-			List<ReportGenDto> listDto = new ArrayList<>();
+			List<DashboardDto> listDto = new ArrayList<>();
 			MemberDto member = memberService.getCurrentMember();
-			ReportGenDto reportGenDto = null;
+			DashboardDto reportGenDto = null;
 			if (member.getRoleId() == Long.parseLong("2")) {
-				reportGenDto = reportGenService.getReportDashboardMonkData();
+				reportGenDto = dashboardService.getReportDashboardMonkData();
 			} else if (member.getRoleId() == Long.parseLong("3")) {
-				reportGenDto = reportGenService.getReportDashboardUserData(member.getId());
+				reportGenDto = dashboardService.getReportDashboardUserData(member.getId());
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			listDto.add(reportGenDto);

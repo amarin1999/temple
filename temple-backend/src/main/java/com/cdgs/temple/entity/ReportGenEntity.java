@@ -80,44 +80,6 @@ import javax.persistence.SqlResultSetMapping;
 		+ "LEFT JOIN region r ON p.region_id = r.region_id " + "WHERE 1=1 AND c.course_id = ? "
 		+ "GROUP BY c.course_id")
 
-@NamedNativeQuery(name = "getReportDashboardMonkData", resultSetMapping = "getReportDashboardMonkDataMapping", query = "SELECT "
-		+ "COUNT(CASE WHEN g.gender_id = '1' THEN 1 ELSE NULL END) AS genderM, "
-		+ "COUNT(CASE WHEN g.gender_id = '2' THEN 1 ELSE NULL END) AS genderF, "
-		+ "COUNT(CASE WHEN g.gender_id = '3' THEN 1 ELSE NULL END) AS genderOther, "
-		+ "COUNT(CASE WHEN t.tran_time_id is Null THEN 1 ELSE NULL END) AS transSelf, "
-		+ "COUNT(CASE WHEN t.tran_time_id is NOT Null THEN 1 ELSE NULL END) AS transTemple, "
-		+ "COUNT(CASE WHEN r.region_id = '4' THEN 1 ELSE NULL END) as center, "
-		+ "COUNT(CASE WHEN r.region_id = '2' THEN 1 ELSE NULL END) as northeast, "
-		+ "COUNT(CASE WHEN r.region_id = '1' THEN 1 ELSE NULL END) as north, "
-		+ "COUNT(CASE WHEN r.region_id = '5' THEN 1 ELSE NULL END) as east, "
-		+ "COUNT(CASE WHEN r.region_id = '3' THEN 1 ELSE NULL END) as west, "
-		+ "COUNT(CASE WHEN r.region_id = '6' THEN 1 ELSE NULL END) as south " + "FROM members_has_courses mhc "
-		+ "LEFT JOIN members m ON mhc.member_id = m.member_id " + "LEFT JOIN courses c ON mhc.course_id = c.course_id "
-		+ "LEFT JOIN gender g ON m.member_gender_id = g.gender_id "
-		+ "LEFT JOIN transportations t ON mhc.tran_id = t.tran_id "
-		+ "LEFT JOIN province p ON m.member_province_id = p.province_id "
-		+ "LEFT JOIN region r ON p.region_id = r.region_id ")
-
-@SqlResultSetMapping(name = "getReportDashboardMonkDataMapping", classes = {
-		@ConstructorResult(targetClass = ReportGenEntity.class, columns = {
-				@ColumnResult(name = "genderM", type = Long.class), @ColumnResult(name = "genderF", type = Long.class),
-				@ColumnResult(name = "genderOther", type = Long.class),
-				@ColumnResult(name = "transSelf", type = Long.class),
-				@ColumnResult(name = "transTemple", type = Long.class),
-				@ColumnResult(name = "center", type = Long.class), @ColumnResult(name = "northeast", type = Long.class),
-				@ColumnResult(name = "north", type = Long.class), @ColumnResult(name = "east", type = Long.class),
-				@ColumnResult(name = "west", type = Long.class), @ColumnResult(name = "south", type = Long.class) }) })
-
-@NamedNativeQuery(name = "getReportDashboardUserData", resultSetMapping = "getReportDashboardUserDataMapping", query = "SELECT "
-		+ "COUNT(CASE WHEN mhc.mhc_status = '1' THEN 1 ELSE NULL END) AS passCourse, "
-		+ "COUNT(CASE WHEN mhc.mhc_status = '2' THEN 1 ELSE NULL END) AS studyCourse " + "FROM members_has_courses mhc "
-		+ "WHERE mhc.member_id = :memberId")
-
-@SqlResultSetMapping(name = "getReportDashboardUserDataMapping", classes = {
-		@ConstructorResult(targetClass = ReportGenEntity.class, columns = {
-				@ColumnResult(name = "passCourse", type = Long.class),
-				@ColumnResult(name = "studyCourse", type = Long.class) }) })
-
 @Entity
 public class ReportGenEntity implements Serializable {
 	/**
