@@ -35,18 +35,19 @@
     </div>
 </ng-container>
 
-<p-dialog [header]="TitleChartRegion" [modal]="true" [(visible)]="display">
+<p-dialog [header]="TitleChartRegion" [modal]="true" [(visible)]="display" [blockScroll]='true'
+    [contentStyle]="{ 'max-height': '20vh','width': '25vw'}">
     <p-table [value]="province">
         <ng-template pTemplate="header">
             <tr>
-                <th>Vin</th>
-                <th>Year</th>
+                <th>จังหวัด</th>
+                <th>จำนวนผู้ที่ได้เข้าอบรม</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-car>
             <tr>
-                <td>{{car}}</td>
-                <td>{{car}}</td>
+                <td>{{car.province}}</td>
+                <td>{{car.totalMemberHasCourse}}</td>
 
             </tr>
         </ng-template>

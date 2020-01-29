@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   regionOptions: {};
   courseHistoryOption: {};
   TitleChartRegion: string;
-  province: number[];
+  province: any;
   provinceKey: string[];
   constructor(private dashBoard: DashboardService, private breadCrumbService: BreadcrumbService, private authService: AuthService) { }
 
@@ -190,10 +190,7 @@ export class DashboardComponent implements OnInit {
     // console.log(e.element._index);
     // console.log(e);
     this.dashBoard.getNumberOfCounty(regionSelect._datasetIndex + 1).subscribe(res => {
-
-      this.province = Object.values(res);
-      this.provinceKey = Object.keys(res);
-      // this.province.split(',');
+      this.province = res;
       console.log(this.province);
     }
     )
