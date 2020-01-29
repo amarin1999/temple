@@ -42,7 +42,6 @@ public class DashboardDto {
 		this.tranTemple = tranTemple;
 		this.transport = transport;
 		this.newStudent = newStudent;
-		this.bangkok = bangkok;
 		this.central = central;
 		this.sakon = sakon;
 		this.northEast = northEast;

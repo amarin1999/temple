@@ -25,6 +25,11 @@ export class DashboardService {
       })
     );
   }
+  getNumberOfCounty(id: number) {
+    return this.http.get(`${ApiConstants.baseURl}/dashboard/${id}`).pipe(map((res: {}) => {
+      return res['data'][0]['countProvince']
+    }))
+  }
 }
 
 
