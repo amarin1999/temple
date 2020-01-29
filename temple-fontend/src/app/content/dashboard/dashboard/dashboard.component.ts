@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
           {
             label: 'เหนือ',
             data: [res[0].region[0]],
-            backgroundColor: '#ff6d6d'
+            backgroundColor: '#5cff8a'
           },
           {
             label: 'ตะวันออกเฉียงเหนือ',
@@ -89,12 +89,12 @@ export class DashboardComponent implements OnInit {
           {
             label: 'ตะวันออก',
             data: [res[0].region[2]],
-            backgroundColor: '#5cff8a'
+            backgroundColor: '#36A2EB'
           },
           {
             label: 'กลาง',
             data: [res[0].region[3]],
-            backgroundColor: '#73fffa'
+            backgroundColor: '#ff6d6d'
           },
           {
             label: 'ตะวันออก',
@@ -104,7 +104,7 @@ export class DashboardComponent implements OnInit {
           {
             label: 'ใต้',
             data: [res[0].region[5]],
-            backgroundColor: '#36A2EB'
+            backgroundColor: '#73fffa'
           }
         ]
       };
