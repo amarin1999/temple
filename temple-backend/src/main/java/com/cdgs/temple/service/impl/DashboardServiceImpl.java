@@ -46,58 +46,23 @@ public class DashboardServiceImpl implements DashboardService {
 		DashboardDto dto = new DashboardDto();
 		try {
 			if (entity != null) {
-				if (entity.getMemberId() != null) {
-					dto.setMemberId(entity.getMemberId());
-				}
-
-				if (entity.getMemberId() != null) {
-					dto.setGenderMale(entity.getGenderM());
-				}
-
-				if (entity.getMemberId() != null) {
-					dto.setGenderFemale(entity.getGenderF());
-				}
-
-				if (entity.getMemberId() != null) {
-					dto.setGenderNotspec(entity.getGenderOther());
-				}
-
-				if (entity.getTransSelf() != null) {
-					dto.setTransport(entity.getTransSelf());
-				}
-				if (entity.getTransTemple() != null) {
-					dto.setTranTemple(entity.getTransTemple());
-				}
-
-				if (entity.getNortheast() != null) {
-					dto.setNorthEast(entity.getNortheast());
-				}
-
-				if (entity.getNorth() != null) {
-					dto.setNorth(entity.getNorth());
-				}
-
-				if (entity.getEast() != null) {
-					dto.setEast(entity.getEast());
-				}
-
-				if (entity.getWest() != null) {
-					dto.setWestern(entity.getWest());
-				}
-
-				if (entity.getSouth() != null) {
-					dto.setSouth(entity.getSouth());
-				}
-
-				if (entity.getPassCourse() != null) {
-					dto.setPassCourse(entity.getPassCourse());
-				}
-
-				if (entity.getStudyCourse() != null) {
-					dto.setStudyCourse(entity.getStudyCourse());
-				}
+				dto.setMemberId(entity.getMemberId());
+				dto.setGenderMale(entity.getGenderM());
+				dto.setGenderFemale(entity.getGenderF());
+				dto.setGenderNotspec(entity.getGenderOther());
+				dto.setTransport(entity.getTransSelf());
+				dto.setTranTemple(entity.getTransTemple());
+				dto.setNorthEast(entity.getNortheast());
+				dto.setNorth(entity.getNorth());
+				dto.setEast(entity.getEast());
+				dto.setWestern(entity.getWest());
+				dto.setSouth(entity.getSouth());
+				dto.setPassCourse(entity.getPassCourse());
+				dto.setStudyCourse(entity.getStudyCourse());
 			}
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			log.error("mapEntityToDto >>> " + e.getMessage());
 			e.printStackTrace();
 		}

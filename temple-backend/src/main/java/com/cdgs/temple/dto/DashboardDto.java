@@ -11,10 +11,8 @@ public class DashboardDto {
 	private Long genderNotspec;
 	private Long tranTemple;
 	private Long transport;
-	private Long newStudent;
 	private Long central;
 	/*** จังหวัด สกลนคร **/
-	private Long sakon;
 	private Long northEast;
 	private Long north;
 	private Long south;
@@ -32,7 +30,7 @@ public class DashboardDto {
 	}
 
 	public DashboardDto(Long memberId, Long genderMale, Long genderFemale, Long genderNotspec, Long tranTemple,
-			Long transport, Long newStudent, Long bangkok, Long central, Long sakon, Long northEast, Long north,
+			Long transport, Long central, Long northEast, Long north,
 			Long south, Long east, Long western, Long passCourse, Long studyCourse, Map<String, Long> countProvince) {
 		super();
 		this.memberId = memberId;
@@ -41,9 +39,7 @@ public class DashboardDto {
 		this.genderNotspec = genderNotspec;
 		this.tranTemple = tranTemple;
 		this.transport = transport;
-		this.newStudent = newStudent;
 		this.central = central;
-		this.sakon = sakon;
 		this.northEast = northEast;
 		this.north = north;
 		this.south = south;
@@ -102,28 +98,12 @@ public class DashboardDto {
 		this.transport = transport;
 	}
 
-	public Long getNewStudent() {
-		return newStudent;
-	}
-
-	public void setNewStudent(Long newStudent) {
-		this.newStudent = newStudent;
-	}
-
 	public Long getCentral() {
 		return central;
 	}
 
 	public void setCentral(Long central) {
 		this.central = central;
-	}
-
-	public Long getSakon() {
-		return sakon;
-	}
-
-	public void setSakon(Long sakon) {
-		this.sakon = sakon;
 	}
 
 	public Long getNorthEast() {
