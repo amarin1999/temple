@@ -25,21 +25,19 @@ public class DashboardServiceImpl implements DashboardService {
 		this.dashboardRepository = dashboardRepository;
 	}
 
-	private DashboardDto mapListEntityToDto(List<DashboardEntity> entities) {
-		DashboardDto dto = new DashboardDto();
+	private List<DashboardDto> mapListEntityToDto(List<DashboardEntity> entities) {
+		List<DashboardDto> listDto = new ArrayList<>();
 		try {
 			if (entities != null) {
 				for (DashboardEntity entity : entities) {
-					if (entity.getProvince() != null && entity.getTotalMemberHasCourse() != null) {
-						dto.getCountProvince().put(entity.getProvince(), entity.getTotalMemberHasCourse());
-					}
+					listDto.add(mapEntityToDto(entity));
 				}
 			}
 		} catch (Exception e) {
 			log.error("mapEntityToDto >>> ", e.getMessage());
 			e.printStackTrace();
 		}
-		return dto;
+		return listDto;
 	}
 
 	private DashboardDto mapEntityToDto(DashboardEntity entity) {
@@ -59,6 +57,8 @@ public class DashboardServiceImpl implements DashboardService {
 				dto.setSouth(entity.getSouth());
 				dto.setPassCourse(entity.getPassCourse());
 				dto.setStudyCourse(entity.getStudyCourse());
+				dto.setProvince(entity.getProvince());
+				dto.setTotalMemberHasCourse(entity.getTotalMemberHasCourse());
 			}
 		} catch (
 
@@ -95,7 +95,7 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	@Override
-	public DashboardDto getProvinceDashboardDataByRegionId(Long regionId) {
+	public List<DashboardDto> getProvinceDashboardDataByRegionId(Long regionId) {
 		List<DashboardEntity> dashboardEntities = new ArrayList<>();
 		try {
 			dashboardEntities = dashboardRepository.getProvinceDataByRegionId(regionId);

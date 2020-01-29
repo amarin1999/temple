@@ -22,16 +22,16 @@ public class DashboardDto {
 	private Long passCourse;
 	/*** คอร์สที่กำลังศึกษา **/
 	private Long studyCourse;
-	/*** รายชื่อจังหวัดที่มีในคอร์สที่ปิดแล้ว และจำนวน **/
-	private Map<String,Long> countProvince = new HashMap<>();
+	private String province;
+	private Long totalMemberHasCourse;
 	
 	public DashboardDto() {
 		super();
 	}
 
 	public DashboardDto(Long memberId, Long genderMale, Long genderFemale, Long genderNotspec, Long tranTemple,
-			Long transport, Long central, Long northEast, Long north,
-			Long south, Long east, Long western, Long passCourse, Long studyCourse, Map<String, Long> countProvince) {
+			Long transport, Long central, Long northEast, Long north, Long south, Long east, Long western,
+			Long passCourse, Long studyCourse, String province, Long totalMemberHasCourse) {
 		super();
 		this.memberId = memberId;
 		this.genderMale = genderMale;
@@ -47,7 +47,8 @@ public class DashboardDto {
 		this.western = western;
 		this.passCourse = passCourse;
 		this.studyCourse = studyCourse;
-		this.countProvince = countProvince;
+		this.province = province;
+		this.totalMemberHasCourse = totalMemberHasCourse;
 	}
 
 	public Long getMemberId() {
@@ -162,11 +163,19 @@ public class DashboardDto {
 		this.studyCourse = studyCourse;
 	}
 
-	public Map<String, Long> getCountProvince() {
-		return countProvince;
+	public String getProvince() {
+		return province;
 	}
 
-	public void setCountProvince(Map<String, Long> countProvince) {
-		this.countProvince = countProvince;
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public Long getTotalMemberHasCourse() {
+		return totalMemberHasCourse;
+	}
+
+	public void setTotalMemberHasCourse(Long totalMemberHasCourse) {
+		this.totalMemberHasCourse = totalMemberHasCourse;
 	}
 }

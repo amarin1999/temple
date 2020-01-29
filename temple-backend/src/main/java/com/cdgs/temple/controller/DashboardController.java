@@ -64,11 +64,9 @@ public class DashboardController {
 			@PathVariable(value = "region") Long regionId) {
 		ResponseDto<DashboardDto> res = new ResponseDto<>();
 		try {
-			List<DashboardDto> listDto = new ArrayList<>();
-			DashboardDto dashboardDto = null;
-			dashboardDto = dashboardService.getProvinceDashboardDataByRegionId(regionId);
+			List<DashboardDto> listDto;
+			listDto = dashboardService.getProvinceDashboardDataByRegionId(regionId);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			listDto.add(dashboardDto);
 			res.setData(listDto);
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);

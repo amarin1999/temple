@@ -1,5 +1,7 @@
 package com.cdgs.temple.service;
 
+import java.util.List;
+
 import com.cdgs.temple.dto.DashboardDto;
 
 public interface DashboardService {
@@ -8,5 +10,5 @@ public interface DashboardService {
 
 	DashboardDto getReportDashboardUserData(Long memberId);
 	
-	DashboardDto getProvinceDashboardDataByRegionId(Long regionId);
+	List<DashboardDto> getProvinceDashboardDataByRegionId(Long regionId);
 }
