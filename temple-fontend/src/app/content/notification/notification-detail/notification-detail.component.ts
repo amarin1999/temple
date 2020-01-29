@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 
 @Component({
   selector: 'app-notification-detail',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationDetailComponent implements OnInit {
 
-  constructor() { }
+  constructor(private breadCrumbService: BreadcrumbService) { }
 
   ngOnInit() {
+    this.setBreadCrumb();
   }
 
+  private setBreadCrumb() {
+    this.breadCrumbService.setPath([{ label: 'แจ้งเตือน', routerLink: '/notification' }]);
+  }
 }

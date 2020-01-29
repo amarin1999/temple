@@ -176,7 +176,7 @@ export class DashboardComponent implements OnInit {
 
   selectData(e) {
     // console.log(e.dataset);
-    // console.log(e.element);
+    console.log(e.element);
     // console.log(e.element._datasetIndex);
     // if (e.element.__datasetIndex = 2) {
       // console.log('two');
