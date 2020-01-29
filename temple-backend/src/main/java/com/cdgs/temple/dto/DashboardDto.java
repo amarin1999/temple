@@ -7,13 +7,13 @@ public class DashboardDto {
 	private Long memberId;
 	private Long genderMale;
 	private Long genderFemale;
-	/*** gender that not specified. * */
+	/*** gender that not specified. **/
 	private Long genderNotspec;
 	private Long tranTemple;
 	private Long transport;
 	private Long newStudent;
 	private Long central;
-	/*** จังหวัด สกลนคร * */
+	/*** จังหวัด สกลนคร **/
 	private Long sakon;
 	private Long northEast;
 	private Long north;
