@@ -15,11 +15,12 @@ export class DashboardComponent implements OnInit {
   userId: string;
   role: string;
   courseHistory: any;
-
+  display: boolean;
   transportOptions: {};
   genderOptions: {};
   regionOptions: {};
   courseHistoryOption: {};
+  TitleChartRegion: string;
   constructor(private dashBoard: DashboardService, private breadCrumbService: BreadcrumbService, private authService: AuthService) { }
 
   ngOnInit() {
@@ -70,59 +71,59 @@ export class DashboardComponent implements OnInit {
             ]
           }
         ]
-      },
-        this.region = {
-          labels: [''],
-          // 'กลาง', 'ตะวันออกเฉียงเหนือ', 'เหนือ', 'ใต้', 'ตะวันออก', 'ตะวันตก'
-          datasets: [
-            {
-              label: 'กลาง',
-              data: [res[0].region[0]],
-              backgroundColor: '#ff6d6d'
-            },
-            {
-              label: 'ตะวันออกเฉียงเหนือ',
-              data: [res[0].region[1]],
-              backgroundColor: '#fff766'
-            },
-            {
-              label: 'เหนือ',
-              data: [res[0].region[2]],
-              backgroundColor: '#5cff8a'
-            },
-            {
-              label: 'ใต้',
-              data: [res[0].region[3]],
-              backgroundColor: '#73fffa'
-            },
-            {
-              label: 'ตะวันออก',
-              data: [res[0].region[4]],
-              backgroundColor: '#d16eff'
-            },
-            {
-              label: 'ตะวันตก',
-              data: [res[0].region[5]],
-              backgroundColor: '#36A2EB'
-            }
-          ]
-        },
-        this.courseHistory = {
-          labels: ['คอร์สที่ผ่านหลักสูตร', 'คอร์สที่กำลังศึกษาอยู่'],
-          datasets: [
-            {
-              data: res[0].courseHistory,
-              backgroundColor: [
-                '#52DE22',
-                '#F3EF18'
-              ],
-              hoverBackgroundColor: [
-                '#52DE22',
-                '#F3EF18'
-              ]
-            }
-          ]
-        };
+      };
+      this.region = {
+        labels: [''],
+        // เหนือ, ตะวันออกเฉียงเหนือ, ตะวันตก, กลาง, ตะวันออก, ใต้
+        datasets: [
+          {
+            label: 'เหนือ',
+            data: [res[0].region[0]],
+            backgroundColor: '#ff6d6d'
+          },
+          {
+            label: 'ตะวันออกเฉียงเหนือ',
+            data: [res[0].region[1]],
+            backgroundColor: '#fff766'
+          },
+          {
+            label: 'ตะวันออก',
+            data: [res[0].region[2]],
+            backgroundColor: '#5cff8a'
+          },
+          {
+            label: 'กลาง',
+            data: [res[0].region[3]],
+            backgroundColor: '#73fffa'
+          },
+          {
+            label: 'ตะวันออก',
+            data: [res[0].region[4]],
+            backgroundColor: '#d16eff'
+          },
+          {
+            label: 'ใต้',
+            data: [res[0].region[5]],
+            backgroundColor: '#36A2EB'
+          }
+        ]
+      };
+      this.courseHistory = {
+        labels: ['คอร์สที่ผ่านหลักสูตร', 'คอร์สที่กำลังศึกษาอยู่'],
+        datasets: [
+          {
+            data: res[0].courseHistory,
+            backgroundColor: [
+              '#52DE22',
+              '#F3EF18'
+            ],
+            hoverBackgroundColor: [
+              '#52DE22',
+              '#F3EF18'
+            ]
+          }
+        ]
+      };
       this.transportOptions = {
         title: {
           display: true,
@@ -175,14 +176,17 @@ export class DashboardComponent implements OnInit {
   }
 
   selectData(e) {
+    const regionSelect = e.element;
+    this.TitleChartRegion = `ภาค${regionSelect._view.datasetLabel}`;
+    this.display = true;
     // console.log(e.dataset);
     // console.log(e.element);
     // console.log(e.element._datasetIndex);
     // if (e.element.__datasetIndex = 2) {
-      // console.log('two');
+    // console.log('two');
     // }
     // console.log(e.element._index);
-    // console.log(e);
+    console.log(e);
 
 
 
