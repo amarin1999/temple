@@ -21,6 +21,8 @@ export class DashboardComponent implements OnInit {
   regionOptions: {};
   courseHistoryOption: {};
   TitleChartRegion: string;
+  province: number[];
+  provinceKey: string[];
   constructor(private dashBoard: DashboardService, private breadCrumbService: BreadcrumbService, private authService: AuthService) { }
 
   ngOnInit() {
@@ -180,15 +182,21 @@ export class DashboardComponent implements OnInit {
     this.TitleChartRegion = `ภาค${regionSelect._view.datasetLabel}`;
     this.display = true;
     // console.log(e.dataset);
-    console.log(e.element);
+    console.log(regionSelect._datasetIndex + 1);
     // console.log(e.element._datasetIndex);
     // if (e.element.__datasetIndex = 2) {
     // console.log('two');
     // }
     // console.log(e.element._index);
-    console.log(e);
+    // console.log(e);
+    this.dashBoard.getNumberOfCounty(regionSelect._datasetIndex + 1).subscribe(res => {
 
-
+      this.province = Object.values(res);
+      this.provinceKey = Object.keys(res);
+      // this.province.split(',');
+      console.log(this.province);
+    }
+    )
 
   }
 
