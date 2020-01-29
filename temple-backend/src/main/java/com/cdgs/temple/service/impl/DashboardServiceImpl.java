@@ -26,18 +26,48 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	private List<DashboardDto> mapListEntityToDto(List<DashboardEntity> entities) {
-		List<DashboardDto> dtoList = new ArrayList<>();
+		List<DashboardDto> listDto = new ArrayList<>();
 		try {
 			if (entities != null) {
 				for (DashboardEntity entity : entities) {
-					dtoList.add(mapEntityToDto(entity));
+					listDto.add(mapEntityToDto(entity));
 				}
 			}
 		} catch (Exception e) {
+			log.error("mapEntityToDto >>> ", e.getMessage());
+			e.printStackTrace();
+		}
+		return listDto;
+	}
+
+	private DashboardDto mapEntityToDto(DashboardEntity entity) {
+		DashboardDto dto = new DashboardDto();
+		try {
+			if (entity != null) {
+				dto.setMemberId(entity.getMemberId());
+				dto.setGenderMale(entity.getGenderM());
+				dto.setGenderFemale(entity.getGenderF());
+				dto.setGenderNotspec(entity.getGenderOther());
+				dto.setTransport(entity.getTransSelf());
+				dto.setTranTemple(entity.getTransTemple());
+				dto.setNorthEast(entity.getNortheast());
+				dto.setNorth(entity.getNorth());
+				dto.setEast(entity.getEast());
+				dto.setWestern(entity.getWest());
+				dto.setSouth(entity.getSouth());
+				dto.setPassCourse(entity.getPassCourse());
+				dto.setStudyCourse(entity.getStudyCourse());
+				dto.setProvince(entity.getProvince());
+				dto.setTotalMemberHasCourse(entity.getTotalMemberHasCourse());
+			}
+		} catch (
+
+		Exception e) {
 			log.error("mapEntityToDto >>> " + e.getMessage());
 			e.printStackTrace();
 		}
-		return dtoList;
+		return dto;
+
 	}
 
 	@Override
@@ -64,44 +94,16 @@ public class DashboardServiceImpl implements DashboardService {
 		return mapEntityToDto(dashboardEntity);
 	}
 
-	private DashboardDto mapEntityToDto(DashboardEntity entity) {
-		DashboardDto dto = new DashboardDto();
+	@Override
+	public List<DashboardDto> getProvinceDashboardDataByRegionId(Long regionId) {
+		List<DashboardEntity> dashboardEntities = new ArrayList<>();
 		try {
-			if (entity != null) {
-				if (entity.getMemberId() != null) {
-					dto.setMemberId(entity.getMemberId());
-				}
-				dto.setGenderMale(entity.getGenderM());
-				dto.setGenderFemale(entity.getGenderF());
-				dto.setGenderNotspec(entity.getGenderOther());
-
-				if (entity.getTransSelf() != null) {
-					dto.setTransport(entity.getTransSelf());
-				}
-				if (entity.getTransTemple() != null) {
-					dto.setTranTemple(entity.getTransTemple());
-				}
-
-				dto.setNorthEast(entity.getNortheast());
-				dto.setNorth(entity.getNorth());
-				dto.setEast(entity.getEast());
-				dto.setWestern(entity.getWest());
-				dto.setSouth(entity.getSouth());
-
-				if (entity.getPassCourse() != null) {
-					dto.setPassCourse(entity.getPassCourse());
-				}
-
-				if (entity.getStudyCourse() != null) {
-					dto.setStudyCourse(entity.getStudyCourse());
-				}
-			}
+			dashboardEntities = dashboardRepository.getProvinceDataByRegionId(regionId);
 		} catch (Exception e) {
-			log.error("mapEntityToDto >>> " + e.getMessage());
+			log.error("getAllDataReport >>>> " + e.getMessage());
 			e.printStackTrace();
 		}
-		return dto;
-
+		return mapListEntityToDto(dashboardEntities);
 	}
 
 }

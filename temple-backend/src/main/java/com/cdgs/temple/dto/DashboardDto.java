@@ -1,20 +1,18 @@
 package com.cdgs.temple.dto;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DashboardDto {
 	private Long memberId;
 	private Long genderMale;
 	private Long genderFemale;
-	/*** gender that not specified. * */
+	/*** gender that not specified. **/
 	private Long genderNotspec;
 	private Long tranTemple;
 	private Long transport;
-	private Long newStudent;
-	private Long bangkok;
 	private Long central;
-	/*** จังหวัด สกลนคร * */
-	private Long sakon;
+	/*** จังหวัด สกลนคร **/
 	private Long northEast;
 	private Long north;
 	private Long south;
@@ -24,18 +22,16 @@ public class DashboardDto {
 	private Long passCourse;
 	/*** คอร์สที่กำลังศึกษา **/
 	private Long studyCourse;
-	private List<String> province;
-	private List<Long> countProvince;
-	private List<String> region;
-
+	private String province;
+	private Long totalMemberHasCourse;
+	
 	public DashboardDto() {
 		super();
 	}
 
 	public DashboardDto(Long memberId, Long genderMale, Long genderFemale, Long genderNotspec, Long tranTemple,
-			Long transport, Long newStudent, Long bangkok, Long central, Long sakon, Long northEast, Long north,
-			Long south, Long east, Long western, Long passCourse, Long studyCourse, List<String> province,
-			List<Long> countProvince, List<String> region) {
+			Long transport, Long central, Long northEast, Long north, Long south, Long east, Long western,
+			Long passCourse, Long studyCourse, String province, Long totalMemberHasCourse) {
 		super();
 		this.memberId = memberId;
 		this.genderMale = genderMale;
@@ -43,10 +39,7 @@ public class DashboardDto {
 		this.genderNotspec = genderNotspec;
 		this.tranTemple = tranTemple;
 		this.transport = transport;
-		this.newStudent = newStudent;
-		this.bangkok = bangkok;
 		this.central = central;
-		this.sakon = sakon;
 		this.northEast = northEast;
 		this.north = north;
 		this.south = south;
@@ -55,8 +48,7 @@ public class DashboardDto {
 		this.passCourse = passCourse;
 		this.studyCourse = studyCourse;
 		this.province = province;
-		this.countProvince = countProvince;
-		this.region = region;
+		this.totalMemberHasCourse = totalMemberHasCourse;
 	}
 
 	public Long getMemberId() {
@@ -107,36 +99,12 @@ public class DashboardDto {
 		this.transport = transport;
 	}
 
-	public Long getNewStudent() {
-		return newStudent;
-	}
-
-	public void setNewStudent(Long newStudent) {
-		this.newStudent = newStudent;
-	}
-
-	public Long getBangkok() {
-		return bangkok;
-	}
-
-	public void setBangkok(Long bangkok) {
-		this.bangkok = bangkok;
-	}
-
 	public Long getCentral() {
 		return central;
 	}
 
 	public void setCentral(Long central) {
 		this.central = central;
-	}
-
-	public Long getSakon() {
-		return sakon;
-	}
-
-	public void setSakon(Long sakon) {
-		this.sakon = sakon;
 	}
 
 	public Long getNorthEast() {
@@ -195,27 +163,19 @@ public class DashboardDto {
 		this.studyCourse = studyCourse;
 	}
 
-	public List<String> getProvince() {
+	public String getProvince() {
 		return province;
 	}
 
-	public void setProvince(List<String> province) {
+	public void setProvince(String province) {
 		this.province = province;
 	}
 
-	public List<Long> getCountProvince() {
-		return countProvince;
+	public Long getTotalMemberHasCourse() {
+		return totalMemberHasCourse;
 	}
 
-	public void setCountProvince(List<Long> countProvince) {
-		this.countProvince = countProvince;
-	}
-
-	public List<String> getRegion() {
-		return region;
-	}
-
-	public void setRegion(List<String> region) {
-		this.region = region;
+	public void setTotalMemberHasCourse(Long totalMemberHasCourse) {
+		this.totalMemberHasCourse = totalMemberHasCourse;
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ import com.cdgs.temple.util.ResponseDto;
 public class DashboardController {
 	private DashboardService dashboardService;
 	private MemberService memberService;
-	
+
 	@Autowired
 	public DashboardController(DashboardService dashboardService, MemberService memberService) {
 		super();
@@ -33,19 +34,39 @@ public class DashboardController {
 
 	@GetMapping(path = "")
 	@PreAuthorize("hasRole('monk') or hasRole('user')")
-	public ResponseEntity<ResponseDto<DashboardDto>> getAllUsers() {
+	public ResponseEntity<ResponseDto<DashboardDto>> getDashboardData() {
 		ResponseDto<DashboardDto> res = new ResponseDto<>();
 		try {
 			List<DashboardDto> listDto = new ArrayList<>();
 			MemberDto member = memberService.getCurrentMember();
-			DashboardDto reportGenDto = null;
+			DashboardDto dashboardDto = null;
 			if (member.getRoleId() == Long.parseLong("2")) {
-				reportGenDto = dashboardService.getReportDashboardMonkData();
+				dashboardDto = dashboardService.getReportDashboardMonkData();
 			} else if (member.getRoleId() == Long.parseLong("3")) {
-				reportGenDto = dashboardService.getReportDashboardUserData(member.getId());
+				dashboardDto = dashboardService.getReportDashboardUserData(member.getId());
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			listDto.add(reportGenDto);
+			listDto.add(dashboardDto);
+			res.setData(listDto);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping(path = "/{region}")
+	@PreAuthorize("hasRole('monk')")
+	public ResponseEntity<ResponseDto<DashboardDto>> getProvinceDataByRegion(
+			@PathVariable(value = "region") Long regionId) {
+		ResponseDto<DashboardDto> res = new ResponseDto<>();
+		try {
+			List<DashboardDto> listDto;
+			listDto = dashboardService.getProvinceDashboardDataByRegionId(regionId);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listDto);
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
