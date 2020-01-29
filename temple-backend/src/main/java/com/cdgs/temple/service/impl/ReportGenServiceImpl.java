@@ -76,30 +76,6 @@ public class ReportGenServiceImpl implements ReportGenService {
 		return dtoList;
 	}
 
-	@Override
-	public ReportGenDto getReportDashboardMonkData() {
-		ReportGenEntity reportGenEntity = new ReportGenEntity();
-		try {
-			reportGenEntity = reportGenRepository.getReportDashboardMonkData();
-		} catch (Exception e) {
-			log.error("getAllDataReport >>>> " + e.getMessage());
-			e.printStackTrace();
-		}
-		return mapEntityToDto(reportGenEntity);
-	}
-
-	@Override
-	public ReportGenDto getReportDashboardUserData(Long memberId) {
-		ReportGenEntity reportGenEntity = new ReportGenEntity();
-		try {
-			reportGenEntity = reportGenRepository.getReportDashboardUserData(memberId);
-		} catch (Exception e) {
-			log.error("getAllDataReport >>>> " + e.getMessage());
-			e.printStackTrace();
-		}
-		return mapEntityToDto(reportGenEntity);
-	}
-
 	private ReportGenDto mapEntityToDto(ReportGenEntity entity) {
 		ReportGenDto dto = new ReportGenDto();
 		try {
@@ -152,7 +128,6 @@ public class ReportGenServiceImpl implements ReportGenService {
 			e.printStackTrace();
 		}
 		return dto;
-
 	}
 
 }
