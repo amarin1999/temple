@@ -9,10 +9,5 @@ public interface ReportGenService {
 	
 	List<ReportGenDto> getDataReportByCourseId(Long courseId);
 	
-	ReportGenDto getReportDashboardMonkData();
-	
 	List<ReportGenDto> findCourseName();
-
-	ReportGenDto getReportDashboardUserData(Long memberId);
-
 }

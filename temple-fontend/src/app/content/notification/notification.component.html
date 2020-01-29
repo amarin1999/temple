@@ -1,15 +1,20 @@
 <div class="wrapper-menu">
   <div class="ui-g">
     <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+      <a  [routerLink]="[ '/notification']">
       <i class="pi pi-bell" style="font-size: 1.7em;color:#007ad9"></i>
-      <span> คุณมีข้อความแจ้งเตือนเกี่ยวกับ คอร์ส ( ชื่อคอร์ส ) </span>
+      <span> คุณมีข้อความแจ้งเตือนเกี่ยวกับ คอร์ส ( ชื่อคอร์ส ) ...( คลิกเพื่อดูเพิ่มเติม )</span>
+    </a>
+      <!-- <button pButton type="button" label="ดูรายละเอียดการแจ้งเตือน" ></button> -->
+      &nbsp;
+  <!-- <button class="button-reject" pButton type="button" label="ปิดแจ้งเตือน" ></button> -->
     </div>
     <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
     </div>
-    <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12" style="text-align: right">
-        <button pButton type="button" label="ดูรายละเอียดการแจ้งเตือน" ></button>
-        &nbsp;
+    <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12" style="text-align: right;">
+        <!-- <button pButton type="button" label="ดูรายละเอียดการแจ้งเตือน" ></button>
+        &nbsp; -->
     <button class="button-reject" pButton type="button" label="ปิดแจ้งเตือน" ></button>
-    </div>
+    </div> 
   </div>
 </div>

@@ -13,12 +13,12 @@ export class DashboardService {
     return this.http.get(ApiConstants.baseURl + `/dashboard`).pipe(
       map((res: {}) => {
         return res['data'].map(data => {
-          const { tranTemple, transport, genderMale, genderFemale, genderNotspec, central, northEast, north, south, east, western ,
+          const { tranTemple, transport, genderMale, genderFemale, genderNotspec, central, northEast, north, south, east, western,
             passCourse, studyCourse } = data;
           return {
             gender: [genderMale, genderFemale, genderNotspec],
             transport: [tranTemple, transport],
-            region: [central, northEast, north, south, east, western],
+            region: [north, northEast, western, central, east, south],
             courseHistory: [passCourse, studyCourse]
           }
         });
