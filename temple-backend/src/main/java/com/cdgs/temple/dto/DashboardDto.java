@@ -1,6 +1,7 @@
 package com.cdgs.temple.dto;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DashboardDto {
 	private Long memberId;
@@ -11,7 +12,6 @@ public class DashboardDto {
 	private Long tranTemple;
 	private Long transport;
 	private Long newStudent;
-	private Long bangkok;
 	private Long central;
 	/*** จังหวัด สกลนคร * */
 	private Long sakon;
@@ -24,18 +24,16 @@ public class DashboardDto {
 	private Long passCourse;
 	/*** คอร์สที่กำลังศึกษา **/
 	private Long studyCourse;
-	private List<String> province;
-	private List<Long> countProvince;
-	private List<String> region;
-
+	/*** รายชื่อจังหวัดที่มีในคอร์สที่ปิดแล้ว และจำนวน **/
+	private Map<String,Long> countProvince = new HashMap<>();
+	
 	public DashboardDto() {
 		super();
 	}
 
 	public DashboardDto(Long memberId, Long genderMale, Long genderFemale, Long genderNotspec, Long tranTemple,
 			Long transport, Long newStudent, Long bangkok, Long central, Long sakon, Long northEast, Long north,
-			Long south, Long east, Long western, Long passCourse, Long studyCourse, List<String> province,
-			List<Long> countProvince, List<String> region) {
+			Long south, Long east, Long western, Long passCourse, Long studyCourse, Map<String, Long> countProvince) {
 		super();
 		this.memberId = memberId;
 		this.genderMale = genderMale;
@@ -54,9 +52,7 @@ public class DashboardDto {
 		this.western = western;
 		this.passCourse = passCourse;
 		this.studyCourse = studyCourse;
-		this.province = province;
 		this.countProvince = countProvince;
-		this.region = region;
 	}
 
 	public Long getMemberId() {
@@ -113,14 +109,6 @@ public class DashboardDto {
 
 	public void setNewStudent(Long newStudent) {
 		this.newStudent = newStudent;
-	}
-
-	public Long getBangkok() {
-		return bangkok;
-	}
-
-	public void setBangkok(Long bangkok) {
-		this.bangkok = bangkok;
 	}
 
 	public Long getCentral() {
@@ -195,27 +183,11 @@ public class DashboardDto {
 		this.studyCourse = studyCourse;
 	}
 
-	public List<String> getProvince() {
-		return province;
-	}
-
-	public void setProvince(List<String> province) {
-		this.province = province;
-	}
-
-	public List<Long> getCountProvince() {
+	public Map<String, Long> getCountProvince() {
 		return countProvince;
 	}
 
-	public void setCountProvince(List<Long> countProvince) {
+	public void setCountProvince(Map<String, Long> countProvince) {
 		this.countProvince = countProvince;
-	}
-
-	public List<String> getRegion() {
-		return region;
-	}
-
-	public void setRegion(List<String> region) {
-		this.region = region;
 	}
 }

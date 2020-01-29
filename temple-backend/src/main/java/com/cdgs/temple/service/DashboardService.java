@@ -7,5 +7,6 @@ public interface DashboardService {
 	DashboardDto getReportDashboardMonkData();
 
 	DashboardDto getReportDashboardUserData(Long memberId);
-
+	
+	DashboardDto getProvinceDashboardDataByRegionId(Long regionId);
 }

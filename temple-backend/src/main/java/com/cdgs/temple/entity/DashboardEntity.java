@@ -1,9 +1,6 @@
 package com.cdgs.temple.entity;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-
 import javax.persistence.*;
 
 @NamedNativeQuery(name = "getReportDashboardMonkData", resultSetMapping = "getReportDashboardMonkDataMapping", query = "SELECT "
@@ -44,6 +41,17 @@ import javax.persistence.*;
 				@ColumnResult(name = "passCourse", type = Long.class),
 				@ColumnResult(name = "studyCourse", type = Long.class) }) })
 
+@NamedNativeQuery(name = "getProvinceByRegionIdData", resultSetMapping = "getProvinceByRegionIdDataMapping", query = "SELECT "
+		+ "p.province_desc AS province, COUNT(m.member_id) AS totalMemberHasCourse "
+		+ "FROM members_has_courses mhc " + "LEFT JOIN members m ON mhc.member_id = m.member_id "
+		+ "LEFT JOIN province p ON m.member_province_id = p.province_id " + "WHERE p.region_id = :regionId "
+		+ "GROUP BY p.province_id")
+
+@SqlResultSetMapping(name = "getProvinceByRegionIdDataMapping", classes = {
+		@ConstructorResult(targetClass = DashboardEntity.class, columns = {
+				@ColumnResult(name = "province", type = String.class),
+				@ColumnResult(name = "totalMemberHasCourse", type = Long.class) }) })
+
 @Entity
 public class DashboardEntity implements Serializable {
 	/**
@@ -66,10 +74,8 @@ public class DashboardEntity implements Serializable {
 	private Long south;
 	private Long passCourse;
 	private Long studyCourse;
-	@ElementCollection(targetClass = String.class)
-	private Map<String, Long> province;
-	@ElementCollection(targetClass = String.class)
-	private List<String> region;
+	private String province;
+	private Long totalMemberHasCourse;
 
 	public DashboardEntity() {
 		super();
@@ -77,7 +83,7 @@ public class DashboardEntity implements Serializable {
 
 	public DashboardEntity(Long memberId, Long genderM, Long genderF, Long genderOther, Long transSelf,
 			Long transTemple, Long center, Long northeast, Long north, Long east, Long west, Long south,
-			Long passCourse, Long studyCourse, Map<String, Long> province, List<String> region) {
+			Long passCourse, Long studyCourse, String province, Long totalMemberHasCourse) {
 		super();
 		this.memberId = memberId;
 		this.genderM = genderM;
@@ -94,9 +100,9 @@ public class DashboardEntity implements Serializable {
 		this.passCourse = passCourse;
 		this.studyCourse = studyCourse;
 		this.province = province;
-		this.region = region;
+		this.totalMemberHasCourse = totalMemberHasCourse;
 	}
-	
+
 	public DashboardEntity(Long genderM, Long genderF, Long genderOther, Long transSelf, Long transTemple, Long center,
 			Long northeast, Long north, Long east, Long west, Long south) {
 		super();
@@ -117,6 +123,12 @@ public class DashboardEntity implements Serializable {
 		super();
 		this.passCourse = passCourse;
 		this.studyCourse = studyCourse;
+	}
+
+	public DashboardEntity(String province, Long totalMemberHasCourse) {
+		super();
+		this.province = province;
+		this.totalMemberHasCourse = totalMemberHasCourse;
 	}
 
 	public Long getMemberId() {
@@ -231,19 +243,19 @@ public class DashboardEntity implements Serializable {
 		this.studyCourse = studyCourse;
 	}
 
-	public Map<String, Long> getProvince() {
+	public String getProvince() {
 		return province;
 	}
 
-	public void setProvince(Map<String, Long> province) {
+	public void setProvince(String province) {
 		this.province = province;
 	}
 
-	public List<String> getRegion() {
-		return region;
+	public Long getTotalMemberHasCourse() {
+		return totalMemberHasCourse;
 	}
 
-	public void setRegion(List<String> region) {
-		this.region = region;
+	public void setTotalMemberHasCourse(Long totalMemberHasCourse) {
+		this.totalMemberHasCourse = totalMemberHasCourse;
 	}
 }
