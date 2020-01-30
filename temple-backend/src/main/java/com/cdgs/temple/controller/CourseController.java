@@ -47,9 +47,7 @@ import com.cdgs.temple.service.SensationService;
 import com.cdgs.temple.service.SpecialApproveService;
 import com.cdgs.temple.service.TransportationService;
 import com.cdgs.temple.service.impl.NotificationsServiceImpl;
-import com.cdgs.temple.util.FirebaseConnection;
 import com.cdgs.temple.util.ResponseDto;
-import com.google.cloud.firestore.Firestore;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
