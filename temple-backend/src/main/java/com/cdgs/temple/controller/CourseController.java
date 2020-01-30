@@ -1,6 +1,7 @@
 package com.cdgs.temple.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class CourseController {
 	private SpecialApproveService specialApproveService;
 	private SensationService sensationService;
 	private ApprovalCoursesService approvalCoursesService;
-	private NotificationsServiceImpl notificationsService = new NotificationsServiceImpl();
+	private NotificationsService notificationsService = new NotificationsServiceImpl();
 
 	@Autowired
 	public CourseController(TransportationService transportationService, MemberService memberService,
@@ -502,17 +503,21 @@ public class CourseController {
 			body.setCourseId(courseOutTimeDto.getId());
 			body.setStatus("4");
 			body.setMemberId(member.getId());
-			specialApproveService.create(body);
+			SpecialApproveDto spaDto = specialApproveService.create(body);
 			listDto.add(courseOutTimeDto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listDto);
 			res.setCode(200);
-			
+
+			//เพิ่มข้อมูล notification ไปให้ ผู้สอน
 			for (Long teacherId : courseDto.getTeacher()) {
 				NotificationsDto notificationDto = new NotificationsDto();
+				notificationDto.setSpecialApproveID(spaDto.getSpecialApproveId());
 				notificationDto.setCourseID(courseOutTimeDto.getId());
 				notificationDto.setMemberID(teacherId);
 				notificationDto.setNotificationStatus(Long.parseLong("0"));
+				notificationDto.setDetail(courseOutTimeDto.getName());
+				notificationDto.setNotificationTime(Calendar.getInstance().getTime());
 				notificationsService.createNotifications(notificationDto);
 			}
 

@@ -3,7 +3,6 @@ package com.cdgs.temple.dto;
 import java.util.Date;
 
 public class NotificationsDto {
-	private int notificationID;
 	private Long specialApproveID;
 	private Long courseID;
 	//คนที่จะแจ้งเตือน
@@ -16,24 +15,15 @@ public class NotificationsDto {
 		super();
 	}
 
-	public NotificationsDto(int notificationID, Long specialApproveID, Long courseID, Long memberID, String detail,
-			Long notificationStatus, Date notificationTime) {
+	public NotificationsDto(Long specialApproveID, Long courseID, Long memberID, String detail, Long notificationStatus,
+			Date notificationTime) {
 		super();
-		this.notificationID = notificationID;
 		this.specialApproveID = specialApproveID;
 		this.courseID = courseID;
 		this.memberID = memberID;
 		this.detail = detail;
 		this.notificationStatus = notificationStatus;
 		this.notificationTime = notificationTime;
-	}
-
-	public int getNotificationID() {
-		return notificationID;
-	}
-
-	public void setNotificationID(int notificationID) {
-		this.notificationID = notificationID;
 	}
 
 	public Long getSpecialApproveID() {

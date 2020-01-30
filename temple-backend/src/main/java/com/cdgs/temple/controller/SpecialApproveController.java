@@ -3,11 +3,14 @@ package com.cdgs.temple.controller;
 import com.cdgs.temple.dto.CourseDto;
 import com.cdgs.temple.dto.CourseScheduleDto;
 import com.cdgs.temple.dto.MemberDto;
+import com.cdgs.temple.dto.NotificationsDto;
 import com.cdgs.temple.dto.SpecialApproveDto;
 import com.cdgs.temple.service.CourseScheduleService;
 import com.cdgs.temple.service.CourseService;
 import com.cdgs.temple.service.MemberService;
+import com.cdgs.temple.service.NotificationsService;
 import com.cdgs.temple.service.SpecialApproveService;
+import com.cdgs.temple.service.impl.NotificationsServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -28,6 +32,7 @@ public class SpecialApproveController {
 	private MemberService memberService;
 	private CourseService courseService;
 	private CourseScheduleService courseScheduleService;
+	private NotificationsService notificationsService = new NotificationsServiceImpl();
 
 	@Autowired
 	public SpecialApproveController(SpecialApproveService specialApproveService, MemberService memberService,
@@ -55,7 +60,7 @@ public class SpecialApproveController {
 				res.setCode(204);
 				return new ResponseEntity<>(res, HttpStatus.NO_CONTENT);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
@@ -114,19 +119,35 @@ public class SpecialApproveController {
 	public ResponseEntity<ResponseDto<SpecialApproveDto>> create(@Valid @RequestBody SpecialApproveDto body) {
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
 		List<SpecialApproveDto> specialApproves = new ArrayList<>();
-		SpecialApproveDto dto;
+		SpecialApproveDto spaDto;
+		CourseDto courseDto;
 		MemberDto member = memberService.getCurrentMember();
 		try {
 			body.setMemberId(member.getId());
 			body.setStatus("2");
-			dto = specialApproveService.create(body);
-			if (dto == null) {
+			spaDto = specialApproveService.create(body);
+			if (spaDto == null) {
 				throw new Exception("เงื่อนไขการสมัครไม่ถูกต้อง");
 			}
-			specialApproves.add(dto);
+			specialApproves.add(spaDto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(specialApproves);
 			res.setCode(200);
+
+			courseDto = courseService.getCourse(spaDto.getCourseId());
+
+			// เพิ่มข้อมูล notification ไปให้ ผู้สอน
+			for (MemberDto teacher : courseDto.getTeacherList()) {
+				NotificationsDto notificationDto = new NotificationsDto();
+				notificationDto.setSpecialApproveID(spaDto.getSpecialApproveId());
+				notificationDto.setCourseID(courseDto.getId());
+				notificationDto.setMemberID(teacher.getId());
+				notificationDto.setNotificationStatus(Long.parseLong("0"));
+				notificationDto.setDetail(courseDto.getName());
+				notificationDto.setNotificationTime(Calendar.getInstance().getTime());
+				notificationsService.createNotifications(notificationDto);
+			}
+
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
