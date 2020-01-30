@@ -28,7 +28,7 @@ export class NotificationComponent implements OnInit {
     this.userId = localStorage.getItem('userId');
 
 
-    this.fireBase.getNoticeData(parseInt(this.userId)).subscribe(res => {
+    this.fireBase.getCountNoticeByUserID(+(this.userId)).subscribe(res => {
       this.numberOfNotice = res;
     });
 
