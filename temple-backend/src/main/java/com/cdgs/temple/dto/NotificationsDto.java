@@ -1,32 +1,29 @@
 package com.cdgs.temple.dto;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import com.cdgs.temple.entity.CourseEntity;
-import com.cdgs.temple.entity.MemberEntity;
-import com.cdgs.temple.entity.SpecialApproveEntity;
-
-public class NotificationsDto implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 394603069323208813L;
-	
+public class NotificationsDto {
 	private int notificationID;
-	private SpecialApproveEntity specialApproveID;
-	private CourseEntity courseID;
-	private MemberEntity memberID;
-	private long notificationStatus;
+	private Long specialApproveID;
+	private Long courseID;
+	//คนที่จะแจ้งเตือน
+	private Long memberID;
+	private String detail;
+	private Long notificationStatus;
 	private Date notificationTime;
 	
-	public NotificationsDto(int notificationID, SpecialApproveEntity specialApproveID, CourseEntity courseID,
-			MemberEntity memberID, long notificationStatus, Date notificationTime) {
+	public NotificationsDto() {
+		super();
+	}
+
+	public NotificationsDto(int notificationID, Long specialApproveID, Long courseID, Long memberID, String detail,
+			Long notificationStatus, Date notificationTime) {
 		super();
 		this.notificationID = notificationID;
 		this.specialApproveID = specialApproveID;
 		this.courseID = courseID;
 		this.memberID = memberID;
+		this.detail = detail;
 		this.notificationStatus = notificationStatus;
 		this.notificationTime = notificationTime;
 	}
@@ -39,35 +36,43 @@ public class NotificationsDto implements Serializable {
 		this.notificationID = notificationID;
 	}
 
-	public SpecialApproveEntity getSpecialApproveID() {
+	public Long getSpecialApproveID() {
 		return specialApproveID;
 	}
 
-	public void setSpecialApproveID(SpecialApproveEntity specialApproveID) {
+	public void setSpecialApproveID(Long specialApproveID) {
 		this.specialApproveID = specialApproveID;
 	}
 
-	public CourseEntity getCourseID() {
+	public Long getCourseID() {
 		return courseID;
 	}
 
-	public void setCourseID(CourseEntity courseID) {
+	public void setCourseID(Long courseID) {
 		this.courseID = courseID;
 	}
 
-	public MemberEntity getMemberID() {
+	public Long getMemberID() {
 		return memberID;
 	}
 
-	public void setMemberID(MemberEntity memberID) {
+	public void setMemberID(Long memberID) {
 		this.memberID = memberID;
 	}
 
-	public long getNotificationStatus() {
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	public Long getNotificationStatus() {
 		return notificationStatus;
 	}
 
-	public void setNotificationStatus(long notificationStatus) {
+	public void setNotificationStatus(Long notificationStatus) {
 		this.notificationStatus = notificationStatus;
 	}
 

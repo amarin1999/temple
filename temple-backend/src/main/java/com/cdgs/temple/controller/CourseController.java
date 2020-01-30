@@ -29,6 +29,7 @@ import com.cdgs.temple.dto.CourseScheduleDto;
 import com.cdgs.temple.dto.CourseTeacherDto;
 import com.cdgs.temple.dto.MemberDto;
 import com.cdgs.temple.dto.MembersHasCourseDto;
+import com.cdgs.temple.dto.NotificationsDto;
 import com.cdgs.temple.dto.ResponseCountDto;
 import com.cdgs.temple.dto.SensationDto;
 import com.cdgs.temple.dto.SpecialApproveDto;
@@ -40,10 +41,14 @@ import com.cdgs.temple.service.CourseService;
 import com.cdgs.temple.service.CourseTeacherService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.service.MembersHasCourseService;
+import com.cdgs.temple.service.NotificationsService;
 import com.cdgs.temple.service.SensationService;
 import com.cdgs.temple.service.SpecialApproveService;
 import com.cdgs.temple.service.TransportationService;
+import com.cdgs.temple.service.impl.NotificationsServiceImpl;
+import com.cdgs.temple.util.FirebaseConnection;
 import com.cdgs.temple.util.ResponseDto;
+import com.google.cloud.firestore.Firestore;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -61,22 +66,24 @@ public class CourseController {
 	private SpecialApproveService specialApproveService;
 	private SensationService sensationService;
 	private ApprovalCoursesService approvalCoursesService;
+	private NotificationsServiceImpl notificationsService = new NotificationsServiceImpl();
 
 	@Autowired
-	public CourseController(CourseService courseService, MemberService memberService,
-			MembersHasCourseService membersHasCourseService, CourseScheduleService courseScheduleService,
-			CourseTeacherService courseTeacherService, SpecialApproveService specialApproveService,
-			SensationService sensationService, ApprovalCoursesService approvalCoursesService,
-			TransportationService transportationService) {
-		this.specialApproveService = specialApproveService;
-		this.courseService = courseService;
+	public CourseController(TransportationService transportationService, MemberService memberService,
+			CourseService courseService, MembersHasCourseService membersHasCourseService,
+			CourseScheduleService courseScheduleService, CourseTeacherService courseTeacherservice,
+			SpecialApproveService specialApproveService, SensationService sensationService,
+			ApprovalCoursesService approvalCoursesService) {
+		super();
+		this.transportationService = transportationService;
 		this.memberService = memberService;
+		this.courseService = courseService;
 		this.membersHasCourseService = membersHasCourseService;
 		this.courseScheduleService = courseScheduleService;
-		this.courseTeacherservice = courseTeacherService;
+		this.courseTeacherservice = courseTeacherservice;
+		this.specialApproveService = specialApproveService;
 		this.sensationService = sensationService;
 		this.approvalCoursesService = approvalCoursesService;
-		this.transportationService = transportationService;
 	}
 
 	@GetMapping(path = "/allmembers/{id}")
@@ -100,7 +107,7 @@ public class CourseController {
 
 	@GetMapping(path = "/user")
 	@PreAuthorize("hasRole('user')")
-	public ResponseEntity<ResponseDto<CourseDto>> GetCoursesUser(@RequestParam("status") String status) {
+	public ResponseEntity<ResponseDto<CourseDto>> getCoursesUser(@RequestParam("status") String status) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> dto = new ArrayList<>();
 		MemberDto member = memberService.getCurrentMember();
@@ -115,7 +122,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("catch >> getCoursesUser ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -129,7 +136,7 @@ public class CourseController {
 	 */
 	@GetMapping(path = "")
 	@PreAuthorize("hasRole('admin') or hasRole('monk')")
-	public ResponseEntity<ResponseDto<CourseDto>> GetCourses() {
+	public ResponseEntity<ResponseDto<CourseDto>> getCourses() {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> dto = new ArrayList<>();
 		MemberDto member = memberService.getCurrentMember();
@@ -144,8 +151,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println("catch >> GetCourses");
-			e.printStackTrace();
+			log.error("catch >> getCourses ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -173,7 +179,6 @@ public class CourseController {
 			} else {
 				count = courseService.countCourses();
 			}
-			// count = courseService.countCourses();
 			dto.setTotalRecord(count);
 			listDto.add(dto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -181,6 +186,7 @@ public class CourseController {
 			res.setCode(201);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("catch >> countCourses ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -190,15 +196,13 @@ public class CourseController {
 
 	@GetMapping(value = "/approve")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<ApprovalCoursesDto>> TeacherGetCoursesApproval(@RequestParam("offset") int offset,
+	public ResponseEntity<ResponseDto<ApprovalCoursesDto>> teacherGetCoursesApproval(@RequestParam("offset") int offset,
 			@RequestParam("limit") int limit, @RequestParam("query") String query) {
 		ResponseDto<ApprovalCoursesDto> res = new ResponseDto<>();
 		List<ApprovalCoursesDto> dto;
 		MemberDto member = memberService.getCurrentMember();
 
 		try {
-			System.out.println(offset);
-			System.out.println(limit);
 			// เปลี่ยนไปใช้ ApprovalCourses จากเดิม Course (TeacherGetCoursesApproval)
 			// เพิ่มจำนวนนักเรียนในแต่ละคอร์ส
 			dto = approvalCoursesService.getApprovalCourses(query, member.getId(), limit, offset);
@@ -207,7 +211,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("catch >> teacherGetCoursesApproval ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -217,15 +221,13 @@ public class CourseController {
 
 	@GetMapping(value = "/approve/outTime")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<CourseDto>> TeacherGetCoursesOutTime(@RequestParam("offset") int offset,
+	public ResponseEntity<ResponseDto<CourseDto>> teacherGetCoursesOutTime(@RequestParam("offset") int offset,
 			@RequestParam("limit") int limit, @RequestParam("query") String query) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> dto;
 		MemberDto member = memberService.getCurrentMember();
 
 		try {
-			System.out.println(offset);
-			System.out.println(limit);
 			// เปลี่ยนไปใช้ ApprovalCourses จากเดิม Course (TeacherGetCoursesApproval)
 			// เพิ่มจำนวนนักเรียนในแต่ละคอร์ส
 			dto = courseService.TeacherGetCoursesApprovalOutTime(member.getId(), offset, limit, query);
@@ -234,7 +236,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("catch >> teacherGetCoursesOutTime ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -244,7 +246,7 @@ public class CourseController {
 
 	@GetMapping(value = "/approve/count")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<ResponseCountDto>> CountTeacherCoursesApproval() {
+	public ResponseEntity<ResponseDto<ResponseCountDto>> countTeacherCoursesApproval() {
 		ResponseDto<ResponseCountDto> res = new ResponseDto<>();
 		List<ResponseCountDto> listDto = new ArrayList<>();
 		ResponseCountDto dto = new ResponseCountDto();
@@ -259,6 +261,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("catch >> countTeacherCoursesApproval ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -326,12 +329,12 @@ public class CourseController {
 					}
 				}
 			}
-			
+
 			List<MemberDto> listMemDto = memberService.getMemberByCourseId(courseDto.getId());
-			
+
 			List<Long> listTeacher = new ArrayList<>();
 			List<MemberDto> listTeacherDto = new ArrayList<>();
-			for(MemberDto memberDto : listMemDto) {
+			for (MemberDto memberDto : listMemDto) {
 				listTeacher.add(memberDto.getId());
 				listTeacherDto.add(memberDto);
 			}
@@ -475,7 +478,7 @@ public class CourseController {
 	}
 
 	@PostMapping(value = "/outTime")
-	public ResponseEntity<ResponseDto<CourseDto>> AssignCoursesOutTime(@Valid @RequestBody SpecialApproveDto body) {
+	public ResponseEntity<ResponseDto<CourseDto>> assignCoursesOutTime(@Valid @RequestBody SpecialApproveDto body) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		CourseDto courseDto = new CourseDto();
 		CourseDto courseOutTimeDto = new CourseDto();
@@ -504,6 +507,15 @@ public class CourseController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listDto);
 			res.setCode(200);
+			
+			for (Long teacherId : courseDto.getTeacher()) {
+				NotificationsDto notificationDto = new NotificationsDto();
+				notificationDto.setCourseID(courseOutTimeDto.getId());
+				notificationDto.setMemberID(teacherId);
+				notificationDto.setNotificationStatus(Long.parseLong("0"));
+				notificationsService.createNotifications(notificationDto);
+			}
+
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());

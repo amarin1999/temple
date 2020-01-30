@@ -1,8 +1,5 @@
 package com.cdgs.temple.dto;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class DashboardDto {
 	private Long memberId;
 	private Long genderMale;
