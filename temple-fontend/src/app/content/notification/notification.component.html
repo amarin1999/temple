@@ -1,14 +1,14 @@
 
-<ng-container *ngIf="currentUrl != '/notification'"> 
+<ng-container *ngIf="currentUrl != '/notification'&&numberOfNotice" > 
 
 <ng-container  *ngIf="notiDisable">
 
-<div class="wrapper-menu">
+<div class="wrapper-menu" >
   <div class="ui-g">
     <div class="ui-g-4 ui-lg-8 ui-md-10 ui-sm-12">
       <a  [routerLink]="[ '/notification']">
       <i class="pi pi-bell" style="font-size: 1.7em;color:#007ad9"></i>
-      <span> คุณมีข้อความแจ้งเตือนเกี่ยวกับ คอร์ส ( ชื่อคอร์ส ) ...( คลิกเพื่อดูเพิ่มเติม )</span>
+      <span> คุณมี {{numberOfNotice}} การแจ้งเตือน ...( คลิกเพื่อดูเพิ่มเติม )</span>
     </a>
       <!-- <button pButton type="button" label="ดูรายละเอียดการแจ้งเตือน" ></button> -->
       &nbsp;

@@ -16,6 +16,8 @@ export class NotificationComponent implements OnInit {
   notiDisable: boolean = true;
   currentUrl: string;
   items: Observable<any[]>;
+  userId: string;
+  numberOfNotice: number;
   // เรียก current path เพื่อซ่อนการแจ้งเตือน
   constructor(private router: Router, private fireBase: FirebaseService) {
     this.router.events.subscribe((_: NavigationEnd) => this.currentUrl = _.url);
@@ -23,8 +25,12 @@ export class NotificationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fireBase.getNoticeData().subscribe(res => console.log(res)
-    )
+    this.userId = localStorage.getItem('userId');
+
+
+    this.fireBase.getNoticeData(parseInt(this.userId)).subscribe(res => {
+      this.numberOfNotice = res;
+    });
 
   }
   toggle() {
