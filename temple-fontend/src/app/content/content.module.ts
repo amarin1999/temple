@@ -37,7 +37,6 @@ import { ManageStorageComponent } from "./manage-storage/manage-storage.componen
 import { ManageCourseForMonkComponent } from "./manage-course-for-monk/manage-course-for-monk.component";
 import { FormatTHdatePipe } from "../shared/pipe/formatTHdate.pipe";
 import { ManageTransportationComponent } from "./manage-transportation/manage-transportation.component";
-import { from } from "rxjs";
 import { CourseRegisterOutTimeComponent } from "./courses/course-register-out-time/course-register-out-time.component";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { ThaiCalendarModule } from '../shared/directive/thai-calendar/thai-calendar.module';
