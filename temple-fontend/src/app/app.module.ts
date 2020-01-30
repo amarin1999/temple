@@ -10,6 +10,8 @@ import { AuthModule } from './auth/auth.module';
 import { AuthService } from './shared/service/auth.service';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment.prod';
 @NgModule({
   declarations: [
     AppComponent
@@ -20,7 +22,8 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     CoreModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy }
