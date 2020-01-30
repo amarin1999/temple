@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+import { Notifications } from '../interfaces/notification';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +14,7 @@ export class FirebaseService {
   }
   getDataNoticeByUserID(userId: number) {
     return this.db.collection('notification', param => param.where('memberID', '==', userId).where('notificationStatus', '==', 0))
-      .snapshotChanges().pipe(map(data => data.map(dataMap=>dataMap.payload.doc.data())));
+      .snapshotChanges().pipe(map(data => data.map(dataMap => dataMap.payload.doc.data() as Notifications)));
   }
 
 }

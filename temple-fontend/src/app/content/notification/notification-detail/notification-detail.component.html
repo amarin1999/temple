@@ -7,7 +7,7 @@
     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
       <p-tabView>
         <p-tabPanel header="แจ้งเตือนคอร์สที่สมัคร">
-          <p-table #tb1 [columns]="cols" [value]="courses" [paginator]="true" [rows]="5" [responsive]="true">
+          <p-table #tb1 [value]="notices" [paginator]="true" [rows]="5" [responsive]="true">
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
             <ng-template pTemplate="caption">
               <div class="ui-g ui-fluid">
@@ -36,35 +36,20 @@
                     ariaLabelAsc="Activate to sort in ascending order">
                   </p-sortIcon>
                 </th>
-                
+
                 <th>
 
                 </th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <ng-template pTemplate="body" let-rowData>
               <tr>
-                <td *ngFor="let col of columns;">
-                  <div>
-                    <span class="ui-column-title">{{col.header}}</span>
-                    <div *ngIf="col.field == 'stDate'" style="text-align: center">
-                      {{rowData['stDate'] | date}} -
-                      {{rowData['endDate'] | date}}
-                    </div>
-                    <div *ngIf="col.field == 'conditionMin'">
-                      ผ่านการเรียนอย่างน้อย {{rowData['conditionMin']}} คอร์ส
-                    </div>
-                    <div *ngIf="col.field != 'stDate'&&col.field != 'conditionMin'">
-                      {{rowData[col.field]}}
-                    </div>
-                  </div>
+                <td>
+                  {{rowData.notificationTime.toDate()|formatTHdate}}
 
                 </td>
                 <td style="text-align: center">
-                  <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-                    <button pButton type="button" label="สมัครคอร์สนอกเวลา"
-                      (click)="showDisplay(rowData['id'])"></button>
-                  </div>
+                 มีผู้สมัครคอร์ส {{rowData.detail}}
                 </td>
               </tr>
             </ng-template>

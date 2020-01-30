@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { FirebaseService } from 'src/app/shared/service/firebase.service';
+import { Notifications } from 'src/app/shared/interfaces/notification';
 
 @Component({
   selector: 'app-notification-detail',
@@ -8,7 +9,7 @@ import { FirebaseService } from 'src/app/shared/service/firebase.service';
   styleUrls: ['./notification-detail.component.scss']
 })
 export class NotificationDetailComponent implements OnInit {
-
+  notices: Notifications[];
   constructor(private breadCrumbService: BreadcrumbService, private firebase: FirebaseService) { }
 
   ngOnInit() {
@@ -22,7 +23,10 @@ export class NotificationDetailComponent implements OnInit {
   }
   private setDataFromFirebase() {
     const userID = localStorage.getItem('userId');
-    this.firebase.getDataNoticeByUserID(+userID).subscribe(res => console.log(res)
+    this.firebase.getDataNoticeByUserID(+userID).subscribe(res => {
+    this.notices = res
+      console.log(this.notices[0].notificationTime.toDate());
+    }
     )
   }
 }
