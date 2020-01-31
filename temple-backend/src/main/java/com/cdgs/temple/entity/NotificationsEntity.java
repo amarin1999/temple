@@ -47,6 +47,10 @@ public class NotificationsEntity implements Serializable {
 	
 	@Temporal(TemporalType.TIME)
 	private Date notificationTime;
+	
+	public NotificationsEntity() {
+		super();
+	}
 
 	public NotificationsEntity(int notificationID, SpecialApproveEntity specialApproveID, CourseEntity courseID,
 			MemberEntity memberID, long notificationStatus, Date notificationTime) {

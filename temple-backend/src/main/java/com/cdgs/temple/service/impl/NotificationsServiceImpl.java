@@ -20,5 +20,4 @@ public class NotificationsServiceImpl implements NotificationsService {
 			e.printStackTrace();
 		}
 	}
-
 }
