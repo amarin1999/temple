@@ -44,13 +44,17 @@ export class NotificationDetailComponent implements OnInit {
   private getRole() {
     this.authService.getRole().subscribe(res => this.role = res);
   }
-  click(e) {
+  openSpecailCourse(e) {
     if (e.specialApproveStatus === '4') {
       this.router.navigateByUrl(`/approvalCourseOutTime/${e.courseID}?course=${e.detail}&&type=OutTime`);
       // console.log(e.courseID);
     } else {
       this.router.navigateByUrl(`/approval/${e.courseID}?course=${e.detail}&&type=InTime`);
     }
+
+  }
+  getCourseDetail(e){
+    this.router.navigateByUrl(`/courses/${e.courseID}`);
 
   }
 }

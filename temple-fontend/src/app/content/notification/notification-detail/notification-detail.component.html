@@ -54,7 +54,7 @@
                 </td>
                 <td style="text-align: center">
                   {{rowData.courseID}}
-                  <button pButton type="button" label="Click" (click)="click(rowData)"></button>
+                  <button pButton type="button" label="Click" (click)="openSpecailCourse(rowData)"></button>
                 </td>
               </tr>
             </ng-template>
@@ -62,7 +62,7 @@
         </p-tabPanel>
         <!-- แจ้งเตือนของ user -->
         <p-tabPanel header="แจ้งเตือนคอร์สที่สมัคร" *ngIf="showRole('user')" [selected]="true">
-          <p-table #tb2  [value]="notices|async" [paginator]="true" [rows]="5" [responsive]="true">
+          <p-table #tb2 [value]="notices|async" [paginator]="true" [rows]="5" [responsive]="true">
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
             <ng-template pTemplate="caption">
               <div class="ui-g ui-fluid">
@@ -97,15 +97,15 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
-              <tr>
+              <tr *ngIf="rowData.specialApproveStatus != 0 ">
                 <td>
                   {{rowData?.notificationTime.toDate()|formatTHdate}}
                 </td>
                 <td>
-                  {{rowData.detail}}
+                  <span> ตอร์ส {{rowData?.detail}} ที่สมัครไว้ <b style="color: #28a745;">ผ่านการอนุมัติ</b> </span>
                 </td>
                 <td style="text-align: center">
-                  <button pButton type="button" label="Click"></button>
+                  <button pButton type="button" label="ดูรายละเอียดคอร์ส" (click)="getCourseDetail(rowData)"></button>
                 </td>
               </tr>
             </ng-template>
@@ -158,7 +158,7 @@
                 <td>
 
                 </td>
-                
+
                 <td style="text-align: center">
                   <button pButton type="button" label="Click"></button>
                 </td>
