@@ -35,8 +35,43 @@ public class CourseDto implements Serializable {
     private List<CourseScheduleDto> dateList;
     private List<Date> date;
     private TransportationDto transportation;
+    
+    public CourseDto() {
+    	super();
+    }
 
-    public Long getId() {
+    public CourseDto(Long id, Long no, String name, Date stDate, Date endDate, String detail, int conditionMin,
+			Date createDate, Date lastUpdate, Long memberId, String memberFname, String memberLname, Long locationId,
+			String locationName, String mhcStatus, String saStatus, String status, int canRegister, List<Long> teacher,
+			List<MemberDto> teacherList, List<CourseScheduleDto> dateList, List<Date> date,
+			TransportationDto transportation) {
+		super();
+		this.id = id;
+		this.no = no;
+		this.name = name;
+		this.stDate = stDate;
+		this.endDate = endDate;
+		this.detail = detail;
+		this.conditionMin = conditionMin;
+		this.createDate = createDate;
+		this.lastUpdate = lastUpdate;
+		this.memberId = memberId;
+		this.memberFname = memberFname;
+		this.memberLname = memberLname;
+		this.locationId = locationId;
+		this.locationName = locationName;
+		this.mhcStatus = mhcStatus;
+		this.saStatus = saStatus;
+		this.status = status;
+		this.canRegister = canRegister;
+		this.teacher = teacher;
+		this.teacherList = teacherList;
+		this.dateList = dateList;
+		this.date = date;
+		this.transportation = transportation;
+	}
+
+	public Long getId() {
         return id;
     }
 
