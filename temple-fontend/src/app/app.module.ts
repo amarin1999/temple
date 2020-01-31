@@ -12,7 +12,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment.prod';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore,AngularFirestoreModule  } from '@angular/fire/firestore';
 @NgModule({
   declarations: [
     AppComponent
@@ -24,7 +24,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy },AngularFirestore
