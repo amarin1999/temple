@@ -5,5 +5,6 @@ export interface Notifications {
     notificationStatus: number;
     notificationTime: firebase.firestore.Timestamp;
     specialApproveID: number;
+    specialApproveStatus: string;
 }
 

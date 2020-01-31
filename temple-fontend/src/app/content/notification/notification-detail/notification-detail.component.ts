@@ -35,7 +35,7 @@ export class NotificationDetailComponent implements OnInit {
   private setDataFromFirebase() {
     this.userID = localStorage.getItem('userId');
     this.notices = this.firebase.getDataNoticeByUserID(+this.userID);
-    
+
   }
   showRole(...role) {
     return role.includes(this.role);
@@ -45,8 +45,12 @@ export class NotificationDetailComponent implements OnInit {
     this.authService.getRole().subscribe(res => this.role = res);
   }
   click(e) {
-        console.log(e.courseID);
-    this.router.navigateByUrl(`/approvalCourseOutTime/${e.courseID}?course=${e.detail}&&type=OutTime`);
+    if (e.specialApproveStatus === '4') {
+      this.router.navigateByUrl(`/approvalCourseOutTime/${e.courseID}?course=${e.detail}&&type=OutTime`);
+      // console.log(e.courseID);
+    } else {
+      this.router.navigateByUrl(`/approval/${e.courseID}?course=${e.detail}&&type=InTime`);
+    }
 
   }
 }
