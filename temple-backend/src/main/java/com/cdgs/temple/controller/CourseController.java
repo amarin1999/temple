@@ -307,11 +307,11 @@ public class CourseController {
 				courseDto = courseService.getCourseUser(member.getId(), id);
 				courseDto.setTeacherList(memberService.getAllUsersWithOutImg());
 				if (courseDto.getTransportation() == null) {
-					TransportationDto transportationDto = new TransportationDto();
+					TransportationDto transportationDto;
 					if (courseDto.getNo() == Long.parseLong("0")) {
 						transportationDto = transportationService.getTransportationByCourseId(id);
 					} else {
-						SpecialApproveDto specialApproveDto = new SpecialApproveDto();
+						SpecialApproveDto specialApproveDto;
 						specialApproveDto = specialApproveService.getByCourseIdAndMemberId(courseDto.getId(),
 								member.getId());
 						transportationDto = transportationService
