@@ -5,9 +5,11 @@
     </div>
     <div class="line"></div>
     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+{{notices|async | json}}
       <p-tabView>
-        <p-tabPanel header="แจ้งเตือนคอร์สที่สมัคร">
-          <p-table #tb1 [value]="notices" [paginator]="true" [rows]="5" [responsive]="true">
+        <!-- แจ้งเตือนของ พระ -->
+        <p-tabPanel header="แจ้งเตือนการสมัครคอร์ส" *ngIf="showRole('monk')" [selected]="true">
+          <p-table #tb1 [value]="notices|async" [paginator]="true" [rows]="5" [responsive]="true">
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
             <ng-template pTemplate="caption">
               <div class="ui-g ui-fluid">
@@ -36,7 +38,6 @@
                     ariaLabelAsc="Activate to sort in ascending order">
                   </p-sortIcon>
                 </th>
-
                 <th>
 
                 </th>
@@ -45,17 +46,22 @@
             <ng-template pTemplate="body" let-rowData>
               <tr>
                 <td>
-                  {{rowData.notificationTime.toDate()|formatTHdate}}
+                  {{rowData?.notificationTime.toDate()|formatTHdate}}
 
                 </td>
                 <td style="text-align: center">
-                 มีผู้สมัครคอร์ส {{rowData.detail}}
+                  มีผู้สมัครคอร์ส {{rowData?.detail}}
+                </td>
+                <td style="text-align: center">
+                  {{rowData.courseID}}
+                  <button pButton type="button" label="Click" (click)="click(rowData)"></button>
                 </td>
               </tr>
             </ng-template>
           </p-table>
         </p-tabPanel>
-        <p-tabPanel header="คอร์สใหม่ล่าสุด">
+        <!-- แจ้งเตือนของ user -->
+        <p-tabPanel header="แจ้งเตือนคอร์สที่สมัคร" *ngIf="showRole('user')" [selected]="true">
           <p-table #tb2 [columns]="cols" [value]="specialApproveWait" [paginator]="true" [rows]="5" [responsive]="true">
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
             <ng-template pTemplate="caption">
@@ -85,20 +91,6 @@
                     ariaLabelAsc="Activate to sort in ascending order">
                   </p-sortIcon>
                 </th>
-                <th pSortableColumn="location" class="ui-p-5">
-                  สถานที่
-                  <p-sortIcon field="location" ariaLabel="Activate to sort"
-                    ariaLabelDesc="Activate to sort in descending order"
-                    ariaLabelAsc="Activate to sort in ascending order">
-                  </p-sortIcon>
-                </th>
-                <th pSortableColumn="conditionMin" class="ui-p-6">
-                  หมายเหตุ
-                  <p-sortIcon field="conditionMin" ariaLabel="Activate to sort"
-                    ariaLabelDesc="Activate to sort in descending order"
-                    ariaLabelAsc="Activate to sort in ascending order">
-                  </p-sortIcon>
-                </th>
                 <th>
 
                 </th>
@@ -123,9 +115,70 @@
                 </td>
                 <td style="text-align: center">
                   <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-                    <button pButton type="button" label="ยกเลิกการขออนุมัติ" (click)="cancelApprove(rowData['id'])"
-                      class="ui-button-danger"></button>
+                      <button pButton type="button" label="Click"></button>
                   </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+        <!-- แจ้งเตือนของ user -->
+
+        <p-tabPanel header="คอร์สใหม่ล่าสุด" *ngIf="showRole('user')">
+          <p-table #tb3 [columns]="cols" [value]="specialApproveSuccess" [paginator]="true" [rows]="5"
+            [responsive]="true">
+            <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
+            <ng-template pTemplate="caption">
+              <div class="ui-g ui-fluid">
+                <div class="ui-g-12 ui-lg-3 ui-md-3 ui-sm-12" style="margin-left: auto;">
+                  <div class="ui-inputgroup">
+                    <fa-icon [icon]="['fas', 'search']" class="ui-inputgroup-addon"></fa-icon>
+                    <input type="text" pInputText placeholder="ค้นหา"
+                      (input)="tb3.filterGlobal($event.target.value, 'contains')">
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th pSortableColumn="date">
+                  วันที่
+                  <p-sortIcon field="date" ariaLabel="Activate to sort"
+                    ariaLabelDesc="Activate to sort in descending order"
+                    ariaLabelAsc="Activate to sort in ascending order">
+                  </p-sortIcon>
+                </th>
+                <th pSortableColumn="name" class="ui-p-4">
+                  ชื่อคอร์ส
+                  <p-sortIcon field="name" ariaLabel="Activate to sort"
+                    ariaLabelDesc="Activate to sort in descending order"
+                    ariaLabelAsc="Activate to sort in ascending order">
+                  </p-sortIcon>
+                </th>
+                <th>
+
+                </th>
+
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns;">
+                  <div>
+                    <span class="ui-column-title">{{col.header}}</span>
+                    <div *ngIf="col.field == 'stDate'" style="text-align: center">
+                      {{rowData['stDate'] | date}} -
+                      {{rowData['endDate'] | date}}</div>
+                    <div *ngIf="col.field == 'conditionMin'">
+                      ผ่านการเรียนอย่างน้อย {{rowData['conditionMin']}} คอร์ส
+                    </div>
+                    <div *ngIf="col.field != 'stDate'&&col.field != 'conditionMin'">
+                      {{rowData[col.field]}}
+                    </div>
+                  </div>
+                </td>
+                <td style="text-align: center"> 
+                  <button pButton type="button" label="Click"></button>
                 </td>
               </tr>
             </ng-template>

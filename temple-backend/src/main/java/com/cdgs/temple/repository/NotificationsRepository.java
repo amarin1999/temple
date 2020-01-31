@@ -1,16 +1,17 @@
 package com.cdgs.temple.repository;
 
-import java.util.List;
+import com.cdgs.temple.dto.NotificationsDto;
+import com.cdgs.temple.util.FirebaseConnection;
+import com.google.cloud.firestore.Firestore;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-
-import com.cdgs.temple.entity.CourseEntity;
-import com.cdgs.temple.entity.NotificationsEntity;
-
-public interface NotificationsRepository extends CrudRepository<NotificationsEntity, Long> {
-	@Query(value = "select * from courses"
-			     + " where course_create_date < date_add(now() , INTERVAL +1 MONTH)"
-			     + " order by course_create_date desc", nativeQuery = true)
-	List<CourseEntity> getAllDataPreviouspast();
+public class NotificationsRepository {
+	private Firestore database = new FirebaseConnection().getFirestoreDatabase();
+	
+	public void createUserNotification(NotificationsDto body) {
+		try {
+			database.collection("notification").add(body);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
