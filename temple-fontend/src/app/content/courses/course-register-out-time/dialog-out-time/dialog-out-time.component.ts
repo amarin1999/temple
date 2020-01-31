@@ -17,6 +17,8 @@ export class DialogOutTimeComponent implements OnInit, OnDestroy {
   filteredTransportation: any[];
   public transportations: Transportation[];
   public formOutTime: FormGroup;
+  // เอาไว้ใช้ใน calendar html 
+  year = new Date().getFullYear();
   constructor(private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder, private courseService: CourseService
     , private messageService: MessageService, private TransService: TransportService

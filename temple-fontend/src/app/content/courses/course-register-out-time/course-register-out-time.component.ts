@@ -36,8 +36,7 @@ export class CourseRegisterOutTimeComponent implements OnInit {
   id: any;
   name: any;
 
-  // เอาไว้ใช้ใน calendar html 
-  year = new Date().getFullYear();
+
 
 
   constructor(
