@@ -47,7 +47,7 @@ public class SpecialApproveServiceImpl implements SpecialApproveService {
 	}
 
 	@Override
-	public SpecialApproveDto getById(Long memberId, Long id) {
+	public SpecialApproveDto getById(Long id) {
 		return mapEntityToDto(specialApproveRepository.findBySpecialApproveId(id));
 	}
 

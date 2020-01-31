@@ -12,9 +12,18 @@ export class FirebaseService {
     return this.db.collection('notification', param => param.where('memberID', '==', userId).where('notificationStatus', '==', 0))
       .snapshotChanges().pipe(map(data => data.length));
   }
+
   getDataNoticeByUserID(userId: number) {
     return this.db.collection('notification', param => param.where('memberID', '==', userId).where('notificationStatus', '==', 0))
-      .snapshotChanges().pipe(map(data => data.map(dataMap => dataMap.payload.doc.data() as Notifications)));
+      .snapshotChanges().pipe(map(data => data.map(
+        dataMap => { return { id: dataMap.payload.doc.id, ...dataMap.payload.doc.data() as Notifications } as Notifications })));
+  }
+
+  updateNotification(notification: Notifications) {
+    let newNotification = { ...notification };
+    newNotification.notificationStatus = 1;
+    delete newNotification.id;
+    return this.db.collection('notification').doc(notification.id).update(Object.assign({}, newNotification));
   }
 
 }

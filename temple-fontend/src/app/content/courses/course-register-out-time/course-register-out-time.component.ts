@@ -28,16 +28,15 @@ export class CourseRegisterOutTimeComponent implements OnInit {
   public totalRecords: number;
   public userPasscours: number;
   public displayDialog = false;
-  public transportations: Transportation[];
+
   public courseId: number;
-  public formOutTime: FormGroup;
+
   public filterTransport: any[];
-  filteredTransportation: any[];
+
   id: any;
   name: any;
 
-  // เอาไว้ใช้ใน calendar html 
-  year = new Date().getFullYear();
+
 
 
   constructor(
@@ -45,10 +44,10 @@ export class CourseRegisterOutTimeComponent implements OnInit {
     private courseService: CourseService,
     private managePassCourseService: ManagePassCourseService,
     private http: HttpClient,
-    private formBuilder: FormBuilder,
+
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private TransService: TransportService
+   
   ) { }
 
   ngOnInit() {
@@ -64,75 +63,27 @@ export class CourseRegisterOutTimeComponent implements OnInit {
     this.breadCrumbService.setPath([
       { label: 'คอร์สนอกเวลา' },
     ]);
-    this.getTranSport();
     this.getDataCanRegis();
-    this.createForm();
+
     this.getDataSpecialApproveWait();
     this.getDataSpecialApproveSuccess();
   }
-  // get การเดินทาง
-  private getTranSport() {
-    this.TransService.getTranSport().subscribe(res => {
-      this.transportations = [...res];
-    });
-  }
 
-  createForm() {
-    this.formOutTime = this.formBuilder.group(
-      {
-        tranId: ['', Validators.required],
-        date: ['', Validators.required],
-        expected: ['', Validators.required],
-        experience: ['', Validators.required],
-        detail: ['', Validators.required]
-      }
-    );
-  }
+
+
   private getDataCanRegis() {
     this.courseService.getCoursesOutTimeCanRegis().subscribe(res => this.courses = res['data']);
   }
 
   showDisplay(id) {
     this.displayDialog = true;
+    console.log(this.displayDialog);
+
     this.courseId = id;
 
-    this.formOutTime.reset();
   }
 
-  public assignCourseOutTime() {
-    const tranId = this.formOutTime.get('tranId').value;
-    const date = this.formOutTime.get('date').value;
-    const outTimeCourse = {
-      courseId: this.courseId,
-      expected: this.formOutTime.get('expected').value,
-      experience: this.formOutTime.get('experience').value,
-      detail: this.formOutTime.get('detail').value,
-      transportationId: tranId.id,
-      stDate: formatDate(date[0], 'yyyy-MM-dd', 'en'),
-      endDate: formatDate(date[1], 'yyyy-MM-dd', 'en'),
-      date: date.map(res => formatDate(res, "yyyy-MM-dd", 'en')).sort()
-    };
 
-    this.confirmationService.confirm({
-      message: 'ยืนยันการขออนุมัติคอร์สนอกเวลา',
-      header: 'ข้อความจากระบบ',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.courseService.registerCourseOutTime(outTimeCourse).subscribe(res => {
-          if (res.status === 'Success') {
-            this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ขออนุมัตินอกเวลาสำเร็จ' });
-            this.getDataCanRegis();
-            this.getDataSpecialApproveWait();
-            this.getDataSpecialApproveSuccess();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] });
-          }
-        });
-        this.displayDialog = false;
-      },
-      reject: () => { }
-    });
-  }
 
   private getDataSpecialApproveWait() {
     this.courseService.getSpecialApprove('Wait').subscribe(res => this.specialApproveWait = res['data']);
@@ -152,9 +103,7 @@ export class CourseRegisterOutTimeComponent implements OnInit {
           if (res.status === 'Success') {
             // console.log("ยกเลิกขออนุมัตินอกเวลาสำเร็จ");
             this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกขออนุมัตินอกเวลาสำเร็จ' });
-            this.getDataCanRegis();
-            this.getDataSpecialApproveWait();
-            this.getDataSpecialApproveSuccess();
+            this.setUpMethod();
           } else {
             this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] });
             // console.log(res);
@@ -164,28 +113,15 @@ export class CourseRegisterOutTimeComponent implements OnInit {
       reject: () => { }
     });
   }
-  /**
-   * รับค่าจากแป้นพิมพ์
-   * @param event ;
-   */
 
-  filterTransportation(query, transportations: any[]): any[] {
-    const filtered: any[] = [];
-    for (let i = 0; i < transportations.length; i++) {
-      const tranId = transportations[i];
-      if (tranId.name.match(query)) {
-        filtered.push(tranId);
-      }
-    }
-    return filtered;
+  onDialogClose(event) {
+    console.log(event);
+    this.setUpMethod();
+    this.displayDialog = event;
   }
-  /**
-     * เปรียบเทียบค่าที่ได้จากแป้นพิมพ์ กับ ค่าที่ได้จากดาต้าเบส
-     * @param query ;
-     * @param titleNames ;
-     */
-  filterTransportationMultiple(event) {
-    const query = event.query;
-    this.filteredTransportation = this.filterTransportation(query, this.transportations);
+  setUpMethod() {
+    this.getDataCanRegis();
+    this.getDataSpecialApproveWait();
+    this.getDataSpecialApproveSuccess();
   }
 }
