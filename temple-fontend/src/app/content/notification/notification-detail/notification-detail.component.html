@@ -5,7 +5,7 @@
     </div>
     <div class="line"></div>
     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-
+{{notices|async | json}}
       <p-tabView>
         <!-- แจ้งเตือนของ พระ -->
         <p-tabPanel header="แจ้งเตือนการสมัครคอร์ส" *ngIf="showRole('monk')" [selected]="true">
@@ -53,8 +53,8 @@
                   มีผู้สมัครคอร์ส {{rowData?.detail}}
                 </td>
                 <td style="text-align: center">
-                  <button pButton type="button" label="Click"></button>
-
+                  {{rowData.courseID}}
+                  <button pButton type="button" label="Click" (click)="click(rowData)"></button>
                 </td>
               </tr>
             </ng-template>
