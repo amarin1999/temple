@@ -47,6 +47,7 @@ import { ApproveOutTimeComponent } from './approval/approve-out-time/approve-out
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { NotificationComponent } from './notification/notification.component';
 import { NotificationDetailComponent } from './notification/notification-detail/notification-detail.component';
+import { DialogOutTimeComponent } from './courses/course-register-out-time/dialog-out-time/dialog-out-time.component';
 
 
 registerLocaleData(localeTh);
@@ -86,7 +87,8 @@ registerLocaleData(localeTh);
     ApproveOutTimeComponent,
     DashboardComponent,
     NotificationComponent,
-    NotificationDetailComponent
+    NotificationDetailComponent,
+    DialogOutTimeComponent
   ],
   imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule, ThaiCalendarModule, TabMenuModule, Ng2ImgMaxModule],
   exports: [ContentComponent],
