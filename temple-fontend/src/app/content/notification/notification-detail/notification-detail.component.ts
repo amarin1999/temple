@@ -16,6 +16,7 @@ export class NotificationDetailComponent implements OnInit {
   role: string;
   courseId: number;
   userID: string;
+  numberOfNotice: number;
   constructor(private breadCrumbService: BreadcrumbService, private firebase: FirebaseService,
     private authService: AuthService, private router: Router
   ) {
@@ -26,8 +27,9 @@ export class NotificationDetailComponent implements OnInit {
 
   ngOnInit() {
     this.showRole();
-
+    this.checkNotification();
   }
+
 
   private setBreadCrumb() {
     this.breadCrumbService.setPath([{ label: 'แจ้งเตือน', routerLink: '/notification' }]);
@@ -55,13 +57,19 @@ export class NotificationDetailComponent implements OnInit {
 
     this.updateNotification(e);
   }
-  getCourseDetail(e){
+  getCourseDetail(e) {
     this.router.navigateByUrl(`/courses/${e.courseID}`);
 
     this.updateNotification(e);
   }
 
-  private updateNotification(notification : Notifications) {
+  private updateNotification(notification: Notifications) {
     this.firebase.updateNotification(notification);
+  }
+
+  private checkNotification(){
+    this.firebase.getCountNoticeByUserID(+(this.userID)).subscribe(res => {
+      this.numberOfNotice = res;
+    });
   }
 }
