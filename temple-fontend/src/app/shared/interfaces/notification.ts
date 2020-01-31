@@ -1,4 +1,5 @@
 export interface Notifications {
+    id?: string;
     courseID: number;
     detail: string;
     memberID: number;

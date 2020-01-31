@@ -44,6 +44,7 @@ export class NotificationDetailComponent implements OnInit {
   private getRole() {
     this.authService.getRole().subscribe(res => this.role = res);
   }
+
   openSpecailCourse(e) {
     if (e.specialApproveStatus === '4') {
       this.router.navigateByUrl(`/approvalCourseOutTime/${e.courseID}?course=${e.detail}&&type=OutTime`);
@@ -52,9 +53,15 @@ export class NotificationDetailComponent implements OnInit {
       this.router.navigateByUrl(`/approval/${e.courseID}?course=${e.detail}&&type=InTime`);
     }
 
+    this.updateNotification(e);
   }
   getCourseDetail(e){
     this.router.navigateByUrl(`/courses/${e.courseID}`);
 
+    this.updateNotification(e);
+  }
+
+  private updateNotification(notification : Notifications) {
+    this.firebase.updateNotification(notification);
   }
 }
