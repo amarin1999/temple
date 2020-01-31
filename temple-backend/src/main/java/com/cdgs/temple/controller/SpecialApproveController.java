@@ -137,16 +137,8 @@ public class SpecialApproveController {
 			courseDto = courseService.getCourse(spaDto.getCourseId());
 
 			// เพิ่มข้อมูล notification ไปให้ ผู้สอน
-			for (MemberDto teacher : courseDto.getTeacherList()) {
-				NotificationsDto notificationDto = new NotificationsDto();
-				notificationDto.setSpecialApproveID(spaDto.getSpecialApproveId());
-				notificationDto.setCourseID(courseDto.getId());
-				notificationDto.setMemberID(teacher.getId());
-				notificationDto.setNotificationStatus(Long.parseLong("0"));
-				notificationDto.setDetail(courseDto.getName());
-				notificationDto.setNotificationTime(Calendar.getInstance().getTime());
-				notificationsService.createNotifications(notificationDto);
-			}
+			notificationsService.createMonkNotifications(courseDto.getTeacher(), spaDto.getSpecialApproveId(),
+					courseDto.getId(), spaDto.getStatus(), courseDto.getName());
 
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {

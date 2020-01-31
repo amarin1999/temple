@@ -5,6 +5,7 @@ import java.util.Date;
 public class NotificationsDto {
 	private Long specialApproveID;
 	private Long courseID;
+	private String specialApproveStatus;
 	//คนที่จะแจ้งเตือน
 	private Long memberID;
 	private String detail;
@@ -15,11 +16,12 @@ public class NotificationsDto {
 		super();
 	}
 
-	public NotificationsDto(Long specialApproveID, Long courseID, Long memberID, String detail, Long notificationStatus,
-			Date notificationTime) {
+	public NotificationsDto(Long specialApproveID, Long courseID, String specialApproveStatus, Long memberID,
+			String detail, Long notificationStatus, Date notificationTime) {
 		super();
 		this.specialApproveID = specialApproveID;
 		this.courseID = courseID;
+		this.specialApproveStatus = specialApproveStatus;
 		this.memberID = memberID;
 		this.detail = detail;
 		this.notificationStatus = notificationStatus;
@@ -40,6 +42,14 @@ public class NotificationsDto {
 
 	public void setCourseID(Long courseID) {
 		this.courseID = courseID;
+	}
+
+	public String getSpecialApproveStatus() {
+		return specialApproveStatus;
+	}
+
+	public void setSpecialApproveStatus(String specialApproveStatus) {
+		this.specialApproveStatus = specialApproveStatus;
 	}
 
 	public Long getMemberID() {

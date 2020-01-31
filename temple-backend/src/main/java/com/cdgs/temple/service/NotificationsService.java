@@ -1,7 +1,8 @@
 package com.cdgs.temple.service;
 
-import com.cdgs.temple.dto.NotificationsDto;
+import java.util.List;
 
 public interface NotificationsService {
-	void createNotifications(NotificationsDto body);
+	void createMonkNotifications(List<Long> listTeacherId, Long specialApproveId, Long courseOutTimeId,
+			String specialApproveStatus, String courseOutTimeName);
 }

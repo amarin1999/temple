@@ -507,17 +507,9 @@ public class CourseController {
 			res.setData(listDto);
 			res.setCode(200);
 
-			//เพิ่มข้อมูล notification ไปให้ ผู้สอน
-			for (Long teacherId : courseDto.getTeacher()) {
-				NotificationsDto notificationDto = new NotificationsDto();
-				notificationDto.setSpecialApproveID(spaDto.getSpecialApproveId());
-				notificationDto.setCourseID(courseOutTimeDto.getId());
-				notificationDto.setMemberID(teacherId);
-				notificationDto.setNotificationStatus(Long.parseLong("0"));
-				notificationDto.setDetail(courseOutTimeDto.getName());
-				notificationDto.setNotificationTime(Calendar.getInstance().getTime());
-				notificationsService.createNotifications(notificationDto);
-			}
+			// เพิ่มข้อมูล notification ไปให้ ผู้สอน
+			notificationsService.createMonkNotifications(courseDto.getTeacher(), spaDto.getSpecialApproveId(),
+					courseOutTimeDto.getId(),spaDto.getStatus(), courseOutTimeDto.getName());
 
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {

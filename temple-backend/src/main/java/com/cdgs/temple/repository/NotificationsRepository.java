@@ -1,9 +1,17 @@
 package com.cdgs.temple.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import com.cdgs.temple.dto.NotificationsDto;
+import com.cdgs.temple.util.FirebaseConnection;
+import com.google.cloud.firestore.Firestore;
 
-import com.cdgs.temple.entity.NotificationsEntity;
-
-public interface NotificationsRepository extends CrudRepository<NotificationsEntity, Long> {
+public class NotificationsRepository {
+	private Firestore database = new FirebaseConnection().getFirestoreDatabase();
 	
+	public void createUserNotification(NotificationsDto body) {
+		try {
+			database.collection("notification").add(body);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
