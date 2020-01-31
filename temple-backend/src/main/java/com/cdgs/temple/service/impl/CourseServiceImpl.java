@@ -327,6 +327,17 @@ public class CourseServiceImpl implements CourseService {
 	public void updateCourseToEnable(Long id) {
 		courseRepository.updateCourseToEnable(id);
 	}
+	
+	@Override
+	public List <CourseDto> getPreviouspast(){
+		try {
+			List<CourseEntity> course = courseRepository.getAllPreviouspast();
+			return mapListEntityToDto(course);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	private List<CourseDto> mapListEntityToDto(List<CourseEntity> entities) {
 		List<CourseDto> listDto = new ArrayList<>();
@@ -586,5 +597,4 @@ public class CourseServiceImpl implements CourseService {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
-
 }

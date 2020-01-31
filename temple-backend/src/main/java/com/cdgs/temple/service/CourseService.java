@@ -63,6 +63,8 @@ public interface CourseService {
 	List<CourseDto> TeacherGetCoursesApprovalOutTime(Long memberId, int offset, int limit, String query);
 
 	Integer CountTeacherCoursesApprovalOutTime(Long memberId);
+	
+	List <CourseDto> getPreviouspast();
 
 	void updateCourseToEnable(Long id);
 
