@@ -5,7 +5,7 @@ import java.util.List;
 import com.cdgs.temple.dto.SpecialApproveDto;
 
 public interface SpecialApproveService {
-	List<SpecialApproveDto> getAll(Long courseId);
+	List<SpecialApproveDto> getAll(Long memberId, Long courseId);
 
 	SpecialApproveDto getById(Long id);
 

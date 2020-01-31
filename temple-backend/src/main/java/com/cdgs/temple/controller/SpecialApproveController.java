@@ -48,8 +48,9 @@ public class SpecialApproveController {
 	public ResponseEntity<ResponseDto<SpecialApproveDto>> getAll(@PathVariable("courseId") Long courseId) {
 		List<SpecialApproveDto> dto;
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
+		MemberDto member = memberService.getCurrentMember();
 		try {
-			dto = specialApproveService.getAll(courseId);
+			dto = specialApproveService.getAll(member.getId(), courseId);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			if (dto.size() > 0) {
 				res.setData(dto);
