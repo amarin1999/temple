@@ -347,8 +347,16 @@ public class MemberDto implements Serializable {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "MemberDto [id=" + id + ", username=" + username + ", password=" + password + ", fname=" + fname
+				+ ", lname=" + lname + ", address=" + address + ", tel=" + tel + ", emergencyTel=" + emergencyTel
+				+ ", email=" + email + ", img=" + img + ", registerDate=" + registerDate + ", lastUpdate=" + lastUpdate
+				+ ", roleId=" + roleId + ", roleName=" + roleName + ", titleId=" + titleId + ", titleDisplay="
+				+ titleDisplay + ", titleName=" + titleName + ", genderId=" + genderId + ", genderName=" + genderName
+				+ ", job=" + job + ", other=" + other + ", blood=" + blood + ", allergyFood=" + allergyFood
+				+ ", allergyMedicine=" + allergyMedicine + ", disease=" + disease + ", emergencyName=" + emergencyName
+				+ ", emergencyRelationship=" + emergencyRelationship + ", enable=" + enable + ", idCard=" + idCard
+				+ ", age=" + age + ", ordianNumber=" + ordianNumber + ", ordianDate=" + ordianDate + ", postalCode="
+				+ postalCode + ", provinceId=" + provinceId + ", provinceName=" + provinceName + ", historyDharma="
+				+ historyDharma + "]";
 	}
-
 }

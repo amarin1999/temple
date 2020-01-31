@@ -120,7 +120,6 @@ public class SpecialApproveController {
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
 		List<SpecialApproveDto> specialApproves = new ArrayList<>();
 		SpecialApproveDto spaDto;
-		CourseDto courseDto;
 		MemberDto member = memberService.getCurrentMember();
 		try {
 			body.setMemberId(member.getId());
@@ -134,7 +133,8 @@ public class SpecialApproveController {
 			res.setData(specialApproves);
 			res.setCode(200);
 
-			courseDto = courseService.getCourse(spaDto.getCourseId());
+			System.out.println("testtttt ++ " + spaDto.getCourseId());
+			CourseDto courseDto = courseService.getCourse(spaDto.getCourseId());
 
 			// เพิ่มข้อมูล notification ไปให้ ผู้สอน
 			notificationsService.createMonkNotifications(courseDto.getTeacher(), spaDto.getSpecialApproveId(),

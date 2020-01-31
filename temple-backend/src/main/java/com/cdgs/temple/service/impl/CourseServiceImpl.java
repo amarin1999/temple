@@ -60,7 +60,7 @@ public class CourseServiceImpl implements CourseService {
 	private CourseScheduleService courseScheduleService;
 
 	private TransportationService transportationService;
-	
+
 	public CourseServiceImpl() {
 		super();
 	}
@@ -327,13 +327,13 @@ public class CourseServiceImpl implements CourseService {
 	public void updateCourseToEnable(Long id) {
 		courseRepository.updateCourseToEnable(id);
 	}
-	
+
 	@Override
-	public List <CourseDto> getPreviouspast(){
+	public List<CourseDto> getPreviouspast() {
 		try {
 			List<CourseEntity> course = courseRepository.getAllPreviouspast();
 			return mapListEntityToDto(course);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -453,16 +453,19 @@ public class CourseServiceImpl implements CourseService {
 				transportationDtoOld = transportationService.getTransportationByCourseId(id);
 				if (transportationDtoOld.getId() != null) {
 					transportationDtoOld.setCourseId(null);
-					transportationService.updateTransportationTemple(transportationDtoOld.getId(), transportationDtoOld);
+					transportationService.updateTransportationTemple(transportationDtoOld.getId(),
+							transportationDtoOld);
 				}
-				transportationDtoNew = transportationService.getTransportationById(courseNew.getTransportation().getId());
+				transportationDtoNew = transportationService
+						.getTransportationById(courseNew.getTransportation().getId());
 				transportationDtoNew.setCourseId(id);
 				transportationService.updateTransportationTemple(transportationDtoNew.getId(), transportationDtoNew);
 			} else if (courseNew.getTransportation().getId() == null) {
 				transportationDtoOld = transportationService.getTransportationByCourseId(id);
 				if (transportationDtoOld.getId() != null) {
 					transportationDtoOld.setCourseId(null);
-					transportationService.updateTransportationTemple(transportationDtoOld.getId(), transportationDtoOld);
+					transportationService.updateTransportationTemple(transportationDtoOld.getId(),
+							transportationDtoOld);
 				}
 			}
 			System.out.println("st1 = " + courseNew.getStDate());
@@ -509,7 +512,6 @@ public class CourseServiceImpl implements CourseService {
 
 	private CourseEntity convDtoToEntity(CourseDto course) {
 		CourseEntity entity = new CourseEntity();
-		System.out.println(course.toString());
 		entity.setCourseId(course.getId());
 		entity.setCourseNo(course.getNo());
 		entity.setCourseName(course.getName());
@@ -554,9 +556,9 @@ public class CourseServiceImpl implements CourseService {
 		return dto;
 	}
 
-
 	private CourseDto mapEntityEditToDto(CourseEntity entity) {
 		List<MemberDto> teacherList = new ArrayList<>();
+		List<Long> teachersId = new ArrayList<>();
 		CourseDto dto = new CourseDto();
 		TransportationDto transportationDto = new TransportationDto();
 		try {
@@ -583,8 +585,11 @@ public class CourseServiceImpl implements CourseService {
 				dto.setEndDate(entity.getCourseEndDate());
 
 				for (CourseTeacherEntity courseTeacher : entity.getCourseTeacher()) {
-					teacherList.add(memberService.getMember(courseTeacher.getMemberId()));
+					MemberDto member = memberService.getMember(courseTeacher.getMemberId());
+					teachersId.add(member.getId());
+					teacherList.add(member);
 				}
+				dto.setTeacher(teachersId);
 				dto.setTeacherList(teacherList);
 				dto.setDateList(courseScheduleService.getCourseScheduleList(entity.getCourseId()));
 

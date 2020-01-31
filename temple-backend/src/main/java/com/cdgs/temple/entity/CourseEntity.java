@@ -298,5 +298,17 @@ public class CourseEntity implements Serializable {
 	public void setLocationName(String locationName) {
 		this.locationName = locationName;
 	}
+
+	@Override
+	public String toString() {
+		return "CourseEntity [courseId=" + courseId + ", courseNo=" + courseNo + ", courseName=" + courseName
+				+ ", courseStDate=" + courseStDate + ", courseEndDate=" + courseEndDate + ", courseDetail="
+				+ courseDetail + ", courseConditionMin=" + courseConditionMin + ", courseLocationId=" + courseLocationId
+				+ ", courseCreateBy=" + courseCreateBy + ", courseCreateDate=" + courseCreateDate
+				+ ", courseLastUpdate=" + courseLastUpdate + ", courseStatus=" + courseStatus + ", courseEnable="
+				+ courseEnable + ", createBy=" + createBy + ", locationId=" + locationId + ", transportationId="
+				+ transportationId + ", locationName=" + locationName + ", courseSchdule=" + courseSchdule
+				+ ", courseTeacher=" + courseTeacher + "]";
+	}
 }
 
