@@ -165,11 +165,7 @@ public class SpecialApproveController {
 				System.out.println(said);
 				bodydto.setSpecialApproveId(said);
 				listDto.add(specialApproveService.update(bodydto, member.getId()));
-				
-				//เพิ่ม notification ให้ user
-				notificationsService.createUserNotifications(specialApprovesDto.getMemberId(),
-						said, specialApprovesDto.getCourseId(), bodydto.getStatus(),
-						specialApprovesDto.getCourseName());
+
 			}
 			if (body.getStatus().equals("1")) {
 				for (SpecialApproveDto dto : listDto) {
@@ -197,6 +193,16 @@ public class SpecialApproveController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listDto);
 			res.setCode(200);
+
+			for (long saId : body.getSpaId()) {
+				SpecialApproveDto saDto = specialApproveService.getById(saId);
+				CourseDto cDto = courseService.getCourseById(saDto.getCourseId());
+
+				// เพิ่ม notification ให้ user
+				notificationsService.createUserNotifications(saDto.getMemberId(), saId, saDto.getCourseId(),
+						saDto.getStatus(), cDto.getName());
+			}
+
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
