@@ -116,8 +116,7 @@
         <!-- แจ้งเตือนของ user -->
 
         <p-tabPanel header="คอร์สใหม่ล่าสุด" *ngIf="showRole('user')">
-          <p-table #tb3 [columns]="cols" [value]="specialApproveSuccess" [paginator]="true" [rows]="5"
-            [responsive]="true">
+          <p-table #tb3 [value]="dataNewCourse" [paginator]="true" [rows]="5" [responsive]="true">
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
             <ng-template pTemplate="caption">
               <div class="ui-g ui-fluid">
@@ -143,26 +142,46 @@
                   ชื่อคอร์ส
                   <p-sortIcon field="name" ariaLabel="Activate to sort"
                     ariaLabelDesc="Activate to sort in descending order"
-                    ariaLabelAsc="Activate to sort in ascending order">
+                    ariaLabelAsc="ActivstDateate to sort in ascending order">
                   </p-sortIcon>
                 </th>
-                <th>
-
+                <th pSortableColumn="location" class="ui-p-4">
+                  สถานที่
+                  <p-sortIcon field="location" ariaLabel="Activate to sort"
+                    ariaLabelDesc="Activate to sort in descending order"
+                    ariaLabelAsc="ActivstDateate to sort in ascending order">
+                  </p-sortIcon>
                 </th>
-
+                <th pSortableColumn="conditionMin" class="ui-p-4">
+                  หมายเหตุ
+                  <p-sortIcon field="conditionMin" ariaLabel="Activate to sort"
+                  ariaLabelDesc="Activate to sort in descending order"
+                  ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+                </th>
+                <th>
+                  สถานะ
+                </th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
               <tr>
-                <td>
+                <td class="text-center">
+                  {{(rowData?.stDate) ? (rowData.stDate | formatTHdate) : 'ไม่มีข้อมูล'}} -
+                  {{(rowData?.endDate) ? (rowData?.endDate | formatTHdate) : 'ไม่มีข้อมูล'}}
                 </td>
-
-                <td>
-
+                <td class="text-left">
+                  {{(rowData?.name)? (rowData.name): 'ไม่มีข้อมูล'}}
                 </td>
-
-                <td style="text-align: center">
-                  <button pButton type="button" label="Click"></button>
+                <td class="text-center">
+                  {{(rowData?.locationName)? (rowData.locationName): 'ไม่มีข้อมูล'}}
+                </td>
+                <td class="text-center">
+                  {{(rowData?.conditionMin>=0)? 'ต้องผ่านอย่างน้อย '+ rowData.conditionMin + ' คอร์ส': 'ไม่มีข้อมูล'}}
+                 <!-- ต้องผ่านอย่างน้อย {{rowData?.conditionMin}} คอร์ส -->
+                </td>
+                <td class="text-center">
+                    <button pButton type="button" label="ดูรายละเอียด" (click)="getNewCourseDetail(rowData)"></button>
                 </td>
               </tr>
             </ng-template>

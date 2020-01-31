@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { Notifications } from '../interfaces/notification';
+import { ApiConstants } from '../../shared/constants/ApiConstants';
+import { HttpClientService } from './http-client.service';
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore, private http: HttpClientService) { }
   getCountNoticeByUserID(userId: number) {
     return this.db.collection('notification', param => param.where('memberID', '==', userId).where('notificationStatus', '==', 0))
       .snapshotChanges().pipe(map(data => data.length));
@@ -26,4 +28,15 @@ export class FirebaseService {
     return this.db.collection('notification').doc(notification.id).update(Object.assign({}, newNotification));
   }
 
+  //เรียกคอร์สใหม่ล่าสุดใน การแจ้งเตือน
+  getNewCourseForUser() {
+    return this.http.get(`${ApiConstants.baseURl}/notification/previouspast`).pipe(
+      map(res=> ({
+        status: res['result'],
+        data: res['data']
+      }))
+    );
+  }
+
+ 
 }

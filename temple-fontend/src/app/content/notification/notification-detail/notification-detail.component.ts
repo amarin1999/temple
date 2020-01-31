@@ -5,6 +5,7 @@ import { Notifications } from 'src/app/shared/interfaces/notification';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { Router } from '@angular/router';
+import { PrePathService } from 'src/app/shared/service/pre-path.service';
 
 @Component({
   selector: 'app-notification-detail',
@@ -17,8 +18,12 @@ export class NotificationDetailComponent implements OnInit {
   courseId: number;
   userID: string;
   numberOfNotice: number;
+  dataNewCourse: any[];
+  url: string;
+  previousUrl: string;
   constructor(private breadCrumbService: BreadcrumbService, private firebase: FirebaseService,
-    private authService: AuthService, private router: Router
+    private authService: AuthService, private router: Router, private pathService: PrePathService,
+
   ) {
     this.setBreadCrumb();
     this.setDataFromFirebase();
@@ -28,6 +33,8 @@ export class NotificationDetailComponent implements OnInit {
   ngOnInit() {
     this.showRole();
     this.checkNotification();
+    this.setDataNewCourseUser();
+    this.setUrl();
   }
 
 
@@ -39,6 +46,14 @@ export class NotificationDetailComponent implements OnInit {
     this.notices = this.firebase.getDataNoticeByUserID(+this.userID);
 
   }
+  private setDataNewCourseUser(){
+    this.firebase.getNewCourseForUser().subscribe(res => {
+      this.dataNewCourse = res['data'];
+      // console.log(this.dataNewCourse);
+      
+    })
+  }
+
   showRole(...role) {
     return role.includes(this.role);
   }
@@ -59,7 +74,7 @@ export class NotificationDetailComponent implements OnInit {
   }
   getCourseDetail(e) {
     this.router.navigateByUrl(`/courses/${e.courseID}`);
-
+  // console.log(e);
     this.updateNotification(e);
   }
 
@@ -72,4 +87,23 @@ export class NotificationDetailComponent implements OnInit {
       this.numberOfNotice = res;
     });
   }
+  getNewCourseDetail(e){
+    this.router.navigateByUrl(`/courses/${e.id}`);
+    // console.log(e.id);
+  }
+  private setUrl() {
+    this.previousUrl = this.pathService.setPreviousUrl();
+    // get path ก่อนหน้า
+    // ตรวจสอบเพิ่มในกรณีไม่มีการรรีเฟรชหน้าเดิม ทำการเก็บข้อมูล pre url
+    if (this.previousUrl != null) {
+      localStorage.removeItem('preurl');
+      localStorage.setItem('preurl', JSON.stringify(this.previousUrl));
+    }
+    this.setBreadCrumbPre();
+  }
+  private setBreadCrumbPre() {
+    if (JSON.parse(localStorage.getItem('preurl')) != null) {
+      this.url = JSON.parse(localStorage.getItem('preurl'));
+    }
+}
 }
