@@ -22,7 +22,7 @@ public class NotificationsServiceImpl implements NotificationsService {
 
 	@Override
 	public void createMonkNotifications(List<Long> listTeacherId, Long specialApproveId, Long courseOutTimeId,
-			String specialApproveStatus, String courseOutTimeName) {
+			String specialApproveStatus, String courseName) {
 		try {
 			for (Long teacherId : listTeacherId) {
 				NotificationsDto notificationDto = new NotificationsDto();
@@ -36,6 +36,24 @@ public class NotificationsServiceImpl implements NotificationsService {
 				notificationsRepository.createUserNotification(notificationDto);
 			}
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void createUserNotifications(Long userId, Long specialApproveId, Long courseId,
+			String specialApproveStatus, String courseName) {
+		try {
+				NotificationsDto notificationDto = new NotificationsDto();
+				notificationDto.setSpecialApproveID(specialApproveId);
+				notificationDto.setCourseID(courseId);
+				notificationDto.setMemberID(userId);
+				notificationDto.setSpecialApproveStatus(specialApproveStatus);
+				notificationDto.setNotificationStatus(Long.parseLong("0"));
+				notificationDto.setDetail(courseOutTimeName);
+				notificationDto.setNotificationTime(Calendar.getInstance().getTime());
+				notificationsRepository.createUserNotification(notificationDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

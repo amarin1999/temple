@@ -165,6 +165,11 @@ public class SpecialApproveController {
 				System.out.println(said);
 				bodydto.setSpecialApproveId(said);
 				listDto.add(specialApproveService.update(bodydto, member.getId()));
+				
+				//เพิ่ม notification ให้ user
+				notificationsService.createUserNotifications(specialApprovesDto.getMemberId(),
+						said, specialApprovesDto.getCourseId(), bodydto.getStatus(),
+						specialApprovesDto.getCourseName());
 			}
 			if (body.getStatus().equals("1")) {
 				for (SpecialApproveDto dto : listDto) {
