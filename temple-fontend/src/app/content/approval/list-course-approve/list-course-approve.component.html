@@ -12,7 +12,7 @@
             <p-tabPanel header="อนุมัติพิเศษ(คอร์สปกติ)"> -->
           <p-table #dt [columns]="cols" [value]="courses" [paginator]="true" [rows]="5" [responsive]="true"
             selectionMode="single" [(selection)]="selectedCourse" (onRowSelect)="onRowSelect($event)" [lazy]="true"
-            (onLazyLoad)="loadData($event)" [totalRecords]="totalRecords" [loading]="loading">
+            (onLazyLoad)="loadData($event)" [totalRecords]="totalRecords" [loading]="loading" class="word-wrap">
             <ng-template pTemplate="caption">
               <div class="ui-g ui-fluid">
                 <div class="ui-g-12 ui-lg-3 ui-md-3 ui-sm-12" style="margin-left: auto;">
