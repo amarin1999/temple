@@ -7,7 +7,7 @@ import { filter, pairwise } from 'rxjs/operators';
 })
 export class PrePathService {
 private url: string;
-private previousUrl: string;
+private previousUrl: string = '';
 
   constructor(private router: Router) {
     this.router.events
