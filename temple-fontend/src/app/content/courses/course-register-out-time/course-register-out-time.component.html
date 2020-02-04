@@ -191,7 +191,7 @@
                                         ariaLabelAsc="Activate to sort in ascending order">
                                     </p-sortIcon>
                                 </th>
-                                <th pSortableColumn="location" class="ui-p-5">
+                                <th pSortableColumn="location" class="ui-p-5" >
                                     สถานที่
                                     <p-sortIcon field="location" ariaLabel="Activate to sort"
                                         ariaLabelDesc="Activate to sort in descending order"
@@ -209,7 +209,7 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns="columns">
                             <tr>
-                                <td *ngFor="let col of columns;">
+                                <td *ngFor="let col of columns;" > 
                                     <div>
                                         <span class="ui-column-title">{{col.header}}</span>
                                         <div *ngIf="col.field == 'stDate'" style="text-align: center">
