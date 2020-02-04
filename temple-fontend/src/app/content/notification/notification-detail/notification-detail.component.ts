@@ -46,12 +46,12 @@ export class NotificationDetailComponent implements OnInit {
     this.notices = this.firebase.getDataNoticeByUserID(+this.userID);
 
   }
-  private setDataNewCourseUser(){
+  private setDataNewCourseUser() {
     this.firebase.getNewCourseForUser().subscribe(res => {
       this.dataNewCourse = res['data'];
       // console.log(this.dataNewCourse);
-      
-    })
+
+    });
   }
 
   showRole(...role) {
@@ -74,7 +74,7 @@ export class NotificationDetailComponent implements OnInit {
   }
   getCourseDetail(e) {
     this.router.navigateByUrl(`/courses/${e.courseID}`);
-  // console.log(e);
+    // console.log(e);
     this.updateNotification(e);
   }
 
@@ -82,12 +82,12 @@ export class NotificationDetailComponent implements OnInit {
     this.firebase.updateNotification(notification);
   }
 
-  private checkNotification(){
+  private checkNotification() {
     this.firebase.getCountNoticeByUserID(+(this.userID)).subscribe(res => {
       this.numberOfNotice = res;
     });
   }
-  getNewCourseDetail(e){
+  getNewCourseDetail(e) {
     this.router.navigateByUrl(`/courses/${e.id}`);
     // console.log(e.id);
   }
@@ -105,5 +105,5 @@ export class NotificationDetailComponent implements OnInit {
     if (JSON.parse(localStorage.getItem('preurl')) != null) {
       this.url = JSON.parse(localStorage.getItem('preurl'));
     }
-}
+  }
 }
