@@ -38,12 +38,14 @@ import com.cdgs.temple.service.ApprovalCoursesService;
 import com.cdgs.temple.service.CourseScheduleService;
 import com.cdgs.temple.service.CourseService;
 import com.cdgs.temple.service.CourseTeacherService;
+import com.cdgs.temple.service.EmailService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.service.MembersHasCourseService;
 import com.cdgs.temple.service.NotificationsService;
 import com.cdgs.temple.service.SensationService;
 import com.cdgs.temple.service.SpecialApproveService;
 import com.cdgs.temple.service.TransportationService;
+import com.cdgs.temple.service.impl.EmailServiceImpl;
 import com.cdgs.temple.service.impl.NotificationsServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
 
@@ -64,6 +66,7 @@ public class CourseController {
 	private SensationService sensationService;
 	private ApprovalCoursesService approvalCoursesService;
 	private NotificationsService notificationsService = new NotificationsServiceImpl();
+	private EmailService emailService = new EmailServiceImpl();
 
 	@Autowired
 	public CourseController(TransportationService transportationService, MemberService memberService,
@@ -508,6 +511,16 @@ public class CourseController {
 			// เพิ่มข้อมูล notification ไปให้ ผู้สอน
 			notificationsService.createMonkNotifications(courseDto.getTeacher(), spaDto.getSpecialApproveId(),
 					courseOutTimeDto.getId(),spaDto.getStatus(), courseOutTimeDto.getName());
+			
+			String subject = "รายงานการสมัครคอร์ส";
+			String text = "คอร์ส " + courseDto.getName() + " ได้รับการอนุมัติแล้ว";
+
+			// ส่ง email ไปให้ผู้สอน
+			for (MemberDto teacher : courseDto.getTeacherList()) {
+				if (null != teacher.getEmail()) {
+					emailService.sendEmail(teacher.getEmail(), subject, text);
+				}
+			}
 
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
