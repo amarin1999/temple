@@ -16,26 +16,13 @@ import com.cdgs.temple.util.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 import javax.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -155,16 +142,15 @@ public class SpecialApproveController {
 			notificationsService.createMonkNotifications(courseDto.getTeacher(), spaDto.getSpecialApproveId(),
 					courseDto.getId(), spaDto.getStatus(), courseDto.getName());
 
-			List<String> listEmail = new ArrayList<>();
 			String subject = "รายงานการสมัครคอร์ส";
 			String text = "มีผู้สมัครคอร์ส " + courseDto.getName();
-			
-			for(MemberDto teacher : courseDto.getTeacherList()) {
-				listEmail.add(teacher.getEmail());
-			}
-			
+
 			// ส่ง email ไปให้ผู้สอน
-			emailService.sendEmail(listEmail, subject, text);
+			for (MemberDto teacher : courseDto.getTeacherList()) {
+				if (null != teacher.getEmail()) {
+					emailService.sendEmail(teacher.getEmail(), subject, text);
+				}
+			}
 
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
@@ -228,10 +214,22 @@ public class SpecialApproveController {
 				// เพิ่ม notification ให้ user
 				notificationsService.createUserNotifications(saDto.getMemberId(), saId, saDto.getCourseId(),
 						saDto.getStatus(), cDto.getName());
+
+				String subject = "รายงานการสมัครคอร์ส";
+				String text = "คอร์ส " + courseDto.getName() + " ได้รับการอนุมัติแล้ว";
+
+				MemberDto user = memberService.getMember(saDto.getMemberId());
+
+				// ส่ง email ไปให้ user
+				if (null != user.getEmail()) {
+					emailService.sendEmail(user.getEmail(), subject, text);
+				}
 			}
 
 			return new ResponseEntity<>(res, HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
