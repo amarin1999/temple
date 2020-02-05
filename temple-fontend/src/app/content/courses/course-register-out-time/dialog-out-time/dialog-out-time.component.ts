@@ -25,14 +25,13 @@ export class DialogOutTimeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.formOutTime.reset();
     this.createForm();
     this.getTranSport();
   }
   onClose() {
     this.formOutTime.reset();
     this.CloseDialog.emit(false);
-    
+
   }
   public assignCourseOutTime() {
     const tranId = this.formOutTime.get('tranId').value;
