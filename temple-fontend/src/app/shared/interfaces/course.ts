@@ -21,4 +21,5 @@ export interface Course {
   mhcStatus?: string;
   canRegister?: number;
   teacherList?:Member;
+  numberOfMembers?: number;
 }

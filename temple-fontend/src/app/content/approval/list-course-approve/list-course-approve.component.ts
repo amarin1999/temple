@@ -28,6 +28,8 @@ export class ListCourseApproveComponent implements OnInit {
   goToCourse: string;
   textBreadCrumb;
   dataOutTimeReport: string;
+  dataInTimeReport: number;
+  reportNoData: string;
   public methodLazyLoad: string;
   constructor(
     private approvalService: ApprovalService,
@@ -124,8 +126,11 @@ export class ListCourseApproveComponent implements OnInit {
           this.courses = null;
         }
         this.loading = false;
-        console.log(this.courses);
-
+        const data = [...res.data];
+        data.map( dataInTime => {
+          this.dataInTimeReport = dataInTime.numberOfMembers;
+        });
+        this.reportNoData = this.dataInTimeReport === 0 ? '( ไม่มีข้อมูลคำขออนุมัติพิเศษ )' : '';
       }
     });
   }
@@ -140,8 +145,6 @@ export class ListCourseApproveComponent implements OnInit {
         this.courses = [...res['data']];
         this.loading = false;
         this.dataOutTimeReport = res['data'].length === 0 ? '( ไม่มีข้อมูลคำขออนุมัติพิเศษ )' : '';
-        console.log(this.courses);
-
       }
     });
   }
