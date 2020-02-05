@@ -3,25 +3,39 @@ package com.cdgs.temple.controller;
 import com.cdgs.temple.dto.CourseDto;
 import com.cdgs.temple.dto.CourseScheduleDto;
 import com.cdgs.temple.dto.MemberDto;
-import com.cdgs.temple.dto.NotificationsDto;
 import com.cdgs.temple.dto.SpecialApproveDto;
 import com.cdgs.temple.service.CourseScheduleService;
 import com.cdgs.temple.service.CourseService;
+import com.cdgs.temple.service.EmailService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.service.NotificationsService;
 import com.cdgs.temple.service.SpecialApproveService;
+import com.cdgs.temple.service.impl.EmailServiceImpl;
 import com.cdgs.temple.service.impl.NotificationsServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.validation.Valid;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+import java.util.Properties;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -33,6 +47,7 @@ public class SpecialApproveController {
 	private CourseService courseService;
 	private CourseScheduleService courseScheduleService;
 	private NotificationsService notificationsService = new NotificationsServiceImpl();
+	private EmailService emailService = new EmailServiceImpl();
 
 	@Autowired
 	public SpecialApproveController(SpecialApproveService specialApproveService, MemberService memberService,
@@ -134,15 +149,26 @@ public class SpecialApproveController {
 			res.setData(specialApproves);
 			res.setCode(200);
 
-			System.out.println("testtttt ++ " + spaDto.getCourseId());
 			courseDto = courseService.getCourse(spaDto.getCourseId());
 
 			// เพิ่มข้อมูล notification ไปให้ ผู้สอน
 			notificationsService.createMonkNotifications(courseDto.getTeacher(), spaDto.getSpecialApproveId(),
 					courseDto.getId(), spaDto.getStatus(), courseDto.getName());
 
+			List<String> listEmail = new ArrayList<>();
+			String subject = "รายงานการสมัครคอร์ส";
+			String text = "มีผู้สมัครคอร์ส " + courseDto.getName();
+			
+			for(MemberDto teacher : courseDto.getTeacherList()) {
+				listEmail.add(teacher.getEmail());
+			}
+			
+			// ส่ง email ไปให้ผู้สอน
+			emailService.sendEmail(listEmail, subject, text);
+
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);

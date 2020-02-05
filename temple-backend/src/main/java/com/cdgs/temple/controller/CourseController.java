@@ -1,7 +1,6 @@
 package com.cdgs.temple.controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +29,6 @@ import com.cdgs.temple.dto.CourseScheduleDto;
 import com.cdgs.temple.dto.CourseTeacherDto;
 import com.cdgs.temple.dto.MemberDto;
 import com.cdgs.temple.dto.MembersHasCourseDto;
-import com.cdgs.temple.dto.NotificationsDto;
 import com.cdgs.temple.dto.ResponseCountDto;
 import com.cdgs.temple.dto.SensationDto;
 import com.cdgs.temple.dto.SpecialApproveDto;

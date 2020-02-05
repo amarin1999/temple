@@ -32,5 +32,4 @@ public class TempleApiApplication implements CommandLineRunner {
 		System.out.println("============================================================================================");
 		System.out.println();
 	}
-
 }

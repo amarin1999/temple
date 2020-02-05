@@ -6,13 +6,13 @@ import { filter, pairwise } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PrePathService {
-private url: string;
-private previousUrl: string = '';
+  private url: string;
+  private previousUrl: string = '';
 
   constructor(private router: Router) {
     this.router.events
       .pipe(filter((e: any) => e instanceof RoutesRecognized),
-          pairwise()
+        pairwise()
       ).subscribe((e: any) => {
         this.previousUrl = e[0].url;
       });
