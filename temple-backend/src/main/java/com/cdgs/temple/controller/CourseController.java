@@ -513,7 +513,7 @@ public class CourseController {
 					courseOutTimeDto.getId(),spaDto.getStatus(), courseOutTimeDto.getName());
 			
 			String subject = "รายงานการสมัครคอร์ส";
-			String text = "คอร์ส " + courseDto.getName() + " ได้รับการอนุมัติแล้ว";
+			String text = "คอร์ส " + courseOutTimeDto.getName() + " ได้รับการอนุมัติแล้ว";
 
 			// ส่ง email ไปให้ผู้สอน
 			for (Long teacherId : courseDto.getTeacher()) {
