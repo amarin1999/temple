@@ -516,7 +516,10 @@ public class CourseController {
 			String text = "คอร์ส " + courseDto.getName() + " ได้รับการอนุมัติแล้ว";
 
 			// ส่ง email ไปให้ผู้สอน
-			for (MemberDto teacher : courseDto.getTeacherList()) {
+			for (Long teacherId : courseDto.getTeacher()) {
+				
+				MemberDto teacher = memberService.getMember(teacherId);
+				
 				if (null != teacher.getEmail()) {
 					emailService.sendEmail(teacher.getEmail(), subject, text);
 				}
