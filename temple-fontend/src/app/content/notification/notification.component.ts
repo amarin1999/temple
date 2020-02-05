@@ -26,19 +26,11 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit() {
     this.userId = localStorage.getItem('userId');
-
-
     this.fireBase.getCountNoticeByUserID(+(this.userId)).subscribe(res => {
       this.numberOfNotice = res;
     });
-
   }
   toggle() {
     this.notiDisable = false;
   }
-
-
-
-
-
 }

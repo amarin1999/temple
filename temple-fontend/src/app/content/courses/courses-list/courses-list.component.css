@@ -2,6 +2,10 @@
     margin: 0 auto;
 }
 
+.redstar{
+    color: red;
+}
+
 .ui-fluid .ui-button {
     width: 100%;
     margin-bottom: 2mm;
