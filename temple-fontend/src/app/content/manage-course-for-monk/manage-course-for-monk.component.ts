@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { LazyLoadEvent, ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { CourseService } from '../courses/shared/course.service';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Course } from 'src/app/shared/interfaces/course';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-manage-course-for-monk',
@@ -28,6 +29,7 @@ export class ManageCourseForMonkComponent implements OnInit {
     private messageService: MessageService,
     private router: Router,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) {
   }
 
@@ -37,14 +39,14 @@ export class ManageCourseForMonkComponent implements OnInit {
     this.getTotalRecord();
 
     this.cols = [
-      {field: 'stDate', header: 'วันที่'},
-      {field: 'name', header: 'ชื่อคอร์ส'},
-      {field: 'locationName', header: 'สถานที่'},
-      {field: 'conditionMin', header: 'หมายเหตุ'},
+      { field: 'stDate', header: 'วันที่' },
+      { field: 'name', header: 'ชื่อคอร์ส' },
+      { field: 'locationName', header: 'สถานที่' },
+      { field: 'conditionMin', header: 'หมายเหตุ' },
     ];
 
     this.breadCrumbService.setPath([
-      {label: 'จัดการคอร์ส', routerLink: '/manageCourseForMonk'},
+      { label: 'จัดการคอร์ส', routerLink: '/manageCourseForMonk' },
     ]);
   }
 
@@ -56,26 +58,29 @@ export class ManageCourseForMonkComponent implements OnInit {
       header: 'ข้อความจากระบบ',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        this.spinner.show();
         this.courseService.deleteCourse(id)
-        .subscribe( res => {
-          if (res['status'] ==='Success') {
-            this.messageService.add({severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการปิดคอร์สสำเร็จ'});
-            const index = this.courses.findIndex(e => e.id === id);
-            const upd = this.courses[index];
-            this.courses = [
-              ...this.courses.slice(0, index),
-              ...this.courses.slice(index+1)
-            ];
-          } else {
-            this.messageService.add({severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการปิดคอร์สไม่สำเร็จ'});
+          .pipe(finalize(() => this.spinner.hide())).subscribe(res => {
+            if (res['status'] === 'Success') {
+              this.spinner.hide();
+              this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการปิดคอร์สสำเร็จ' });
+              const index = this.courses.findIndex(e => e.id === id);
+              const upd = this.courses[index];
+              this.courses = [
+                ...this.courses.slice(0, index),
+                ...this.courses.slice(index + 1)
+              ];
+            } else {
+              this.spinner.hide();
+              this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการปิดคอร์สไม่สำเร็จ' });
+            }
           }
-        }
 
-        );
+          );
 
       },
       reject: () => {
-        this.messageService.add({severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการปิดคอร์ส'});
+        this.messageService.add({ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการปิดคอร์ส' });
       }
     });
   }
@@ -100,12 +105,13 @@ export class ManageCourseForMonkComponent implements OnInit {
     });
   }
   private getData() {
-        this.courseService.getCourses()
-    .subscribe(res => {
-      if (res['status'] === 'Success') {
-        this.courses = res['data'];
-      }
-    });
+    this.spinner.show();
+    this.courseService.getCourses()
+      .pipe(finalize(() => this.spinner.hide())).subscribe(res => {
+        if (res['status'] === 'Success') {
+          this.courses = res['data'];
+        }
+      });
   }
 
   public onRowSelect(e) {
@@ -113,7 +119,7 @@ export class ManageCourseForMonkComponent implements OnInit {
     this.router.navigate(['/courses', course.id]);
   }
 
-  public closeMessage(){
+  public closeMessage() {
     this.messageService.clear();
   }
 }

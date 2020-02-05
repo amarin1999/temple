@@ -274,6 +274,7 @@ export class CourseCreateComponent implements OnInit {
               this.msgs = [{ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการสร้างคอร์สสำเร็จ' }];
               this.onCancle(this.msgs);
             } else if (res['result'] === 'Fail') {
+              this.spinner.hide();
               this.msgs = [{ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] }];
               this.onCancle(this.msgs);
             }

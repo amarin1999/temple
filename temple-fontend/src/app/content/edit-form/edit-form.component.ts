@@ -60,7 +60,7 @@ export class EditFormComponent implements OnInit {
 
   // เรียกเอาไปใช้ใน calendar html
   year = new Date().getFullYear();
-  
+
 
   showNoProfile = false;
   showLoadingPicture = true;
@@ -222,6 +222,7 @@ export class EditFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.settingCalendarTH();
     this.showRole = this.roleService.getRoleStatus();
     this.roles = this.roleService.getRoles();
@@ -272,6 +273,7 @@ export class EditFormComponent implements OnInit {
         { label: 'แก้ไขข้อมูลส่วนตัว' }
       ]);
     }
+    this.spinner.hide();
   }
 
   addCourseHis() {

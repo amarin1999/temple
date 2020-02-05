@@ -6,7 +6,7 @@ import { MenuItem, ConfirmationService, SelectItem, MessageService } from 'prime
 import { BreadcrumbService } from '../../../shared/service/breadcrumb.service';
 import { Course } from 'src/app/shared/interfaces/course';
 import { SpecialApprove } from '../../../shared/interfaces/special-approve';
-import { switchMap, filter, pairwise, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { switchMap, filter, pairwise, debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { ManageUserService } from 'src/app/shared/service/manage-user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -15,7 +15,7 @@ import { PrePathService } from 'src/app/shared/service/pre-path.service';
 import { TransportService } from 'src/app/shared/service/transport.service';
 import { ExcelService } from 'src/app/shared/service/excel.service';
 import { saveAs } from 'file-saver';
-import { combineLatest } from 'rxjs';
+import { combineLatest, pipe } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 const MIME_TYPE = {
@@ -151,8 +151,10 @@ export class CourseComponent implements OnInit, OnDestroy {
   /*------------------------------------------*/
 
   downloadFile(fileName) {
+    this.spinner.show();
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.courseService.downloadFile({ 'fileName': fileName })
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe(data => {
         // บันทึกในเครื่อง client
         saveAs(new Blob([data], { type: MIME_TYPE[EXT] }), fileName);
@@ -237,6 +239,7 @@ export class CourseComponent implements OnInit, OnDestroy {
               this.course.canRegister = 0;
               this.course.mhcStatus = '2';
               this.onCancle('as');
+              this.spinner.hide();
               this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการลงทะเบียนสำเร็จ' });
             } else if (res['result'] === 'Fail') {
               this.onCancle('as');
@@ -244,6 +247,7 @@ export class CourseComponent implements OnInit, OnDestroy {
             }
           }).catch(err => {
             this.onCancle('as');
+            this.spinner.hide();
             this.messageService.add({
               severity: 'error', summary: 'ข้อความจากระบบ',
               detail: 'ดำเนินการลงทะเบียนไม่สำเร็จเนื่องจาก' + err['errorMessage']
@@ -312,12 +316,15 @@ export class CourseComponent implements OnInit, OnDestroy {
               this.course.status = 'ยังไม่ได้ลงทะเบียน';
               this.course.canRegister = 1;
               this.course.saStatus = null;
+              this.spinner.hide();
               this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการขออนุมัติพิเศษสำเร็จ' });
             } else if (res['result'] === 'Fail') {
+              this.spinner.hide();
               this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] });
             }
           }
           ).catch(err => {
+            this.spinner.hide();
             this.messageService.add({
               severity: 'error', summary: 'ข้อความจากระบบ',
               detail: 'ยกเลิกการขออนุมัติพิเศษไม่สำเร็จเนื่องจาก ' + err['error']['errorMessage']
@@ -407,7 +414,9 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   private getMemberByCourseId() {
+    this.spinner.show();
     this.courseService.getUserByCourseId(this.id)
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe(res => {
         // tslint:disable-next-line: forin
         for (let key in res.data) {
@@ -425,22 +434,26 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   // count graduated course
   private getCountGraduatedCourse() {
-    this.courseService.getTotalRecord('1').subscribe(res => {
-      if (res['status'] === 'Success') {
-        this.total = res['data'][0]['totalRecord'];
-      }
-    });
+    this.spinner.show();
+    this.courseService.getTotalRecord('1')
+      .pipe(finalize(() => this.spinner.hide())).subscribe(res => {
+        if (res['status'] === 'Success') {
+          this.total = res['data'][0]['totalRecord'];
+        }
+      });
   }
 
   createExcel() {
-    this.excelService.createExcel(this.id).subscribe(res => {
-      if (res['result'] === 'Success') {
-        this.downloadFile('temple.xls');
-        this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการบันทึกไฟล์สำเร็จ', sticky: true });
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการบันทึกไฟล์ไม่สำเร็จ', life: 5000 });
-      }
-    });
+    this.spinner.show();
+    this.excelService.createExcel(this.id).
+      pipe(finalize(() => this.spinner.hide())).subscribe(res => {
+        if (res['result'] === 'Success') {
+          this.downloadFile('temple.xls');
+          this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการบันทึกไฟล์สำเร็จ', sticky: true });
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการบันทึกไฟล์ไม่สำเร็จ', life: 5000 });
+        }
+      });
   }
 
   goToProfile() {

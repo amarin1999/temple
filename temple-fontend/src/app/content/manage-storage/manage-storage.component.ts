@@ -7,6 +7,7 @@ import { MenuItem, ConfirmationService, Message, MessageService } from 'primeng/
 import { ManageUserService } from 'src/app/shared/service/manage-user.service';
 import { LoginComponent } from 'src/app/auth/login/login.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-manage-storage',
@@ -72,7 +73,9 @@ export class ManageStorageComponent implements OnInit {
   }
 
   private initDialogData() {
+    this.spinner.show();
     this.memberService.getAllUsers()
+      .pipe(finalize(() => this.spinner.show()))
       .subscribe(res => {
         if (res['status'] === 'Success') {
           this.members = res['data'].map(res => {
@@ -171,13 +174,15 @@ export class ManageStorageComponent implements OnInit {
   }
 
   delete(id) {
+    this.spinner.show();
     const index = this.items.findIndex(e => e.baggageId === id);
     this.baggageService.delete(id).toPromise()
       .then(res => {
         if (res['status'] === 'Success') {
           this.items.splice(index, 1);
         }
-      }).catch((e) => console.log(e['error']['errorMessage']));
+      }).catch((e) => console.log(e['error']['errorMessage']))
+      .finally(() => this.spinner.hide());
   }
 
   save() {
@@ -209,9 +214,9 @@ export class ManageStorageComponent implements OnInit {
               detail: 'ดำเนินการฝากสัมภาระไม่สำเร็จเนื่องจาก ' + err['error']['errorMessage']
             });
           }).finally(() => {
-            this.spinner.hide();
             this.selectedMember = null;
             this.selectedNumber = null;
+            this.spinner.hide() ;
           });
       }
     });

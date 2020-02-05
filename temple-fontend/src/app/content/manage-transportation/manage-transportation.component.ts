@@ -3,8 +3,9 @@ import { TransportService } from 'src/app/shared/service/transport.service';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { Transportation } from 'src/app/shared/interfaces/transportation';
-import { combineLatest } from 'rxjs';
+import { combineLatest, pipe } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-manage-transportation',
@@ -36,63 +37,66 @@ export class ManageTransportationComponent implements OnInit {
         public spinner: NgxSpinnerService
     ) { }
 
-  ngOnInit() {
-    this.breadCrumbService.setPath([
-      { label: 'จัดการการเดินทางทั้งหมด', routerLink: '/transportation' }
-    ]);
-    this.getTransportation();
-    this.getTransportationTemple();
-    this.initTransportation();
-    this.cols = [
-      { field: 'name', header: 'ประเภทการเดินทาง' },
-    ];
-    this.colsTemple = [
-      { field: 'name', header: 'ประเภทการเดินทาง' },
-      { field: 'timePickUp', header: 'เวลารับ' },
-      { field: 'timeSend', header: 'เวลาส่ง' }
-    ];
-  }
-  
-  onTabChange(event) {
-    this.tabIndex = event.index;
-  }
+    ngOnInit() {
+        this.breadCrumbService.setPath([
+            { label: 'จัดการการเดินทางทั้งหมด', routerLink: '/transportation' }
+        ]);
+        this.getTransportation();
+        this.getTransportationTemple();
+        this.initTransportation();
+        this.cols = [
+            { field: 'name', header: 'ประเภทการเดินทาง' },
+        ];
+        this.colsTemple = [
+            { field: 'name', header: 'ประเภทการเดินทาง' },
+            { field: 'timePickUp', header: 'เวลารับ' },
+            { field: 'timeSend', header: 'เวลาส่ง' }
+        ];
+    }
 
-  showDialogToAdd() {
-    this.displayTransportation = true;
-    this.displayDialog = true;
-    this.newTransportation = '';
-  }
-  getTransportation() {
-      this.spinner.show();
-    this.transportationService.getTranSportToEdit().toPromise()
-    .then(res => {
-        this.transport = res['data'];
-    }).catch(err => {
-        console.log(err['error']['errorMessage']);
-    }).finally(() =>
-        this.spinner.hide()
-    );
-    // combineLatest for process 2 service before subscribe
-    // combineLatest(
-    //   this.transportationService.getTranSportToEdit(),
-    //   this.transportationService.getTranSportTempleToEdit()
-    // ).subscribe(
-    //   ([tranSport , tranSportTemple]) => {
-    //     this.transport = [...tranSport.data , ...tranSportTemple.data];
-    //   }
-    // );
-  }
-  getTransportationTemple() {
-    this.transportationService.getTranSportTemple(null).subscribe(
-      res => {
-        this.transportTemple = res['data'];
-        this.transportTemple = this.transportTemple.map( data => {
-            return { id: data.id , name: data.name , timePickUp: data.timePickUp , timeSend: data.timeSend }
-        });
-    });
-  }
+    onTabChange(event) {
+        this.tabIndex = event.index;
+    }
 
-  public save() {
+    showDialogToAdd() {
+        this.displayTransportation = true;
+        this.displayDialog = true;
+        this.newTransportation = '';
+    }
+    getTransportation() {
+        this.spinner.show();
+        this.transportationService.getTranSportToEdit().toPromise()
+            .then(res => {
+                this.transport = res['data'];
+            }).catch(err => {
+                console.log(err['error']['errorMessage']);
+            }).finally(() =>
+                this.spinner.hide()
+            );
+        // combineLatest for process 2 service before subscribe
+        // combineLatest(
+        //   this.transportationService.getTranSportToEdit(),
+        //   this.transportationService.getTranSportTempleToEdit()
+        // ).subscribe(
+        //   ([tranSport , tranSportTemple]) => {
+        //     this.transport = [...tranSport.data , ...tranSportTemple.data];
+        //   }
+        // );
+    }
+    getTransportationTemple() {
+        this.spinner.show();
+        this.transportationService.getTranSportTemple(null)
+            .pipe(finalize(() => this.spinner.hide()))
+            .subscribe(
+                res => {
+                    this.transportTemple = res['data'];
+                    this.transportTemple = this.transportTemple.map(data => {
+                        return { id: data.id, name: data.name, timePickUp: data.timePickUp, timeSend: data.timeSend }
+                    });
+                });
+    }
+
+    public save() {
         this.transportation.name = this.newTransportation;
         if (this.timePickUp !== null && this.timeSend !== null) {
             this.transportation.timePickUp = new Date(this.timePickUp).getTime();
@@ -109,30 +113,34 @@ export class ManageTransportationComponent implements OnInit {
             });
             return;
         }
-            this.transportationService
-                .createTransportation(this.transportation)
-                .subscribe(
-                    res => {
-                        if (res['status'] === 'Success') {
-                            this.messageService.add({
-                                severity: 'success',
-                                summary: 'ข้อความจากระบบ',
-                                detail:
-                                    'ดำเนินการเพิ่มการเดินทาง: ' + res['data']['name'] + ' สำเร็จ'
-                            });
-                            this.getTransportation();
-                            this.getTransportationTemple();
-                            this.initTransportation();
-                        }
-                    },
-                    e => {
+        this.spinner.show();
+        this.transportationService
+            .createTransportation(this.transportation)
+            .pipe(finalize(() => this.spinner.hide()))
+            .subscribe(
+                res => {
+                    if (res['status'] === 'Success') {
+                        this.spinner.hide();
                         this.messageService.add({
-                            severity: 'error',
+                            severity: 'success',
                             summary: 'ข้อความจากระบบ',
-                            detail: 'ดำเนินการไม่สำเร็จ'
+                            detail:
+                                'ดำเนินการเพิ่มการเดินทาง: ' + res['data']['name'] + ' สำเร็จ'
                         });
+                        this.getTransportation();
+                        this.getTransportationTemple();
+                        this.initTransportation();
                     }
-                );
+                },
+                e => {
+                    this.spinner.hide();
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'ข้อความจากระบบ',
+                        detail: 'ดำเนินการไม่สำเร็จ'
+                    });
+                }
+            );
         this.clear();
     }
 
@@ -149,16 +157,19 @@ export class ManageTransportationComponent implements OnInit {
             this.transportation.name === this.newTransportation
         ) {
             // this.transportation.status = this.status;
-            
+
             if (this.tabIndex === 0) {
+                this.spinner.show();
                 this.transportation.name = this.newTransportation;
                 this.transportation.timePickUp = this.timePickUp;
                 this.transportation.timeSend = this.timeSend;
                 this.transportationService
                     .updateTransportationTemple(this.transportation)
+                    .pipe(finalize(() => this.spinner.hide()))
                     .subscribe(
                         res => {
                             if (res['status'] === 'Success') {
+                                this.spinner.hide();
                                 this.messageService.add({
                                     severity: 'success',
                                     summary: 'ข้อความจากระบบ',
@@ -173,6 +184,7 @@ export class ManageTransportationComponent implements OnInit {
                             }
                         },
                         e => {
+                            this.spinner.hide();
                             this.messageService.add({
                                 severity: 'error',
                                 summary: 'ข้อความจากระบบ',
@@ -184,10 +196,13 @@ export class ManageTransportationComponent implements OnInit {
                 this.transportation.name = this.newTransportation;
                 this.transportation.timePickUp = null;
                 this.transportation.timeSend = null;
+                this.spinner.show();
                 this.transportationService.updateTransportation(this.transportation)
+                    .pipe(finalize(() => this.spinner.hide()))
                     .subscribe(
                         res => {
                             if (res['status'] === 'Success') {
+                                this.spinner.hide();
                                 this.messageService.add({
                                     severity: 'success',
                                     summary: 'ข้อความจากระบบ',
@@ -202,6 +217,7 @@ export class ManageTransportationComponent implements OnInit {
                             }
                         },
                         e => {
+                            this.spinner.hide();
                             this.messageService.add({
                                 severity: 'error',
                                 summary: 'ข้อความจากระบบ',
@@ -234,63 +250,72 @@ export class ManageTransportationComponent implements OnInit {
                 this.typeTran.filter(res => res.id === id)[0].name,
             header: 'ข้อความจากระบบ',
             accept: () => {
+                this.spinner.show();
                 if (this.tabIndex === 0) {
-                    this.transportationService.deleteTransportationTemple(id).subscribe(
-                        res => {
-                            if (res['status'] === 'Success') {
-                                this.messageService.add({
-                                    severity: 'success',
-                                    summary: 'ข้อความจากระบบ',
-                                    detail: 'ดำเนินการลบสำเร็จ'
-                                });
-                                this.getTransportationTemple();
+                    this.transportationService.deleteTransportationTemple(id)
+                        .pipe(finalize(() => this.spinner.hide())).subscribe(
+                            res => {
+                                if (res['status'] === 'Success') {
+                                    this.spinner.hide();
+                                    this.messageService.add({
+                                        severity: 'success',
+                                        summary: 'ข้อความจากระบบ',
+                                        detail: 'ดำเนินการลบสำเร็จ'
+                                    });
+                                    this.getTransportationTemple();
+                                }
+                            },
+                            (e) => {
+                                if (e['error']['errorMessage'] === 'transportationTemple is using') {
+                                    this.spinner.hide();
+                                    this.messageService.add({
+                                        severity: 'error',
+                                        summary: 'ข้อความจากระบบ: ',
+                                        detail: 'ดำเนินการลบการเดินทางของวัดไม่สำเร็จเนื่องจากการเดินทางของวัดถูกใช้งานอยู่'
+                                    });
+                                } else {
+                                    this.spinner.hide();
+                                    this.messageService.add({
+                                        severity: 'error',
+                                        summary: 'ข้อความจากระบบ: ',
+                                        detail: 'ดำเนินการลบคำนำหน้าไม่สำเร็จเนื่องจาก ' + e['error']['errorMessage']
+                                    });
+                                }
                             }
-                        },
-                        (e) => {
-                            if (e['error']['errorMessage'] === 'transportationTemple is using') {
-                                this.messageService.add({
-                                    severity: 'error',
-                                    summary: 'ข้อความจากระบบ: ',
-                                    detail: 'ดำเนินการลบการเดินทางของวัดไม่สำเร็จเนื่องจากการเดินทางของวัดถูกใช้งานอยู่'
-                                });
-                            } else {
-                                this.messageService.add({
-                                    severity: 'error',
-                                    summary: 'ข้อความจากระบบ: ',
-                                    detail: 'ดำเนินการลบคำนำหน้าไม่สำเร็จเนื่องจาก ' + e['error']['errorMessage']
-                                });
-                            }
-                        }
-                    );
+                        );
                 } else {
-                    this.transportationService.deleteTransportation(id).subscribe(
-                        res => {
-                            if (res['status'] === 'Success') {
-                                this.messageService.add({
-                                    severity: 'success',
-                                    summary: 'ข้อความจากระบบ',
-                                    detail: 'ดำเนินการลบสำเร็จ'
-                                });
-                                this.getTransportation();
+                    this.transportationService.deleteTransportation(id)
+                        .pipe(finalize(() => this.spinner.hide())).subscribe(
+                            res => {
+                                this.spinner.hide();
+                                if (res['status'] === 'Success') {
+                                    this.messageService.add({
+                                        severity: 'success',
+                                        summary: 'ข้อความจากระบบ',
+                                        detail: 'ดำเนินการลบสำเร็จ'
+                                    });
+                                    this.getTransportation();
+                                }
+                            },
+                            (e) => {
+                                console.log(e['error']['errorMessage']);
+                                if (e['error']['errorMessage'] === 'transportation is using') {
+                                    this.spinner.hide();
+                                    this.messageService.add({
+                                        severity: 'error',
+                                        summary: 'ข้อความจากระบบ: ',
+                                        detail: 'ดำเนินการลบการเดินทางด้วยตัวเองไม่สำเร็จเนื่องจากการเดินทางด้วยตัวเองถูกใช้งานอยู่'
+                                    });
+                                } else {
+                                    this.spinner.hide();
+                                    this.messageService.add({
+                                        severity: 'error',
+                                        summary: 'ข้อความจากระบบ: ',
+                                        detail: 'ดำเนินการลบคำนำหน้าไม่สำเร็จเนื่องจาก ' + e['error']['errorMessage']
+                                    });
+                                }
                             }
-                        },
-                        (e) => {
-                            console.log(e['error']['errorMessage']);
-                            if (e['error']['errorMessage'] === 'transportation is using') {
-                                this.messageService.add({
-                                    severity: 'error',
-                                    summary: 'ข้อความจากระบบ: ',
-                                    detail: 'ดำเนินการลบการเดินทางด้วยตัวเองไม่สำเร็จเนื่องจากการเดินทางด้วยตัวเองถูกใช้งานอยู่'
-                                });
-                            } else {
-                                this.messageService.add({
-                                    severity: 'error',
-                                    summary: 'ข้อความจากระบบ: ',
-                                    detail: 'ดำเนินการลบคำนำหน้าไม่สำเร็จเนื่องจาก ' + e['error']['errorMessage']
-                                });
-                            }
-                        }
-                    );
+                        );
                 }
             }
         });
@@ -321,7 +346,7 @@ export class ManageTransportationComponent implements OnInit {
         this.displayDialog = false;
         this.transportation = {
             id: null,
-            name: '' 
+            name: ''
         };
         this.timePickUp = null;
         this.timeSend = null;
