@@ -234,7 +234,7 @@
         <div class="ui-g-12 ui-lg-12 ui-md-12">
           <div class="ui-g">
             <div class="ui-g-12 ui-lg-4 ui-md-4 text-info" *ngIf="formAssignError.transportation == ''">
-              <label>การเดินทางมาอบรม*</label>
+              <label>การเดินทางมาอบรม<label class="redstar">*</label></label>
             </div>
             <div class="ui-g-12 ui-lg-4 ui-md-4 ui-sm-12 text-danger text-invalid"
               *ngIf="formAssignError.transportation != ''">
@@ -248,7 +248,7 @@
           </div>
           <div class="ui-g">
             <div class="ui-g-12 ui-lg-4 ui-md-4 text-info" *ngIf="!formAssignError.experience">
-              <label>ประสบการณ์ปฎิบัติธรรมที่ผ่านมา*</label>
+              <label>ประสบการณ์ปฎิบัติธรรมที่ผ่านมา<label class="redstar">*</label></label>
             </div>
 
             <div class="ui-g-12 ui-lg-4 ui-md-4 ui-sm-12 text-danger text-invalid" *ngIf="formAssignError.experience">
@@ -263,7 +263,7 @@
           </div>
           <div class="ui-g">
             <div class="ui-g-12 ui-lg-4 ui-md-4 text-info" *ngIf="!formAssignError.expected">
-              <label>ความคาดหวังในครั้งนี้*</label>
+              <label>ความคาดหวังในครั้งนี้<label class="redstar">*</label></label>
             </div>
             <div class="ui-g-12 ui-lg-4 ui-md-4 ui-sm-12 text-danger text-invalid" *ngIf="formAssignError.expected">
               <label>{{ formAssignError.expected }}</label>
@@ -288,14 +288,14 @@
     </p-footer>
   </p-dialog>
   <!--Dialog approve course-->
-  <p-dialog (onHide)="onCancle('ap')" header="ข้อมูลคำขออนุมัติพิเศษสมัครคอร์ส" [(visible)]="displayApproveDialog"
+  <p-dialog (onHide)="onCancle('ap')" header="ข้อมูลคำขออนุมัติพิเศษสำหรับสมัครคอร์ส" [(visible)]="displayApproveDialog"
     [responsive]="true" showEffect="fade" [modal]="true">
     <div [formGroup]="approveFormCourse">
       <div class="ui-g">
         <div class="ui-g-12 ui-lg-12 ui-md-12">
           <div class="ui-g">
             <div class="ui-g-12 ui-lg-4 ui-md-4 text-info" *ngIf="!formApproveError.transportation">
-              <label>การเดินทางมาอบรม*</label>
+              <label>การเดินทางมาอบรม<label class="redstar">*</label></label>
             </div>
             <div class="ui-g-12 ui-lg-4 ui-md-4 ui-sm-12 text-danger text-invalid"
               *ngIf="formApproveError.transportation">
@@ -309,7 +309,7 @@
           </div>
           <div class="ui-g">
             <div class="ui-g-12 ui-lg-4 ui-md-4 text-info" *ngIf="!formApproveError.experience">
-              <label>ประสบการณ์ปฎิบัติธรรมที่ผ่านมา*</label>
+              <label>ประสบการณ์ปฎิบัติธรรมที่ผ่านมา<label class="redstar">*</label></label>
             </div>
             <div class="ui-g-12 ui-lg-4 ui-md-4 ui-sm-12 text-danger text-invalid" *ngIf="formApproveError.experience">
               <label>{{ formApproveError.experience }}</label>
@@ -323,7 +323,7 @@
           </div>
           <div class="ui-g">
             <div class="ui-g-12 ui-lg-4 ui-md-4 text-info" *ngIf="!formApproveError.expected">
-              <label>ความคาดหวังในครั้งนี้*</label>
+              <label>ความคาดหวังในครั้งนี้<label class="redstar">*</label></label>
             </div>
             <div class="ui-g-12 ui-lg-4 ui-md-4 ui-sm-12 text-danger text-invalid" *ngIf="formApproveError.expected">
               <label>{{ formApproveError.expected }}</label>
@@ -339,7 +339,7 @@
       </div>
       <div class="ui-g">
         <div class="ui-g-12 ui-lg-4 ui-md-4 text-info" *ngIf="!formApproveError.detail">
-          <label>รายละเอียดคำขออนุมัติ*</label>
+          <label>รายละเอียดคำขออนุมัติ<label class="redstar">*</label></label>
         </div>
         <div class="ui-g-12 ui-lg-4 ui-md-4 ui-sm-12 text-danger text-invalid" *ngIf="formApproveError.detail">
           <label>{{ formApproveError.detail }}</label>
