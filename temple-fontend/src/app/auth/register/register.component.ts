@@ -16,7 +16,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ManageUserService } from 'src/app/shared/service/manage-user.service';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { TitleName } from 'src/app/shared/interfaces/title-name';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
 import { ProvinceService } from 'src/app/shared/service/province.service';
 import { Ng2ImgMaxService } from 'ng2-img-max';
@@ -207,6 +207,7 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.spinner.show();
     // const email = this.registerForm.get('email');
     this.registerSuccess = false;
     this.showCancelMessage = false;
@@ -234,6 +235,7 @@ export class RegisterComponent implements OnInit {
       { label: 'Login', url: 'auth/login' },
       { label: 'Register : สมัครสมาชิก' }
     ];
+    this.spinner.hide();
   }
 
   addCourseHis() {
@@ -353,7 +355,7 @@ export class RegisterComponent implements OnInit {
           disease: this.registerForm.get('underlyDisease').value === '' ? null : this.registerForm.get('underlyDisease').value,
           blood: bloodGroup.value
         };
-        this.manageUserService.createUser(dataUser).subscribe(
+        this.manageUserService.createUser(dataUser).pipe(finalize(() => this.spinner.hide())).subscribe(
           res => {
             if (res['status'] === 'Success') {
               this.showToast('alertMessage', 'สมัครสมาชิกสำเร็จ', 'success');

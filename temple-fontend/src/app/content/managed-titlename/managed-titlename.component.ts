@@ -4,7 +4,7 @@ import { TitleNameService } from 'src/app/shared/service/title-name.service';
 import { MenuItem, Message, ConfirmationService, MessageService } from 'primeng/api';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -103,7 +103,9 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
     if (!this.titlesForm.valid) {
       this.subscribeInputMessageWaring();
     } else {
+      this.spinner.show();
       this.titleNamesService.createTitleName(titleName)
+        .pipe(finalize(() => this.spinner.hide()))
         .subscribe(res => {
           if (res['status'] === 'Success') {
             this.messageService.add({
@@ -164,9 +166,11 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
         this.duplicateTitle = true;
       } else {
         this.duplicateTitle = false;
+        this.spinner.show();
         this.titleNamesService.updateTitleName(titleName)
           .subscribe(res => {
             if (res['status'] === 'Success') {
+              this.spinner.hide();
               this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ: ', detail: 'ดำเนินการแก้ไขคำนำหน้าสำเร็จ' });
               const index = this.titleNames.findIndex(e => e.id === res['data']['id']);
               this.titleNames[index] = res['data'];
@@ -214,7 +218,9 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
       header: 'ยืนยันการลบคำนำหน้า',
       accept: () => {
         const index = this.titleNames.findIndex(e => e.id === id);
+        this.spinner.show();
         this.titleNamesService.deleteTitleName(id)
+          .pipe(finalize(() => this.spinner.hide()))
           .subscribe(res => {
             if (res['status'] === 'Success') {
               this.messageService.add({

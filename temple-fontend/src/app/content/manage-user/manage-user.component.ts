@@ -25,6 +25,7 @@ export class ManageUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.breadCrumbService.setPath([
       { label: 'จัดการสมาชิก', routerLink: '/users' },
     ]);
@@ -47,9 +48,11 @@ export class ManageUserComponent implements OnInit {
       { field: 'rolename', header: 'rolename' },
       { field: 'contact', header: 'contact' }
     ];
+    this.spinner.hide();
   }
 
   deleteUser(id) {
+    this.spinner.show();
     this.manageUser.deleteUser(id).toPromise()
       .then(res => {
         if (res['status'] === 'Success') {
@@ -61,6 +64,7 @@ export class ManageUserComponent implements OnInit {
         }
       }).catch((e) => console.log(e['error']['errorMessage'])
       ).finally(() => this.spinner.hide());
+    this.spinner.hide();
   }
   public onRowSelect(e) {
     this.router.navigate(['/profile', e.data['id']]);

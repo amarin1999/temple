@@ -8,6 +8,7 @@ import { LocationService } from '../location/location.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Location } from 'src/app/shared/interfaces/location';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/internal/operators/finalize';
 
 @Component({
   selector: 'app-baggages',
@@ -70,15 +71,15 @@ export class BaggagesComponent implements OnInit {
   private getData() {
     this.spinner.show();
     this.baggageService.getItemAll().toPromise()
-    .then(res => {
+      .then(res => {
         if (res['status'] === 'Success') {
           this.items = res['data'];
           this.baggage = res['data'];
         }
       }
-    ).catch(err => 
-      console.log(err['error']['errorMessage'])
-    ).finally(() => this.spinner.hide());
+      ).catch(err =>
+        console.log(err['error']['errorMessage'])
+      ).finally(() => this.spinner.hide());
   }
 
   showEditButton(...role) {
@@ -126,7 +127,7 @@ export class BaggagesComponent implements OnInit {
               });
             }
           }).catch((e) => console.log(e['message']));
-          this.spinner.hide();
+        this.spinner.hide();
       },
       reject: () => {
       }
@@ -170,7 +171,7 @@ export class BaggagesComponent implements OnInit {
         locationId: this.location.id
       };
       // this.messageService.clear()
-      this.baggageService.update(data)
+      this.baggageService.update(data).pipe(finalize(() => this.spinner.hide()))
         .subscribe(res => {
           if (res['status'] === 'Success') {
             const index = this.items.findIndex(e => e['lockerId'] === res['data'][0]['lockerId']);
