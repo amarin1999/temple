@@ -5,7 +5,6 @@ import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { MenuItem, ConfirmationService, Message, MessageService } from 'primeng/api';
 import { ManageUserService } from 'src/app/shared/service/manage-user.service';
-import { LoginComponent } from 'src/app/auth/login/login.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/operators';
 
@@ -21,7 +20,7 @@ export class ManageStorageComponent implements OnInit {
   itemsRe: Baggage[];
   newBaggage: boolean;
   baggage: Baggage;
-  baggageNumber: String;
+  baggageNumber: string;
   cols: any[];
   baggageselect: Baggage;
   data: any;
@@ -73,9 +72,7 @@ export class ManageStorageComponent implements OnInit {
   }
 
   private initDialogData() {
-    this.spinner.show();
     this.memberService.getAllUsers()
-      .pipe(finalize(() => this.spinner.show()))
       .subscribe(res => {
         if (res['status'] === 'Success') {
           this.members = res['data'].map(res => {
@@ -93,8 +90,7 @@ export class ManageStorageComponent implements OnInit {
 
   }
   private getItem() {
-    this.spinner.show();
-    this.baggageService.getItem().pipe(finalize(() => this.spinner.hide())).subscribe((res => {
+    this.baggageService.getItem().subscribe((res => {
       if (res['status'] === 'Success') {
         this.numberOfLocker = res['data'].map(res => {
           return {
@@ -108,8 +104,7 @@ export class ManageStorageComponent implements OnInit {
   }
 
   private getData() {
-    this.spinner.show();
-    this.baggageService.getItems().pipe(finalize(() => this.spinner.hide())).subscribe(res => {
+    this.baggageService.getItems().subscribe(res => {
       if (res['status'] === 'Success') {
         this.items = res['data'].map(res => {
           if (res['status'] === '1') {

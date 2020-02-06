@@ -114,7 +114,7 @@ public class SpecialApproveServiceImpl implements SpecialApproveService {
 
 	@Override
 	public SpecialApproveDto getApproveByCourseIdAndMemberId(Long courseId, Long memberId) {
-		return mapEntityToDto(specialApproveRepository.findByCourseIdAndMemberId(courseId, memberId));
+		return mapEntityToDto(specialApproveRepository.getByCourseIdAndMemberId(courseId, memberId));
 	}
 
 	@Override
