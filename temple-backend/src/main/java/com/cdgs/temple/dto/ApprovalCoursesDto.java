@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter @Getter @ToString
+@Setter
+@Getter
+@ToString
 public class ApprovalCoursesDto implements Serializable {
 	private static final long serialVersionUID = -5875499638883264049L;
 	private Long id;

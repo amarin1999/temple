@@ -2,6 +2,13 @@ package com.cdgs.temple.dto;
 
 import java.util.Date;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class NotificationsDto {
 	private Long specialApproveID;
 	private Long courseID;
@@ -25,62 +32,6 @@ public class NotificationsDto {
 		this.memberID = memberID;
 		this.detail = detail;
 		this.notificationStatus = notificationStatus;
-		this.notificationTime = notificationTime;
-	}
-
-	public Long getSpecialApproveID() {
-		return specialApproveID;
-	}
-
-	public void setSpecialApproveID(Long specialApproveID) {
-		this.specialApproveID = specialApproveID;
-	}
-
-	public Long getCourseID() {
-		return courseID;
-	}
-
-	public void setCourseID(Long courseID) {
-		this.courseID = courseID;
-	}
-
-	public String getSpecialApproveStatus() {
-		return specialApproveStatus;
-	}
-
-	public void setSpecialApproveStatus(String specialApproveStatus) {
-		this.specialApproveStatus = specialApproveStatus;
-	}
-
-	public Long getMemberID() {
-		return memberID;
-	}
-
-	public void setMemberID(Long memberID) {
-		this.memberID = memberID;
-	}
-
-	public String getDetail() {
-		return detail;
-	}
-
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
-
-	public Long getNotificationStatus() {
-		return notificationStatus;
-	}
-
-	public void setNotificationStatus(Long notificationStatus) {
-		this.notificationStatus = notificationStatus;
-	}
-
-	public Date getNotificationTime() {
-		return notificationTime;
-	}
-
-	public void setNotificationTime(Date notificationTime) {
 		this.notificationTime = notificationTime;
 	}
 }

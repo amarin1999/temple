@@ -67,9 +67,9 @@ public class GraduatedServiceImpl implements GraduatedService {
 
 	private GraduatedDto mapEntityesToDto(GraduatedEntity entity) {
 		GraduatedDto dto = new GraduatedDto();
-		dto.setuId(entity.getMemberId());
+		dto.setCId(entity.getMemberId());
 		dto.setMhcId(entity.getMemberHasCourseId());
-		dto.setcId(entity.getCourseId());
+		dto.setCId(entity.getCourseId());
 		dto.setFullname(entity.getDisplayName());
 		dto.setStatus(entity.getMhcStatus());
 		return dto;

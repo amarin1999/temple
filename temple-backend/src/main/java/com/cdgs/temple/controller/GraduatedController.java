@@ -69,7 +69,7 @@ public class GraduatedController {
 		System.out.println(body.toString());
 		try {
 			for (MemberHasCourseStatus mhc : body.getMhcList()) {
-				bodydto.setcId(body.getcId());
+				bodydto.setCId(body.getCId());
 				bodydto.setMhcId(mhc.getMhcId());
 				bodydto.setStatus(mhc.getStatus());
 				System.out.println("body => " + bodydto.toString());
