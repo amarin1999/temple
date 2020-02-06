@@ -1,11 +1,10 @@
 package com.cdgs.temple.security;
 
 import java.io.Serializable;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,8 +13,7 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.TextCodec;
-import io.jsonwebtoken.impl.crypto.MacProvider;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtTokenUtil implements Serializable {
@@ -28,10 +26,7 @@ public class JwtTokenUtil implements Serializable {
     private static final String CLAM_KEY_USERNAME = "username";
     private static final String CLAM_KEY_ID = "account_id";
     private static final String CLAM_KEY_CREATED = "created";
-    private SecretKey key = MacProvider.generateKey(SignatureAlgorithm.HS512);
-//    private String base64Encoded = TextCodec.BASE64.encode(key.getEncoded());
-    
-    private String base64Encoded = TextCodec.BASE64.encode("eyJhbGciOiJIUzUxMiJ9.eyJhY2NvdW50X2lkIjoxLCJjcmVhdGVkIjoxNTUyMzgzMDMxNzQ0LCJleHAiO");
+    private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     
     @Value("${jwt.expiration}")
     private Long expiration;
@@ -52,7 +47,7 @@ public class JwtTokenUtil implements Serializable {
     private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
-            claims = Jwts.parser().setSigningKey(base64Encoded).parseClaimsJws(token).getBody();
+            claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
         } catch (Exception e) {
             claims = null;
         }
@@ -101,7 +96,7 @@ public class JwtTokenUtil implements Serializable {
                 .setClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.HS512, base64Encoded)
+                .signWith(key)
                 .compact();
     }
 
