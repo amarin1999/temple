@@ -3,6 +3,10 @@ package com.cdgs.temple.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @NamedNativeQuery(name = "getReportDashboardMonkData", resultSetMapping = "getReportDashboardMonkDataMapping", query = "SELECT "
 		+ "COUNT(CASE WHEN g.gender_id = '1' THEN 1 ELSE NULL END) AS genderM, "
 		+ "COUNT(CASE WHEN g.gender_id = '2' THEN 1 ELSE NULL END) AS genderF, "
@@ -53,10 +57,10 @@ import javax.persistence.*;
 				@ColumnResult(name = "totalMemberHasCourse", type = Long.class) }) })
 
 @Entity
+@Getter
+@Setter
+@ToString
 public class DashboardEntity implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6411299710331678689L;
 
 	@Id
@@ -128,134 +132,6 @@ public class DashboardEntity implements Serializable {
 	public DashboardEntity(String province, Long totalMemberHasCourse) {
 		super();
 		this.province = province;
-		this.totalMemberHasCourse = totalMemberHasCourse;
-	}
-
-	public Long getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
-	}
-
-	public Long getGenderM() {
-		return genderM;
-	}
-
-	public void setGenderM(Long genderM) {
-		this.genderM = genderM;
-	}
-
-	public Long getGenderF() {
-		return genderF;
-	}
-
-	public void setGenderF(Long genderF) {
-		this.genderF = genderF;
-	}
-
-	public Long getGenderOther() {
-		return genderOther;
-	}
-
-	public void setGenderOther(Long genderOther) {
-		this.genderOther = genderOther;
-	}
-
-	public Long getTransSelf() {
-		return transSelf;
-	}
-
-	public void setTransSelf(Long transSelf) {
-		this.transSelf = transSelf;
-	}
-
-	public Long getTransTemple() {
-		return transTemple;
-	}
-
-	public void setTransTemple(Long transTemple) {
-		this.transTemple = transTemple;
-	}
-
-	public Long getCenter() {
-		return center;
-	}
-
-	public void setCenter(Long center) {
-		this.center = center;
-	}
-
-	public Long getNortheast() {
-		return northeast;
-	}
-
-	public void setNortheast(Long northeast) {
-		this.northeast = northeast;
-	}
-
-	public Long getNorth() {
-		return north;
-	}
-
-	public void setNorth(Long north) {
-		this.north = north;
-	}
-
-	public Long getEast() {
-		return east;
-	}
-
-	public void setEast(Long east) {
-		this.east = east;
-	}
-
-	public Long getWest() {
-		return west;
-	}
-
-	public void setWest(Long west) {
-		this.west = west;
-	}
-
-	public Long getSouth() {
-		return south;
-	}
-
-	public void setSouth(Long south) {
-		this.south = south;
-	}
-
-	public Long getPassCourse() {
-		return passCourse;
-	}
-
-	public void setPassCourse(Long passCourse) {
-		this.passCourse = passCourse;
-	}
-
-	public Long getStudyCourse() {
-		return studyCourse;
-	}
-
-	public void setStudyCourse(Long studyCourse) {
-		this.studyCourse = studyCourse;
-	}
-
-	public String getProvince() {
-		return province;
-	}
-
-	public void setProvince(String province) {
-		this.province = province;
-	}
-
-	public Long getTotalMemberHasCourse() {
-		return totalMemberHasCourse;
-	}
-
-	public void setTotalMemberHasCourse(Long totalMemberHasCourse) {
 		this.totalMemberHasCourse = totalMemberHasCourse;
 	}
 }

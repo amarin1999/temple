@@ -10,14 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "roles")
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class RoleEntity implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 281725112750659635L;
 
 	@Id
@@ -27,21 +30,4 @@ public class RoleEntity implements Serializable {
 
 	@Column(name = "role_name")
 	private String roleName;
-
-	public long getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(long roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-
 }

@@ -11,6 +11,8 @@ import com.cdgs.temple.entity.LocationEntity;
 
 @Repository
 public interface LocationRepository extends CrudRepository<LocationEntity, Long> {
+	LocationEntity findByLocationId(Long locationId);
+	
 	List<LocationEntity> findAllBylocationEnableIsTrue();
 
 	@Query(value = "SELECT (count(c.course_location_id)+count(lk.location_id))AS sum FROM temple.locations l\r\n"

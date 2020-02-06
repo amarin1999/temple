@@ -1,11 +1,10 @@
 package com.cdgs.temple.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,10 +33,11 @@ import com.cdgs.temple.service.CourseService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.service.TransportationService;
 
-@Service
-public class CourseServiceImpl implements CourseService {
+import lombok.extern.slf4j.Slf4j;
 
-	private static final Logger log = LoggerFactory.getLogger(CourseServiceImpl.class);
+@Service
+@Slf4j
+public class CourseServiceImpl implements CourseService {
 
 	private CourseRepository courseRepository;
 
@@ -115,8 +115,6 @@ public class CourseServiceImpl implements CourseService {
 		} else {
 			enable = "1";
 		}
-		System.out.println(status);
-		System.out.println(enable);
 		List<TempCourseEntity> entity = tempCourseRepository.findCoursesUser(memberId, status, enable);
 		return mapListTempEntityToDto(entity);
 	}
@@ -145,8 +143,7 @@ public class CourseServiceImpl implements CourseService {
 			entity = courseRepository.save(convDtoToEntity(body));
 			return mapEntityToDto(entity);
 		} catch (Exception e) {
-			e.printStackTrace();
-			log.error("createCourse>>> " + e.getMessage());
+			log.error("createCourse >>> " + e);
 			return null;
 		}
 	}
@@ -167,19 +164,17 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public CourseDto getCourse(Long id) {
 		try {
-			CourseEntity entity = courseRepository.findById(id).get();
+			CourseEntity entity = courseRepository.findByCourseId(id);
 			return mapEntityEditToDto(entity);
 		} catch (Exception e) {
-			log.error("getCourse >>>> " + e.getMessage());
-			e.printStackTrace();
+			log.error("getCourse >>>> " + e);
 		}
 		return null;
-
 	}
 
 	@Override
 	public CourseDto getCourseMonk(Long id) {
-		CourseEntity entity = courseRepository.findById(id).get();
+		CourseEntity entity = courseRepository.findByCourseId(id);
 		return mapEntityEditToDto(entity);
 
 	}
@@ -200,16 +195,12 @@ public class CourseServiceImpl implements CourseService {
 	public MembersHasCourseDto assignCourse(MembersHasCourseDto body) {
 		MembersHasCourseEntity entity = mapDtoToEntity(body);
 		long count = membersHasCourseRepository.CountForPassCourse(body.getMemberId());
-		CourseEntity course = courseRepository.findById(body.getCourseId()).get();
-		System.out.println("member id " + body.getMemberId());
-		System.out.println("course " + body.getCourseId());
-		System.out.println("count " + count);
-		System.out.println("condition " + course.getCourseConditionMin());
+		CourseEntity course = courseRepository.findByCourseId(body.getCourseId());
 		try {
 			if (count >= course.getCourseConditionMin()) {
 				return mapEntityToDto(membersHasCourseRepository.save(entity));
 			} else {
-				throw new Exception("เงื่อนไขการสมัครไม่ถูกต้อง aa");
+				throw new Exception("เงื่อนไขการสมัครไม่ถูกต้อง");
 			}
 		} catch (Exception e) {
 			log.error("assignCourse>>> " + e.getMessage());
@@ -224,7 +215,7 @@ public class CourseServiceImpl implements CourseService {
 		if (course != null) {
 			return mapListEntityToDto(course);
 		}
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -334,7 +325,7 @@ public class CourseServiceImpl implements CourseService {
 			List<CourseEntity> course = courseRepository.getAllPreviouspast();
 			return mapListEntityToDto(course);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("getPreviouspast", e);
 			return null;
 		}
 	}
@@ -352,7 +343,7 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public CourseDto getCourseById(Long courseId) {
-		CourseEntity entity = courseRepository.findById(courseId).get();
+		CourseEntity entity = courseRepository.findByCourseId(courseId);
 		return mapEntityToDto(entity);
 	}
 
@@ -444,7 +435,7 @@ public class CourseServiceImpl implements CourseService {
 
 	@Transactional
 	public CourseDto updateCourse(Long id, CourseDto courseNew) {
-		CourseEntity courseOld = courseRepository.findById(id).get();
+		CourseEntity courseOld = courseRepository.findByCourseId(id);
 		CourseEntity entity;
 		TransportationDto transportationDtoOld = new TransportationDto();
 		TransportationDto transportationDtoNew = new TransportationDto();
@@ -468,23 +459,14 @@ public class CourseServiceImpl implements CourseService {
 							transportationDtoOld);
 				}
 			}
-			System.out.println("st1 = " + courseNew.getStDate());
 
 			// set update name, detail, location
 			courseOld.setCourseName(courseNew.getName());
-			System.out.println("name = " + courseNew.getName());
 			courseOld.setCourseDetail(courseNew.getDetail());
-			System.out.println("detail = " + courseNew.getDetail());
-			courseOld.setLocationId(locationRepository.findById(courseNew.getLocationId()).get());
+			courseOld.setLocationId(locationRepository.findByLocationId(courseNew.getLocationId()));
 			courseOld.setCourseStDate(courseNew.getStDate());
-			System.out.println("st = " + courseNew.getStDate());
-			System.out.println("stOld = " + courseOld.getCourseStDate());
 			courseOld.setCourseConditionMin(courseNew.getConditionMin());
 			courseOld.setCourseEndDate(courseNew.getEndDate());
-			System.out.println("end = " + courseNew.getEndDate());
-			System.out.println("endOld = " + courseOld.getCourseEndDate());
-			String datetest = "2019-12-12";
-			System.out.println("datetest =" + datetest);
 			courseOld.setCourseLastUpdate(new Date());
 			courseOld.setCourseLocationId(courseNew.getLocationId());
 			entity = courseRepository.save(courseOld);
@@ -501,9 +483,6 @@ public class CourseServiceImpl implements CourseService {
 
 			return mapEntityEditToDto(entity);
 
-		} catch (RuntimeException e) {
-			log.error("updateCourse >>>> " + e.getMessage());
-			return null;
 		} catch (Exception e) {
 			log.error("updateCourse >>>> " + e.getMessage());
 			return null;

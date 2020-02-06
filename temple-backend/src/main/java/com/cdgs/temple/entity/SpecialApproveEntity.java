@@ -2,6 +2,10 @@ package com.cdgs.temple.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -18,11 +22,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "special_approve")
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class SpecialApproveEntity implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4780915762853262556L;
 
 	@Id
@@ -59,85 +62,4 @@ public class SpecialApproveEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "tran_id", insertable = false, updatable = false)
 	private TransportationEntity transpotation;
-
-	public Long getSpecialApproveId() {
-		return specialApproveId;
-	}
-
-	public void setSpecialApproveId(Long specialApproveId) {
-		this.specialApproveId = specialApproveId;
-	}
-
-	public Long getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
-	}
-
-	public Long getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
-	}
-
-	public String getSpaDetail() {
-		return spaDetail;
-	}
-
-	public void setSpaDetail(String spaDetail) {
-		this.spaDetail = spaDetail;
-	}
-
-	public String getSpaStatus() {
-		return spaStatus;
-	}
-
-	public void setSpaStatus(String spaStatus) {
-		this.spaStatus = spaStatus;
-	}
-
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(LocalDateTime createDate) {
-		this.createDate = createDate;
-	}
-
-	public LocalDateTime getLastUpdate() {
-		return lastUpdate;
-	}
-
-	public void setLastUpdate(LocalDateTime lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-
-	public Long getSenseId() {
-		return senseId;
-	}
-
-	public void setSenseId(Long senseId) {
-		this.senseId = senseId;
-	}
-
-	public Long getTranId() {
-		return tranId;
-	}
-
-	public void setTranId(Long tranId) {
-		this.tranId = tranId;
-	}
-
-	public TransportationEntity getTranspotation() {
-		return transpotation;
-	}
-
-	public void setTranspotation(TransportationEntity transpotation) {
-		this.transpotation = transpotation;
-	}
-
 }

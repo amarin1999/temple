@@ -10,14 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "title_names")
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class TitleNamesEntity implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3445764127909844707L;
 
 	@Id
@@ -41,29 +44,4 @@ public class TitleNamesEntity implements Serializable {
 		this.titleDisplay = titleDisplay;
 		this.titleName = titleName;
 	}
-
-	public Long getTitleId() {
-		return titleId;
-	}
-
-	public void setTitleId(Long titleId) {
-		this.titleId = titleId;
-	}
-
-	public String getTitleDisplay() {
-		return titleDisplay;
-	}
-
-	public void setTitleDisplay(String titleDisplay) {
-		this.titleDisplay = titleDisplay;
-	}
-
-	public String getTitleName() {
-		return titleName;
-	}
-
-	public void setTitleName(String titleName) {
-		this.titleName = titleName;
-	}
-
 }

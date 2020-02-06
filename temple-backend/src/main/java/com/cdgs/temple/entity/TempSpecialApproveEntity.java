@@ -13,6 +13,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @SqlResultSetMapping(name = "findTempSpecialApproveOuttimeEntityDataMapping", classes = {
 		@ConstructorResult(targetClass = TempSpecialApproveEntity.class, columns = {
 				@ColumnResult(name = "specialApproveId", type = Long.class),
@@ -40,6 +44,9 @@ import javax.persistence.Transient;
 		+ "WHERE sa.spa_status = '4' AND sa.course_id =:courseId ")
 
 @Entity
+@Getter
+@Setter
+@ToString
 public class TempSpecialApproveEntity implements Serializable {
 	private static final Long serialVersionUID = -4780915762853262556L;
 
@@ -84,88 +91,6 @@ public class TempSpecialApproveEntity implements Serializable {
 		this.courseDetail = courseDetail;
 		this.courseStDate = courseStDate;
 		this.courseEndDate = courseEndDate;
-		this.transportation = transportation;
-	}
-
-
-
-	public Long getSpecialApproveId() {
-		return specialApproveId;
-	}
-
-	public void setSpecialApproveId(Long specialApproveId) {
-		this.specialApproveId = specialApproveId;
-	}
-
-	public Long getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
-	}
-
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
-
-	public String getSpaDetail() {
-		return spaDetail;
-	}
-
-	public void setSpaDetail(String spaDetail) {
-		this.spaDetail = spaDetail;
-	}
-
-	public Long getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
-	}
-
-	public String getCourseName() {
-		return courseName;
-	}
-
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
-
-	public String getCourseDetail() {
-		return courseDetail;
-	}
-
-	public void setCourseDetail(String courseDetail) {
-		this.courseDetail = courseDetail;
-	}
-
-	public Date getCourseStDate() {
-		return courseStDate;
-	}
-
-	public void setCourseStDate(Date courseStDate) {
-		this.courseStDate = courseStDate;
-	}
-
-	public Date getCourseEndDate() {
-		return courseEndDate;
-	}
-
-	public void setCourseEndDate(Date courseEndDate) {
-		this.courseEndDate = courseEndDate;
-	}
-
-	public String getTransportation() {
-		return transportation;
-	}
-
-	public void setTransportation(String transportation) {
 		this.transportation = transportation;
 	}
 }

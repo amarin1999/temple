@@ -10,14 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "locations")
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class LocationEntity implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2667439266984772043L;
 
 	@Id
@@ -30,29 +33,4 @@ public class LocationEntity implements Serializable {
 
 	@Column(name = "location_enable")
 	private boolean locationEnable = true;
-
-	public boolean getLocationEnable() {
-		return locationEnable;
-	}
-
-	public void setLocationEnable(boolean locationEnable) {
-		this.locationEnable = locationEnable;
-	}
-
-	public Long getLocationId() {
-		return locationId;
-	}
-
-	public void setLocationId(Long locationId) {
-		this.locationId = locationId;
-	}
-
-	public String getLocationName() {
-		return locationName;
-	}
-
-	public void setLocationName(String locationName) {
-		this.locationName = locationName;
-	}
-
 }

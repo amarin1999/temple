@@ -10,14 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "region")
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class RegionEntity implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4920156610220202638L;
 
 	@Id
@@ -27,21 +30,4 @@ public class RegionEntity implements Serializable {
 
 	@Column(name = "region_name")
 	private String regionName;
-
-	public Long getRegionId() {
-		return regionId;
-	}
-
-	public void setRegionId(Long regionId) {
-		this.regionId = regionId;
-	}
-
-	public String getRegionName() {
-		return regionName;
-	}
-
-	public void setRegionName(String regionName) {
-		this.regionName = regionName;
-	}
-
 }

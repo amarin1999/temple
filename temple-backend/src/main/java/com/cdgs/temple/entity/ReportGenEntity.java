@@ -9,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.SqlResultSetMapping;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @SqlResultSetMapping(name = "getCourseNameMapping", classes = {
 		@ConstructorResult(targetClass = ReportGenEntity.class, columns = {
 				@ColumnResult(name = "courseId", type = Long.class),
@@ -81,10 +85,10 @@ import javax.persistence.SqlResultSetMapping;
 		+ "GROUP BY c.course_id")
 
 @Entity
+@Getter
+@Setter
+@ToString
 public class ReportGenEntity implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5218040759577439311L;
 	@Id
 	private Long courseId;
@@ -158,149 +162,5 @@ public class ReportGenEntity implements Serializable {
 		this.east = east;
 		this.west = west;
 		this.south = south;
-	}
-
-	public Long getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
-	}
-
-	public String getCourseName() {
-		return courseName;
-	}
-
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
-
-	public Long getGenderM() {
-		return genderM;
-	}
-
-	public void setGenderM(Long genderM) {
-		this.genderM = genderM;
-	}
-
-	public Long getGenderF() {
-		return genderF;
-	}
-
-	public void setGenderF(Long genderF) {
-		this.genderF = genderF;
-	}
-
-	public Long getGenderOther() {
-		return genderOther;
-	}
-
-	public void setGenderOther(Long genderOther) {
-		this.genderOther = genderOther;
-	}
-
-	public Long getTransSelf() {
-		return transSelf;
-	}
-
-	public void setTransSelf(Long transSelf) {
-		this.transSelf = transSelf;
-	}
-
-	public Long getTransTemple() {
-		return transTemple;
-	}
-
-	public void setTransTemple(Long transTemple) {
-		this.transTemple = transTemple;
-	}
-
-	public Long getNewStudent() {
-		return newStudent;
-	}
-
-	public void setNewStudent(Long newStudent) {
-		this.newStudent = newStudent;
-	}
-
-	public Long getBangkok() {
-		return bangkok;
-	}
-
-	public void setBangkok(Long bangkok) {
-		this.bangkok = bangkok;
-	}
-
-	public Long getCenter() {
-		return center;
-	}
-
-	public void setCenter(Long center) {
-		this.center = center;
-	}
-
-	public Long getSakonnakhon() {
-		return sakonnakhon;
-	}
-
-	public void setSakonnakhon(Long sakonnakhon) {
-		this.sakonnakhon = sakonnakhon;
-	}
-
-	public Long getNortheast() {
-		return northeast;
-	}
-
-	public void setNortheast(Long northeast) {
-		this.northeast = northeast;
-	}
-
-	public Long getNorth() {
-		return north;
-	}
-
-	public void setNorth(Long north) {
-		this.north = north;
-	}
-
-	public Long getEast() {
-		return east;
-	}
-
-	public void setEast(Long east) {
-		this.east = east;
-	}
-
-	public Long getWest() {
-		return west;
-	}
-
-	public void setWest(Long west) {
-		this.west = west;
-	}
-
-	public Long getSouth() {
-		return south;
-	}
-
-	public void setSouth(Long south) {
-		this.south = south;
-	}
-
-	public Long getPassCourse() {
-		return passCourse;
-	}
-
-	public void setPassCourse(Long passCourse) {
-		this.passCourse = passCourse;
-	}
-
-	public Long getStudyCourse() {
-		return studyCourse;
-	}
-
-	public void setStudyCourse(Long studyCourse) {
-		this.studyCourse = studyCourse;
 	}
 }
