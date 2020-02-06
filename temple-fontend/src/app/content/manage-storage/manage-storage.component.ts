@@ -94,60 +94,55 @@ export class ManageStorageComponent implements OnInit {
   }
   private getItem() {
     this.spinner.show();
-    this.baggageService.getItem().toPromise()
-      .then(res => {
-        if (res['status'] === 'Success') {
-          this.numberOfLocker = res['data'].map(res => {
-            return {
-              number: res['locationName'] + '  ' + res['number'],
-              lockerId: res['lockerId']
-            };
-          });
-        }
-      }).catch(err => {
-        console.log(err['error']['errorMessage']);
-      }).finally(() => this.spinner.hide());
+    this.baggageService.getItem().pipe(finalize(() => this.spinner.hide())).subscribe((res => {
+      if (res['status'] === 'Success') {
+        this.numberOfLocker = res['data'].map(res => {
+          return {
+            number: res['locationName'] + '  ' + res['number'],
+            lockerId: res['lockerId']
+          };
+        });
+      }
+    }))
+
   }
 
   private getData() {
     this.spinner.show();
-    this.baggageService.getItems().toPromise()
-      .then(res => {
-        if (res['status'] === 'Success') {
-          this.items = res['data'].map(res => {
-            if (res['status'] === '1') {
-              return {
-                baggageId: res['baggageId'],
-                memberId: res['memberId'],
-                lockerId: res['lockerId'],
-                status: res['status'],
-                createDate: res['createDate'],
-                lastUpdate: res['lastUpdate'],
-                memberName: res['memberName'],
-                locker: res['locker']
-              };
-            } else { return null; }
-          });
-          this.itemsRe = res['data'].map(res => {
-            if (res['status'] !== '1') {
-              return {
-                baggageId: res['baggageId'],
-                memberId: res['memberId'],
-                lockerId: res['lockerId'],
-                status: res['status'],
-                createDate: res['createDate'],
-                lastUpdate: res['lastUpdate'],
-                memberName: res['memberName'],
-                locker: res['locker']
-              };
-            } else { return null; }
-          });
-        }
-        this.items = this.items.filter(e => e != null);
-        this.itemsRe = this.itemsRe.filter(e => e != null);
-      }).catch(e =>
-        console.log(e['error']['errorMessage'])
-      ).finally(() => this.spinner.hide());
+    this.baggageService.getItems().pipe(finalize(() => this.spinner.hide())).subscribe(res => {
+      if (res['status'] === 'Success') {
+        this.items = res['data'].map(res => {
+          if (res['status'] === '1') {
+            return {
+              baggageId: res['baggageId'],
+              memberId: res['memberId'],
+              lockerId: res['lockerId'],
+              status: res['status'],
+              createDate: res['createDate'],
+              lastUpdate: res['lastUpdate'],
+              memberName: res['memberName'],
+              locker: res['locker']
+            };
+          } else { return null; }
+        });
+        this.itemsRe = res['data'].map(res => {
+          if (res['status'] !== '1') {
+            return {
+              baggageId: res['baggageId'],
+              memberId: res['memberId'],
+              lockerId: res['lockerId'],
+              status: res['status'],
+              createDate: res['createDate'],
+              lastUpdate: res['lastUpdate'],
+              memberName: res['memberName'],
+              locker: res['locker']
+            };
+          } else { return null; }
+        });
+      }
+      this.items = this.items.filter(e => e != null);
+      this.itemsRe = this.itemsRe.filter(e => e != null);
+    });
   }
 
   showEditButton(...role) {
@@ -176,13 +171,11 @@ export class ManageStorageComponent implements OnInit {
   delete(id) {
     this.spinner.show();
     const index = this.items.findIndex(e => e.baggageId === id);
-    this.baggageService.delete(id).toPromise()
-      .then(res => {
-        if (res['status'] === 'Success') {
-          this.items.splice(index, 1);
-        }
-      }).catch((e) => console.log(e['error']['errorMessage']))
-      .finally(() => this.spinner.hide());
+    this.baggageService.delete(id).pipe(finalize(() => this.spinner.hide())).subscribe(res => {
+      if (res['status'] === 'Success') {
+        this.items.splice(index, 1);
+      }
+    })
   }
 
   save() {
@@ -199,24 +192,24 @@ export class ManageStorageComponent implements OnInit {
           memberId: this.selectedMember['memberId'],
           lockerId: this.selectedNumber['lockerId']
         };
-        this.baggageService.saveStorage(data).toPromise()
-          .then(res => {
-            if (res['status'] === 'Success') {
-              this.getData();
-              this.getItem();
-              this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการฝากสัมภาระสำเร็จ' });
-            } else {
-              this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการฝากสัมภาระไม่สำเร็จ' });
-            }
-          }).catch(err => {
+        this.baggageService.saveStorage(data).pipe(finalize(() => {
+          this.selectedMember = null;
+          this.selectedNumber = null;
+          this.spinner.hide();
+        })).subscribe(res => {
+          if (res['status'] === 'Success') {
+            this.getData();
+            this.getItem();
+            this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการฝากสัมภาระสำเร็จ' });
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการฝากสัมภาระไม่สำเร็จ' });
+          }
+        }
+          , err => {
             this.messageService.add({
               severity: 'error', summary: 'ข้อความจากระบบ',
               detail: 'ดำเนินการฝากสัมภาระไม่สำเร็จเนื่องจาก ' + err['error']['errorMessage']
             });
-          }).finally(() => {
-            this.selectedMember = null;
-            this.selectedNumber = null;
-            this.spinner.hide() ;
           });
       }
     });
@@ -236,8 +229,8 @@ export class ManageStorageComponent implements OnInit {
           lockerId: this.selectedNumber['lockerId'],
           status: this.selectedStatus['val']
         };
-        this.baggageService.updateStorage(this.baggageselect.baggageId, data).toPromise()
-          .then(res => {
+        this.baggageService.updateStorage(this.baggageselect.baggageId, data).pipe(finalize(() => this.spinner.hide())).subscribe(
+          res => {
             if (res['status'] === 'Success') {
               this.clear();
               this.getData();
@@ -249,12 +242,12 @@ export class ManageStorageComponent implements OnInit {
             } else {
               this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'แก้ไขสัมภาระไม่สำเร็จ' });
             }
-          }).catch(err => {
+          }, err => {
             this.messageService.add({
               severity: 'error', summary: 'ข้อความจากระบบ',
               detail: 'แก้ไขสัมภาระไม่สำเร็จเนื่องจาก ' + err['error']['errorMessage']
             });
-          }).finally(() => this.spinner.hide());
+          });
       }
     });
   }

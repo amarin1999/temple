@@ -107,8 +107,7 @@ export class CourseEditComponent implements OnInit {
   ngOnInit() {
     this.initNotice();
     /*     this.courseId = this.route.snapshot.paramMap.get('id');*/
-    this.spinner.show();
-    this.courseService.getTeachers().pipe(finalize(() => this.spinner.show())).subscribe(
+    this.courseService.getTeachers().subscribe(
       res => {
         if (res.status === 'Success') {
           this.teachers = res['data'].map(res => {
@@ -123,8 +122,7 @@ export class CourseEditComponent implements OnInit {
         console.log(error['error']['errorMessage']);
       }
     );
-    this.spinner.show();
-    this.locationService.getLocation().pipe(finalize(() => this.spinner.hide())).subscribe(
+    this.locationService.getLocation().subscribe(
       res => {
         if (res.status === 'Success') {
           this.locations = res.data;

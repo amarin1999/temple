@@ -31,7 +31,6 @@ export class LocationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
     this.breadCrumbService.setPath([
       { label: 'จัดการสถานที่', routerLink: '/location' },
     ]);
@@ -45,7 +44,6 @@ export class LocationComponent implements OnInit {
       { label: '', icon: 'pi pi-home', routerLink: '/' },
       { label: 'Manange Locations : จัดการสถานที่' },
     ];
-    this.spinner.hide();
   }
 
   showDialogToAdd() {
@@ -199,7 +197,7 @@ export class LocationComponent implements OnInit {
           });
         }
 
-      });
+      }).finally(() => this.spinner.hide());
       this.clear();
     } else {
       this.messageService.add({

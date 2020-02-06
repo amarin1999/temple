@@ -207,7 +207,6 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.spinner.show();
     // const email = this.registerForm.get('email');
     this.registerSuccess = false;
     this.showCancelMessage = false;
@@ -235,7 +234,6 @@ export class RegisterComponent implements OnInit {
       { label: 'Login', url: 'auth/login' },
       { label: 'Register : สมัครสมาชิก' }
     ];
-    this.spinner.hide();
   }
 
   addCourseHis() {

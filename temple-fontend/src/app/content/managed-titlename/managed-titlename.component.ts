@@ -108,6 +108,7 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
         .pipe(finalize(() => this.spinner.hide()))
         .subscribe(res => {
           if (res['status'] === 'Success') {
+            this.spinner.hide();
             this.messageService.add({
               severity: 'success',
               summary: 'ข้อความจากระบบ',
@@ -117,6 +118,7 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
           }
         },
           (e) => {
+            this.spinner.hide();
             this.messageService.add({
               severity: 'error', summary: 'ข้อความจากระบบ',
               detail: 'ดำเนินการบันทึกไม่สำเร็จ (คำนำหน้าชื่อหรือคำย่ออาจมีอยู่แล้ว)', life: 5000
@@ -168,7 +170,7 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
         this.duplicateTitle = false;
         this.spinner.show();
         this.titleNamesService.updateTitleName(titleName)
-          .subscribe(res => {
+          .pipe(finalize(() => this.spinner.hide())).subscribe(res => {
             if (res['status'] === 'Success') {
               this.spinner.hide();
               this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ: ', detail: 'ดำเนินการแก้ไขคำนำหน้าสำเร็จ' });
@@ -176,6 +178,7 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
               this.titleNames[index] = res['data'];
             }
           }, (e) => {
+            this.spinner.hide();
             this.messageService.add({
               severity: 'error',
               summary: 'ข้อความจากระบบ: ',
@@ -243,6 +246,7 @@ export class ManagedTitlenameComponent implements OnInit, AfterViewInit {
           },
             (e) => {
               console.log(e['error']['errorMessage']);
+              this.spinner.hide();
               if (e['error']['errorMessage'] === 'titleName is using') {
                 this.messageService.add({
                   severity: 'error',

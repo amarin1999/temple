@@ -69,7 +69,7 @@ export class BaggagesComponent implements OnInit {
   }
 
   private getData() {
-    this.spinner.show();
+    // this.spinner.show();
     this.baggageService.getItemAll().toPromise()
       .then(res => {
         if (res['status'] === 'Success') {
@@ -79,7 +79,8 @@ export class BaggagesComponent implements OnInit {
       }
       ).catch(err =>
         console.log(err['error']['errorMessage'])
-      ).finally(() => this.spinner.hide());
+      )
+    // .finally(() => this.spinner.hide());
   }
 
   showEditButton(...role) {
@@ -126,8 +127,8 @@ export class BaggagesComponent implements OnInit {
                 detail: 'เนื่องจากระบบมีข้อผิดพลาด'
               });
             }
-          }).catch((e) => console.log(e['message']));
-        this.spinner.hide();
+          }).catch((e) => console.log(e['message'])).finally(() => this.spinner.hide());
+
       },
       reject: () => {
       }
