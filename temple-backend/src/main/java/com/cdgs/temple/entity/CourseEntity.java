@@ -9,6 +9,10 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * @created 13/01/2563
  * @author PRAYOON SUNTORNKITI
@@ -49,6 +53,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Table(name = "courses")
 @Embeddable
+@Getter @Setter @ToString
 public class CourseEntity implements Serializable {
 
 	/**
@@ -146,169 +151,5 @@ public class CourseEntity implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "course_id", insertable = false, updatable = false)
 	private List<CourseTeacherEntity> courseTeacher;
-
-	public Long getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
-	}
-
-	public String getCourseName() {
-		return courseName;
-	}
-
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
-
-	public Date getCourseStDate() {
-		return courseStDate;
-	}
-
-	public void setCourseStDate(Date courseStDate) {
-		this.courseStDate = courseStDate;
-	}
-
-	public Date getCourseEndDate() {
-		return courseEndDate;
-	}
-
-	public void setCourseEndDate(Date courseEndDate) {
-		this.courseEndDate = courseEndDate;
-	}
-
-	public String getCourseDetail() {
-		return courseDetail;
-	}
-
-	public void setCourseDetail(String courseDetail) {
-		this.courseDetail = courseDetail;
-	}
-
-	public Integer getCourseConditionMin() {
-		return courseConditionMin;
-	}
-
-	public void setCourseConditionMin(Integer courseConditionMin) {
-		this.courseConditionMin = courseConditionMin;
-	}
-
-	public Long getCourseLocationId() {
-		return courseLocationId;
-	}
-
-	public void setCourseLocationId(Long courseLocationId) {
-		this.courseLocationId = courseLocationId;
-	}
-
-	public Long getCourseCreateBy() {
-		return courseCreateBy;
-	}
-
-	public void setCourseCreateBy(Long courseCreateBy) {
-		this.courseCreateBy = courseCreateBy;
-	}
-
-	public Date getCourseCreateDate() {
-		return courseCreateDate;
-	}
-
-	public void setCourseCreateDate(Date courseCreateDate) {
-		this.courseCreateDate = courseCreateDate;
-	}
-
-	public Date getCourseLastUpdate() {
-		return courseLastUpdate;
-	}
-
-	public void setCourseLastUpdate(Date courseLastUpdate) {
-		this.courseLastUpdate = courseLastUpdate;
-	}
-
-	public MemberEntity getCreateBy() {
-		return createBy;
-	}
-
-	public void setCreateBy(MemberEntity createBy) {
-		this.createBy = createBy;
-	}
-
-	public LocationEntity getLocationId() {
-		return locationId;
-	}
-
-	public void setLocationId(LocationEntity locationId) {
-		this.locationId = locationId;
-	}
-
-	public Boolean isCourseEnable() {
-		return courseEnable;
-	}
-
-	public void setCourseEnable(Boolean courseEnable) {
-		this.courseEnable = courseEnable;
-	}
-
-	public List<CourseScheduleEntity> getCourseSchdule() {
-		return courseSchdule;
-	}
-
-	public void setCourseSchdule(List<CourseScheduleEntity> courseSchdule) {
-		this.courseSchdule = courseSchdule;
-	}
-
-	public List<CourseTeacherEntity> getCourseTeacher() {
-		return courseTeacher;
-	}
-
-	public void setCourseTeacher(List<CourseTeacherEntity> courseTeacher) {
-		this.courseTeacher = courseTeacher;
-	}
-
-	public Long getCourseNo() {
-		return courseNo;
-	}
-
-	public void setCourseNo(Long courseNo) {
-		this.courseNo = courseNo;
-	}
-
-	public String getCourseStatus() {
-		return courseStatus;
-	}
-
-	public void setCourseStatus(String courseStatus) {
-		this.courseStatus = courseStatus;
-	}
-
-	public Long getTransportationId() {
-		return transportationId;
-	}
-
-	public void setTransportationId(Long transportationId) {
-		this.transportationId = transportationId;
-	}
-
-	public String getLocationName() {
-		return locationName;
-	}
-	
-	public void setLocationName(String locationName) {
-		this.locationName = locationName;
-	}
-
-	@Override
-	public String toString() {
-		return "CourseEntity [courseId=" + courseId + ", courseNo=" + courseNo + ", courseName=" + courseName
-				+ ", courseStDate=" + courseStDate + ", courseEndDate=" + courseEndDate + ", courseDetail="
-				+ courseDetail + ", courseConditionMin=" + courseConditionMin + ", courseLocationId=" + courseLocationId
-				+ ", courseCreateBy=" + courseCreateBy + ", courseCreateDate=" + courseCreateDate
-				+ ", courseLastUpdate=" + courseLastUpdate + ", courseStatus=" + courseStatus + ", courseEnable="
-				+ courseEnable + ", createBy=" + createBy + ", locationId=" + locationId + ", transportationId="
-				+ transportationId + ", locationName=" + locationName + ", courseSchdule=" + courseSchdule
-				+ ", courseTeacher=" + courseTeacher + "]";
-	}
 }
 
