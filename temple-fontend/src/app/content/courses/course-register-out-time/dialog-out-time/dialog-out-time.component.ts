@@ -5,6 +5,7 @@ import { CourseService } from '../../shared/course.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Transportation } from 'src/app/shared/interfaces/transportation';
 import { TransportService } from 'src/app/shared/service/transport.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-dialog-out-time',
   templateUrl: './dialog-out-time.component.html',
@@ -22,6 +23,7 @@ export class DialogOutTimeComponent implements OnInit, OnDestroy {
   constructor(private confirmationService: ConfirmationService,
     private formBuilder: FormBuilder, private courseService: CourseService
     , private messageService: MessageService, private TransService: TransportService
+    , private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -52,11 +54,14 @@ export class DialogOutTimeComponent implements OnInit, OnDestroy {
       header: 'ข้อความจากระบบ',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        this.spinner.show();
         this.courseService.registerCourseOutTime(outTimeCourse).subscribe(res => {
           if (res.status === 'Success') {
+            this.spinner.hide();
             this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ขออนุมัตินอกเวลาสำเร็จ' });
             this.onClose();
           } else {
+            this.spinner.hide();
             this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] });
           }
         });
