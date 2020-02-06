@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ConfirmationService, LazyLoadEvent, MenuItem, MessageService } from 'primeng/api';
 import { Course } from 'src/app/shared/interfaces/course';
 import { CourseService } from '../courses/shared/course.service';
 import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { of, Observable, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CourseCreateComponent } from '../courses/course-create/course-create.component';
 import { CourseEditComponent } from '../courses/course-edit/course-edit.component';
@@ -15,7 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './manage-course.component.html',
   styleUrls: ['./manage-course.component.scss']
 })
-export class ManageCourseComponent implements OnInit {
+export class ManageCourseComponent implements OnInit, OnDestroy {
 
   // public msgs: any[] = [];
   public courses: Course[];
@@ -30,6 +30,7 @@ export class ManageCourseComponent implements OnInit {
   public courseId: number;
   @ViewChild('CourseEdit') CourseEdit: CourseEditComponent;
   @ViewChild('CourseCreate') CourseCreate: CourseCreateComponent;
+  private courseSubscription: Subscription;
 
   constructor(
     private courseService: CourseService,
@@ -96,15 +97,13 @@ export class ManageCourseComponent implements OnInit {
 
   private getData() {
     this.spinner.show();
-    this.courseService.getCourses().toPromise()
-      .then(res => {
-        if (res['status'] === 'Success') {
-          this.courses = res['data'];
-          this.loading = false;
-        }
-      }).catch(err =>
-        console.log(err['error']['errorMessage'])
-      ).finally(() => this.spinner.hide());
+    this.courseSubscription = this.courseService.getCourses().subscribe(res => {
+      if (res['status'] === 'Success') {
+        this.courses = res['data'];
+        this.loading = false;
+      }
+    });
+    this.spinner.hide();
   }
 
   public onRowSelect(e) {
@@ -128,5 +127,9 @@ export class ManageCourseComponent implements OnInit {
     }
     this.getData();
     // this.getTotalRecord();
+  }
+
+  ngOnDestroy(): void {
+    this.courseSubscription.unsubscribe();
   }
 }
