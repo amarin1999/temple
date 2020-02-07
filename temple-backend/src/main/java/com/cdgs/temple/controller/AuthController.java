@@ -100,6 +100,7 @@ public class AuthController {
 			res.setCode(201);
 			return new ResponseEntity<>(res, HttpStatus.CREATED);
 		} catch (Exception e) {
+			log.error("register", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -124,6 +125,7 @@ public class AuthController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("getMemberByToken", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage("Token is inValid");
 			res.setCode(401);
