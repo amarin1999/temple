@@ -136,15 +136,17 @@ export class BaggagesComponent implements OnInit {
   }
 
   save() {
-    this.spinner.show();
     if (this.items.findIndex(res => res.number === this.baggageNumber && res.locationId === this.location['id']) < 0) {
       // this.messageService.clear();
+
       const data = {
         number: this.baggageNumber,
         locationId: this.location['id']
       };
+      
       // this.messageService.clear()
       this.baggageService.save(data).toPromise().then(res => {
+        this.spinner.show();
         if (res['status'] === 'Success') {
           this.items = [...this.items, res['data'][0]];
           this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มตู้สัมภาระสำเร็จ' });
@@ -153,17 +155,18 @@ export class BaggagesComponent implements OnInit {
             severity: 'error', summary: 'ข้อความจากระบบ',
             detail: 'ดำเนินการเพิ่มไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด'
           });
+
         }
+            this.spinner.hide();
       }).catch((e) => console.log(e['message']));
     } else {
       this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มไม่สำเร็จ : ตู้สัมภาระซ้ำ' });
     }
     this.clear();
-    this.spinner.hide();
+    
   }
 
   update() {
-    this.spinner.show();
     const count = this.items.findIndex(res => res.number === this.baggageNumber && res.locationId === this.location['id']);
     if (count === this.number || count === -1) {
       const data = {
@@ -172,8 +175,9 @@ export class BaggagesComponent implements OnInit {
         locationId: this.location.id
       };
       // this.messageService.clear()
-      this.baggageService.update(data).pipe(finalize(() => this.spinner.hide()))
-        .subscribe(res => {
+      this.baggageService.update(data).
+        subscribe(res => {
+          this.spinner.show();
           if (res['status'] === 'Success') {
             const index = this.items.findIndex(e => e['lockerId'] === res['data'][0]['lockerId']);
             this.items[index] = res['data'][0];
@@ -184,6 +188,7 @@ export class BaggagesComponent implements OnInit {
               detail: 'ดำเนินการแก้ไขไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด'
             });
           }
+        this.spinner.hide();
         },
           (e) => {
             console.log(e['message']);

@@ -29,7 +29,7 @@
             <div class="line"></div>
         </div>
         <div class="ui-g-12 ui-md-0 ui-lg-3"></div>
-        <div class="ui-g-6 ui-md-12 ui-lg-6">
+        <div class="ui-g-6 ui-md-12 ui-lg-6 ui-sm-12">
             <p-chart type="doughnut" [data]="courseHistory" [options]="courseHistoryOption"></p-chart>
         </div>
     </div>
@@ -47,7 +47,7 @@
         <ng-template pTemplate="body" let-car>
             <tr>
                 <td>{{car.province}}</td>
-                <td>{{car.totalMemberHasCourse}}</td>
+                <td class="text-right">{{car.totalMemberHasCourse}}</td>
 
             </tr>
         </ng-template>

@@ -142,3 +142,6 @@ body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button
     word-wrap: break-word;
 
 }
+p-table{
+    word-wrap: break-word;
+}
