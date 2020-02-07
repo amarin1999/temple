@@ -1,16 +1,14 @@
 package com.cdgs.temple.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-
-import com.cdgs.temple.entity.CourseEntity;
-
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.cdgs.temple.entity.CourseEntity;
 
 public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 	CourseEntity findByCourseId(Long id);
