@@ -10,6 +10,8 @@ export const environment = {
     appId: "1:772045324798:web:7b68466a2f9cc352a080af"
   },
   //API server
-  api: 'http://13.76.96.231/TempleAPI/v1'
+  // api: 'http://13.76.96.231/TempleAPI/v1'
+  api: 'http://20.191.137.58/TempleAPI/v1'
+
 
 };
