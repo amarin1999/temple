@@ -65,7 +65,7 @@
         </p-tabPanel>
         <!-- แจ้งเตือนของ user -->
         <p-tabPanel header="แจ้งเตือนคอร์สที่สมัคร" *ngIf="showRole('user')" [selected]="true">
-          <p-table #tb2 [columns]="cols2" [value]="notices|async" [paginator]="true" [rows]="5" [responsive]="true"
+          <p-table #tb2  [value]="notices|async" [paginator]="true" [rows]="5" [responsive]="true"
           [globalFilterFields]="['notificationTime','detail','ผ่านการอนุมัติ' ]">
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
             <ng-template pTemplate="caption">
@@ -118,7 +118,7 @@
         <!-- แจ้งเตือนของ user -->
 
         <p-tabPanel header="คอร์สใหม่ล่าสุด" *ngIf="showRole('user')">
-          <p-table  #tb3 [columns]="cols3" [value]="dataNewCourse" [paginator]="true" [rows]="5" [responsive]="true"
+          <p-table  #tb3  [value]="dataNewCourse" [paginator]="true" [rows]="5" [responsive]="true"
           [globalFilterFields]="['stDate','endDate','name','locationName','conditionMin']">
           <!-- globalFilterFields ตรวขสอบช่องค้นหา-->
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
