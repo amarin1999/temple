@@ -81,9 +81,9 @@
             </ng-template>
             <ng-template pTemplate="header" let-columns>
               <tr>
-                <th pSortableColumn="stDate">
+                <th pSortableColumn="notificationTime">
                   วันที่
-                  <p-sortIcon field="stDate" ariaLabel="Activate to sort"
+                  <p-sortIcon field="notificationTime" ariaLabel="Activate to sort"
                     ariaLabelDesc="Activate to sort in descending order"
                     ariaLabelAsc="Activate to sort in ascending order">
                   </p-sortIcon>
@@ -102,7 +102,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
               <tr *ngIf="rowData.specialApproveStatus != 0 ">
-                <td>
+                <td style="text-align: center">
                   {{rowData?.notificationTime.toDate()|formatTHdate}}
                 </td>
                 <td>
