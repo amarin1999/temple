@@ -11,7 +11,7 @@
         <!-- แจ้งเตือนของ พระ -->
         <p-tabPanel header="แจ้งเตือนการสมัครคอร์ส" *ngIf="showRole('monk')" [selected]="true">
           <p-table #tb1  [value]="notices|async" [paginator]="true" [rows]="5" [responsive]="true"
-          [globalFilterFields]="['notificationTime','detail','ผ่านการอนุมัติ' ]">
+          [globalFilterFields]="['notificationTime','detail' ]">
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
             <ng-template pTemplate="caption">
               <div class="ui-g ui-fluid">
@@ -66,7 +66,7 @@
         <!-- แจ้งเตือนของ user -->
         <p-tabPanel header="แจ้งเตือนคอร์สที่สมัคร" *ngIf="showRole('user')" [selected]="true">
           <p-table #tb2  [value]="notices|async" [paginator]="true" [rows]="5" [responsive]="true"
-          [globalFilterFields]="['notificationTime','detail','ผ่านการอนุมัติ' ]">
+          [globalFilterFields]="['notificationTime','detail' ]">
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
             <ng-template pTemplate="caption">
               <div class="ui-g ui-fluid">
