@@ -2,11 +2,11 @@
   <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
     <div style="text-align:center">
       <h1>{{title}}</h1>
-      <ng-container *ngIf="isInTime(); else dataOutTime">
+      <ng-container *ngIf="url === 'approval'; else dataOutTime">
       <span style="text-align: center;">{{reportNoData}}</span>
     </ng-container>
     <ng-template #dataOutTime>
-        <span #dataOutTime style="text-align: center;">{{dataOutTimeReport}}</span>
+        <span  style="text-align: center;">{{dataOutTimeReport}}</span>
     </ng-template>
     </div>
     <div class="line"></div>
