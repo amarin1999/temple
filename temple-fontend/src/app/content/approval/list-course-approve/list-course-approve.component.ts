@@ -39,15 +39,20 @@ export class ListCourseApproveComponent implements OnInit {
     private router: Router,
   ) {
     this.url = this.router.url;
+
+
+
+
   }
 
   ngOnInit() {
     this.loading = true;
     this.loadingOutTime = true;
-    this.setColumn();
-    this.setBreadCrumb();
     this.getTotalRecord();
     this.getTotalRecordOutTime();
+    this.setColumn();
+    this.setBreadCrumb();
+    this.checkTotalRecord();
     this.setData();
 
   }
@@ -122,12 +127,15 @@ export class ListCourseApproveComponent implements OnInit {
       if (res['status'] === 'Success') {
         if (res['status'] !== [] || res['status'] !== null) {
           this.courses = [...res['data']];
+          this.getTotalRecord();
+          console.log(this.courses);
+
         } else {
           this.courses = null;
         }
         this.loading = false;
         const data = [...res.data];
-        data.map( dataInTime => {
+        data.map(dataInTime => {
           this.dataInTimeReport = dataInTime.numberOfMembers;
         });
         this.reportNoData = this.dataInTimeReport === 0 ? '( ไม่มีข้อมูลคำขออนุมัติพิเศษ )' : '';
@@ -144,6 +152,9 @@ export class ListCourseApproveComponent implements OnInit {
       if (res['status'] === 'Success') {
         this.courses = [...res['data']];
         this.loading = false;
+        this.getTotalRecordOutTime();
+        console.log(this.courses);
+        
         this.dataOutTimeReport = res['data'].length === 0 ? '( ไม่มีข้อมูลคำขออนุมัติพิเศษ )' : '';
       }
     });
@@ -153,6 +164,8 @@ export class ListCourseApproveComponent implements OnInit {
     this.approvalService.getTotalRecord().subscribe(res => {
       if (res['status'] === 'Success') {
         this.totalRecords = res['data'][0]['totalRecord'];
+        console.log(this.totalRecords);
+        
       }
     });
   }
@@ -163,6 +176,14 @@ export class ListCourseApproveComponent implements OnInit {
         this.totalRecords = res['data'][0]['totalRecord'];
       }
     });
+  }
+
+  checkTotalRecord() {
+    if (this.url === 'approval') {
+        
+    } else {
+      
+    }
   }
 
 }
