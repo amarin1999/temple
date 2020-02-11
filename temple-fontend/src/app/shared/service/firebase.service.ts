@@ -11,12 +11,14 @@ export class FirebaseService {
 
   constructor(private db: AngularFirestore, private http: HttpClientService) { }
   getCountNoticeByUserID(userId: number) {
-    return this.db.collection('notification', param => param.where('memberID', '==', userId).where('notificationStatus', '==', 0))
+    return this.db.collection('notification', param => param.where('memberID', '==', userId).where('notificationStatus', '==', 0)
+      .orderBy('notificationTime', 'desc'))
       .snapshotChanges().pipe(map(data => data.length));
   }
 
   getDataNoticeByUserID(userId: number) {
-    return this.db.collection('notification', param => param.where('memberID', '==', userId).where('notificationStatus', '==', 0))
+    return this.db.collection('notification', param => param.where('memberID', '==', userId).where('notificationStatus', '==', 0)
+      .orderBy('notificationTime', 'desc'))
       .snapshotChanges().pipe(map(data => data.map(
         dataMap => { return { id: dataMap.payload.doc.id, ...dataMap.payload.doc.data() as Notifications } as Notifications })));
   }
@@ -31,12 +33,12 @@ export class FirebaseService {
   //เรียกคอร์สใหม่ล่าสุดใน การแจ้งเตือน
   getNewCourseForUser() {
     return this.http.get(`${ApiConstants.baseURl}/notification/previouspast`).pipe(
-      map(res=> ({
+      map(res => ({
         status: res['result'],
         data: res['data']
       }))
     );
   }
 
- 
+
 }
