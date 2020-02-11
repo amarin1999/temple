@@ -160,7 +160,7 @@ export class ListCourseApproveComponent implements OnInit {
   private getTotalRecordOutTime() {
     this.approvalService.getTotalRecordOutTime().subscribe(res => {
       if (res['status'] === 'Success') {
-        this.totalRecordsOutTime = res['data'][0]['totalRecord'];
+        this.totalRecords = res['data'][0]['totalRecord'];
       }
     });
   }
