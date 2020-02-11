@@ -23,7 +23,7 @@ public interface ApprovalCoursesRepository extends CrudRepository<ApprovalCourse
 			+ "OR c.course_detail LIKE CONCAT('%',:query,'%') "
 			+ "OR c.course_condition_min LIKE CONCAT('%',:query,'%')) ELSE 1 END) "
 			+ "GROUP BY c.course_id "
-			+ "ORDER BY c.course_id "
+			+ "ORDER BY  total_member DESC, c.course_id "
 			+ "limit :offset , :limit", nativeQuery = true)
 	List<ApprovalCoursesEntity> getAll(@Param("query") String query, @Param("monkId") Long monkId,
 			@Param("limit") int limit, @Param("offset") int offset);
