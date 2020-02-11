@@ -56,7 +56,7 @@ export class ApprovalService {
     return this.http.get(`${ApiConstants.baseURl}/courses/approve/count`).pipe(
       map(res => ({
         status: res['result'],
-        data: res['data']
+        data: [...res['data']]
       }))
     );
   }
@@ -64,7 +64,7 @@ export class ApprovalService {
     return this.http.get(`${ApiConstants.baseURl}/courses/approve/outTime/count`).pipe(
       map(res => ({
         status: res['result'],
-        data: res['data']
+        data: [...res['data']]
       }))
     );
   }
