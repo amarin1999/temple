@@ -134,14 +134,8 @@ body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button
     .container {
         width: 95%;
     }
-
-
-
 }
-.word-wrap{
-    word-wrap: break-word;
 
-}
-p-table , p-panel{
+p-table , p-panel , .word-wrap{
     word-wrap: break-word;
 }
