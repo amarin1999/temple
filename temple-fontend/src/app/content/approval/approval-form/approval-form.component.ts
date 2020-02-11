@@ -107,14 +107,17 @@ export class ApprovalFormComponent implements OnInit {
       message: message + 'ต้องการอนุมัติพิเศษ',
       header: 'การอนุมัติพิเศษ',
       accept: () => {
+        this.spinner.show();
         this.approvalService.approveStudents(e)
           .subscribe((res) => {
             // console.log(res);
             if (res['status'] === 'Success') {
               this.initMember();
+              this.spinner.hide();
               this.messageServise.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการ' + message + 'อนุมัติพิเศษสำเร็จ' });
             } else {
               this.btnrej = false;
+              this.spinner.hide();
               this.messageServise.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการ' + message + 'อนุมัติพิเศษไม่สำเร็จ' });
             }
           });
@@ -136,9 +139,11 @@ export class ApprovalFormComponent implements OnInit {
       message: message + 'ต้องการอนุมัตินอกเวลา',
       header: 'การอนุมัตินอกเวลา',
       accept: () => {
+        this.spinner.show();
         this.approvalService.approveStudents(e)
           .subscribe((res) => {
             if (res['status'] === 'Success') {
+              this.spinner.hide();
               console.log(res);
               this.messageServise.add({
                 severity: 'success',
@@ -150,6 +155,7 @@ export class ApprovalFormComponent implements OnInit {
               // this.initMember();
             } else {
               this.btnrej = false;
+              this.spinner.hide();
               this.messageServise.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการ' + message + 'อนุมัตินอกเวลาไม่สำเร็จ' });
             }
 

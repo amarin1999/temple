@@ -1,6 +1,6 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {BreadcrumbService} from 'src/app/shared/service/breadcrumb.service';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
+import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CourseService } from '../courses/shared/course.service';
 
@@ -39,7 +39,7 @@ export class ListAllowComponent implements OnInit {
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private courseService: CourseService,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {
   }
   ngOnInit() {
@@ -75,9 +75,9 @@ export class ListAllowComponent implements OnInit {
     const obj = this.member.filter((item) => {
       return item.checked === true;
     });
-    if(obj.length !== 0){
+    if (obj.length !== 0) {
       this.disbtn = false;
-    }else{
+    } else {
       this.disbtn = true;
     }
     if (obj.length !== this.member.length) {
@@ -93,7 +93,7 @@ export class ListAllowComponent implements OnInit {
       return true;
     }
   }
-  sentData(status=null) {
+  sentData(status = null) {
     // this.messageService.clear();
     this.check = false;
     let memberSent;
@@ -114,24 +114,22 @@ export class ListAllowComponent implements OnInit {
       // อนุมัติพิเศษ
       // '1' = Approve '0' != ไม่Approve 
     } else if (this.option == '2') {
-      console.log(this.member);
-      
       memberSent = this.member.filter((member) => member.checked === true).map(member => member[this.fieldId]);
       memberSent = {
-          member: [
-            ...memberSent
-          ],
-          courseId: this.courseId,
-          // status: this.status.status
-          status:status
-        };
-        this.disbtn = true;
+        member: [
+          ...memberSent
+        ],
+        courseId: this.courseId,
+        // status: this.status.status
+        status: status
+      };
+      this.disbtn = true;
     }
     if (this.member.length !== 0) {
       this.listData.emit(memberSent);
     }
   }
-  
+
   showCheckbox() {
     return !(this.member[0]['displayName'] === 'ไม่มีข้อมูล');
   }
