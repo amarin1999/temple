@@ -320,9 +320,9 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseDto> getPreviouspast() {
+	public List<CourseDto> getLastedCourses() {
 		try {
-			List<CourseEntity> course = courseRepository.getAllPreviouspast();
+			List<CourseEntity> course = courseRepository.getLastedCourses();
 			return mapListEntityToDto(course);
 		} catch (Exception e) {
 			log.error("getPreviouspast", e);

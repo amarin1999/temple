@@ -142,9 +142,9 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 	void updateCourseToEnable(@Param("courseId") Long id);
 	
 	@Query(value = "SELECT * FROM courses" + 
-			       " WHERE course_create_date < DATE_ADD(now() , INTERVAL +1 MONTH)" +
+			       " WHERE course_create_date < DATE_ADD(NOW() , INTERVAL +1 MONTH)" +
 			       " AND course_no = '0'"+
 			       " ORDER BY course_create_date DESC", nativeQuery = true)
-	List<CourseEntity> getAllPreviouspast();
+	List<CourseEntity> getLastedCourses();
 
 }

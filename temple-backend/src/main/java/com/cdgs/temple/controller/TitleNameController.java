@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +18,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.cdgs.temple.dto.TitleNameDto;
 import com.cdgs.temple.service.TitleNameService;
 import com.cdgs.temple.util.ResponseDto;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/titlenames")
-
+@Slf4j
 public class TitleNameController {
-
-	private static final Logger log = LoggerFactory.getLogger(TitleNameController.class);
 
 	@Autowired
 	TitleNameService titleNameService;
@@ -46,6 +45,7 @@ public class TitleNameController {
 			res.setCode(200);
 			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("getTitleNames ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -69,6 +69,7 @@ public class TitleNameController {
 			res.setCode(200);
 			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("putTitleName ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -84,7 +85,6 @@ public class TitleNameController {
 		TitleNameDto titleName = new TitleNameDto();
 		List<TitleNameDto> oldTitles = new ArrayList<TitleNameDto>();
 		oldTitles = titleNameService.getTitleNames();
-		System.out.println("xx");
 		try {
 			for (TitleNameDto titles : oldTitles) {
 				if (titles.getName().equals(body.getName()) || titles.getDisplay().equals(body.getName())) {
@@ -103,6 +103,7 @@ public class TitleNameController {
 			res.setCode(200);
 			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("postTitleName ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -129,6 +130,7 @@ public class TitleNameController {
 			res.setCode(200);
 			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("getTitleName ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -154,7 +156,7 @@ public class TitleNameController {
 			}
 			return new ResponseEntity<ResponseDto<TitleNameDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error("deleteTitleName ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);

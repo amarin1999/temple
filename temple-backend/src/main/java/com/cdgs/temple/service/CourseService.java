@@ -64,7 +64,7 @@ public interface CourseService {
 
 	Integer CountTeacherCoursesApprovalOutTime(Long memberId);
 	
-	List <CourseDto> getPreviouspast();
+	List <CourseDto> getLastedCourses();
 
 	void updateCourseToEnable(Long id);
 

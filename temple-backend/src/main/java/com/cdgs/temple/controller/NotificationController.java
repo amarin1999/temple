@@ -29,7 +29,7 @@ public class NotificationController {
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
 	public ResponseEntity<ResponseDto<CourseDto>> getAllPreviouspast() {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
-		List<CourseDto> courseDto = courseService.getPreviouspast();
+		List<CourseDto> courseDto = courseService.getLastedCourses();
 		try {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(courseDto);
