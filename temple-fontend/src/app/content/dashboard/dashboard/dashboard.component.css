@@ -1,0 +1,15 @@
+div.ui-g{
+
+}
+.text-right{
+    text-align: right;
+}
+
+:host>>>p-dialog .ui-dialog {
+    /* margin-top: 10%; */
+    /* max-height: 70%; */
+    /* overflow: scroll; */
+    max-height: 70%;
+    width: 30%;
+}
+    

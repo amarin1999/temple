@@ -35,9 +35,9 @@
     </div>
 </ng-container>
 
-<p-dialog [header]="TitleChartRegion" [modal]="true" [(visible)]="display" [blockScroll]='true'
-    [contentStyle]="{ 'max-height': '20vh','width': '25vw'}">
-    <p-table [value]="province">
+<p-dialog class="center" [header]="TitleChartRegion" [modal]="true" [(visible)]="display" [blockScroll]='true'  [draggable]='true' [positionTop]="90"
+    [resizable]='true' >
+    <p-table [value]="province" >
         <ng-template pTemplate="header">
             <tr>
                 <th>จังหวัด</th>
