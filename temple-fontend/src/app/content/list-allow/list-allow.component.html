@@ -1,3 +1,4 @@
+
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 <div class="ui-g-11 ui-lg-11 ui-md-10 ui-sm-9  text-right">
     <p-button *ngIf="showWhenApproveForm()" label="ไม่อนุมัติ" styleClass="button-reject" (onClick)=sentData(0) [disabled]="disbtn"></p-button>
@@ -7,7 +8,7 @@
 </div>
 <ng-container *ngIf="option==2; else elseTemplate">
     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-        <p-table [columns]="cols" [value]="member" [paginator]="true" [rows]="5">
+        <p-table [columns]="cols" [value]="member" [paginator]="true" [rows]="5" class="word-wrap">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th pSortableColumn="displayName">

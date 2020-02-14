@@ -12,6 +12,8 @@ public interface MemberService {
 
 	MemberDto getMember(Long id);
 
+	List<MemberDto> getMemberByCourseId(Long courseId);
+
 	MemberDto createMember(MemberDto body);
 
 	MemberDto updateMember(Long id, MemberDto body);

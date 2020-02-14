@@ -5,16 +5,18 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "lockers")
-
+@Getter
+@Setter
+@ToString
 public class LockerEntity implements Serializable {
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 4407068550942794862L;
 
 	@Id
@@ -48,84 +50,4 @@ public class LockerEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "location_id", insertable = false, updatable = false)
 	private LocationEntity location;
-
-	public Long getLockerId() {
-		return lockerId;
-	}
-
-	public void setLockerId(Long lockerId) {
-		this.lockerId = lockerId;
-	}
-
-	public Long getLocationId() {
-		return locationId;
-	}
-
-	public void setLocationId(Long locationId) {
-		this.locationId = locationId;
-	}
-
-	public String getLockerNumber() {
-		return lockerNumber;
-	}
-
-	public void setLockerNumber(String lockerNumber) {
-		this.lockerNumber = lockerNumber;
-	}
-
-	public Long getLockerCreateBy() {
-		return lockerCreateBy;
-	}
-
-	public void setLockerCreateBy(Long lockerCreateBy) {
-		this.lockerCreateBy = lockerCreateBy;
-	}
-
-	public char getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(char isActive) {
-		this.isActive = isActive;
-	}
-
-	public boolean isEnable() {
-		return enable;
-	}
-
-	public void setEnable(boolean enable) {
-		this.enable = enable;
-	}
-
-	public LocalDateTime getLockerLastUpdate() {
-		return lockerLastUpdate;
-	}
-
-	public void setLockerLastUpdate(LocalDateTime lockerLastUpdate) {
-		this.lockerLastUpdate = lockerLastUpdate;
-	}
-
-	public LocalDateTime getLockerCreateDate() {
-		return lockerCreateDate;
-	}
-
-	public void setLockerCreateDate(LocalDateTime lockerCreateDate) {
-		this.lockerCreateDate = lockerCreateDate;
-	}
-
-	public LocationEntity getLocation() {
-		return location;
-	}
-
-	public void setLocation(LocationEntity location) {
-		this.location = location;
-	}
-
-	@Override
-	public String toString() {
-		return "LockerEntity [lockerId=" + lockerId + ", locationId=" + locationId + ", lockerNumber=" + lockerNumber
-				+ ", lockerCreateBy=" + lockerCreateBy + ", isActive=" + isActive + ", enable=" + enable
-				+ ", lockerLastUpdate=" + lockerLastUpdate + ", lockerCreateDate=" + lockerCreateDate + ", location="
-				+ location + "]";
-	}
 }

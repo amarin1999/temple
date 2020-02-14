@@ -53,14 +53,18 @@ body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button
 
 } */
 .button-reject{
-    border-color: rgb(231, 231, 231) !important;
-    background-color: rgb(231, 231, 231) !important;
-     color: black !important; 
+    background-color: #777676 !important;
+    color: #fff;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: #777676 !important;
+    border-radius: 5px;
+    font-size: 1em;
 }
 .button-reject:hover{
-    border-color: #D3D3D3 !important;
-    background-color: #D3D3D3 !important;
-     color: black !important; 
+    background-color: #4e4e4e !important;
+    border: #777676;
+    border-radius: 5px;
 }
 .button-success{
     border-color: #007ad9 !important;
@@ -130,7 +134,8 @@ body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button
     .container {
         width: 95%;
     }
+}
 
-
-
+p-table , p-panel , .word-wrap{
+    word-wrap: break-word;
 }

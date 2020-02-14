@@ -20,7 +20,7 @@ public class CourseTeacherServiceImpl implements CourseTeacherService {
 	public CourseTeacherServiceImpl(CourseTeacherRepository courseTeacherRepository) {
 		this.courseTeacherRepository = courseTeacherRepository;
 	}
-
+	
 	private List<CourseTeacherDto> mapEntityListToDtoList(List<CourseTeacherEntity> entities) {
 		List<CourseTeacherDto> dto = new ArrayList<CourseTeacherDto>();
 		for (CourseTeacherEntity entity : entities) {

@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import { PrePathService } from 'src/app/shared/service/pre-path.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-courses',

@@ -26,8 +26,11 @@ export class ListCourseApproveComponent implements OnInit {
   public title: string;
   url: string;
   goToCourse: string;
+  textBreadCrumb;
+  dataOutTimeReport: string;
+  dataInTimeReport: number;
+  reportNoData: string;
   public methodLazyLoad: string;
-
   constructor(
     private approvalService: ApprovalService,
     private messageService: MessageService,
@@ -36,31 +39,36 @@ export class ListCourseApproveComponent implements OnInit {
     private router: Router,
   ) {
     this.url = this.router.url;
+
+
+
+
   }
 
   ngOnInit() {
     this.loading = true;
     this.loadingOutTime = true;
-    this.setColumn();
-    this.setBreadCrumb();
     this.getTotalRecord();
     this.getTotalRecordOutTime();
+    this.setColumn();
+    this.setBreadCrumb();
+    this.checkTotalRecord();
     this.setData();
 
   }
   setData() {
-    if (this.isOutTime()) {
+    if (this.isInTime()) {
       this.title = 'จัดการอนุมัติพิเศษ';
-      this.methodLazyLoad = 'loadData($event)';
+
     } else {
       this.title = 'จัดการอนุมัตินอกเวลา';
-      this.methodLazyLoad = 'loadDataOutTime($event)';
+
     }
   }
 
   public loadData(e: LazyLoadEvent) {
     let query = '';
-    if (this.isOutTime()) {
+    if (this.isInTime()) {
       if (e.globalFilter) {
         query = e.globalFilter;
       }
@@ -71,6 +79,7 @@ export class ListCourseApproveComponent implements OnInit {
       }
       this.getDataOutTime(e.first, e.rows, query);
     }
+
   }
 
   private setColumn() {
@@ -82,12 +91,16 @@ export class ListCourseApproveComponent implements OnInit {
   }
 
   private setBreadCrumb() {
-    this.breadCrumbService.setPath([
-      { label: 'จัดการอนุมัติพิเศษ', routerLink: '/approval' },
+    if (this.isInTime()) {
+      this.textBreadCrumb = { label: 'การอนุมัติพิเศษ', routerLink: '/approval' };
+    } else {
+      this.textBreadCrumb = { label: 'การอนุมัตินอกเวลา', routerLink: '/approvalCourseOutTime' };
+    }
+    this.breadCrumbService.setPath([{ ...this.textBreadCrumb }
     ]);
   }
 
-  private isOutTime(): boolean {
+  public isInTime(): boolean {
     if (this.url === '/approval') {
       return true;
     } else if (this.url === '/approvalCourseOutTime') {
@@ -96,12 +109,14 @@ export class ListCourseApproveComponent implements OnInit {
   }
 
   onRowSelect(e) {
-    this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=InTime`);
+    // console.log(e);
+    if (this.isInTime()) {
+      this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=InTime`);
+    } else {
+      this.router.navigateByUrl(`/approvalCourseOutTime/${e.data.id}?course=${e.data.name}&&type=OutTime`);
+    }
   }
 
-  onRowSelectOutTime(e) {
-    this.router.navigateByUrl(`/approval/${e.data.id}?course=${e.data.name}&&type=OutTime`);
-  }
 
   private getData(first = 0, rows = 5, query: string = '') {
     this.loading = true;
@@ -112,10 +127,18 @@ export class ListCourseApproveComponent implements OnInit {
       if (res['status'] === 'Success') {
         if (res['status'] !== [] || res['status'] !== null) {
           this.courses = [...res['data']];
+          this.getTotalRecord();
+          console.log(this.courses);
+
         } else {
           this.courses = null;
         }
         this.loading = false;
+        const data = [...res.data];
+        data.map(dataInTime => {
+          this.dataInTimeReport = dataInTime.numberOfMembers;
+        });
+        this.reportNoData = this.dataInTimeReport === 0 ? '( ไม่มีข้อมูลคำขออนุมัติพิเศษ )' : '';
       }
     });
   }
@@ -127,8 +150,12 @@ export class ListCourseApproveComponent implements OnInit {
         this.approvalService.getCoursesApprovalOutTime(firstCon, rowsCon, queryCon))
     ).subscribe(res => {
       if (res['status'] === 'Success') {
-        this.coursesOutTime = [...res['data']];
-        this.loadingOutTime = false;
+        this.courses = [...res['data']];
+        this.loading = false;
+        this.getTotalRecordOutTime();
+        console.log(this.courses);
+        
+        this.dataOutTimeReport = res['data'].length === 0 ? '( ไม่มีข้อมูลคำขออนุมัติพิเศษ )' : '';
       }
     });
   }
@@ -137,6 +164,8 @@ export class ListCourseApproveComponent implements OnInit {
     this.approvalService.getTotalRecord().subscribe(res => {
       if (res['status'] === 'Success') {
         this.totalRecords = res['data'][0]['totalRecord'];
+        console.log(this.totalRecords);
+        
       }
     });
   }
@@ -144,8 +173,17 @@ export class ListCourseApproveComponent implements OnInit {
   private getTotalRecordOutTime() {
     this.approvalService.getTotalRecordOutTime().subscribe(res => {
       if (res['status'] === 'Success') {
-        this.totalRecordsOutTime = res['data'][0]['totalRecord'];
+        this.totalRecords = res['data'][0]['totalRecord'];
       }
     });
   }
+
+  checkTotalRecord() {
+    if (this.url === 'approval') {
+        
+    } else {
+      
+    }
+  }
+
 }

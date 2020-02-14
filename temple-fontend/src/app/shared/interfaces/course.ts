@@ -1,4 +1,6 @@
 import { TransportationTemple } from './transportation-temple';
+import { Teacher } from './teacher';
+import { Member } from './member';
 
 export interface Course {
   id?: number;
@@ -18,4 +20,6 @@ export interface Course {
   saStatus?: string;
   mhcStatus?: string;
   canRegister?: number;
+  teacherList?:Member;
+  numberOfMembers?: number;
 }

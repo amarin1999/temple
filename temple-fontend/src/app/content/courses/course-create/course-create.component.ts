@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { TransportService } from 'src/app/shared/service/transport.service';
 import { TransportationTemple } from 'src/app/shared/interfaces/transportation-temple';
+import { NgxSpinnerService } from 'ngx-spinner';
 // import { Teacher } from 'src/app/shared/interfaces/teacher';
 
 @Component({
@@ -97,6 +98,7 @@ export class CourseCreateComponent implements OnInit {
     private courseService: CourseService,
     private router: Router,
     private confirmationService: ConfirmationService,
+    private spinner: NgxSpinnerService,
     // private memberService: MemberService,
   ) { }
 
@@ -221,6 +223,7 @@ export class CourseCreateComponent implements OnInit {
         header: 'สร้างคอร์สใหม่',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+          this.spinner.show();
           const date = this.courseForm.get('date').value;
           const stDate = formatDate(date[0], 'yyyy-MM-dd', 'th');
           let endDate = '';
@@ -254,6 +257,7 @@ export class CourseCreateComponent implements OnInit {
             status: 1,
             teacher: this.courseForm.get('teachers').value.map(res => res.id)
           };
+          
           this.courseService.createCourse(course).subscribe(res => {
             if (res['result'] === 'Success') {
               /* const index = this.courses.findIndex(course => course.id === this.courseId);
@@ -266,9 +270,11 @@ export class CourseCreateComponent implements OnInit {
                 upd,
                 ...this.courses.slice(index + 1)
               ]); */
+              this.spinner.hide();
               this.msgs = [{ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการสร้างคอร์สสำเร็จ' }];
               this.onCancle(this.msgs);
             } else if (res['result'] === 'Fail') {
+              this.spinner.hide();
               this.msgs = [{ severity: 'error', summary: 'ข้อความจากระบบ', detail: res['errorMessage'] }];
               this.onCancle(this.msgs);
             }

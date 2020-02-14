@@ -70,6 +70,12 @@ public class MemberServiceImpl implements MemberService {
 		MemberEntity entity = memberRepository.findById(id).get();
 		return mapEntityToDto(entity);
 	}
+	
+	@Override
+	public List<MemberDto> getMemberByCourseId(Long courseId) {
+		List<MemberEntity> entities = memberRepository.getTeacherByCourseId(courseId);
+		return mapListEntityToDto(entities);
+	}
 
 	@Override
 	public MemberDto createMember(MemberDto member) {

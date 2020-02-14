@@ -10,15 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "members")
 @Embeddable
-
+@Getter
+@Setter
+@ToString
 public class ForgetPassEntity implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7701296893488454698L;
 
 	@Id
@@ -31,42 +33,4 @@ public class ForgetPassEntity implements Serializable {
 
 	@Column(name = "member_tel")
 	private String memberTel;
-
-	public Long getMemberUsername() {
-		return memberUsername;
-	}
-
-	public void setMemberUsername(Long memberUsername) {
-		this.memberUsername = memberUsername;
-	}
-
-	public String getMemberIdCard() {
-		return memberIdCard;
-	}
-
-	public void setMemberIdCard(String memberIdCard) {
-		this.memberIdCard = memberIdCard;
-	}
-
-	public String getMemberTel() {
-		return memberTel;
-	}
-
-	public void setMemberTel(String memberTel) {
-		this.memberTel = memberTel;
-	}
-
-	// @Id
-//	@Column(name = "count")
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
-//	private Integer count;
-//	
-//	public Integer getCount() {
-//		return count;
-//	}
-//	
-//	public void setCount(Integer count) {
-//		this.count = count;
-//	}
-
 }

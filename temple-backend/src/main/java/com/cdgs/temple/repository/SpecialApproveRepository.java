@@ -16,8 +16,6 @@ public interface SpecialApproveRepository extends CrudRepository<SpecialApproveE
 
 	SpecialApproveEntity findBySpecialApproveId(Long saId);
 
-	SpecialApproveEntity findByCourseIdAndMemberId(Long courseId, Long memberId);
-
 	@Query(value = "SELECT sa.* FROM special_approve sa LEFT JOIN courses_teacher ct ON sa.course_id=ct.course_id "
 			+ "WHERE sa.course_id = :courseId " + "AND sa.member_id = :memberId "
 			+ "AND sa.spa_status = :status", nativeQuery = true)
@@ -28,9 +26,10 @@ public interface SpecialApproveRepository extends CrudRepository<SpecialApproveE
 			+ "		WHERE sa.special_approve_id=:saId AND ct.member_id=:memberId", nativeQuery = true)
 	SpecialApproveEntity fetchBySaIdAndMemberId(Long saId, Long memberId);
 
-	@Query(value = "SELECT spa.*" + "		FROM special_approve spa"
-			+ "		LEFT JOIN courses c ON c.course_id = spa.course_id AND c.course_no <> '0'"
-			+ "		WHERE spa.course_id = :courseId AND spa.member_id = :memberId", nativeQuery = true)
+	@Query(value = "SELECT spa.* " + "FROM special_approve spa "
+			+ "LEFT JOIN courses c ON c.course_id = spa.course_id AND c.course_no <> '0' "
+			+ "WHERE spa.course_id = :courseId AND spa.member_id = :memberId "
+			+ "AND spa.spa_status NOT IN('0','3') ", nativeQuery = true)
 	SpecialApproveEntity getByCourseIdAndMemberId(@Param("courseId") Long courseId, @Param("memberId") Long memberId);
 
 	@Modifying

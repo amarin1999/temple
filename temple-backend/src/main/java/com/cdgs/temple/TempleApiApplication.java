@@ -12,8 +12,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @SpringBootApplication
 public class TempleApiApplication implements CommandLineRunner {
-
-	
 	@Autowired
 	DataSource dataSource;
 	public static void main(String[] args) {
@@ -34,5 +32,4 @@ public class TempleApiApplication implements CommandLineRunner {
 		System.out.println("============================================================================================");
 		System.out.println();
 	}
-
 }

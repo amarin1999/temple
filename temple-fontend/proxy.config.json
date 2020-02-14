@@ -1,8 +1,8 @@
 {
-    "/server":{
+    "/TempleAPI/*": {
         "target": "http://localhost:8080",
-        "pathRewrite":{ 
-            "^/server":""
-        }
+        "secure": false,
+        "loglevel": "debug",
+        "changeDrigin": true
     }
 }

@@ -28,9 +28,9 @@
                     </ng-template>
                     <ng-template pTemplate="header" let-columns>
                         <tr>
-                            <th pSortableColumn="date" >
+                            <th pSortableColumn="stDate" >
                                 วันที่
-                                <p-sortIcon field="date" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+                                <p-sortIcon field="stDate" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
                                 </p-sortIcon>
                             </th>
                             <th pSortableColumn="name" class="ui-p-4">
@@ -48,6 +48,11 @@
                                 <p-sortIcon field="conditionMin" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
                                 </p-sortIcon>
                             </th>
+                            <th pSortableColumn="status" class="ui-p-6">
+                                ประเภทคอร์ส
+                                <p-sortIcon field="status" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+                                </p-sortIcon>
+                            </th>
                             <th>
 
                             </th>
@@ -61,6 +66,9 @@
                                 <div *ngIf="rowData[col.field] == rowData['locationName'] && col.field == 'locationName'" style="text-align: center">{{rowData['locationName']}}</div>
                                 <div *ngIf="rowData[col.field] == rowData['conditionMin'] && col.field == 'conditionMin'" style="text-align: center">ต้องผ่านอย่างน้อย {{rowData['conditionMin']}} คอร์ส</div>
                                 <div *ngIf="rowData[col.field] == rowData['status'] && col.field == 'status'" style="text-align: center">{{rowData['status']}}</div>
+                            </td>
+                            <td style="text-align: center">
+                                {{(rowData?.status === '1')? 'คอร์สปกติ': 'คอร์สนอกเวลา' }}
                             </td>
                             <td>
                                 <div class="ui-g" style="text-align: center">

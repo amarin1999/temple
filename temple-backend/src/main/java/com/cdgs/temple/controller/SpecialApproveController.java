@@ -6,8 +6,12 @@ import com.cdgs.temple.dto.MemberDto;
 import com.cdgs.temple.dto.SpecialApproveDto;
 import com.cdgs.temple.service.CourseScheduleService;
 import com.cdgs.temple.service.CourseService;
+import com.cdgs.temple.service.EmailService;
 import com.cdgs.temple.service.MemberService;
+import com.cdgs.temple.service.NotificationsService;
 import com.cdgs.temple.service.SpecialApproveService;
+import com.cdgs.temple.service.impl.EmailServiceImpl;
+import com.cdgs.temple.service.impl.NotificationsServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +33,8 @@ public class SpecialApproveController {
 	private MemberService memberService;
 	private CourseService courseService;
 	private CourseScheduleService courseScheduleService;
+	private NotificationsService notificationsService = new NotificationsServiceImpl();
+	private EmailService emailService = new EmailServiceImpl();
 
 	@Autowired
 	public SpecialApproveController(SpecialApproveService specialApproveService, MemberService memberService,
@@ -40,7 +47,7 @@ public class SpecialApproveController {
 
 	@GetMapping(path = "/{courseId}")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<SpecialApproveDto>> GetAll(@PathVariable("courseId") Long courseId) {
+	public ResponseEntity<ResponseDto<SpecialApproveDto>> getAll(@PathVariable("courseId") Long courseId) {
 		List<SpecialApproveDto> dto;
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
 		MemberDto member = memberService.getCurrentMember();
@@ -55,7 +62,7 @@ public class SpecialApproveController {
 				res.setCode(204);
 				return new ResponseEntity<>(res, HttpStatus.NO_CONTENT);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
@@ -67,7 +74,7 @@ public class SpecialApproveController {
 
 	@GetMapping(path = "outTime/{courseId}")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<SpecialApproveDto>> GetAllOutTime(@PathVariable("courseId") Long courseId) {
+	public ResponseEntity<ResponseDto<SpecialApproveDto>> getAllOutTime(@PathVariable("courseId") Long courseId) {
 		List<SpecialApproveDto> dto;
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
 		MemberDto member = memberService.getCurrentMember();
@@ -78,6 +85,7 @@ public class SpecialApproveController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -110,24 +118,43 @@ public class SpecialApproveController {
 
 	@PostMapping(path = "")
 	@PreAuthorize("hasRole('user')")
-	public ResponseEntity<ResponseDto<SpecialApproveDto>> Create(@Valid @RequestBody SpecialApproveDto body) {
+	public ResponseEntity<ResponseDto<SpecialApproveDto>> create(@Valid @RequestBody SpecialApproveDto body) {
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
 		List<SpecialApproveDto> specialApproves = new ArrayList<>();
-		SpecialApproveDto dto;
+		SpecialApproveDto spaDto;
+		CourseDto courseDto;
 		MemberDto member = memberService.getCurrentMember();
 		try {
 			body.setMemberId(member.getId());
 			body.setStatus("2");
-			dto = specialApproveService.create(body);
-			if (dto == null) {
+			spaDto = specialApproveService.create(body);
+			if (spaDto == null) {
 				throw new Exception("เงื่อนไขการสมัครไม่ถูกต้อง");
 			}
-			specialApproves.add(dto);
+			specialApproves.add(spaDto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(specialApproves);
 			res.setCode(200);
+
+			courseDto = courseService.getCourse(spaDto.getCourseId());
+
+			// เพิ่มข้อมูล notification ไปให้ ผู้สอน
+			notificationsService.createMonkNotifications(courseDto.getTeacher(), spaDto.getSpecialApproveId(),
+					courseDto.getId(), spaDto.getStatus(), courseDto.getName());
+
+			String subject = "รายงานการสมัครคอร์ส";
+			String text = "มีผู้สมัครคอร์ส " + courseDto.getName();
+
+			// ส่ง email ไปให้ผู้สอน
+			for (MemberDto teacher : courseDto.getTeacherList()) {
+				if (null != teacher.getEmail()) {
+					emailService.sendEmail(teacher.getEmail(), subject, text);
+				}
+			}
+
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -137,7 +164,7 @@ public class SpecialApproveController {
 
 	@PutMapping(path = "")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<SpecialApproveDto>> Update(@Valid @RequestBody SpecialApproveDto body) {
+	public ResponseEntity<ResponseDto<SpecialApproveDto>> update(@Valid @RequestBody SpecialApproveDto body) {
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
 		SpecialApproveDto specialApprovesDto = new SpecialApproveDto();
 		CourseDto courseDto = new CourseDto();
@@ -151,6 +178,7 @@ public class SpecialApproveController {
 				System.out.println(said);
 				bodydto.setSpecialApproveId(said);
 				listDto.add(specialApproveService.update(bodydto, member.getId()));
+
 			}
 			if (body.getStatus().equals("1")) {
 				for (SpecialApproveDto dto : listDto) {
@@ -170,7 +198,7 @@ public class SpecialApproveController {
 						courseScheduleService.createCourseSchedule(courseSchedule);
 					}
 
-					RegisterCourse(dto);
+					registerCourse(dto);
 				}
 			}
 			if (listDto.isEmpty())
@@ -178,8 +206,30 @@ public class SpecialApproveController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listDto);
 			res.setCode(200);
+
+			for (long saId : body.getSpaId()) {
+				SpecialApproveDto saDto = specialApproveService.getById(saId);
+				CourseDto cDto = courseService.getCourseById(saDto.getCourseId());
+
+				// เพิ่ม notification ให้ user
+				notificationsService.createUserNotifications(saDto.getMemberId(), saId, saDto.getCourseId(),
+						saDto.getStatus(), cDto.getName());
+
+				String subject = "รายงานการสมัครคอร์ส";
+				String text = "คอร์ส " + courseDto.getName() + " ได้รับการอนุมัติแล้ว";
+
+				MemberDto user = memberService.getMember(saDto.getMemberId());
+
+				// ส่ง email ไปให้ user
+				if (null != user.getEmail()) {
+					emailService.sendEmail(user.getEmail(), subject, text);
+				}
+			}
+
 			return new ResponseEntity<>(res, HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
@@ -197,7 +247,7 @@ public class SpecialApproveController {
 		MemberDto member = memberService.getCurrentMember();
 		try {
 			dto = specialApproveService.getApproveByCourseIdAndMemberId(courseId, member.getId());
-			if (specialApproveService.cancelApproveOutTime(dto.getSpecialApproveId())) {
+			if (Boolean.TRUE.equals(specialApproveService.cancelApproveOutTime(dto.getSpecialApproveId()))) {
 				res.setResult("Success");
 				res.setCode(200);
 				return new ResponseEntity<>(res, HttpStatus.OK);
@@ -206,6 +256,7 @@ public class SpecialApproveController {
 				return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -215,7 +266,7 @@ public class SpecialApproveController {
 
 	@DeleteMapping(path = "/{courseId}")
 	@PreAuthorize("hasRole('user')")
-	public ResponseEntity<ResponseDto<SpecialApproveDto>> UserDelete(@PathVariable("courseId") Long courseId) {
+	public ResponseEntity<ResponseDto<SpecialApproveDto>> userDelete(@PathVariable("courseId") Long courseId) {
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
 		List<SpecialApproveDto> specialApproves = new ArrayList<>();
 		SpecialApproveDto dto;
@@ -223,7 +274,7 @@ public class SpecialApproveController {
 		System.out.println(courseId);
 		try {
 			dto = specialApproveService.delete(courseId, member.getId());
-			ResSuccess(res, specialApproves, dto);
+			resSuccess(res, specialApproves, dto);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
@@ -233,7 +284,7 @@ public class SpecialApproveController {
 		}
 	}
 
-	private void ResSuccess(ResponseDto<SpecialApproveDto> res, List<SpecialApproveDto> specialApproves,
+	private void resSuccess(ResponseDto<SpecialApproveDto> res, List<SpecialApproveDto> specialApproves,
 			SpecialApproveDto dto) throws Exception {
 		if (dto == null)
 			throw new Exception("ไม่สามารถทำรายการได้");
@@ -243,7 +294,7 @@ public class SpecialApproveController {
 		res.setCode(200);
 	}
 
-	private boolean RegisterCourse(SpecialApproveDto dto) {
+	private boolean registerCourse(SpecialApproveDto dto) {
 		return specialApproveService.approve(dto);
 	}
 }

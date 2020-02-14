@@ -24,9 +24,12 @@ import com.cdgs.temple.service.BaggageService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.util.ResponseDto;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/baggage")
+@Slf4j
 public class BaggageController {
 
 	private MemberService memberService;
@@ -57,6 +60,7 @@ public class BaggageController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("getAll", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -78,6 +82,7 @@ public class BaggageController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("create", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -103,11 +108,10 @@ public class BaggageController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("update", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-
 }

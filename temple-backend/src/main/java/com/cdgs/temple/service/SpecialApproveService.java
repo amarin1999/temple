@@ -7,7 +7,7 @@ import com.cdgs.temple.dto.SpecialApproveDto;
 public interface SpecialApproveService {
 	List<SpecialApproveDto> getAll(Long memberId, Long courseId);
 
-	SpecialApproveDto getById(Long memberId, Long id);
+	SpecialApproveDto getById(Long id);
 
 	SpecialApproveDto create(SpecialApproveDto body);
 

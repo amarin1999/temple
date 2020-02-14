@@ -1,11 +1,10 @@
 package com.cdgs.temple.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,10 +33,11 @@ import com.cdgs.temple.service.CourseService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.service.TransportationService;
 
-@Service
-public class CourseServiceImpl implements CourseService {
+import lombok.extern.slf4j.Slf4j;
 
-	private static final Logger log = LoggerFactory.getLogger(CourseServiceImpl.class);
+@Service
+@Slf4j
+public class CourseServiceImpl implements CourseService {
 
 	private CourseRepository courseRepository;
 
@@ -60,6 +60,10 @@ public class CourseServiceImpl implements CourseService {
 	private CourseScheduleService courseScheduleService;
 
 	private TransportationService transportationService;
+
+	public CourseServiceImpl() {
+		super();
+	}
 
 	@Autowired
 	public CourseServiceImpl(CourseRepository courseRepository, MembersHasCourseRepository membersHasCourseRepository,
@@ -94,18 +98,12 @@ public class CourseServiceImpl implements CourseService {
 			courses.add(memberHasCourse.getCourse());
 		}
 		coursesDto = mapListEntityToDto(courses);
-		// if(coursesDto != null){
 		return coursesDto;
-		// }else{
-		// throw new RuntimeException("สมาชิกยังไม่เคยผ่านหลักสูคร");
-		// }
-
 	}
 
 	@Override
 	public List<CourseDto> getCoursesUserRegister(Long memberId) {
 		List<TempCourseEntity> entity = tempCourseRepository.findCoursesUserRegister(memberId);
-		// System.out.println(entity.size());
 		return mapListTempEntityToDto(entity);
 	}
 
@@ -117,8 +115,6 @@ public class CourseServiceImpl implements CourseService {
 		} else {
 			enable = "1";
 		}
-		System.out.println(status);
-		System.out.println(enable);
 		List<TempCourseEntity> entity = tempCourseRepository.findCoursesUser(memberId, status, enable);
 		return mapListTempEntityToDto(entity);
 	}
@@ -147,8 +143,7 @@ public class CourseServiceImpl implements CourseService {
 			entity = courseRepository.save(convDtoToEntity(body));
 			return mapEntityToDto(entity);
 		} catch (Exception e) {
-			e.printStackTrace();
-			log.error("createCourse>>> " + e.getMessage());
+			log.error("createCourse >>> " + e);
 			return null;
 		}
 	}
@@ -169,19 +164,17 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public CourseDto getCourse(Long id) {
 		try {
-			CourseEntity entity = courseRepository.findById(id).get();
+			CourseEntity entity = courseRepository.findByCourseId(id);
 			return mapEntityEditToDto(entity);
 		} catch (Exception e) {
-			log.error("getCourse >>>> " + e.getMessage());
-			e.printStackTrace();
+			log.error("getCourse >>>> " + e);
 		}
 		return null;
-
 	}
 
 	@Override
 	public CourseDto getCourseMonk(Long id) {
-		CourseEntity entity = courseRepository.findById(id).get();
+		CourseEntity entity = courseRepository.findByCourseId(id);
 		return mapEntityEditToDto(entity);
 
 	}
@@ -202,16 +195,12 @@ public class CourseServiceImpl implements CourseService {
 	public MembersHasCourseDto assignCourse(MembersHasCourseDto body) {
 		MembersHasCourseEntity entity = mapDtoToEntity(body);
 		long count = membersHasCourseRepository.CountForPassCourse(body.getMemberId());
-		CourseEntity course = courseRepository.findById(body.getCourseId()).get();
-		System.out.println("member id " + body.getMemberId());
-		System.out.println("course " + body.getCourseId());
-		System.out.println("count " + count);
-		System.out.println("condition " + course.getCourseConditionMin());
+		CourseEntity course = courseRepository.findByCourseId(body.getCourseId());
 		try {
 			if (count >= course.getCourseConditionMin()) {
 				return mapEntityToDto(membersHasCourseRepository.save(entity));
 			} else {
-				throw new Exception("เงื่อนไขการสมัครไม่ถูกต้อง aa");
+				throw new Exception("เงื่อนไขการสมัครไม่ถูกต้อง");
 			}
 		} catch (Exception e) {
 			log.error("assignCourse>>> " + e.getMessage());
@@ -226,7 +215,7 @@ public class CourseServiceImpl implements CourseService {
 		if (course != null) {
 			return mapListEntityToDto(course);
 		}
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -265,8 +254,8 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseDto> getCoursesOutTime() {
-		List<CourseEntity> entity = courseRepository.getAllCourseOutTime();
+	public List<CourseDto> getCoursesOutTime(Long memberId) {
+		List<CourseEntity> entity = courseRepository.getAllCourseOutTime(memberId);
 		return mapListEntityToDto(entity);
 	}
 
@@ -330,6 +319,17 @@ public class CourseServiceImpl implements CourseService {
 		courseRepository.updateCourseToEnable(id);
 	}
 
+	@Override
+	public List<CourseDto> getLastedCourses() {
+		try {
+			List<CourseEntity> course = courseRepository.getLastedCourses();
+			return mapListEntityToDto(course);
+		} catch (Exception e) {
+			log.error("getPreviouspast", e);
+			return null;
+		}
+	}
+
 	private List<CourseDto> mapListEntityToDto(List<CourseEntity> entities) {
 		List<CourseDto> listDto = new ArrayList<>();
 		if (!entities.isEmpty()) {
@@ -343,11 +343,11 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public CourseDto getCourseById(Long courseId) {
-		CourseEntity entity = courseRepository.findById(courseId).get();
+		CourseEntity entity = courseRepository.findByCourseId(courseId);
 		return mapEntityToDto(entity);
 	}
 
-	private CourseDto mapEntityToDto(CourseEntity entity) {
+	public CourseDto mapEntityToDto(CourseEntity entity) {
 		CourseDto dto = new CourseDto();
 		CourseTeacherDto teacherDto = new CourseTeacherDto();
 		TransportationDto transportationDto = new TransportationDto();
@@ -408,7 +408,6 @@ public class CourseServiceImpl implements CourseService {
 
 	private CourseDto mapTempEntityToDto(TempCourseEntity entity) {
 		CourseDto dto = new CourseDto();
-//		TransportationDto transportationDto = new TransportationDto();
 		if (entity != null) {
 			dto.setId(entity.getCourseId());
 			dto.setNo(entity.getCourseNo());
@@ -428,11 +427,6 @@ public class CourseServiceImpl implements CourseService {
 			dto.setSaStatus(entity.getSaStatus());
 			dto.setMhcStatus(entity.getMhcStatus());
 			dto.setCanRegister(entity.getCanRegister());
-//			if (entity.getTransportationId() != null) {
-//				transportationDto = transportationService.getTransportationByCourseId(entity.getCourseId());
-//				dto.setTransportation(transportationDto);
-//			}
-//			dto.setTransportTempleId(entity.getTransportTempleId());
 		} else {
 			dto = null;
 		}
@@ -441,7 +435,7 @@ public class CourseServiceImpl implements CourseService {
 
 	@Transactional
 	public CourseDto updateCourse(Long id, CourseDto courseNew) {
-		CourseEntity courseOld = courseRepository.findById(id).get();
+		CourseEntity courseOld = courseRepository.findByCourseId(id);
 		CourseEntity entity;
 		TransportationDto transportationDtoOld = new TransportationDto();
 		TransportationDto transportationDtoNew = new TransportationDto();
@@ -450,36 +444,29 @@ public class CourseServiceImpl implements CourseService {
 				transportationDtoOld = transportationService.getTransportationByCourseId(id);
 				if (transportationDtoOld.getId() != null) {
 					transportationDtoOld.setCourseId(null);
-					transportationService.updateTransportationTemple(transportationDtoOld.getId(), transportationDtoOld);
+					transportationService.updateTransportationTemple(transportationDtoOld.getId(),
+							transportationDtoOld);
 				}
-				transportationDtoNew = transportationService.getTransportationById(courseNew.getTransportation().getId());
+				transportationDtoNew = transportationService
+						.getTransportationById(courseNew.getTransportation().getId());
 				transportationDtoNew.setCourseId(id);
 				transportationService.updateTransportationTemple(transportationDtoNew.getId(), transportationDtoNew);
 			} else if (courseNew.getTransportation().getId() == null) {
 				transportationDtoOld = transportationService.getTransportationByCourseId(id);
 				if (transportationDtoOld.getId() != null) {
 					transportationDtoOld.setCourseId(null);
-					transportationService.updateTransportationTemple(transportationDtoOld.getId(), transportationDtoOld);
+					transportationService.updateTransportationTemple(transportationDtoOld.getId(),
+							transportationDtoOld);
 				}
 			}
-			System.out.println("st1 = " + courseNew.getStDate());
 
 			// set update name, detail, location
 			courseOld.setCourseName(courseNew.getName());
-			System.out.println("name = " + courseNew.getName());
 			courseOld.setCourseDetail(courseNew.getDetail());
-			System.out.println("detail = " + courseNew.getDetail());
-			courseOld.setLocationId(locationRepository.findById(courseNew.getLocationId()).get());
+			courseOld.setLocationId(locationRepository.findByLocationId(courseNew.getLocationId()));
 			courseOld.setCourseStDate(courseNew.getStDate());
-			System.out.println("st = " + courseNew.getStDate());
-			System.out.println("stOld = " + courseOld.getCourseStDate());
 			courseOld.setCourseConditionMin(courseNew.getConditionMin());
 			courseOld.setCourseEndDate(courseNew.getEndDate());
-			System.out.println("end = " + courseNew.getEndDate());
-			System.out.println("endOld = " + courseOld.getCourseEndDate());
-			String datetest = "2019-12-12";
-//			Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(datetest);
-			System.out.println("datetest =" + datetest);
 			courseOld.setCourseLastUpdate(new Date());
 			courseOld.setCourseLocationId(courseNew.getLocationId());
 			entity = courseRepository.save(courseOld);
@@ -496,46 +483,14 @@ public class CourseServiceImpl implements CourseService {
 
 			return mapEntityEditToDto(entity);
 
-		} catch (RuntimeException e) {
-			log.error("updateCourse >>>> " + e.getMessage());
-			return null;
 		} catch (Exception e) {
 			log.error("updateCourse >>>> " + e.getMessage());
 			return null;
 		}
 	}
 
-//	private List<CourseScheduleEntity> mapCourseScheduleListToEntities(Long id, List<CourseScheduleDto> dateList) {
-//		List<CourseScheduleEntity> entities = new ArrayList<CourseScheduleEntity>();
-//		CourseScheduleEntity entity = new CourseScheduleEntity();
-//		if (dateList != null) {
-//			for (CourseScheduleDto date : dateList) {
-//				entity.setCourseId(id);
-//				entity.setCourseScheduleDate(date.getCourseScheduleDate());
-//				entities.add(entity);
-//			}
-//		}
-//		return entities;
-//	}
-//
-//	private List<CourseTeacherEntity> mapMemberListToTeacherEntity(Long courseId, List<MemberDto> list) {
-//		List<CourseTeacherEntity> entities = new ArrayList<CourseTeacherEntity>();
-//		CourseTeacherEntity entity = new CourseTeacherEntity();
-//		if (list != null) {
-//			for (MemberDto teacher : list) {
-//				entity.setCourseId(courseId);
-//				entity.setMemberId(teacher.getId());
-////				 entity.setMember(memberRepository.findById(teacher.getId()).get());
-//				entities.add(entity);
-//			}
-//		}
-//
-//		return entities;
-//	}
-
 	private CourseEntity convDtoToEntity(CourseDto course) {
 		CourseEntity entity = new CourseEntity();
-		System.out.println(course.toString());
 		entity.setCourseId(course.getId());
 		entity.setCourseNo(course.getNo());
 		entity.setCourseName(course.getName());
@@ -553,7 +508,7 @@ public class CourseServiceImpl implements CourseService {
 
 	private MembersHasCourseEntity mapDtoToEntity(MembersHasCourseDto body) {
 		MembersHasCourseEntity entity = new MembersHasCourseEntity();
-		TransportationEntity tran = new TransportationEntity();
+		TransportationEntity tranEntity = new TransportationEntity();
 		if (body != null) {
 			entity.setMembersHasCourseId(body.getMembersHasCourseId());
 			entity.setCourseId(body.getCourseId());
@@ -561,8 +516,8 @@ public class CourseServiceImpl implements CourseService {
 			entity.setRegisterDate(body.getRegisterDate());
 			entity.setSenseId(body.getSenseId());
 			entity.setMhcStatus(body.getStatus());
-			tran.setTransportationId(body.getTransportationId());
-			entity.setTranId(tran);
+			tranEntity.setTransportationId(body.getTransportationId());
+			entity.setTranId(tranEntity);
 		}
 		return entity;
 	}
@@ -580,27 +535,9 @@ public class CourseServiceImpl implements CourseService {
 		return dto;
 	}
 
-//	private CourseScheduleEntity mapDtoToEntity(CourseScheduleDto body) {
-//		CourseScheduleEntity entity = new CourseScheduleEntity();
-//		if (body != null) {
-//			entity.setCourseId(body.getCourseId());
-//			entity.setCourseScheduleDate(body.getCourseScheduleDate());
-//		}
-//		return entity;
-//	}
-//
-//	private CourseScheduleDto mapEntityToDto(CourseScheduleEntity body) {
-//		CourseScheduleDto dto = new CourseScheduleDto();
-//		if (body != null) {
-//			dto.setCourseId(body.getCourseId());
-//			dto.setCourseScheduleDate(body.getCourseScheduleDate());
-//
-//		}
-//		return dto;
-//	}
-
 	private CourseDto mapEntityEditToDto(CourseEntity entity) {
 		List<MemberDto> teacherList = new ArrayList<>();
+		List<Long> teachersId = new ArrayList<>();
 		CourseDto dto = new CourseDto();
 		TransportationDto transportationDto = new TransportationDto();
 		try {
@@ -627,8 +564,11 @@ public class CourseServiceImpl implements CourseService {
 				dto.setEndDate(entity.getCourseEndDate());
 
 				for (CourseTeacherEntity courseTeacher : entity.getCourseTeacher()) {
-					teacherList.add(memberService.getMember(courseTeacher.getMemberId()));
+					MemberDto member = memberService.getMember(courseTeacher.getMemberId());
+					teachersId.add(member.getId());
+					teacherList.add(member);
 				}
+				dto.setTeacher(teachersId);
 				dto.setTeacherList(teacherList);
 				dto.setDateList(courseScheduleService.getCourseScheduleList(entity.getCourseId()));
 
@@ -641,22 +581,4 @@ public class CourseServiceImpl implements CourseService {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
-
-//	private List<CourseScheduleDto> mapDateEntityListToDto(List<CourseScheduleEntity> courseSchduleList) {
-//		List<CourseScheduleDto> dtoList = new ArrayList<>();
-//		for (CourseScheduleEntity courseSchdule : courseSchduleList) {
-//			dtoList.add(mapDateEntityToDto(courseSchdule));
-//		}
-//		return dtoList;
-//	}
-
-//	private CourseScheduleDto mapDateEntityToDto(CourseScheduleEntity courseSchdule) {
-//		CourseScheduleDto dto = new CourseScheduleDto();
-//		if (courseSchdule != null) {
-//			dto.setCourseId(courseSchdule.getCourseId());
-//			dto.setCourseScheduleDate(courseSchdule.getCourseScheduleDate());
-//		}
-//		return dto;
-//	}
-
 }

@@ -10,14 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "history_dharma")
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class HistoryDharmaEntity implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1422669375047737226L;
 
 	@Id
@@ -33,37 +36,4 @@ public class HistoryDharmaEntity implements Serializable {
 
 	@Column(name = "history_dharma_member_id")
 	private Long historyDharmaMemberId;
-
-	public long getHistoryDharmaId() {
-		return historyDharmaId;
-	}
-
-	public void setHistoryDharmaId(long historyDharmaId) {
-		this.historyDharmaId = historyDharmaId;
-	}
-
-	public String getHistoryDharmaDesc() {
-		return historyDharmaDesc;
-	}
-
-	public void setHistoryDharmaDesc(String historyDharmaDesc) {
-		this.historyDharmaDesc = historyDharmaDesc;
-	}
-
-	public String getHistoryDharmaLocation() {
-		return historyDharmaLocation;
-	}
-
-	public void setHistoryDharmaLocation(String historyDharmaLocation) {
-		this.historyDharmaLocation = historyDharmaLocation;
-	}
-
-	public Long getHistoryDharmaMemberId() {
-		return historyDharmaMemberId;
-	}
-
-	public void setHistoryDharmaMemberId(Long historyDharmaMemberId) {
-		this.historyDharmaMemberId = historyDharmaMemberId;
-	}
-
 }

@@ -5,6 +5,7 @@ import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-manage-user',
@@ -29,13 +30,12 @@ export class ManageUserComponent implements OnInit {
       { label: 'จัดการสมาชิก', routerLink: '/users' },
     ]);
     this.spinner.show();
-    this.manageUser.getAllUsersWithOutImg().toPromise().then(res => {
+    this.manageUser.getAllUsersWithOutImg().pipe(finalize(() => this.spinner.hide())).subscribe(res => {
       if (res['status'] === 'Success') {
         this.personal = res.data;
       }
-    }).catch(e =>
-      console.log(e['error']['errorMessage'])
-    ).finally(() => this.spinner.hide());
+    });
+
 
     this.menu = [
       { label: '', icon: 'pi pi-home', routerLink: '/' },
@@ -50,17 +50,16 @@ export class ManageUserComponent implements OnInit {
   }
 
   deleteUser(id) {
-    this.manageUser.deleteUser(id).toPromise()
-      .then(res => {
-        if (res['status'] === 'Success') {
-          const index = this.personal.findIndex(e => e.id === id);
-          this.personal = [
-            ...this.personal.slice(0, index),
-            ...this.personal.slice(index + 1)
-          ];
-        }
-      }).catch((e) => console.log(e['error']['errorMessage'])
-      ).finally(() => this.spinner.hide());
+    this.spinner.show();
+    this.manageUser.deleteUser(id).pipe(finalize(() => this.spinner.hide())).subscribe(res => {
+      if (res['status'] === 'Success') {
+        const index = this.personal.findIndex(e => e.id === id);
+        this.personal = [
+          ...this.personal.slice(0, index),
+          ...this.personal.slice(index + 1)
+        ];
+      }
+    })
   }
   public onRowSelect(e) {
     this.router.navigate(['/profile', e.data['id']]);

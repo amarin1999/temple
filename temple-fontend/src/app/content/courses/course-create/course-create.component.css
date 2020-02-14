@@ -10,3 +10,8 @@
 .star{
   color: red;
 }
+:host>>>button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only {
+  background-color: #b8860b;
+  border: #b8860b;
+  border-radius: 3px;
+}

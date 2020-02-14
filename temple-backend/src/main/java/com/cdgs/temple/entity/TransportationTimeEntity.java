@@ -13,14 +13,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "transportations_time")
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class TransportationTimeEntity implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2044543602178920317L;
 
 	@Id
@@ -35,29 +38,4 @@ public class TransportationTimeEntity implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "tran_time_send")
 	private Date transportationTempleTimeSend;
-
-	public Long getTransportationTimeId() {
-		return transportationTimeId;
-	}
-
-	public void setTransportationTimeId(Long transportationTimeId) {
-		this.transportationTimeId = transportationTimeId;
-	}
-
-	public Date getTransportationTempleTimePickup() {
-		return transportationTempleTimePickup;
-	}
-
-	public void setTransportationTempleTimePickup(Date transportationTempleTimePickup) {
-		this.transportationTempleTimePickup = transportationTempleTimePickup;
-	}
-
-	public Date getTransportationTempleTimeSend() {
-		return transportationTempleTimeSend;
-	}
-
-	public void setTransportationTempleTimeSend(Date transportationTempleTimeSend) {
-		this.transportationTempleTimeSend = transportationTempleTimeSend;
-	}
-
 }

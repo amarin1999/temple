@@ -5,14 +5,17 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "courses_schedule")
 @IdClass(CourseScheduleEntity.class)
+@Getter
+@Setter
+@ToString
 public class CourseScheduleEntity implements Serializable {
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -470237690775417023L;
 
 	@Id
@@ -22,20 +25,4 @@ public class CourseScheduleEntity implements Serializable {
 	@Id
 	@Column(name = "course_schedule_date")
 	private Date courseScheduleDate;
-
-	public Long getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
-	}
-
-	public Date getCourseScheduleDate() {
-		return courseScheduleDate;
-	}
-
-	public void setCourseScheduleDate(Date courseScheduleDate) {
-		this.courseScheduleDate = courseScheduleDate;
-	}
 }

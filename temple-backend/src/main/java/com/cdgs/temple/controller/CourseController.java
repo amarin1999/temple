@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,20 +36,24 @@ import com.cdgs.temple.service.ApprovalCoursesService;
 import com.cdgs.temple.service.CourseScheduleService;
 import com.cdgs.temple.service.CourseService;
 import com.cdgs.temple.service.CourseTeacherService;
+import com.cdgs.temple.service.EmailService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.service.MembersHasCourseService;
+import com.cdgs.temple.service.NotificationsService;
 import com.cdgs.temple.service.SensationService;
 import com.cdgs.temple.service.SpecialApproveService;
 import com.cdgs.temple.service.TransportationService;
+import com.cdgs.temple.service.impl.EmailServiceImpl;
+import com.cdgs.temple.service.impl.NotificationsServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
+
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/courses")
+@Slf4j
 public class CourseController {
-
-	private static final Logger log = LoggerFactory.getLogger(TransportationController.class);
-
 	private TransportationService transportationService;
 	private MemberService memberService;
 	private CourseService courseService;
@@ -61,22 +63,25 @@ public class CourseController {
 	private SpecialApproveService specialApproveService;
 	private SensationService sensationService;
 	private ApprovalCoursesService approvalCoursesService;
+	private NotificationsService notificationsService = new NotificationsServiceImpl();
+	private EmailService emailService = new EmailServiceImpl();
 
 	@Autowired
-	public CourseController(CourseService courseService, MemberService memberService,
-			MembersHasCourseService membersHasCourseService, CourseScheduleService courseScheduleService,
-			CourseTeacherService courseTeacherService, SpecialApproveService specialApproveService,
-			SensationService sensationService, ApprovalCoursesService approvalCoursesService,
-			TransportationService transportationService) {
-		this.specialApproveService = specialApproveService;
-		this.courseService = courseService;
+	public CourseController(TransportationService transportationService, MemberService memberService,
+			CourseService courseService, MembersHasCourseService membersHasCourseService,
+			CourseScheduleService courseScheduleService, CourseTeacherService courseTeacherservice,
+			SpecialApproveService specialApproveService, SensationService sensationService,
+			ApprovalCoursesService approvalCoursesService) {
+		super();
+		this.transportationService = transportationService;
 		this.memberService = memberService;
+		this.courseService = courseService;
 		this.membersHasCourseService = membersHasCourseService;
 		this.courseScheduleService = courseScheduleService;
-		this.courseTeacherservice = courseTeacherService;
+		this.courseTeacherservice = courseTeacherservice;
+		this.specialApproveService = specialApproveService;
 		this.sensationService = sensationService;
 		this.approvalCoursesService = approvalCoursesService;
-		this.transportationService = transportationService;
 	}
 
 	@GetMapping(path = "/allmembers/{id}")
@@ -100,7 +105,7 @@ public class CourseController {
 
 	@GetMapping(path = "/user")
 	@PreAuthorize("hasRole('user')")
-	public ResponseEntity<ResponseDto<CourseDto>> GetCoursesUser(@RequestParam("status") String status) {
+	public ResponseEntity<ResponseDto<CourseDto>> getCoursesUser(@RequestParam("status") String status) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> dto = new ArrayList<>();
 		MemberDto member = memberService.getCurrentMember();
@@ -115,7 +120,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("catch >> getCoursesUser ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -129,7 +134,7 @@ public class CourseController {
 	 */
 	@GetMapping(path = "")
 	@PreAuthorize("hasRole('admin') or hasRole('monk')")
-	public ResponseEntity<ResponseDto<CourseDto>> GetCourses() {
+	public ResponseEntity<ResponseDto<CourseDto>> getCourses() {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> dto = new ArrayList<>();
 		MemberDto member = memberService.getCurrentMember();
@@ -144,8 +149,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println("catch >> GetCourses");
-			e.printStackTrace();
+			log.error("catch >> getCourses ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -173,7 +177,6 @@ public class CourseController {
 			} else {
 				count = courseService.countCourses();
 			}
-			// count = courseService.countCourses();
 			dto.setTotalRecord(count);
 			listDto.add(dto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -181,6 +184,7 @@ public class CourseController {
 			res.setCode(201);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("catch >> countCourses ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -190,15 +194,13 @@ public class CourseController {
 
 	@GetMapping(value = "/approve")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<ApprovalCoursesDto>> TeacherGetCoursesApproval(@RequestParam("offset") int offset, @RequestParam("limit") int limit, 
-			@RequestParam("query") String query) {
+	public ResponseEntity<ResponseDto<ApprovalCoursesDto>> teacherGetCoursesApproval(@RequestParam("offset") int offset,
+			@RequestParam("limit") int limit, @RequestParam("query") String query) {
 		ResponseDto<ApprovalCoursesDto> res = new ResponseDto<>();
 		List<ApprovalCoursesDto> dto;
 		MemberDto member = memberService.getCurrentMember();
 
 		try {
-			System.out.println(offset);
-			System.out.println(limit);
 			// เปลี่ยนไปใช้ ApprovalCourses จากเดิม Course (TeacherGetCoursesApproval)
 			// เพิ่มจำนวนนักเรียนในแต่ละคอร์ส
 			dto = approvalCoursesService.getApprovalCourses(query, member.getId(), limit, offset);
@@ -207,7 +209,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("catch >> teacherGetCoursesApproval ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -217,15 +219,13 @@ public class CourseController {
 
 	@GetMapping(value = "/approve/outTime")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<CourseDto>> TeacherGetCoursesOutTime(@RequestParam("offset") int offset,
+	public ResponseEntity<ResponseDto<CourseDto>> teacherGetCoursesOutTime(@RequestParam("offset") int offset,
 			@RequestParam("limit") int limit, @RequestParam("query") String query) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> dto;
 		MemberDto member = memberService.getCurrentMember();
 
 		try {
-			System.out.println(offset);
-			System.out.println(limit);
 			// เปลี่ยนไปใช้ ApprovalCourses จากเดิม Course (TeacherGetCoursesApproval)
 			// เพิ่มจำนวนนักเรียนในแต่ละคอร์ส
 			dto = courseService.TeacherGetCoursesApprovalOutTime(member.getId(), offset, limit, query);
@@ -234,7 +234,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("catch >> teacherGetCoursesOutTime ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -244,7 +244,7 @@ public class CourseController {
 
 	@GetMapping(value = "/approve/count")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<ResponseCountDto>> CountTeacherCoursesApproval() {
+	public ResponseEntity<ResponseDto<ResponseCountDto>> countTeacherCoursesApproval() {
 		ResponseDto<ResponseCountDto> res = new ResponseDto<>();
 		List<ResponseCountDto> listDto = new ArrayList<>();
 		ResponseCountDto dto = new ResponseCountDto();
@@ -259,6 +259,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("countTeacherCoursesApproval ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -268,7 +269,7 @@ public class CourseController {
 
 	@GetMapping(value = "/approve/outTime/count")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<ResponseCountDto>> CountTeacherCoursesApprovalOutTime() {
+	public ResponseEntity<ResponseDto<ResponseCountDto>> countTeacherCoursesApprovalOutTime() {
 		ResponseDto<ResponseCountDto> res = new ResponseDto<>();
 		List<ResponseCountDto> listDto = new ArrayList<>();
 		ResponseCountDto dto = new ResponseCountDto();
@@ -298,31 +299,52 @@ public class CourseController {
 	public ResponseEntity<ResponseDto<CourseDto>> getCoursesById(@PathVariable("id") Long id) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		MemberDto member = memberService.getCurrentMember();
-        CourseDto courseDto = new CourseDto();
-        List<CourseDto> courseDtoList = new ArrayList<>();
+		CourseDto courseDto = new CourseDto();
+		List<CourseDto> courseDtoList = new ArrayList<>();
 		try {
 			if (member.getRoleName().equals("user")) {
-                courseDto = courseService.getCourseUser(member.getId(), id);
-                if ( courseDto.getTransportation() == null) {
-                	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
-                }
-                courseDtoList.add(courseDto);
+				courseDto = courseService.getCourseUser(member.getId(), id);
+				courseDto.setTeacherList(memberService.getAllUsersWithOutImg());
+				if (courseDto.getTransportation() == null) {
+					TransportationDto transportationDto;
+					if (courseDto.getNo() == Long.parseLong("0")) {
+						transportationDto = transportationService.getTransportationByCourseId(id);
+					} else {
+						SpecialApproveDto specialApproveDto;
+						specialApproveDto = specialApproveService.getByCourseIdAndMemberId(courseDto.getId(),
+								member.getId());
+						transportationDto = transportationService
+								.getTransportationById(specialApproveDto.getTransportationId());
+					}
+					courseDto.setTransportation(transportationDto);
+				}
 			} else {
-                courseDto = courseService.getCourse(id);
-                if ( courseDto.getTransportation() == null) {
-                	courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
-                	if (courseDto.getTransportation().getId() == null ) {
-                		courseDto.setTransportation(null);
-                	}
-                }
-                courseDtoList.add(courseDto);
+				courseDto = courseService.getCourse(id);
+				if (courseDto.getTransportation() == null) {
+					courseDto.setTransportation(transportationService.getTransportationByCourseId(id));
+					if (courseDto.getTransportation().getId() == null) {
+						courseDto.setTransportation(null);
+					}
+				}
 			}
+
+			List<MemberDto> listMemDto = memberService.getMemberByCourseId(courseDto.getId());
+
+			List<Long> listTeacher = new ArrayList<>();
+			List<MemberDto> listTeacherDto = new ArrayList<>();
+			for (MemberDto memberDto : listMemDto) {
+				listTeacher.add(memberDto.getId());
+				listTeacherDto.add(memberDto);
+			}
+			courseDto.setTeacher(listTeacher);
+			courseDto.setTeacherList(listTeacherDto);
+			courseDtoList.add(courseDto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-            res.setData(courseDtoList);
+			res.setData(courseDtoList);
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("getCoursesById ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -332,28 +354,18 @@ public class CourseController {
 
 	@GetMapping(path = "/outTime")
 	@PreAuthorize("hasRole('user')")
-	public ResponseEntity<ResponseDto<CourseDto>> GetCoursesOutTime(
-			@RequestParam("courseOutTimeType") String courseOutTimeType) {
+	public ResponseEntity<ResponseDto<CourseDto>> getCoursesOutTime() {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> listCourseDto;
 		MemberDto member = memberService.getCurrentMember();
 		try {
-			if (courseOutTimeType.equals("Specialapprove")) {
-				listCourseDto = courseService.getCoursesSpecialApproveOutTime(member.getId());
-			} else if (courseOutTimeType.equals("MemberHasCourse")) {
-				listCourseDto = courseService.getCoursesMemberHasCourseOutTime(member.getId());
-			} else if (courseOutTimeType.equals("MemberHasOutTime")) {
-				listCourseDto = courseService.getCoursesOutTimeByMemberId(member.getId());
-			} else if (courseOutTimeType.equals("MemberHasToStudy")) {
-				listCourseDto = courseService.getCoursesMemberToStudy(member.getId());
-			} else {
-				listCourseDto = courseService.getCoursesOutTime();
-			}
+			listCourseDto = courseService.getCoursesOutTime(member.getId());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listCourseDto);
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("getCoursesOutTime ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(200);
@@ -366,12 +378,20 @@ public class CourseController {
 		ResponseDto<Long> res = new ResponseDto<>();
 		List<Long> dto = new ArrayList<>();
 		Long passCourse = null;
-		passCourse = membersHasCourseService.countForPassCourses(id);
-		dto.add(passCourse);
-		res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-		res.setData(dto);
-		res.setCode(200);
-		return new ResponseEntity<>(res, HttpStatus.OK);
+		try {
+			passCourse = membersHasCourseService.countForPassCourses(id);
+			dto.add(passCourse);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			log.error("getMemberPassCourse ", e);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(200);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -392,15 +412,10 @@ public class CourseController {
 		try {
 			course = courseService.createCourse(body);
 			courseSchedule.setCourseId(course.getId());
-			try {
-				if (body.getTransportation().getId() != null) {
-					transportationDto.setCourseId(course.getId());
-					transportationDto.setId(body.getTransportation().getId());
-					transportationService.updateTransportationTemple(transportationDto.getId(), transportationDto);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error(e.getMessage());
+			if (body.getTransportation().getId() != null) {
+				transportationDto.setCourseId(course.getId());
+				transportationDto.setId(body.getTransportation().getId());
+				transportationService.updateTransportationTemple(transportationDto.getId(), transportationDto);
 			}
 			// ตรวจสอบกรณีวันที่เท่ากัน / 1 วัน
 			if (dateSt.compareTo(dateEnd) == 0) {
@@ -408,7 +423,6 @@ public class CourseController {
 				courseScheduleService.createCourseSchedule(courseSchedule);
 			} else {
 				for (Date date : body.getDate()) {
-					System.out.println("***date = " + date);
 					courseSchedule.setCourseScheduleDate(date);
 					courseScheduleService.createCourseSchedule(courseSchedule);
 				}
@@ -425,6 +439,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("createCourse ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -433,7 +448,7 @@ public class CourseController {
 	}
 
 	@PostMapping(value = "/outTime")
-	public ResponseEntity<ResponseDto<CourseDto>> AssignCoursesOutTime(@Valid @RequestBody SpecialApproveDto body) {
+	public ResponseEntity<ResponseDto<CourseDto>> assignCoursesOutTime(@Valid @RequestBody SpecialApproveDto body) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		CourseDto courseDto = new CourseDto();
 		CourseDto courseOutTimeDto = new CourseDto();
@@ -457,13 +472,32 @@ public class CourseController {
 			body.setCourseId(courseOutTimeDto.getId());
 			body.setStatus("4");
 			body.setMemberId(member.getId());
-			specialApproveService.create(body);
+			SpecialApproveDto spaDto = specialApproveService.create(body);
 			listDto.add(courseOutTimeDto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listDto);
 			res.setCode(200);
+
+			// เพิ่มข้อมูล notification ไปให้ ผู้สอน
+			notificationsService.createMonkNotifications(courseDto.getTeacher(), spaDto.getSpecialApproveId(),
+					courseOutTimeDto.getId(), spaDto.getStatus(), courseOutTimeDto.getName());
+
+			String subject = "รายงานการสมัครคอร์ส";
+			String text = "คอร์ส " + courseOutTimeDto.getName() + " ได้รับการอนุมัติแล้ว";
+
+			// ส่ง email ไปให้ผู้สอน
+			for (Long teacherId : courseDto.getTeacher()) {
+
+				MemberDto teacher = memberService.getMember(teacherId);
+
+				if (null != teacher.getEmail()) {
+					emailService.sendEmail(teacher.getEmail(), subject, text);
+				}
+			}
+
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("assignCoursesOutTime ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -485,22 +519,12 @@ public class CourseController {
 		CourseDto course;
 		CourseScheduleDto courseSchedule = new CourseScheduleDto();
 		try {
-			System.out.println("print");
 			course = courseService.updateCourse(id, body);
-			System.out.println("body st = " + body.getStDate());
-			System.out.println("body condition = " + body.getConditionMin());
-			System.out.println("body end = " + body.getEndDate());
-			System.out.println("course end = " + course.getStDate());
-			System.out.println("course end = " + course.getEndDate());
-			System.out.println(body);
-			if (body != null) {
-				courses.add(body);
-			}
+			courses.add(body);
 			/* ตรวจสอบเพิ่มกรณีไม่มีข้อมูลใน schedule */
 			if (courseScheduleService.getCourseId(id) == null) {
 				courseSchedule.setCourseId(course.getId());
 				for (Date date : body.getDate()) {
-					System.out.println("***date = " + date);
 					courseSchedule.setCourseScheduleDate(date);
 					courseScheduleService.createCourseSchedule(courseSchedule);
 				}
@@ -516,6 +540,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("putCourse ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -527,14 +552,22 @@ public class CourseController {
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<ResponseDto<CourseEntity>> deleteCourse(@PathVariable("id") long id) {
 		ResponseDto<CourseEntity> res = new ResponseDto<>();
-		if (courseService.deleteCourse(id)) {
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setCode(204);
-			return new ResponseEntity<>(res, HttpStatus.NO_CONTENT);
-		} else {
+		try {
+			if (Boolean.TRUE.equals(courseService.deleteCourse(id))) {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setCode(204);
+				return new ResponseEntity<>(res, HttpStatus.NO_CONTENT);
+			} else {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+				res.setCode(200);
+				return new ResponseEntity<>(res, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			log.error("deleteCourse ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-			res.setCode(200);
-			return new ResponseEntity<>(res, HttpStatus.OK);
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -548,7 +581,6 @@ public class CourseController {
 		MemberDto member = memberService.getCurrentMember();
 		SensationDto tempSensation = new SensationDto();
 		SensationDto sensation = new SensationDto();
-		System.out.println("Detail" + body.getTransportationId());
 
 		try {
 			if (courseService.getCoursesUserByCourseId(member.getId(), body.getCourseId()) == 0) {
@@ -560,7 +592,6 @@ public class CourseController {
 				body.setMemberId(member.getId());
 				body.setSenseId(sensation.getId());
 				body.setStatus('2');
-				System.out.println(body.getStatus());
 				memberHasCourse = courseService.assignCourse(body);
 				if (memberHasCourse == null) {
 					throw new Exception("เงื่อนไขการสมัครไม่ถูกต้อง");
@@ -578,6 +609,7 @@ public class CourseController {
 				return new ResponseEntity<>(res, HttpStatus.OK);
 			}
 		} catch (Exception e) {
+			log.error("createMemberHasCourse ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -618,9 +650,9 @@ public class CourseController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
-			System.out.println(dto.toString());
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("getCourseScheduleByUser ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -653,7 +685,7 @@ public class CourseController {
 	public ResponseEntity<ResponseDto<CourseDto>> deleteCourse(@PathVariable("id") Long id) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		try {
-			if (courseService.deleteCourse(id)) {
+			if (Boolean.TRUE.equals(courseService.deleteCourse(id))) {
 				res.setResult("Success");
 				res.setCode(200);
 				return new ResponseEntity<>(res, HttpStatus.OK);
@@ -679,10 +711,8 @@ public class CourseController {
 		MemberDto member = memberService.getCurrentMember();
 		try {
 			if (member.getRoleName().equals("user")) {
-				// dto.add(courseService.getHistory(member.getId()));
 				dto = courseService.getHistory(member.getId());
 			} else {
-				// dto.add(courseService.getHistory(id));
 				dto = courseService.getHistory(id);
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -690,6 +720,7 @@ public class CourseController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("getHistoryCourseLearn ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);

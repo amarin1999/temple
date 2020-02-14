@@ -5,13 +5,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-
-import com.cdgs.temple.entity.CourseEntity;
-
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cdgs.temple.entity.CourseEntity;
+
 public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
+	CourseEntity findByCourseId(Long id);
+	
 	List<CourseEntity> findAll();
 
 	// count ข้อมูลของ admin
@@ -65,12 +66,23 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 //			+ "LEFT JOIN locations l ON c.course_location_id = l.location_id "
 //			+ "LEFT JOIN transportations t ON c.course_id = t.course_id "
 //			+ "LEFT JOIN transportations_time tt ON t.tran_time_id = tt.tran_time_id ", nativeQuery = true )
-	@Query(nativeQuery = true, name = "findAllCourseEntity" )
+	@Query(nativeQuery = true, name = "findAllCourseEntity")
 	List<CourseEntity> findAllCourseEntity();
 
-	@Query(value = "SELECT c.*" + "		FROM courses c" + "		WHERE  c.course_no = '0'"
-			+ "		ORDER BY c.course_id", nativeQuery = true)
-	List<CourseEntity> getAllCourseOutTime();
+// ของเก่า
+//	@Query(value = "SELECT c.*" + "		FROM courses c" + "		WHERE  c.course_no = '0'"
+//			+ "		ORDER BY c.course_id", nativeQuery = true)
+
+	@Query(value = "SELECT c.* FROM courses c LEFT JOIN special_approve spa "
+			+ "ON spa.course_id = c.course_id LEFT JOIN members_has_courses mhc " + "ON mhc.course_id = c.course_id "
+			+ "WHERE c.course_id <> (c.course_no <> '0' AND c.course_create_by = '1' AND spa.spa_status = '4') "
+			+ "AND c.course_id NOT IN (SELECT sa.course_id FROM special_approve sa WHERE sa.spa_status <> '3') "
+			+ "AND c.course_id NOT IN (SELECT c.course_no FROM courses c "
+			+ "WHERE c.course_id IN (SELECT spa.course_id FROM special_approve spa WHERE spa.spa_status IN ('4', '1') "
+			+ "AND spa.member_id = :memberId)) "
+			+ "AND c.course_id NOT IN (SELECT mhc.course_id FROM members_has_courses mhc WHERE mhc.member_id = :memberId) "
+			+ "AND c.course_status = '1' AND c.course_enable = '1' ORDER BY c.course_id;", nativeQuery = true)
+	List<CourseEntity> getAllCourseOutTime(@Param("memberId") Long memberId);
 
 	@Query(value = "SELECT c.*" + "		FROM courses c"
 			+ "		LEFT JOIN special_approve spa ON spa.course_id = c.course_id AND spa.member_id = :memberId AND c.course_no = '0'"
@@ -114,7 +126,7 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 			@Param("limit") int limit, @Param("query") String query);
 
 	@Query(value = "SELECT COUNT(*) total_record FROM ("
-			+ "SELECT c.course_id FROM courses c INNER JOIN courses_teacher ct ON c.course_id=ct.course_id INNER JOIN special_approve sa ON c.course_id=sa.course_id WHERE 1=1 AND ct.member_id=:memberId AND sa.spa_status='2' AND c.course_status='0' GROUP BY c.course_id) t1", nativeQuery = true)
+			+ "SELECT c.course_id FROM courses c INNER JOIN courses_teacher ct ON c.course_id=ct.course_id INNER JOIN special_approve sa ON c.course_id=sa.course_id WHERE 1=1 AND ct.member_id=:memberId AND sa.spa_status='4' AND c.course_status='0' GROUP BY c.course_id) t1", nativeQuery = true)
 	Integer countCoursesTeacherApprovalAllOutTime(@Param("memberId") Long memberId);
 
 	@Modifying
@@ -128,5 +140,11 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 	@Query(value = "UPDATE courses as c   " + "set c.course_enable = 1  "
 			+ "WHERE c.course_id = :courseId", nativeQuery = true)
 	void updateCourseToEnable(@Param("courseId") Long id);
+	
+	@Query(value = "SELECT * FROM courses" + 
+			       " WHERE course_create_date < DATE_ADD(NOW() , INTERVAL +1 MONTH)" +
+			       " AND course_no = '0'"+
+			       " ORDER BY course_create_date DESC", nativeQuery = true)
+	List<CourseEntity> getLastedCourses();
 
 }

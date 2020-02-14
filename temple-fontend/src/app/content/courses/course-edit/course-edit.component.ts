@@ -6,7 +6,7 @@ import { formatDate, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '../../location/location.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { debounceTime, distinctUntilChanged, count } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, count, finalize } from 'rxjs/operators';
 import { TransportService } from 'src/app/shared/service/transport.service';
 import { TransportationTemple } from 'src/app/shared/interfaces/transportation-temple';
 import { Spinner } from 'primeng/primeng';
@@ -122,7 +122,6 @@ export class CourseEditComponent implements OnInit {
         console.log(error['error']['errorMessage']);
       }
     );
-
     this.locationService.getLocation().subscribe(
       res => {
         if (res.status === 'Success') {
@@ -147,10 +146,11 @@ export class CourseEditComponent implements OnInit {
   }
 
   settingForm(id) {
+    this.spinner.show();
     this.courseId = id;
     this.getTransportationTempleList(id);
     this.courseService.getCourseByid(id)
-      .subscribe(res => {
+      .pipe(finalize(() => this.spinner.hide())).subscribe(res => {
         /*var result = [];
         var teacherLength;*/
         const teachers = res['data']['teacherList'].map(res => {
@@ -202,8 +202,9 @@ export class CourseEditComponent implements OnInit {
 
   // ------------ Get List of Transportation Temple ------------
   getTransportationTempleList(id) {
+    this.spinner.show();
     this.optionTime = { hour: '2-digit', minute: '2-digit' };
-    this.transportTempleService.getTranSportTemple(id).subscribe(
+    this.transportTempleService.getTranSportTemple(id).pipe(finalize(() => this.spinner.hide())).subscribe(
       res => {
         this.transport = res['data'].map(data => {
           return {
@@ -230,6 +231,7 @@ export class CourseEditComponent implements OnInit {
         header: 'แก้ไขคอร์ส',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+          this.spinner.show();
           const date2 = this.formEdit.get('date').value;
           const stDate = formatDate(date2[0], 'yyyy-MM-dd', 'th');
           let endDate = '';
@@ -261,10 +263,12 @@ export class CourseEditComponent implements OnInit {
             // lastUpdate: lastUpdate,
             teacher: this.formEdit.get('teachers').value.map(res => res.id),
             // tslint:disable-next-line: max-line-length
-            transportation: {id: transportTempleId},
+            transportation: { id: transportTempleId },
           };
 
-          this.courseService.editCourse(id, course).subscribe(res => {
+          this.courseService.editCourse(id, course).pipe(finalize(() => {
+            this.spinner.hide();
+          })).subscribe(res => {
             if (res['result'] === 'Success') {
               this.msgs = [{ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการแก้ไขคอร์สสำเร็จ' }];
               this.onCancle(this.msgs);
@@ -273,6 +277,7 @@ export class CourseEditComponent implements OnInit {
               this.onCancle(this.msgs);
             }
           });
+
         },
         reject: () => {
           // this.msgs = [{ severity: 'info', summary: 'ข้อความจากระบบ', detail: 'ยกเลิกการแก้ไขคอร์ส' }];

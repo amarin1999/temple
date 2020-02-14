@@ -2,7 +2,12 @@
   <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
     <div style="text-align:center">
       <h1>{{title}}</h1>
-      <div *ngIf="totalRecords === 0">( ไม่มีข้อมูลคำขออนุมัติพิเศษ )</div>
+      <ng-container *ngIf="url === 'approval'; else dataOutTime">
+      <span style="text-align: center;">{{reportNoData}}</span>
+    </ng-container>
+    <ng-template #dataOutTime>
+        <span  style="text-align: center;">{{dataOutTimeReport}}</span>
+    </ng-template>
     </div>
     <div class="line"></div>
     <div class="container">
@@ -12,7 +17,7 @@
             <p-tabPanel header="อนุมัติพิเศษ(คอร์สปกติ)"> -->
           <p-table #dt [columns]="cols" [value]="courses" [paginator]="true" [rows]="5" [responsive]="true"
             selectionMode="single" [(selection)]="selectedCourse" (onRowSelect)="onRowSelect($event)" [lazy]="true"
-            (onLazyLoad)="loadData($event)" [totalRecords]="totalRecords" [loading]="loading">
+            (onLazyLoad)="loadData($event)" [totalRecords]="totalRecords" [loading]="loading" >
             <ng-template pTemplate="caption">
               <div class="ui-g ui-fluid">
                 <div class="ui-g-12 ui-lg-3 ui-md-3 ui-sm-12" style="margin-left: auto;">
@@ -32,9 +37,9 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
-              <tr [pSelectableRow]="rowData" *ngIf="rowData.numberOfMembers > 0">
+              <tr [pSelectableRow]="rowData" *ngIf="isInTime()? rowData.numberOfMembers > 0: 'columns'">
                 <td *ngFor="let col of columns">
-                  <span class="ui-column-title">{{col.header}}</span>
+                <span class="ui-column-title">{{col.header}}</span>
                   {{col.field == "conditionMin" ? "ผ่านการเรียนมาอย่างน้อย " + rowData[col.field] + " คอร์ส" : rowData[col.field]}}
                 </td>
               </tr>

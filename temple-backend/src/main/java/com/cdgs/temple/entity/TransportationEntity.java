@@ -12,14 +12,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "transportations")
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class TransportationEntity implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8609326581235221457L;
 
 	@Id
@@ -39,57 +42,4 @@ public class TransportationEntity implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "tran_time_id", insertable = false, updatable = false)
 	private TransportationTimeEntity transportationTimeEntity;
-//
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "course_id", insertable = false, updatable = false)
-//	private CourseEntity coursesEntity;
-
-	public Long getTransportationId() {
-		return transportationId;
-	}
-
-	public void setTransportationId(Long transportationId) {
-		this.transportationId = transportationId;
-	}
-
-	public String getTransportationName() {
-		return transportationName;
-	}
-
-	public void setTransportationName(String transportationName) {
-		this.transportationName = transportationName;
-	}
-
-	public TransportationTimeEntity getTransportationTimeEntity() {
-		return transportationTimeEntity;
-	}
-
-	public void setTransportationTimeEntity(TransportationTimeEntity transportationTimeEntity) {
-		this.transportationTimeEntity = transportationTimeEntity;
-	}
-
-//	public CourseEntity getCoursesEntity() {
-//		return coursesEntity;
-//	}
-//
-//	public void setCoursesEntity(CourseEntity coursesEntity) {
-//		this.coursesEntity = coursesEntity;
-//	}
-
-	public Long getTransportationTimeId() {
-		return transportationTimeId;
-	}
-
-	public void setTransportationTimeId(Long transportationTimeId) {
-		this.transportationTimeId = transportationTimeId;
-	}
-
-	public Long getTransportationCoursesId() {
-		return transportationCoursesId;
-	}
-
-	public void setTransportationCoursesId(Long transportationCoursesId) {
-		this.transportationCoursesId = transportationCoursesId;
-	}
-
 }

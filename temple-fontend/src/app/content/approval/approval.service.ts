@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {map} from 'rxjs/operators';
-import {ApiConstants} from '../../shared/constants/ApiConstants';
-import {HttpClientService} from '../../shared/service/http-client.service';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { ApiConstants } from '../../shared/constants/ApiConstants';
+import { HttpClientService } from '../../shared/service/http-client.service';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +56,7 @@ export class ApprovalService {
     return this.http.get(`${ApiConstants.baseURl}/courses/approve/count`).pipe(
       map(res => ({
         status: res['result'],
-        data: res['data']
+        data: [...res['data']]
       }))
     );
   }
@@ -64,7 +64,7 @@ export class ApprovalService {
     return this.http.get(`${ApiConstants.baseURl}/courses/approve/outTime/count`).pipe(
       map(res => ({
         status: res['result'],
-        data: res['data']
+        data: [...res['data']]
       }))
     );
   }
@@ -73,7 +73,7 @@ export class ApprovalService {
     return this.http.get(`${ApiConstants.baseURl}/courses/approve?query=${query}&offset=${first}&limit=${rows}`).pipe(
       map(res => ({
         status: res['result'],
-        data: res['data']
+        data: [...res['data']]
       }))
     );
   }
@@ -82,14 +82,14 @@ export class ApprovalService {
     return this.http.get(`${ApiConstants.baseURl}/courses/approve/outTime?query=${query}&offset=${first}&limit=${rows}`).pipe(
       map(res => ({
         status: res['result'],
-        data: res['data']
+        data: [...res['data']]
       }))
     );
   }
 
   approveStudents(data) {
     const req = {
-      spaId: data.member,
+      spaId: data.member ? data.member : data.spaId,
       courseId: data.courseId,
       status: data.status
     };

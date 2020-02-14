@@ -56,6 +56,7 @@ export class LocationComponent implements OnInit {
     if (this.locations.findIndex(res => res.name == this.locationNameEdit) < 0) {
       // this.messageService.clear();
       this.location['name'] = this.locationNameEdit;
+      this.spinner.show();
       this.locationService.save(this.location).toPromise().then(res => {
         if (res['status'] === 'Success') {
           this.locations.push(res['data']);
@@ -70,7 +71,7 @@ export class LocationComponent implements OnInit {
             detail: 'ดำเนินการเพิ่มไม่สำเร็จ เนื่องจากระบบมีข้อผิดพลาด'
           });
         }
-      });
+      }).finally(() => this.spinner.hide());
     } else {
       this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มไม่สำเร็จ สถานที่ซ้ำ' });
     }
@@ -105,13 +106,16 @@ export class LocationComponent implements OnInit {
       accept: () => {
         // this.messageService.clear();
         const index = this.locations.findIndex(e => e.id === id);
+        this.spinner.show();
         this.locationService.delete(id).toPromise()
           .then(res => {
             if (res['status'] === 'Success') {
               this.locations.splice(index, 1);
+              this.spinner.hide();
               this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการลบสำเร็จ' });
               this.getLocation();
             } else {
+              this.spinner.hide();
               this.messageService.add({
                 severity: 'error', summary: 'ข้อความจากระบบ',
                 detail: 'ดำเนินการลบไม่สำเร็จ เนื่องจากมีการใช้สถานที่นี้อยู่หรือระบบมีข้อผิดพลาด ', life: 8000
@@ -121,23 +125,26 @@ export class LocationComponent implements OnInit {
           .catch(e => {
             if (e['error']['result'] === 'Fail') {
               if (e['error']['errorMessage'] === 'location is using') {
+                this.spinner.hide();
                 this.messageService.add({
                   severity: 'error', summary: 'ข้อความจากระบบ',
                   detail: 'ดำเนินการลบไม่สำเร็จ เนื่องจากมีการใช้สถานที่นี้อยู่', life: 8000
                 });
               } else {
+                this.spinner.hide();
                 this.messageService.add({
                   severity: 'error', summary: 'ข้อความจากระบบ',
                   detail: 'ดำเนินการลบไม่สำเร็จ เนื่องจากระบบมีข้อผิดพลาด', life: 8000
                 });
               }
             } else {
+              this.spinner.hide();
               this.messageService.add({
                 severity: 'error', summary: 'ข้อความจากระบบ',
                 detail: 'ดำเนินการไม่สำเร็จ เนื่องจากระบบมีข้อผิดพลาด', life: 8000
               });
             }
-          });
+          }).finally(() => this.spinner.hide());
       },
       reject: () => {
         // this.messageService.add({ severity: 'info', summary: 'ยกเลิกการลบ' });
@@ -172,22 +179,25 @@ export class LocationComponent implements OnInit {
     // this.messageService.clear();
     if (this.locations.findIndex(res => res.name == this.locationNameEdit) < 0 || this.location['name'] == this.locationNameEdit) {
       this.location['name'] = this.locationNameEdit;
+      this.spinner.show();
       this.locationService.update(this.location).toPromise().then(res => {
         if (res['status'] === 'Success') {
           const index = this.locations.findIndex(e => e.id === res['data']['id']);
           this.locations[index].name = res['data']['name'];
+          this.spinner.hide();
           this.messageService.add({
             severity: 'success', summary: 'ข้อความจากระบบ',
             detail: 'ดำเนินการแก้ไข สถานที่ : ' + res['data']['name'] + ' สำเร็จ'
           });
         } else {
+          this.spinner.hide();
           this.messageService.add({
             severity: 'error', summary: 'ข้อความจากระบบ',
             detail: 'ดำเนินการแก้ไขไม่สำเร็จ เนื่องจากระบบมีข้อผิดพลาด '
           });
         }
 
-      });
+      }).finally(() => this.spinner.hide());
       this.clear();
     } else {
       this.messageService.add({

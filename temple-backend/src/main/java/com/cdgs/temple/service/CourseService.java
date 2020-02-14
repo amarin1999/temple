@@ -46,7 +46,7 @@ public interface CourseService {
 
 	List<CourseDto> getCoursesSpecialApproveOutTime(Long memberId);
 
-	List<CourseDto> getCoursesOutTime();
+	List<CourseDto> getCoursesOutTime(Long memberId);
 
 	List<CourseDto> getCoursesMemberHasCourseOutTime(Long memberId);
 
@@ -63,6 +63,8 @@ public interface CourseService {
 	List<CourseDto> TeacherGetCoursesApprovalOutTime(Long memberId, int offset, int limit, String query);
 
 	Integer CountTeacherCoursesApprovalOutTime(Long memberId);
+	
+	List <CourseDto> getLastedCourses();
 
 	void updateCourseToEnable(Long id);
 

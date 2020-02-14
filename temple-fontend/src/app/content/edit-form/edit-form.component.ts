@@ -57,6 +57,11 @@ export class EditFormComponent implements OnInit {
   public courseHisList: any[] = [];
   public provinces: any[];
   public courseHisDelList: any[] = [];
+
+  // เรียกเอาไปใช้ใน calendar html
+  year = new Date().getFullYear();
+
+
   showNoProfile = false;
   showLoadingPicture = true;
   currentId = 0;

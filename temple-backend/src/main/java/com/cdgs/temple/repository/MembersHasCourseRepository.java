@@ -28,7 +28,7 @@ public interface MembersHasCourseRepository extends CrudRepository<MembersHasCou
 
 	List<MembersHasCourseEntity> findAll();
 
-	@Query(value = "SELECT mhc* FROM members_has_courses as mhc"
+	@Query(value = "SELECT mhc.* FROM members_has_courses as mhc"
 			+ "WHERE mhc.member_id = :memberId AND mhc.mhc_status = :status", nativeQuery = true)
 	List<MembersHasCourseEntity> findAllByMemberIdAndStatus(Long memberId, char status);
 

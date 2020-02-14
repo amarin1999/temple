@@ -47,7 +47,7 @@ public class SpecialApproveServiceImpl implements SpecialApproveService {
 	}
 
 	@Override
-	public SpecialApproveDto getById(Long memberId, Long id) {
+	public SpecialApproveDto getById(Long id) {
 		return mapEntityToDto(specialApproveRepository.findBySpecialApproveId(id));
 	}
 
@@ -114,7 +114,7 @@ public class SpecialApproveServiceImpl implements SpecialApproveService {
 
 	@Override
 	public SpecialApproveDto getApproveByCourseIdAndMemberId(Long courseId, Long memberId) {
-		return mapEntityToDto(specialApproveRepository.findByCourseIdAndMemberId(courseId, memberId));
+		return mapEntityToDto(specialApproveRepository.getByCourseIdAndMemberId(courseId, memberId));
 	}
 
 	@Override
@@ -171,8 +171,23 @@ public class SpecialApproveServiceImpl implements SpecialApproveService {
 		SpecialApproveDto dto = new SpecialApproveDto();
 		dto.setSpecialApproveId(entity.getSpecialApproveId());
 		dto.setMemberId(entity.getMemberId());
-		dto.setDisplayName(entity.getDisplayName());
 		dto.setDetail(entity.getSpaDetail());
+		dto.setDisplayName(entity.getDisplayName());
+		if (null != entity.getCourseId()) {
+			dto.setCourseId(entity.getCourseId());
+		}
+		if (null != entity.getCourseName()) {
+			dto.setCourseName(entity.getCourseName());
+		}
+		if (null != entity.getCourseDetail()) {
+			dto.setCourseDetail(entity.getCourseDetail());
+		}
+		if (null != entity.getCourseStDate()) {
+			dto.setStDate(new java.sql.Date(entity.getCourseStDate().getTime()));
+		}
+		if (null != entity.getCourseEndDate()) {
+			dto.setEndDate(new java.sql.Date(entity.getCourseEndDate().getTime()));
+		}
 		dto.setTransportationName(entity.getTransportation());
 		return dto;
 	}

@@ -2,6 +2,13 @@ package com.cdgs.temple.dto;
 
 import java.io.Serializable;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class CourseTeacherDto implements Serializable {
 
 	/**
@@ -11,21 +18,4 @@ public class CourseTeacherDto implements Serializable {
 
 	private Long courseId;
 	private Long memberId;
-
-	public Long getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
-	}
-
-	public Long getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
-	}
-
 }

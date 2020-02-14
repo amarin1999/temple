@@ -37,13 +37,17 @@ import { ManageStorageComponent } from "./manage-storage/manage-storage.componen
 import { ManageCourseForMonkComponent } from "./manage-course-for-monk/manage-course-for-monk.component";
 import { FormatTHdatePipe } from "../shared/pipe/formatTHdate.pipe";
 import { ManageTransportationComponent } from "./manage-transportation/manage-transportation.component";
-import { from } from "rxjs";
 import { CourseRegisterOutTimeComponent } from "./courses/course-register-out-time/course-register-out-time.component";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { ThaiCalendarModule } from '../shared/directive/thai-calendar/thai-calendar.module';
-import {TabMenuModule} from 'primeng/tabmenu';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { Ng2ImgMaxModule } from 'ng2-img-max';
 import { ReportComponent } from './report/report.component';
+import { ApproveOutTimeComponent } from './approval/approve-out-time/approve-out-time.component';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { NotificationComponent } from './notification/notification.component';
+import { NotificationDetailComponent } from './notification/notification-detail/notification-detail.component';
+import { DialogOutTimeComponent } from './courses/course-register-out-time/dialog-out-time/dialog-out-time.component';
 
 
 registerLocaleData(localeTh);
@@ -79,9 +83,14 @@ registerLocaleData(localeTh);
     FormatTHdatePipe,
     ManageTransportationComponent,
     CourseRegisterOutTimeComponent,
-    ReportComponent
+    ReportComponent,
+    ApproveOutTimeComponent,
+    DashboardComponent,
+    NotificationComponent,
+    NotificationDetailComponent,
+    DialogOutTimeComponent
   ],
-  imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule , ThaiCalendarModule, TabMenuModule, Ng2ImgMaxModule],
+  imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule, ThaiCalendarModule, TabMenuModule, Ng2ImgMaxModule],
   exports: [ContentComponent],
   providers: [
     ConfirmationService,
@@ -91,4 +100,4 @@ registerLocaleData(localeTh);
     { provide: LOCALE_ID, useValue: "th" }
   ]
 })
-export class ContentModule {}
+export class ContentModule { }

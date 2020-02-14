@@ -92,7 +92,7 @@ export class RegisterFormComponent implements OnInit {
     ]),
     phone: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.email]),
-    ordianDate: new FormControl(null),
+    ordianDate: new FormControl(null, [Validators.min(0)]),
     ordianNumber: new FormControl(null),
     phoneEmergency: new FormControl(null, [Validators.required]),
     fnameEmergency: new FormControl(null, [Validators.required]),

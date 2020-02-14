@@ -10,14 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name = "sensations")
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class SensationEntity implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3971704619188825868L;
 
 	@Id
@@ -30,29 +33,4 @@ public class SensationEntity implements Serializable {
 
 	@Column(name = "sense_experience")
 	private String senseExprience;
-
-	public long getSenseId() {
-		return senseId;
-	}
-
-	public void setSenseId(long senseId) {
-		this.senseId = senseId;
-	}
-
-	public String getSenseExpected() {
-		return senseExpected;
-	}
-
-	public void setSenseExpected(String senseExpected) {
-		this.senseExpected = senseExpected;
-	}
-
-	public String getSenseExprience() {
-		return senseExprience;
-	}
-
-	public void setSenseExprience(String senseExprience) {
-		this.senseExprience = senseExprience;
-	}
-
 }

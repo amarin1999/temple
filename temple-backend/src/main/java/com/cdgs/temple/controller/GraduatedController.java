@@ -1,5 +1,23 @@
 package com.cdgs.temple.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.cdgs.temple.dto.GraduatedCourseDto;
 import com.cdgs.temple.dto.GraduatedDto;
 import com.cdgs.temple.dto.MemberDto;
@@ -10,23 +28,13 @@ import com.cdgs.temple.service.GraduatedService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.util.ResponseDto;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/graduated")
+@Slf4j
 public class GraduatedController {
-	private static final Logger log = LoggerFactory.getLogger(GraduatedController.class);
 
 	private MemberService memberService;
 	private GraduatedService graduatedService;
@@ -53,6 +61,7 @@ public class GraduatedController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("getAllStatus ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -62,14 +71,14 @@ public class GraduatedController {
 
 	@PutMapping(path = "")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<GraduatedDto>> Update(@Valid @RequestBody GraduatedDto body) {
+	public ResponseEntity<ResponseDto<GraduatedDto>> update(@Valid @RequestBody GraduatedDto body) {
 		ResponseDto<GraduatedDto> res = new ResponseDto<>();
 		MemberDto member = memberService.getCurrentMember();
 		GraduatedDto bodydto = new GraduatedDto();
 		System.out.println(body.toString());
 		try {
 			for (MemberHasCourseStatus mhc : body.getMhcList()) {
-				bodydto.setcId(body.getcId());
+				bodydto.setCId(body.getCId());
 				bodydto.setMhcId(mhc.getMhcId());
 				bodydto.setStatus(mhc.getStatus());
 				System.out.println("body => " + bodydto.toString());
@@ -79,7 +88,7 @@ public class GraduatedController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error("update ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -102,6 +111,7 @@ public class GraduatedController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("getAll ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -111,7 +121,7 @@ public class GraduatedController {
 
 	@GetMapping(value = "/count")
 	@PreAuthorize("hasRole('monk')")
-	public ResponseEntity<ResponseDto<ResponseCountDto>> CountTeacherCoursesApproval() {
+	public ResponseEntity<ResponseDto<ResponseCountDto>> countTeacherCoursesApproval() {
 		ResponseDto<ResponseCountDto> res = new ResponseDto<>();
 		List<ResponseCountDto> listDto = new ArrayList<>();
 		ResponseCountDto dto = new ResponseCountDto();
@@ -126,6 +136,7 @@ public class GraduatedController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("countTeacherCoursesApproval ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);

@@ -7,11 +7,18 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 
 
 @Entity
 @Table(name = "members_has_courses")
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class MembersHasCourseEntity implements Serializable {
 
 	/**
@@ -51,75 +58,4 @@ public class MembersHasCourseEntity implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "sense_id", insertable = false, updatable = false)
 	private SensationEntity sense;
-
-	public long getMembersHasCourseId() {
-		return membersHasCourseId;
-	}
-
-	public void setMembersHasCourseId(long membersHasCourseId) {
-		this.membersHasCourseId = membersHasCourseId;
-	}
-
-	public long getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(long memberId) {
-		this.memberId = memberId;
-	}
-
-	public long getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(long courseId) {
-		this.courseId = courseId;
-	}
-
-	public char getMhcStatus() {
-		return mhcStatus;
-	}
-
-	public void setMhcStatus(char mhcStatus) {
-		this.mhcStatus = mhcStatus;
-	}
-
-	public LocalDateTime getRegisterDate() {
-		return registerDate;
-	}
-
-	public void setRegisterDate(LocalDateTime registerDate) {
-		this.registerDate = registerDate;
-	}
-
-	public CourseEntity getCourse() {
-		return course;
-	}
-
-	public void setCourse(CourseEntity course) {
-		this.course = course;
-	}
-
-	public long getSenseId() {
-		return senseId;
-	}
-
-	public void setSenseId(long senseId) {
-		this.senseId = senseId;
-	}
-
-	public TransportationEntity getTranId() {
-		return tranId;
-	}
-
-	public void setTranId(TransportationEntity tranId) {
-		this.tranId = tranId;
-	}
-
-	@Override
-	public String toString() {
-		return "MembersHasCourseEntity [membersHasCourseId=" + membersHasCourseId + ", memberId=" + memberId
-				+ ", courseId=" + courseId + ", mhcStatus=" + mhcStatus + ", registerDate=" + registerDate + "]";
-	}
-
 }
