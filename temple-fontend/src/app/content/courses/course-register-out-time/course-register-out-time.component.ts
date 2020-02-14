@@ -1,18 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Course } from 'src/app/shared/interfaces/course';
-import { CourseService } from '../shared/course.service';
-import { LazyLoadEvent, ConfirmationService, MessageService } from 'primeng/api';
-import { of, forkJoin } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { ManagePassCourseService } from 'src/app/shared/service/manage-pass-course.service';
-import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
-
-import { ApiConstants } from 'src/app/shared/constants/ApiConstants';
 import { HttpClient } from '@angular/common/http';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { formatDate } from '@angular/common';
-import { Transportation } from 'src/app/shared/interfaces/transportation';
-import { TransportService } from 'src/app/shared/service/transport.service';
+import { Component, OnInit } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Course } from 'src/app/shared/interfaces/course';
+import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
+import { ManagePassCourseService } from 'src/app/shared/service/manage-pass-course.service';
+import { CourseService } from '../shared/course.service';
+
 
 @Component({
   selector: 'app-course-register-out-time',

@@ -131,7 +131,6 @@ export class ApprovalFormComponent implements OnInit {
   }
   showDialogOutTime(e) {
     console.log(e);
-    // เขียน api ตอบรับ outTime ใหม่
     this.spinner.show();
     this.btnrej = true;
     const message = e.status == '1' ? '' : 'ไม่';

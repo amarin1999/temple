@@ -29,7 +29,7 @@ export class ApprovalService {
             status: res['result'],
             data: data,
           };
-        } else {return null;}
+        } else { return null; }
       })
     );
   }
@@ -91,7 +91,8 @@ export class ApprovalService {
     const req = {
       spaId: data.member ? data.member : data.spaId,
       courseId: data.courseId,
-      status: data.status
+      status: data.status,
+      rejectComment: data.rejectComment
     };
     return this.http.put(`${ApiConstants.baseURl}/approve`, req).pipe(
       map((res) => {

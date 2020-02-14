@@ -6,6 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Transportation } from 'src/app/shared/interfaces/transportation';
 import { TransportService } from 'src/app/shared/service/transport.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-dialog-out-time',
   templateUrl: './dialog-out-time.component.html',
@@ -55,7 +56,7 @@ export class DialogOutTimeComponent implements OnInit, OnDestroy {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.spinner.show();
-        this.courseService.registerCourseOutTime(outTimeCourse).subscribe(res => {
+        this.courseService.registerCourseOutTime(outTimeCourse).pipe(finalize(() => this.spinner.hide())).subscribe(res => {
           if (res.status === 'Success') {
             this.spinner.hide();
             this.messageService.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ขออนุมัตินอกเวลาสำเร็จ' });
