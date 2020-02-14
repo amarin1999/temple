@@ -228,8 +228,8 @@ public class SpecialApproveController {
 				if (body.getStatus().equals("1")) {
 					text += " ได้รับการอนุมัติแล้ว";
 				} else if (body.getStatus().equals("0")) {
-					text += " ได้รับการไม่ผ่านการอนุมัติ";
-					if (!body.getRejectComment().isEmpty()) {
+					text += " ไม่ผ่านการอนุมัติ";
+					if (null != body.getRejectComment() && !body.getRejectComment().isEmpty()) {
 						text += " เนื่องจาก " + body.getRejectComment();
 					}
 				}
