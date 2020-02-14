@@ -41,7 +41,7 @@ public class NotificationsServiceImpl implements NotificationsService {
 
 	@Override
 	public void createUserNotifications(Long userId, Long specialApproveId, Long courseId, String specialApproveStatus,
-			String courseName) {
+			String courseName, String rejectComment) {
 		try {
 			NotificationsDto notificationDto = new NotificationsDto();
 			notificationDto.setSpecialApproveID(specialApproveId);
@@ -51,6 +51,7 @@ public class NotificationsServiceImpl implements NotificationsService {
 			notificationDto.setNotificationStatus(Long.parseLong("0"));
 			notificationDto.setDetail(courseName);
 			notificationDto.setNotificationTime(Calendar.getInstance().getTime());
+			notificationDto.setRejectComment(rejectComment);
 			notificationsRepository.createUserNotification(notificationDto);
 		} catch (Exception e) {
 			log.error("error createUserNotifications() ", e);

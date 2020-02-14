@@ -27,7 +27,7 @@ public class NotificationController {
 
 	@GetMapping(path = "/previouspast")
 	@PreAuthorize("hasRole('admin') or hasRole('monk') or hasRole('user')")
-	public ResponseEntity<ResponseDto<CourseDto>> getAllPreviouspast() {
+	public ResponseEntity<ResponseDto<CourseDto>> getLastedCouses() {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		List<CourseDto> courseDto = courseService.getLastedCourses();
 		try {

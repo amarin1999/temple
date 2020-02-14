@@ -18,6 +18,7 @@ public class NotificationsDto {
 	private String detail;
 	private Long notificationStatus;
 	private Date notificationTime;
+	private String rejectComment;
 	
 	public NotificationsDto() {
 		super();

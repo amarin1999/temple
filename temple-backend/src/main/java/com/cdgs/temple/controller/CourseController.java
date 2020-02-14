@@ -41,6 +41,7 @@ import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.service.MembersHasCourseService;
 import com.cdgs.temple.service.NotificationsService;
 import com.cdgs.temple.service.SensationService;
+import com.cdgs.temple.service.SmsService;
 import com.cdgs.temple.service.SpecialApproveService;
 import com.cdgs.temple.service.TransportationService;
 import com.cdgs.temple.service.impl.EmailServiceImpl;
@@ -485,11 +486,11 @@ public class CourseController {
 			String subject = "รายงานการสมัครคอร์ส";
 			String text = "คอร์ส " + courseOutTimeDto.getName() + " ได้รับการอนุมัติแล้ว";
 
-			// ส่ง email ไปให้ผู้สอน
 			for (Long teacherId : courseDto.getTeacher()) {
 
 				MemberDto teacher = memberService.getMember(teacherId);
 
+				// ส่ง email ไปให้ผู้สอน
 				if (null != teacher.getEmail()) {
 					emailService.sendEmail(teacher.getEmail(), subject, text);
 				}

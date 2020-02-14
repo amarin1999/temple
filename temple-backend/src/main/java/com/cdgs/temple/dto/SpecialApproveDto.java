@@ -33,6 +33,8 @@ public class SpecialApproveDto implements Serializable {
 	private String experience;
 	private long transportationId;
 	private String transportationName;
+	
+	private String rejectComment;
 
 	private Date stDate;
 	private Date endDate;

@@ -13,6 +13,9 @@ import com.cdgs.temple.service.SpecialApproveService;
 import com.cdgs.temple.service.impl.EmailServiceImpl;
 import com.cdgs.temple.service.impl.NotificationsServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +30,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/v1/approve")
+@Slf4j
 public class SpecialApproveController {
 
 	private SpecialApproveService specialApproveService;
@@ -54,7 +58,7 @@ public class SpecialApproveController {
 		try {
 			dto = specialApproveService.getAll(member.getId(), courseId);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			if (dto.size() > 0) {
+			if (!dto.isEmpty()) {
 				res.setData(dto);
 				res.setCode(200);
 				return new ResponseEntity<>(res, HttpStatus.OK);
@@ -64,7 +68,7 @@ public class SpecialApproveController {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("getAll", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -85,7 +89,7 @@ public class SpecialApproveController {
 			res.setCode(200);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("getAllOutTime", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -109,6 +113,7 @@ public class SpecialApproveController {
 			res.setData(listDto);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("getCourseOutTimeByMemberId", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -154,7 +159,7 @@ public class SpecialApproveController {
 
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("create", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -178,7 +183,6 @@ public class SpecialApproveController {
 				System.out.println(said);
 				bodydto.setSpecialApproveId(said);
 				listDto.add(specialApproveService.update(bodydto, member.getId()));
-
 			}
 			if (body.getStatus().equals("1")) {
 				for (SpecialApproveDto dto : listDto) {
@@ -201,9 +205,9 @@ public class SpecialApproveController {
 					registerCourse(dto);
 				}
 			}
-			if (listDto.isEmpty())
+			if (listDto.isEmpty()) {
 				throw new Exception("ไม่สามารถทำรายการได้");
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			}res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listDto);
 			res.setCode(200);
 
@@ -230,7 +234,7 @@ public class SpecialApproveController {
 		} catch (
 
 		Exception e) {
-			e.printStackTrace();
+			log.error("update", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -256,7 +260,7 @@ public class SpecialApproveController {
 				return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("cancelApproveOutTime", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -277,6 +281,7 @@ public class SpecialApproveController {
 			resSuccess(res, specialApproves, dto);
 			return new ResponseEntity<>(res, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("userDelete", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);

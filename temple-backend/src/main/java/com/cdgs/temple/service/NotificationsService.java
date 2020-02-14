@@ -7,5 +7,5 @@ public interface NotificationsService {
 			String specialApproveStatus, String courseOutTimeName);
 	
 	void createUserNotifications(Long userId, Long specialApproveId, Long courseOutTimeId, String specialApproveStatus,
-			String courseOutTimeName);
+			String courseOutTimeName, String rejectComment);
 }
