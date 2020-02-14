@@ -46,6 +46,7 @@ import com.cdgs.temple.service.SpecialApproveService;
 import com.cdgs.temple.service.TransportationService;
 import com.cdgs.temple.service.impl.EmailServiceImpl;
 import com.cdgs.temple.service.impl.NotificationsServiceImpl;
+import com.cdgs.temple.service.impl.SmsServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,6 +67,7 @@ public class CourseController {
 	private ApprovalCoursesService approvalCoursesService;
 	private NotificationsService notificationsService = new NotificationsServiceImpl();
 	private EmailService emailService = new EmailServiceImpl();
+	private SmsService smsService = new SmsServiceImpl();
 
 	@Autowired
 	public CourseController(TransportationService transportationService, MemberService memberService,
@@ -493,6 +495,11 @@ public class CourseController {
 				// ส่ง email ไปให้ผู้สอน
 				if (null != teacher.getEmail()) {
 					emailService.sendEmail(teacher.getEmail(), subject, text);
+				}
+
+				// ส่ง sms ให้ผู้สอน
+				if (null != teacher.getTel()) {
+					smsService.sendSms("", teacher.getTel(), text);
 				}
 			}
 
