@@ -1,0 +1,11 @@
+<p-dialog header="เหตุผลการไม่อนุมัติ" [(visible)]="display" [style]="{ width: '300px' }" [modal]="true"
+  (onHide)="onClose()">
+  <textarea pInputTextarea [rows]="2" [cols]="30" placeholder="รายละเอียด" #rejectComment></textarea>
+  <p-footer>
+    <p-button label="ยกเลิก" styleClass="button-reject " (onClick)="onClose()">
+    </p-button>
+    &nbsp;
+    <p-button label="ยืนยัน" styleClass="button-success" (onClick)="onAccept(rejectComment)"></p-button>
+
+  </p-footer>
+</p-dialog>

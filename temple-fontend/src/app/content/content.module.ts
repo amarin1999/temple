@@ -48,6 +48,7 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { NotificationComponent } from './notification/notification.component';
 import { NotificationDetailComponent } from './notification/notification-detail/notification-detail.component';
 import { DialogOutTimeComponent } from './courses/course-register-out-time/dialog-out-time/dialog-out-time.component';
+import { RejectCommentComponent } from './notification/rejectComment/rejectComment.component';
 
 
 registerLocaleData(localeTh);
@@ -88,7 +89,8 @@ registerLocaleData(localeTh);
     DashboardComponent,
     NotificationComponent,
     NotificationDetailComponent,
-    DialogOutTimeComponent
+    DialogOutTimeComponent,
+    RejectCommentComponent
   ],
   imports: [CoreModule, SharedModule, ContentRoutingModule, RadioButtonModule, ThaiCalendarModule, TabMenuModule, Ng2ImgMaxModule],
   exports: [ContentComponent],

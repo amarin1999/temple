@@ -7,5 +7,6 @@ export interface Notifications {
     notificationTime: firebase.firestore.Timestamp;
     specialApproveID: number;
     specialApproveStatus: string;
+    reasonForMonk: string;
 }
 

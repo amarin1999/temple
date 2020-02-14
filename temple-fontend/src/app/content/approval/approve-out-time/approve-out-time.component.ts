@@ -17,6 +17,7 @@ export class ApproveOutTimeComponent implements OnInit {
   @Input() disbtn;
   @Input() detail;
   @Output() listData = new EventEmitter();
+  rejectDialog: boolean;
   public status;
   public check: boolean;
   public checked = true;
@@ -75,30 +76,45 @@ export class ApproveOutTimeComponent implements OnInit {
         member: [...detailSend],
         courseId: this.courseId
       };
+      console.log(detailSend);
+
 
       // อนุมัติพิเศษ
       // '1' = Approve '0' != ไม่Approve 
     } else if (this.option == '2') {
-      console.log(this.detail);
-      const { specialApproveId, courseId } = this.detail;
-      detailSend = { spaId: [specialApproveId], courseId, status };
-      console.log(detailSend);
-
-      // detailSend = [...this.detail[this.fieldId]];
-      // detailSend = {
-      //   member: [
-      //     ...detailSend
-      //   ],
-      //   courseId: this.courseId,
-      // status: this.status.status
-      //     status: status
-      //   };
-
+      if (status == 0) {
+        this.rejectDialog = true;
+      } else if (status == 1) {
+        console.log(this.detail);
+        const { specialApproveId, courseId } = this.detail;
+        detailSend = { spaId: [specialApproveId], courseId, status };
+        console.log(detailSend);
+        if (detailSend) {
+          this.listData.emit(detailSend);
+        }
+      }
     }
+
+  }
+
+  onDialogClose(event) {
+    this.rejectDialog = event;
+  }
+
+  sendDataReject(e: string) {
+    console.log(e);
+
+    let detailSend;
+    console.log(this.detail);
+    const { specialApproveId, courseId } = this.detail;
+    detailSend = { spaId: [specialApproveId], courseId, status: 0, rejectComment: e };
+    console.log(detailSend);
+
     if (detailSend) {
+      console.log(detailSend);
+      
       this.listData.emit(detailSend);
 
     }
-
   }
 }
