@@ -207,7 +207,8 @@ public class SpecialApproveController {
 			}
 			if (listDto.isEmpty()) {
 				throw new Exception("ไม่สามารถทำรายการได้");
-			}res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			}
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(listDto);
 			res.setCode(200);
 
@@ -217,12 +218,21 @@ public class SpecialApproveController {
 
 				// เพิ่ม notification ให้ user
 				notificationsService.createUserNotifications(saDto.getMemberId(), saId, saDto.getCourseId(),
-						saDto.getStatus(), cDto.getName());
+						saDto.getStatus(), cDto.getName(), body.getRejectComment());
 
 				String subject = "รายงานการสมัครคอร์ส";
-				String text = "คอร์ส " + courseDto.getName() + " ได้รับการอนุมัติแล้ว";
+				String text = "คอร์ส " + courseDto.getName();
 
 				MemberDto user = memberService.getMember(saDto.getMemberId());
+
+				if (body.getStatus().equals("1")) {
+					text += " ได้รับการอนุมัติแล้ว";
+				} else if (body.getStatus().equals("0")) {
+					text += " ได้รับการไม่ผ่านการอนุมัติ";
+					if (!body.getRejectComment().isEmpty()) {
+						text += " เนื่องจาก " + body.getRejectComment();
+					}
+				}
 
 				// ส่ง email ไปให้ user
 				if (null != user.getEmail()) {
