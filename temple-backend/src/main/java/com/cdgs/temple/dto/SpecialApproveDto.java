@@ -6,13 +6,12 @@ import java.time.LocalDateTime;
 import java.sql.Date;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@Data
 public class SpecialApproveDto implements Serializable {
 
 	private static final long serialVersionUID = -6856109137261338018L;
