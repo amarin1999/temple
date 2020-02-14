@@ -101,5 +101,4 @@ public class HistoryDharmaController {
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
-
 }

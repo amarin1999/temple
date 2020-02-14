@@ -8,9 +8,6 @@ import java.util.List;
 
 import lombok.*;
 
-@Getter
-@Setter
-@ToString
 @Data
 public class SpecialApproveDto implements Serializable {
 

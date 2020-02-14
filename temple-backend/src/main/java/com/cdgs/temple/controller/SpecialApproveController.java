@@ -9,9 +9,11 @@ import com.cdgs.temple.service.CourseService;
 import com.cdgs.temple.service.EmailService;
 import com.cdgs.temple.service.MemberService;
 import com.cdgs.temple.service.NotificationsService;
+import com.cdgs.temple.service.SmsService;
 import com.cdgs.temple.service.SpecialApproveService;
 import com.cdgs.temple.service.impl.EmailServiceImpl;
 import com.cdgs.temple.service.impl.NotificationsServiceImpl;
+import com.cdgs.temple.service.impl.SmsServiceImpl;
 import com.cdgs.temple.util.ResponseDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +41,7 @@ public class SpecialApproveController {
 	private CourseScheduleService courseScheduleService;
 	private NotificationsService notificationsService = new NotificationsServiceImpl();
 	private EmailService emailService = new EmailServiceImpl();
+	private SmsService smsService = new SmsServiceImpl();
 
 	@Autowired
 	public SpecialApproveController(SpecialApproveService specialApproveService, MemberService memberService,
@@ -155,6 +158,11 @@ public class SpecialApproveController {
 				if (null != teacher.getEmail()) {
 					emailService.sendEmail(teacher.getEmail(), subject, text);
 				}
+
+				// ส่ง sms ให้ผู้สอน
+				if (null != teacher.getTel()) {
+					smsService.sendSms("", teacher.getTel(), text);
+				}
 			}
 
 			return new ResponseEntity<>(res, HttpStatus.OK);
@@ -237,6 +245,11 @@ public class SpecialApproveController {
 				// ส่ง email ไปให้ user
 				if (null != user.getEmail()) {
 					emailService.sendEmail(user.getEmail(), subject, text);
+				}
+
+				// ส่ง sms ให้ผู้สอน
+				if (null != user.getTel()) {
+					smsService.sendSms("", user.getTel(), text);
 				}
 			}
 
