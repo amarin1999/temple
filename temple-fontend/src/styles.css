@@ -142,7 +142,7 @@ p-panel,
   word-wrap: break-word;
 }
 .animation-page{
-    animation: fadeFromTop 0.8s;
+    animation: fadeFromTop 0.5s;
 }
 
 @keyframes fadeFromTop {

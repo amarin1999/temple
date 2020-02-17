@@ -30,6 +30,12 @@
     width: 2em;
     vertical-align: middle;
 }
+.user-img{
+  width: 2em;
+  vertical-align: middle;
+  border-radius: 50px;
+}
+
 
 .top-menu {
     line-height: 80px;

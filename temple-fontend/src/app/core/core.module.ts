@@ -4,6 +4,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { TopbarComponent } from './topbar/topbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarService } from './service/sidebar.service';
+import { ManageUserService } from '../shared/service/manage-user.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { SidebarService } from './service/sidebar.service';
   imports: [
     SharedModule
   ],
-  providers: [SidebarService],
+  providers: [SidebarService, ManageUserService],
   exports: [
     SidebarComponent,
     TopbarComponent,
