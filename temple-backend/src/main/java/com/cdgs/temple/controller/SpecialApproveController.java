@@ -161,7 +161,7 @@ public class SpecialApproveController {
 
 				// ส่ง sms ให้ผู้สอน
 				if (null != teacher.getTel()) {
-					smsService.sendSms("", teacher.getTel(), text);
+					smsService.sendSms(teacher.getTel(), text);
 				}
 			}
 
@@ -249,7 +249,7 @@ public class SpecialApproveController {
 
 				// ส่ง sms ให้ผู้สอน
 				if (null != user.getTel()) {
-					smsService.sendSms("", user.getTel(), text);
+					smsService.sendSms(user.getTel(), text);
 				}
 			}
 

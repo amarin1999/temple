@@ -451,6 +451,7 @@ public class CourseController {
 	}
 
 	@PostMapping(value = "/outTime")
+	@PreAuthorize("hasRole('user')")
 	public ResponseEntity<ResponseDto<CourseDto>> assignCoursesOutTime(@Valid @RequestBody SpecialApproveDto body) {
 		ResponseDto<CourseDto> res = new ResponseDto<>();
 		CourseDto courseDto = new CourseDto();
@@ -499,7 +500,7 @@ public class CourseController {
 
 				// ส่ง sms ให้ผู้สอน
 				if (null != teacher.getTel()) {
-					smsService.sendSms("", teacher.getTel(), text);
+					smsService.sendSms(teacher.getTel(), text);
 				}
 			}
 
