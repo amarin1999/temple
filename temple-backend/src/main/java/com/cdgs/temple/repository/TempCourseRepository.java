@@ -18,7 +18,8 @@ public interface TempCourseRepository extends CrudRepository<TempCourseEntity, L
 			+ " SELECT MAX(create_date) FROM special_approve sa WHERE sa.member_id=:memberId AND sa.course_id=c.course_id GROUP BY sa.course_id)) AS sa_status,("
 			+ " SELECT MAX(cs.course_schedule_date) FROM courses_schedule cs WHERE cs.course_id=c.course_id GROUP BY cs.course_id) AS end_date,("
 			+ " SELECT MIN(cs.course_schedule_date) FROM courses_schedule cs WHERE cs.course_id=c.course_id GROUP BY cs.course_id) AS st_date FROM courses c WHERE c.course_enable=TRUE) AS t1 "
-			+ " GROUP BY t1.course_id " + "ORDER BY t1.mhc_status,t1.course_st_date ", nativeQuery = true)
+			+ " WHERE t1.course_no = '0' " + "GROUP BY t1.course_id "
+			+ "ORDER BY t1.mhc_status,t1.course_st_date ", nativeQuery = true)
 	List<TempCourseEntity> findCoursesUserRegister(@Param("memberId") Long memberId);
 
 	@Query(value = "SELECT t1.*,(CASE WHEN t1.mhc_status='1' THEN 'สำเร็จการศึกษา' WHEN t1.mhc_status='2' THEN 'กำลังศึกษา' "

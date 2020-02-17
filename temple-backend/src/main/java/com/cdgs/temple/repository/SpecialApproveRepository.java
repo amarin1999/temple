@@ -16,6 +16,10 @@ public interface SpecialApproveRepository extends CrudRepository<SpecialApproveE
 
 	SpecialApproveEntity findBySpecialApproveId(Long saId);
 
+	@Query(value = "SELECT spa.* FROM special_approve spa " + "WHERE spa.course_id = :courseId "
+			+ "ORDER BY spa.special_approve_id DESC LIMIT 1 ", nativeQuery = true)
+	SpecialApproveEntity getByCourseId(@Param("courseId") Long courseId);
+
 	@Query(value = "SELECT sa.* FROM special_approve sa LEFT JOIN courses_teacher ct ON sa.course_id=ct.course_id "
 			+ "WHERE sa.course_id = :courseId " + "AND sa.member_id = :memberId "
 			+ "AND sa.spa_status = :status", nativeQuery = true)
