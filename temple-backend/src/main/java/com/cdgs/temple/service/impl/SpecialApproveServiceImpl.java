@@ -205,4 +205,10 @@ public class SpecialApproveServiceImpl implements SpecialApproveService {
 		return entity;
 	}
 
+	@Override
+	public SpecialApproveDto getByCourseId(Long courseId) {
+		SpecialApproveEntity spaEntity = specialApproveRepository.getByCourseId(courseId);
+		return mapEntityToDto(spaEntity);
+	}
+
 }

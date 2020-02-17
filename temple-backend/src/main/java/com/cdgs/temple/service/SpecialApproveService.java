@@ -14,6 +14,8 @@ public interface SpecialApproveService {
 	SpecialApproveDto delete(Long courseId, Long memberId);
 
 	SpecialApproveDto update(SpecialApproveDto body, Long id);
+	
+	SpecialApproveDto getByCourseId(Long courseId);
 
 	boolean approve(SpecialApproveDto data);
 
