@@ -52,9 +52,9 @@
                       ariaLabelAsc="Activate to sort in ascending order">
                     </p-sortIcon>
                   </th>
-                  <th pSortableColumn="locationName" class="ui-p-5">
+                  <th pSortableColumn="location" class="ui-p-5">
                     สถานที่
-                    <p-sortIcon field="locationName" ariaLabel="Activate to sort"
+                    <p-sortIcon field="location" ariaLabel="Activate to sort"
                       ariaLabelDesc="Activate to sort in descending order"
                       ariaLabelAsc="Activate to sort in ascending order">
                     </p-sortIcon>
@@ -169,9 +169,9 @@
               </ng-template>
               <ng-template pTemplate="header" let-columns>
                 <tr>
-                  <th pSortableColumn="stDate">
+                  <th [pSortableColumn]="columns.date">
                     วันที่
-                    <p-sortIcon field="stDate"></p-sortIcon>
+                    <p-sortIcon [field]="columns.date"></p-sortIcon>
                   </th>
                   <th pSortableColumn="name" class="ui-p-4">
                     ชื่อคอร์ส
