@@ -10,8 +10,8 @@
       <p-tabView>
         <!-- แจ้งเตือนของ พระ -->
         <p-tabPanel header="แจ้งเตือนการสมัครคอร์ส" *ngIf="showRole('monk')" [selected]="true">
-          <p-table #tb1  [value]="notices|async" [paginator]="true" [rows]="5" [responsive]="true"
-          [globalFilterFields]="['notificationTime','detail' ]">
+          <p-table #tb1 [value]="notices|async" [paginator]="true" [rows]="5" [responsive]="true"
+            [globalFilterFields]="['notificationTime','detail' ]">
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
             <ng-template pTemplate="caption">
               <div class="ui-g ui-fluid">
@@ -65,8 +65,8 @@
         </p-tabPanel>
         <!-- แจ้งเตือนของ user -->
         <p-tabPanel header="แจ้งเตือนคอร์สที่สมัคร" *ngIf="showRole('user')" [selected]="true">
-          <p-table #tb2  [value]="notices|async" [paginator]="true" [rows]="5" [responsive]="true"
-          [globalFilterFields]="['notificationTime','detail' ]">
+          <p-table #tb2 [value]="notices|async" [paginator]="true" [rows]="5" [responsive]="true"
+            [globalFilterFields]="['notificationTime','detail' ]">
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
             <ng-template pTemplate="caption">
               <div class="ui-g ui-fluid">
@@ -96,6 +96,9 @@
                   </p-sortIcon>
                 </th>
                 <th>
+                  เหตุผล
+                </th>
+                <th>
 
                 </th>
               </tr>
@@ -106,10 +109,20 @@
                   {{rowData?.notificationTime.toDate()|formatTHdate}}
                 </td>
                 <td>
-                  <span> คอร์ส {{rowData?.detail}} ที่สมัครไว้ <b style="color: #28a745;">ผ่านการอนุมัติ</b> </span>
+                  <span> คอร์ส {{rowData?.detail}} ที่สมัครไว้
+                  <ng-container *ngIf="'rowData.rejectComment === null' ; else courseFail">
+                     <b style="color: #28a745;">ผ่านการอนุมัติ</b>
+                  </ng-container>
+                  <ng-template #courseFail>
+                      <b style="color: crimson;">ไม่ผ่านการอนุมัติ</b>
+                  </ng-template>
+                  </span>
                 </td>
                 <td style="text-align: center">
-                  <button pButton type="button" label="ดูรายละเอียดคอร์ส" (click)="getCourseDetail(rowData)"></button>
+                 <span>{{(rowData.rejectComment)? rowData.rejectComment : '-' }}</span>
+                </td>
+                <td style="text-align: center">
+                    <button pButton type="button" label="ดูรายละเอียดคอร์ส" (click)="getCourseDetail(rowData)"></button>
                 </td>
               </tr>
             </ng-template>
@@ -118,9 +131,9 @@
         <!-- แจ้งเตือนของ user -->
 
         <p-tabPanel header="คอร์สใหม่ล่าสุด" *ngIf="showRole('user')">
-          <p-table  #tb3  [value]="dataNewCourse" [paginator]="true" [rows]="5" [responsive]="true"
-          [globalFilterFields]="['stDate','endDate','name','locationName','conditionMin']">
-          <!-- globalFilterFields ตรวขสอบช่องค้นหา-->
+          <p-table #tb3 [value]="dataNewCourse" [paginator]="true" [rows]="5" [responsive]="true"
+            [globalFilterFields]="['stDate','endDate','name','locationName','conditionMin']">
+            <!-- globalFilterFields ตรวขสอบช่องค้นหา-->
             <!-- [lazy]="true" (onLazyLoad)="loadDataCanRegis($event)" [totalRecords]="totalRecords" [loading]="loading"> -->
             <ng-template pTemplate="caption">
               <div class="ui-g ui-fluid">
@@ -128,7 +141,7 @@
                   <div class="ui-inputgroup">
                     <fa-icon [icon]="['fas', 'search']" class="ui-inputgroup-addon"></fa-icon>
                     <input type="text" pInputText placeholder="ค้นหา"
-                    (input)="tb3.filterGlobal($event.target.value, 'contains')">
+                      (input)="tb3.filterGlobal($event.target.value, 'contains')">
                   </div>
                 </div>
               </div>
@@ -159,12 +172,12 @@
                 <th pSortableColumn="conditionMin" class="ui-p-4">
                   หมายเหตุ
                   <p-sortIcon field="conditionMin" ariaLabel="Activate to sort"
-                  ariaLabelDesc="Activate to sort in descending order"
-                  ariaLabelAsc="Activate to sort in ascending order">
-              </p-sortIcon>
+                    ariaLabelDesc="Activate to sort in descending order"
+                    ariaLabelAsc="Activate to sort in ascending order">
+                  </p-sortIcon>
                 </th>
                 <th>
-                  
+
                 </th>
               </tr>
             </ng-template>
@@ -182,10 +195,10 @@
                 </td>
                 <td class="text-center">
                   {{(rowData?.conditionMin>=0)? 'ต้องผ่านอย่างน้อย '+ rowData.conditionMin + ' คอร์ส': 'ไม่มีข้อมูล'}}
-                 <!-- ต้องผ่านอย่างน้อย {{rowData?.conditionMin}} คอร์ส -->
+                  <!-- ต้องผ่านอย่างน้อย {{rowData?.conditionMin}} คอร์ส -->
                 </td>
                 <td class="text-center">
-                    <button pButton type="button" label="ดูรายละเอียด" (click)="getNewCourseDetail(rowData)"></button>
+                  <button pButton type="button" label="ดูรายละเอียด" (click)="getNewCourseDetail(rowData)"></button>
                 </td>
               </tr>
             </ng-template>
