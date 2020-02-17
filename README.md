@@ -27,6 +27,7 @@ Intern Department ADD-CDGs Team.
 -  Java
 -  Spring Tool (from Market ecilpse Spring tool 4)
 -  Connect Database port 3306 (Default) [Password&&Username: root] 
+-  Lombok (extention for eclipse)
 -  ...
 
 ## Install Develop
