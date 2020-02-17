@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-            <div class="line" *ngIf="courseType === 'InTime'" ></div>
+            <div class="line" *ngIf="courseType === 'InTime'"></div>
         </div>
         <ng-container *ngIf="courseType === 'InTime'">
             <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
@@ -19,7 +19,6 @@
             <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
                 <app-approve-out-time [cols]="cols" [detail]="courseOutTime" [option]='option'
                     (listData)="showDialogOutTime($event)" [fieldId]='fieldId'>
-                    <!-- [cols]="cols" [member]="member" [option]='option' (listData)="showDialog($event)" [fieldId]='fieldId' -->
                 </app-approve-out-time>
             </div>
         </ng-container>

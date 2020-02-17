@@ -6,7 +6,6 @@
     </div>
     <div class="line"></div>
     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-      <!-- {{notices|async | json}} -->
       <p-tabView>
         <!-- แจ้งเตือนของ พระ -->
         <p-tabPanel header="แจ้งเตือนการสมัครคอร์ส" *ngIf="showRole('monk')" [selected]="true">
@@ -95,6 +94,13 @@
                     ariaLabelAsc="Activate to sort in ascending order">
                   </p-sortIcon>
                 </th>
+                <th pSortableColumn="rejectComment" class="ui-p-4">
+                  สถานะของการอนุมัติ
+                  <p-sortIcon field="rejectComment" ariaLabel="Activate to sort"
+                  ariaLabelDesc="Activate to sort in descending order"
+                  ariaLabelAsc="Activate to sort in ascending order">
+                </p-sortIcon>
+                </th>
                 <th>
                   เหตุผล
                 </th>
@@ -104,25 +110,28 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
-              <tr *ngIf="rowData.specialApproveStatus != 0 ">
+              <tr>
                 <td style="text-align: center">
                   {{rowData?.notificationTime.toDate()|formatTHdate}}
                 </td>
                 <td>
-                  <span> คอร์ส {{rowData?.detail}} ที่สมัครไว้
-                  <ng-container *ngIf="'rowData.rejectComment === null' ; else courseFail">
-                     <b style="color: #28a745;">ผ่านการอนุมัติ</b>
-                  </ng-container>
-                  <ng-template #courseFail>
+                  <span> คอร์ส {{rowData?.detail}} </span>
+                </td>
+                <td style="text-align: center">
+                  <span>
+                    <ng-container *ngIf="rowData.rejectComment === null ; else courseFail">
+                      <b style="color: #28a745;">ผ่านการอนุมัติ</b>
+                    </ng-container>
+                    <ng-template #courseFail>
                       <b style="color: crimson;">ไม่ผ่านการอนุมัติ</b>
-                  </ng-template>
+                    </ng-template>
                   </span>
                 </td>
                 <td style="text-align: center">
-                 <span>{{(rowData.rejectComment)? rowData.rejectComment : '-' }}</span>
+                  <span>{{(rowData.rejectComment)? rowData.rejectComment : '-' }}</span>
                 </td>
                 <td style="text-align: center">
-                    <button pButton type="button" label="ดูรายละเอียดคอร์ส" (click)="getCourseDetail(rowData)"></button>
+                  <button pButton type="button" label="ดูรายละเอียดคอร์ส" (click)="getCourseDetail(rowData)"></button>
                 </td>
               </tr>
             </ng-template>

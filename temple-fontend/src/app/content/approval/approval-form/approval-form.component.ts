@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApprovalService } from '../approval.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { finalize } from 'rxjs/internal/operators/finalize';
 
 @Component({
   selector: 'app-approval-form',
@@ -140,6 +141,7 @@ export class ApprovalFormComponent implements OnInit {
       accept: () => {
         this.spinner.show();
         this.approvalService.approveStudents(e)
+          .pipe(finalize(() => this.spinner.hide()))
           .subscribe((res) => {
             if (res['status'] === 'Success') {
               this.spinner.hide();
