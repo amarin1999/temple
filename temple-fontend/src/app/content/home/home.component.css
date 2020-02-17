@@ -17,6 +17,8 @@
 .menu-card:hover {
     background: #b8860b;
     border-color: #b8860b;
+    transform:scale(1.05,1.05);
+    transition: 0.3s;  
 }
 
 .img-menu {
