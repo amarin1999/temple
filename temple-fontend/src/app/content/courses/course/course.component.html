@@ -1,5 +1,6 @@
 <ngx-spinner></ngx-spinner>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
+{{course | json}}
 <div class="ui-g">
     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 ">
         <div class="container" *ngIf="showButtonBack('user')">
@@ -49,9 +50,15 @@
                         <label><b>สถานะ</b></label></div>
                     <div class="ui-g-12 ui-lg-10 ui-md-10 ui-sm-12 ">
                         <ng-container *ngIf="course.saStatus === '0' ; else courseSatatus">
-                            <span> คอร์สถูกปฎิเสธ </span></ng-container>
+                            <span><b style="color: crimson">ไม่ถูกอนุมัติ</b></span></ng-container>
                         <ng-template #courseSatatus>
-                                {{(course?.status) ? course.status : '-'}}
+                            <ng-container *ngIf="course.mhcStatus === '2'">
+                                    <b style="color: #007ad9">{{course.status}}</b>
+                            </ng-container>
+                            <ng-container *ngIf="course.mhcStatus === '1'">
+                                    <b style="color: #28a745">{{course.status}}</b>
+                            </ng-container>
+                                
                         </ng-template>
                     </div>
                     <div class="ui-g-12 ui-lg-12 ui-md-12 " style="margin: 0 auto;">
