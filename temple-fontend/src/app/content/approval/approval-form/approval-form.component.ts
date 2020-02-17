@@ -24,6 +24,7 @@ export class ApprovalFormComponent implements OnInit {
   public courseId: string;
   public nameCourse: string;
   public btnrej: boolean;
+  CloseReject: boolean;
   public courseType: string;
   constructor(
     private breadCrumbService: BreadcrumbService,
@@ -108,14 +109,15 @@ export class ApprovalFormComponent implements OnInit {
       message: message + 'ต้องการอนุมัติพิเศษ',
       header: 'การอนุมัติพิเศษ',
       accept: () => {
+        this.CloseReject = false;
         this.spinner.show();
         this.approvalService.approveStudents(e)
-          .subscribe((res) => {
-            // console.log(res);
-            if (res['status'] === 'Success') {
-              this.initMember();
-              this.spinner.hide();
-              this.messageServise.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการ' + message + 'อนุมัติพิเศษสำเร็จ' });
+        .subscribe((res) => {
+          // console.log(res);
+          if (res['status'] === 'Success') {
+            this.initMember();
+            this.spinner.hide();
+            this.messageServise.add({ severity: 'success', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการ' + message + 'อนุมัติพิเศษสำเร็จ' });
             } else {
               this.btnrej = false;
               this.spinner.hide();
@@ -132,6 +134,7 @@ export class ApprovalFormComponent implements OnInit {
   }
   showDialogOutTime(e) {
     console.log(e);
+    this.CloseReject = false;
     this.spinner.show();
     this.btnrej = true;
     const message = e.status == '1' ? '' : 'ไม่';
@@ -139,6 +142,7 @@ export class ApprovalFormComponent implements OnInit {
       message: message + 'ต้องการอนุมัตินอกเวลา',
       header: 'การอนุมัตินอกเวลา',
       accept: () => {
+        this.CloseReject = false;
         this.spinner.show();
         this.approvalService.approveStudents(e)
           .pipe(finalize(() => this.spinner.hide()))

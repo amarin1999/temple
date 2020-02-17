@@ -21,7 +21,7 @@ export class ListAllowComponent implements OnInit {
   public check: boolean;
   public checked = true;
   public courseId: string;
-  rejectDialog: boolean;
+  @Input() rejectDialog: boolean;
   public menusSelect = [
     {
       status: '1',

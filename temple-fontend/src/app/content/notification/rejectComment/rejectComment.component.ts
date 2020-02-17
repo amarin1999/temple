@@ -20,7 +20,7 @@ export class RejectCommentComponent implements OnInit {
   }
   onAccept(e: HTMLInputElement) {
     console.log(e.value);
-    this.CloseDialog.emit(false);
+    // this.CloseDialog.emit(false);
     this.rejectComment.emit(e.value);
 
   }
