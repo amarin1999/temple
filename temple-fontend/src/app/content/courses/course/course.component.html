@@ -57,7 +57,10 @@
                             <ng-container *ngIf="course.mhcStatus === '1'">
                                     <b style="color: #28a745">{{course.status}}</b>
                             </ng-container>
-                                
+                            <ng-container *ngIf="course.mhcStatus === null">
+                                    {{(course.status)? course.status: '-'}}
+                            </ng-container>
+                            
                         </ng-template>
                     </div>
                     <div class="ui-g-12 ui-lg-12 ui-md-12 " style="margin: 0 auto;">
