@@ -169,9 +169,9 @@
               </ng-template>
               <ng-template pTemplate="header" let-columns>
                 <tr>
-                  <th [pSortableColumn]="columns.date">
+                  <th pSortableColumn="stDate">
                     วันที่
-                    <p-sortIcon [field]="columns.date"></p-sortIcon>
+                    <p-sortIcon field="stDate"></p-sortIcon>
                   </th>
                   <th pSortableColumn="name" class="ui-p-4">
                     ชื่อคอร์ส
