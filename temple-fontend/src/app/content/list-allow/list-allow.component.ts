@@ -21,6 +21,7 @@ export class ListAllowComponent implements OnInit {
   public check: boolean;
   public checked = true;
   public courseId: string;
+  rejectDialog: boolean;
   public menusSelect = [
     {
       status: '1',
@@ -113,17 +114,48 @@ export class ListAllowComponent implements OnInit {
       // อนุมัติพิเศษ
       // '1' = Approve '0' != ไม่Approve 
     } else if (this.option == '2') {
-      memberSent = this.member.filter((member) => member.checked === true).map(member => member[this.fieldId]);
-      memberSent = {
-        member: [
-          ...memberSent
-        ],
-        courseId: this.courseId,
-        // status: this.status.status
-        status: status
-      };
-      this.disbtn = true;
+      console.log(status);
+
+      if (status == 0) {
+        this.rejectDialog = true;
+      } else {
+        memberSent = this.member.filter((member) => member.checked === true).map(member => member[this.fieldId]);
+        memberSent = {
+          member: [
+            ...memberSent
+          ],
+          courseId: this.courseId,
+          // status: this.status.status
+          status: status
+        };
+        this.disbtn = true;
+        if (this.member.length !== 0) {
+          this.listData.emit(memberSent);
+        }
+      }
+
     }
+  }
+
+  onDialogClose(event) {
+    this.rejectDialog = event;
+  }
+
+  sendDataReject(e: string) {
+    let memberSent;
+    console.log(e);
+
+    memberSent = this.member.filter((member) => member.checked === true).map(member => member[this.fieldId]);
+    memberSent = {
+      member: [
+        ...memberSent
+      ],
+      courseId: this.courseId,
+      // status: this.status.status
+      status: 0,
+      rejectComment: e
+    };
+    this.disbtn = true;
     if (this.member.length !== 0) {
       this.listData.emit(memberSent);
     }
