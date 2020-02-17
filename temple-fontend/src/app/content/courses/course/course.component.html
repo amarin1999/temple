@@ -22,8 +22,9 @@
                     <div class="ui-g-12 ui-lg- ui-md-2 ui-sm-12">
                         <label><b>ผู้สอน</b></label></div>
                     <div class="ui-g-12 ui-lg-10 ui-md-10 ui-sm-12">
-                        <span *ngFor="let teach of course?.teacherList let last = last"> {{teach.titleName}} {{teach.fname}}
-                        {{teach.lname}} {{!last?' , ' :''}}</span>
+                        <span *ngFor="let teach of course?.teacherList let last = last"> {{teach.titleName}}
+                            {{teach.fname}}
+                            {{teach.lname}} {{!last?' , ' :''}}</span>
                     </div>
                     <div class="ui-g-12 ui-lg-2 ui-md-2 ui-sm-12">
                         <label><b>สถานที่</b></label></div>
@@ -47,11 +48,25 @@
                     <div class="ui-g-12 ui-lg-2 ui-md-2 ui-sm-12">
                         <label><b>สถานะ</b></label></div>
                     <div class="ui-g-12 ui-lg-10 ui-md-10 ui-sm-12 ">
-                        {{(course?.status) ? course.status : '-'}}</div>
+                        <ng-container *ngIf="course.saStatus === '0' ; else courseSatatus">
+                            <span><b style="color: crimson">ไม่ถูกอนุมัติ</b></span></ng-container>
+                        <ng-template #courseSatatus>
+                            <ng-container *ngIf="course.mhcStatus === '2'">
+                                    <b style="color: #007ad9">{{course.status}}</b>
+                            </ng-container>
+                            <ng-container *ngIf="course.mhcStatus === '1'">
+                                    <b style="color: #28a745">{{course.status}}</b>
+                            </ng-container>
+                            <ng-container *ngIf="course.mhcStatus === null">
+                                    {{(course.status)? course.status: '-'}}
+                            </ng-container>
+                            
+                        </ng-template>
+                    </div>
                     <div class="ui-g-12 ui-lg-12 ui-md-12 " style="margin: 0 auto;">
                         <div class="ui-g">
                             <div class="ui-g-12 ui-lg-6 ui-md-6 btn-right"
-                                *ngIf="course?.saStatus !== '2' && course?.canRegister === 1 && course?.canRegister !== 0;else elseTemplate">
+                                *ngIf="course?.saStatus !== '2' && course?.canRegister === 1 && course?.canRegister !== 0 && course?.saStatus !== '0';else elseTemplate">
                                 <div *ngIf="total >= course?.conditionMin">
                                     <button pButton type="button" label="สมัคร"
                                         (click)="rgCourse(course['id'])"></button>
@@ -73,13 +88,13 @@
                             </div>
                             <div class="ui-g-12 ui-lg-6=7 ui-md-7 btn-right"
                                 *ngIf="course?.saStatus === '4' && course?.no !== 0">
-                                <button pButton type="button" label="ยกเลิกการขออนุมัตินอกเวลา" class="ui-button-warning"
-                                    (click)="cancelApprovalCourse(course['id'])">
+                                <button pButton type="button" label="ยกเลิกการขออนุมัตินอกเวลา"
+                                    class="ui-button-warning" (click)="cancelApprovalCourse(course['id'])">
                                 </button>
                             </div>
+
                             <div class="ui-g-12 ui-lg-5 ui-md-5 btn-left ">
-                                <button pButton type="button" label="กลับ" class="button-reject"
-                                    (click)="getBack()">
+                                <button pButton type="button" label="กลับ" class="button-reject" (click)="getBack()">
                                 </button>
                             </div>
 

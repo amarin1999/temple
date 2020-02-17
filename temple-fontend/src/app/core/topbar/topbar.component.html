@@ -3,9 +3,16 @@
         <a routerLink="/"><img src="./assets/images/logo.png" /></a>
     </div>
     <div class="title">
-        <span style ="color:whitesmoke;" >ระบบรับสมัครอบรมธรรมะ วัดป่าโสมพนัส</span>
+        <span style="color:whitesmoke;">ระบบรับสมัครอบรมธรรมะ วัดป่าโสมพนัส</span>
     </div>
     <div class="top-menu" (click)="logout()" *ngIf="isLoggedIn">
-        <span style ="color:whitesmoke;" ><img class="logout-menu" src="./assets/images/logout.png"> ออกจากระบบ</span>
+
+        <span style="color:whitesmoke;">
+            <img class="user-img" src="data:image/png;base64,{{userData.img}}" *ngIf="userData.img">
+            <img class="user-img" src="./assets/images/no-img.png" *ngIf="!userData.img">
+            {{userData.fname ? userData.fname : ''}} {{userData.lname ? userData.lname : ''}}
+           
+            <img class="logout-menu" src="./assets/images/logout.png"> ออกจากระบบ
+        </span>
     </div>
 </div>

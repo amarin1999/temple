@@ -5,6 +5,7 @@ import {AuthService} from 'src/app/shared/service/auth.service';
 import { PrePathService } from 'src/app/shared/service/pre-path.service';
 import { CourseService } from '../courses/shared/course.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ManageUserService } from 'src/app/shared/service/manage-user.service';
 
 @Component({
   selector: 'app-home',
@@ -23,13 +24,16 @@ export class HomeComponent implements OnInit {
     private authService: AuthService,
     private pathService: PrePathService,
     private courseService: CourseService,
-    public spinner: NgxSpinnerService
+    private manageUser: ManageUserService,
+    public spinner: NgxSpinnerService,
+    
   ) {
   }
 
   ngOnInit() {
     this.breadCrumbService.clearPath();
     this.userId = localStorage.getItem('userId');
+    this.manageUser.getUser(localStorage.getItem('userId')).subscribe(res => console.log(res))
     this.authService.getRole().subscribe(res => this.role = res);
     localStorage.setItem('preurl', JSON.stringify( this.pathService.setPreviousUrl()));
     this.getCountGraduatedCourse();
