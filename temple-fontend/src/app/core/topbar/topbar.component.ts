@@ -13,7 +13,7 @@ import { map, switchMap } from 'rxjs/operators';
 export class TopbarComponent implements OnInit {
     public isLoggedIn: boolean;
     public userData: Member;
-    
+
 
     constructor(
         private authService: AuthService,
@@ -24,13 +24,14 @@ export class TopbarComponent implements OnInit {
     ngOnInit() {
         this.authService.isLoggedIn().subscribe(res => {
             this.isLoggedIn = res;
-
+            if (this.isLoggedIn) {
+                this.manageUser.getUser(localStorage.getItem('userId')).subscribe()
+            }
         })
 
-        this.manageUser.getUserOnline().subscribe(response => {
-            this.userData = {...response};                        
+        this.manageUser.getUserOnline().subscribe(res => {
+            this.userData = { ...res };
         })
-
     }
 
 

@@ -33,7 +33,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.breadCrumbService.clearPath();
     this.userId = localStorage.getItem('userId');
-    this.manageUser.getUser(localStorage.getItem('userId')).subscribe()
     this.authService.getRole().subscribe(res => this.role = res);
     localStorage.setItem('preurl', JSON.stringify( this.pathService.setPreviousUrl()));
     this.getCountGraduatedCourse();
