@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiConstants } from '../constants/ApiConstants';
 import { AuthService } from './auth.service';
 import { HttpClientService } from './http-client.service';
+import { Member } from '../interfaces/member';
 
 @Injectable()
 export class ManageUserService {
+  private user = new BehaviorSubject<any>('');
 
   constructor(
     private http: HttpClient,
@@ -18,20 +21,22 @@ export class ManageUserService {
   createUser(dataUser) {
     return this.http.post(ApiConstants.baseURl + '/auth/register',
       dataUser, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access-token')}`
-        }
-      }).pipe(
-        map(res => {
-          return {
-            status: res['result'],
-            errorMessage: res['errorMessage']
-          };
-        }
-        )
-      );
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access-token')}`
+      }
+    }).pipe(
+      map(res => {
+        return {
+          status: res['result'],
+          errorMessage: res['errorMessage']
+        };
+      }
+      )
+    );
 
   }
+
+
 
   getUser(id) {
     return this.http.get(ApiConstants.baseURl + `/members/${id}`, {
@@ -40,6 +45,7 @@ export class ManageUserService {
       }
     }).pipe(
       map((res) => {
+        this.user.next(res['data'][0]);
         return {
           status: res['result'],
           data: res['data'][0]
@@ -47,6 +53,12 @@ export class ManageUserService {
       })
     );
   }
+
+
+  getUserOnline(): BehaviorSubject<any> {
+    return this.user;
+  };
+
 
   getAllUsersWithOutImg() {
     return this.http.get(ApiConstants.baseURl + '/members/getAllUsersWithOutImg', {

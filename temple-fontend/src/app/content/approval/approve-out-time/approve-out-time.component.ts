@@ -17,7 +17,7 @@ export class ApproveOutTimeComponent implements OnInit {
   @Input() disbtn;
   @Input() detail;
   @Output() listData = new EventEmitter();
-  rejectDialog: boolean;
+  @Input() rejectDialog: boolean;
   public status;
   public check: boolean;
   public checked = true;
@@ -112,7 +112,7 @@ export class ApproveOutTimeComponent implements OnInit {
 
     if (detailSend) {
       console.log(detailSend);
-      
+
       this.listData.emit(detailSend);
 
     }

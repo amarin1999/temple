@@ -1,6 +1,13 @@
-<p-dialog header="เหตุผลการไม่อนุมัติ" [(visible)]="display" [style]="{ width: '300px' }" [modal]="true"
-  (onHide)="onClose()">
-  <textarea pInputTextarea [rows]="2" [cols]="30" placeholder="รายละเอียด" #rejectComment></textarea>
+<p-dialog header="เหตุผลการไม่อนุมัติ" [(visible)]="display" [responsive]="true" showEffect="fade" [modal]="true"
+  [style]="{width: '700px'}" positionTop="100" [contentStyle]="{'max-height':'500px'}" (onHide)="onClose()">
+  <div class="ui-g">
+    <div class="ui-g-4">
+      <span>เหตุผลที่ไม่อนุมัติ</span>
+    </div>
+    <div class="ui-g-8">
+      <textarea pInputTextarea rows="5" cols="30" autoResize="autoResize" placeholder="รายละเอียด" #rejectComment
+        maxlength="255"></textarea></div>
+  </div>
   <p-footer>
     <p-button label="ยกเลิก" styleClass="button-reject " (onClick)="onClose()">
     </p-button>

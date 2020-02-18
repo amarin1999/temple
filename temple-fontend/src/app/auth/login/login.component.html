@@ -1,9 +1,10 @@
 <ngx-spinner></ngx-spinner>
+<div class="animation-page">
 <div class="ui-fluid">
   <div class="container">
     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
       <div class="row">
-        <div class="ui-g-12 ui-lg-5 ui-md-7 ui-sm-12 horizontal-center">
+        <div id="carder" class="ui-g-12 ui-lg-5 ui-md-7 ui-sm-12 horizontal-center">            
           <p-card>
             <p-header>เข้าสู่ระบบ</p-header>
             <!-- from send value -->
@@ -41,10 +42,11 @@
               </div>
               <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
                 <div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-6">
-                  <button pButton type="submit" label="เข้าสู่ระบบ"  class="ui-button-warning ui-button-raised"></button>
+                  <button pButton type="submit" label="เข้าสู่ระบบ" class="ui-button-warning ui-button-raised"></button>
                 </div>
                 <div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-6">
-                  <button pButton type="button" label="ลงทะเบียน" class="ui-button-secondary ui-button-raised" routerLink="/auth/register"></button>
+                  <button pButton type="button" label="ลงทะเบียน" class="ui-button-secondary ui-button-raised"
+                    routerLink="/auth/register"></button>
                 </div>
               </div>
             </form>
@@ -61,9 +63,11 @@
       </div>
       <div class="ui-g ui-fluid">
         <div class="ui-g-12">
-          <button type="button" autofocus  pButton (click)="onConfirm()" label="ปิด" class="ui-button-success ui-button-raised"></button>
+          <button type="button" autofocus pButton (click)="onConfirm()" label="ปิด"
+            class="ui-button-success ui-button-raised"></button>
         </div>
       </div>
     </ng-template>
   </p-toast>
+</div>
 </div>

@@ -1,20 +1,33 @@
 button {
-    margin-right: 5mm;
-    margin-top: 1mm;
+  margin-right: 5mm;
+  margin-top: 1mm;
 }
 
 label {
-    margin-bottom: 2mm;
+  margin-bottom: 2mm;
 }
 
-:host>>>.ui-card-header {
-    text-align: center;
-    font-size: 4em;
+:host >>> .ui-card-header {
+  text-align: center;
+  font-size: 4em;
 }
 
-:host>>>.ui-card-content {
-    display: flex;
+:host >>> .ui-card-content {
+  display: flex;
 }
-.text-danger{
-    color: rgb(238, 12, 12);
+.text-danger {
+  color: rgb(238, 12, 12);
+}
+
+/* #carder {
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  -moz-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+} */
+
+.login-header-text {
+  margin-top: 20px;
 }

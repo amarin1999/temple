@@ -133,6 +133,31 @@
 			<version>1.18.10</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.clicksend</groupId>
+			<artifactId>ClickSend</artifactId>
+			<version>3.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.clicksend</groupId>
+			<artifactId>clicksend-java-client</artifactId>
+			<version>1.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.30.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>nz.net.osnz.common</groupId>
+			<artifactId>sms-api</artifactId>
+			<version>1.1</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>

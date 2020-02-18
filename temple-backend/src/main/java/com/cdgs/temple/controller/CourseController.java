@@ -314,8 +314,7 @@ public class CourseController {
 						transportationDto = transportationService.getTransportationByCourseId(id);
 					} else {
 						SpecialApproveDto specialApproveDto;
-						specialApproveDto = specialApproveService.getByCourseIdAndMemberId(courseDto.getId(),
-								member.getId());
+						specialApproveDto = specialApproveService.getByCourseId(courseDto.getId());
 						transportationDto = transportationService
 								.getTransportationById(specialApproveDto.getTransportationId());
 					}

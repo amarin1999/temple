@@ -179,31 +179,31 @@ public class SpecialApproveController {
 	@PreAuthorize("hasRole('monk')")
 	public ResponseEntity<ResponseDto<SpecialApproveDto>> update(@Valid @RequestBody SpecialApproveDto body) {
 		ResponseDto<SpecialApproveDto> res = new ResponseDto<>();
-		SpecialApproveDto specialApprovesDto = new SpecialApproveDto();
+		SpecialApproveDto specialApprovesDto;
 		CourseDto courseDto = new CourseDto();
 		CourseScheduleDto courseSchedule = new CourseScheduleDto();
 		List<SpecialApproveDto> listDto = new ArrayList<>();
 		MemberDto member = memberService.getCurrentMember();
-		SpecialApproveDto bodydto = new SpecialApproveDto();
+
 		try {
-			bodydto.setStatus(body.getStatus());
 			for (long said : body.getSpaId()) {
-				System.out.println(said);
+				SpecialApproveDto bodydto = new SpecialApproveDto();
+				bodydto.setStatus(body.getStatus());
 				bodydto.setSpecialApproveId(said);
 				listDto.add(specialApproveService.update(bodydto, member.getId()));
 			}
-			if (body.getStatus().equals("1")) {
-				for (SpecialApproveDto dto : listDto) {
+			for (SpecialApproveDto dto : listDto) {
+				specialApprovesDto = specialApproveService.getByCourseId(dto.getCourseId());
+				courseDto = courseService.getCourse(specialApprovesDto.getCourseId());
+
+				if (body.getStatus().equals("1")) {
 					courseService.updateCourseToEnable(dto.getCourseId());
-					specialApprovesDto = specialApproveService.getByCourseIdAndMemberId(dto.getCourseId(),
-							dto.getMemberId());
 					/**
 					 * in Time = null ,out Time != null
 					 */
-					if (specialApprovesDto != null) {
-						courseDto = courseService.getCourse(specialApprovesDto.getCourseId());
+					// add course schedule
+					if (null != specialApprovesDto) {
 						courseSchedule.setCourseId(specialApprovesDto.getCourseId());
-
 						courseSchedule.setCourseScheduleDate(courseDto.getStDate());
 						courseScheduleService.createCourseSchedule(courseSchedule);
 						courseSchedule.setCourseScheduleDate(courseDto.getEndDate());

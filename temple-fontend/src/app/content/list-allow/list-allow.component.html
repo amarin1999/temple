@@ -1,9 +1,9 @@
-
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 <div class="ui-g-11 ui-lg-11 ui-md-10 ui-sm-9  text-right">
-    <p-button *ngIf="showWhenApproveForm()" label="ไม่อนุมัติ" styleClass="button-reject" (onClick)=sentData(0) [disabled]="disbtn"></p-button>
+    <p-button *ngIf="showWhenApproveForm()" label="ไม่อนุมัติ" styleClass="button-reject" (onClick)=sentData(0)
+        [disabled]="disbtn"></p-button>
 </div>
-<div class="ui-g-1 ui-lg-1 ui-md-2 ui-sm-3" >
+<div class="ui-g-1 ui-lg-1 ui-md-2 ui-sm-3">
     <p-button label="อนุมัติ" styleClass="button-success" (onClick)=sentData(1) [disabled]="disbtn"></p-button>
 </div>
 <ng-container *ngIf="option==2; else elseTemplate">
@@ -29,64 +29,73 @@
                         คำขออนุมัติพิเศษ
                     </th>
                     <th class="table-grid">
-                        <p-checkbox  value="true" inputId="la" (onChange)="selectAll()" [(ngModel)]="check" binary="true"></p-checkbox>
+                        <p-checkbox value="true" inputId="la" (onChange)="selectAll()" [(ngModel)]="check"
+                            binary="true"></p-checkbox>
                     </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr [pSelectableRow]="rowData" >
+                <tr [pSelectableRow]="rowData">
                     <td *ngFor="let col of columns;">
-                        <div *ngIf="rowData[col.field] == rowData['displayName'] && col.field == 'displayName'">{{rowData.displayName}}</div>
-                        <div *ngIf="rowData[col.field] == rowData['transportationName'] && col.field == 'transportationName'" style="text-align: center;">{{rowData.transportationName}}</div>
-                        <div *ngIf="rowData[col.field] == rowData['detail'] && col.field == 'detail'">{{rowData.detail}}</div>
+                        <div *ngIf="rowData[col.field] == rowData['displayName'] && col.field == 'displayName'">
+                            {{rowData.displayName}}</div>
+                        <div *ngIf="rowData[col.field] == rowData['transportationName'] && col.field == 'transportationName'"
+                            style="text-align: center;">{{rowData.transportationName}}</div>
+                        <div *ngIf="rowData[col.field] == rowData['detail'] && col.field == 'detail'">{{rowData.detail}}
+                        </div>
                         <div *ngIf="col.field == 'checked'" class="content-center">
                             <div class="ui-g-12">
-                                <p-checkbox *ngIf="showCheckbox()" [value]="rowData[col.field]" [(ngModel)]="rowData.checked" binary="true" (onChange)="onCheck()"></p-checkbox>
+                                <p-checkbox *ngIf="showCheckbox()" [value]="rowData[col.field]"
+                                    [(ngModel)]="rowData.checked" binary="true" (onChange)="onCheck()"></p-checkbox>
                             </div>
                         </div>
                     </td>
                 </tr>
             </ng-template>
-        </p-table>    
+        </p-table>
     </div>
 </ng-container>
 <ng-template #elseTemplate>
-        <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-            <p-table [columns]="cols" [value]="member" [paginator]="true" [rows]="5">
-                <ng-template pTemplate="header" let-columns>
-                    <tr>
-                        <th pSortableColumn="fullname">
-                            ชื่อ - นามสกุล
-                            <p-sortIcon field="fullname" ariaLabel="Activate to sort"
-                                ariaLabelDesc="Activate to sort in descending order"
-                                ariaLabelAsc="Activate to sort in ascending order">
-                            </p-sortIcon>
-                        </th>
-                        <th class="table-grid">
-                            <p-checkbox  value="true" inputId="la" (onChange)="selectAll()" [(ngModel)]="check" binary="true"></p-checkbox>
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-rowData let-columns="columns">
-                    <tr >
-                        <td *ngFor="let col of columns;">
-                            <div *ngIf="rowData[col.field] == rowData['fullname'] && col.field == 'fullname'">{{rowData.fullname}}</div>
-                            <div *ngIf="col.field == 'checked'" class="content-center">
-                                <div class="ui-g-12">
-                                    <p-checkbox *ngIf="showCheckbox()" [value]="rowData[col.field]" [(ngModel)]="rowData.checked" binary="true" (onChange)="onCheck()"></p-checkbox>
-                                </div>
+    <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
+        <p-table [columns]="cols" [value]="member" [paginator]="true" [rows]="5">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th pSortableColumn="fullname">
+                        ชื่อ - นามสกุล
+                        <p-sortIcon field="fullname" ariaLabel="Activate to sort"
+                            ariaLabelDesc="Activate to sort in descending order"
+                            ariaLabelAsc="Activate to sort in ascending order">
+                        </p-sortIcon>
+                    </th>
+                    <th class="table-grid">
+                        <p-checkbox value="true" inputId="la" (onChange)="selectAll()" [(ngModel)]="check"
+                            binary="true"></p-checkbox>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                    <td *ngFor="let col of columns;">
+                        <div *ngIf="rowData[col.field] == rowData['fullname'] && col.field == 'fullname'">
+                            {{rowData.fullname}}</div>
+                        <div *ngIf="col.field == 'checked'" class="content-center">
+                            <div class="ui-g-12">
+                                <p-checkbox *ngIf="showCheckbox()" [value]="rowData[col.field]"
+                                    [(ngModel)]="rowData.checked" binary="true" (onChange)="onCheck()"></p-checkbox>
                             </div>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
 </ng-template>
 
 
 
 <div class="ui-g-11 ui-lg-11 ui-md-10 ui-sm-9 text-right">
-    <p-button *ngIf="showWhenApproveForm()" label="ไม่อนุมัติ" styleClass="button-reject " (onClick)=sentData(0) [disabled]="disbtn"></p-button>
+    <p-button *ngIf="showWhenApproveForm()" label="ไม่อนุมัติ" styleClass="button-reject " (onClick)=sentData(0)
+        [disabled]="disbtn"></p-button>
 </div>
 <div class="ui-g-1 ui-lg-1 ui-md-2 ui-sm-3">
     <p-button label="อนุมัติ" styleClass="button-success" (onClick)=sentData(1) [disabled]="disbtn"></p-button>
@@ -101,8 +110,11 @@
         </div>
         <div class="ui-g ui-fluid">
             <div class="ui-g-12">
-                <button type="button" pButton [label]=messageback class="ui-button-success" [routerLink]=urlback></button>
+                <button type="button" pButton [label]=messageback class="ui-button-success"
+                    [routerLink]=urlback></button>
             </div>
         </div>
     </ng-template>
 </p-toast>
+<app-rejectComment [display]="rejectDialog" (CloseDialog)="onDialogClose($event)"
+    (rejectComment)="sendDataReject($event)"></app-rejectComment>

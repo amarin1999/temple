@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from '../../shared/service/auth.service';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {Router} from '@angular/router';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
-import {MessageService} from 'primeng/api';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../../shared/service/auth.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { MessageService } from 'primeng/api';
 import { ForgetPassService } from 'src/app/shared/service/forget-pass.service';
 
 
@@ -54,12 +54,12 @@ export class LoginComponent implements OnInit {
                 // access_token
                 if (res['result'] === 'Success') {
                     const accessToken = res['access_token'];
-                    localStorage.setItem('access-token', accessToken);
+                    localStorage.setItem('access-token', accessToken);                    
                     this.authService.isLoggedIn().next(true);
                     this.router.navigate(['/']);
                 }
             }).catch(err => {
-                if (err['error']['code'] == 401){
+                if (err['error']['code'] == 401) {
                     this.messageService.add({
                         key: 'alert',
                         sticky: true,
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
                         summary: 'ระบบขัดข้อง โปรดติดต่อผู้ดูแลระบบ'
                     });
                 }
-                this.form.setValue({'username': '','password': ''});
+                this.form.setValue({ 'username': '', 'password': '' });
             }).finally(() => this.spinner.hide());
         } else {
             this.onValueChange();
