@@ -8,19 +8,18 @@
           <a [routerLink]="[ '/notification']">
             <div>
               <span> <i class="pi pi-bell" style="color:#e91224;animation: shake 1s;"></i>
+                
                 <span class="boldAndBig"> คุณมี {{numberOfNotice}} การแจ้งเตือน ...( คลิกเพื่อดูเพิ่มเติม )</span>
               </span>
             </div>
           </a>
-          <!-- <button pButton type="button" label="ดูรายละเอียดการแจ้งเตือน" ></button> -->
+          
           &nbsp;
-          <!-- <button class="button-reject" pButton type="button" label="ปิดแจ้งเตือน" ></button> -->
+          
         </div>
-        <!-- <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
-    </div> -->
+       
         <div class="ui-g-4 ui-lg-4 ui-md-2 ui-sm-12" style="text-align: right;">
-          <!-- <button pButton type="button" label="ดูรายละเอียดการแจ้งเตือน" ></button>
-      &nbsp; -->
+         
           <button class="button-reject" pButton type="button" label="ปิดแจ้งเตือน" (click)="toggle()"></button>
         </div>
 
