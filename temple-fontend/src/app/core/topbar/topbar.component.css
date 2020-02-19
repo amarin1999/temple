@@ -43,7 +43,7 @@
 }
 
 .right-header-btn:hover span {
-  display: inline-block;
+ 
   transform: scale(1.03, 1.03);
   opacity: 0.8;
 }

@@ -144,13 +144,13 @@ p-panel,
   word-wrap: break-word;
 }
 .animation-page{
-    animation: fadeFromTop 0.5s;
+    animation: fadeFromTop 0.4s;
 }
 
 @keyframes fadeFromTop {
     0% {
       opacity: 0;
-      transform: translateY(-40px);
+      transform: translateY(-20px);
     }
     100% {
       opacity: 1;

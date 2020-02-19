@@ -5,9 +5,9 @@
     <div class="title">
         <span style="color:whitesmoke;">ระบบรับสมัครอบรมธรรมะ วัดป่าโสมพนัส</span>
     </div>
-    <span  class="top-menu" *ngIf="isLoggedIn && userData">
+    <div  class="top-menu" *ngIf="isLoggedIn && userData">
         <span style="color:whitesmoke;">
-            <span  [routerLink]="['/profile',userData?.id]" class="right-header-btn" >
+            <span  [routerLink]="['/profile',userData?.id]" class="right-header-btn" id="user-name">
                 <img class="user-img" src="data:image/png;base64,{{userData?.img}}" *ngIf="userData?.img">
                 <img class="user-img" src="./assets/images/no-img.png" *ngIf="!userData?.img">
                 &nbsp;
@@ -19,5 +19,5 @@
                 <span class="text-menu">ออกจากระบบ</span>
             </span>
         </span>
-    </span>
+    </div>
 </div>
