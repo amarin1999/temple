@@ -24,9 +24,7 @@ export class TopbarComponent implements OnInit {
     ngOnInit() {
         this.authService.isLoggedIn().subscribe(res => {
             this.isLoggedIn = res;
-            if (this.isLoggedIn) {
-                this.manageUser.getUser(localStorage.getItem('userId')).subscribe()
-            }
+            this.isLoggedIn ? this.manageUser.getUser(localStorage.getItem('userId')).subscribe() : undefined;           
         })
 
         this.manageUser.getUserOnline().subscribe(res => {

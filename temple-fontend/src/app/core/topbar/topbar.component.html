@@ -5,19 +5,19 @@
     <div class="title">
         <span style="color:whitesmoke;">ระบบรับสมัครอบรมธรรมะ วัดป่าโสมพนัส</span>
     </div>
-    <div class="top-menu" *ngIf="isLoggedIn && userData">
+    <span  class="top-menu" *ngIf="isLoggedIn && userData">
         <span style="color:whitesmoke;">
-            <span [routerLink]="['/profile',userData?.id]" class="right-header-btn" id="user-name">
+            <span  [routerLink]="['/profile',userData?.id]" class="right-header-btn" >
                 <img class="user-img" src="data:image/png;base64,{{userData?.img}}" *ngIf="userData?.img">
                 <img class="user-img" src="./assets/images/no-img.png" *ngIf="!userData?.img">
                 &nbsp;
                 <span class="text-menu">{{userData?.titleName}}{{userData?.fname}} {{userData?.lname}}</span>
-            </span>
+            </span >
 
             <span class="right-header-btn" (click)="logout()">
                 <img class=" logout-menu" src="./assets/images/logout.png" (click)="logout()">
                 <span class="text-menu">ออกจากระบบ</span>
             </span>
         </span>
-    </div>
+    </span>
 </div>
