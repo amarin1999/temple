@@ -48,7 +48,7 @@ public interface TempCourseRepository extends CrudRepository<TempCourseEntity, L
 			+ "SELECT sa2.spa_status FROM special_approve sa2 WHERE sa2.create_date=( "
 			+ "SELECT MAX(create_date) FROM special_approve sa WHERE sa.member_id='1' AND sa.course_id=c.course_id GROUP BY sa.course_id)) AS sa_status ,( "
 			+ "SELECT MAX(cs.course_schedule_date) FROM courses_schedule cs WHERE cs.course_id=c.course_id GROUP BY cs.course_id) AS end_date,("
-			+ "SELECT MIN(cs.course_schedule_date) FROM courses_schedule cs WHERE cs.course_id=c.course_id GROUP BY cs.course_id) AS st_date FROM courses c WHERE c.course_id = '78') AS t1 "
+			+ "SELECT MIN(cs.course_schedule_date) FROM courses_schedule cs WHERE cs.course_id=c.course_id GROUP BY cs.course_id) AS st_date FROM courses c WHERE c.course_id = ':courseId') AS t1 "
 			+ "LEFT JOIN transportations tran ON t1.course_id = tran.course_id "
 			+ "LEFT JOIN transportations_time tt ON tran.tran_time_id = tt.tran_time_id ", nativeQuery = true)
 	TempCourseEntity findCourseUserById(@Param("memberId") Long memberId, @Param("courseId") Long courseId);
