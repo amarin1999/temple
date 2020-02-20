@@ -111,6 +111,9 @@ export class ListAllowComponent implements OnInit {
         courseId: this.courseId
       };
       this.disbtn = true;
+      if (this.member.length !== 0) {
+        this.listData.emit(memberSent);
+      }
       // อนุมัติพิเศษ
       // '1' = Approve '0' != ไม่Approve 
     } else if (this.option == '2') {
@@ -130,10 +133,10 @@ export class ListAllowComponent implements OnInit {
         };
         this.disbtn = true;
 
+        if (this.member.length !== 0) {
+          this.listData.emit(memberSent);
+        }
       }
-    }
-    if (this.member.length !== 0) {
-      this.listData.emit(memberSent);
     }
   }
 
