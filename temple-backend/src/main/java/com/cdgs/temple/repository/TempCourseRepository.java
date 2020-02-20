@@ -22,8 +22,11 @@ public interface TempCourseRepository extends CrudRepository<TempCourseEntity, L
 			+ "ORDER BY t1.mhc_status,t1.course_st_date ", nativeQuery = true)
 	List<TempCourseEntity> findCoursesUserRegister(@Param("memberId") Long memberId);
 
-	@Query(value = "SELECT t1.*,(CASE WHEN t1.mhc_status='1' THEN 'สำเร็จการศึกษา' WHEN t1.mhc_status='2' THEN 'กำลังศึกษา' "
-			+ "ELSE (CASE WHEN t1.sa_status='2' THEN 'รอการอนุมัติ' ELSE 'ยังไม่ได้ลงทะเบียน' END) END) AS status_text"
+	@Query(value = "SELECT t1.*, (CASE WHEN t1.mhc_status='1' THEN 'สำเร็จการศึกษา' "
+			+ "WHEN t1.mhc_status='2' AND t1.course_st_date > NOW() THEN 'รอศึกษา' WHEN t1.mhc_status='2' "
+			+ "AND t1.course_st_date <= NOW() THEN 'กำลังศึกษา' "
+			+ "ELSE (CASE WHEN t1.sa_status='2' THEN 'รอการอนุมัติ' "
+			+ "ELSE 'ยังไม่ได้ลงทะเบียน' END) END) AS status_text "
 			+ ",(CASE WHEN t1.mhc_status='1' OR t1.mhc_status='2' THEN 0 ELSE (CASE WHEN t1.sa_status='2' THEN 0 ELSE 1 END) END) AS can_register FROM ("
 			+ " SELECT c.*,(" + " SELECT mhc2.mhc_status FROM members_has_courses mhc2 WHERE mhc2.register_date=("
 			+ " SELECT MAX(register_date) FROM members_has_courses mhc WHERE mhc.member_id=:memberId AND mhc.course_id=c.course_id GROUP BY mhc.course_id) AND mhc2.member_id=:memberId ) AS mhc_status,("
@@ -38,7 +41,8 @@ public interface TempCourseRepository extends CrudRepository<TempCourseEntity, L
 			@Param("enable") String enable);
 
 	@Query(value = "SELECT t1.*, (CASE WHEN t1.mhc_status='1' THEN 'สำเร็จการศึกษา' "
-			+ "WHEN t1.mhc_status='2' AND t1.course_st_date > NOW() THEN 'รอศึกษา' WHEN t1.mhc_status='2' AND t1.course_st_date <= NOW() THEN 'กำลังศึกษา' "
+			+ "WHEN t1.mhc_status='2' AND t1.course_st_date > NOW() THEN 'รอศึกษา' WHEN t1.mhc_status='2' "
+			+ "AND t1.course_st_date <= NOW() THEN 'กำลังศึกษา' "
 			+ "ELSE (CASE WHEN t1.sa_status='2' THEN 'รอการอนุมัติ' "
 			+ "ELSE 'ยังไม่ได้ลงทะเบียน' END) END) AS status_text, "
 			+ "(CASE WHEN t1.mhc_status='1' OR t1.mhc_status='2' THEN 0 "
@@ -52,5 +56,4 @@ public interface TempCourseRepository extends CrudRepository<TempCourseEntity, L
 			+ "LEFT JOIN transportations tran ON t1.course_id = tran.course_id "
 			+ "LEFT JOIN transportations_time tt ON tran.tran_time_id = tt.tran_time_id ", nativeQuery = true)
 	TempCourseEntity findCourseUserById(@Param("memberId") Long memberId, @Param("courseId") Long courseId);
-
 }
