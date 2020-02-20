@@ -129,11 +129,11 @@ export class ListAllowComponent implements OnInit {
           status: status
         };
         this.disbtn = true;
-        if (this.member.length !== 0) {
-          this.listData.emit(memberSent);
-        }
-      }
 
+      }
+    }
+    if (this.member.length !== 0) {
+      this.listData.emit(memberSent);
     }
   }
 
