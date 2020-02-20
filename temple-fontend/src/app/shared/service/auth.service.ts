@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {ApiConstants} from '../constants/ApiConstants';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ApiConstants } from '../constants/ApiConstants';
 
 
 @Injectable()
@@ -17,7 +17,7 @@ export class AuthService {
 
   }
 
-  getRole():BehaviorSubject<string>{
+  getRole(): BehaviorSubject<string> {
     return this.role;
   }
 
@@ -29,9 +29,9 @@ export class AuthService {
     const body = {
       username, password
     };
-    return this.http.post(ApiConstants.baseURl + '/auth/login', body);
+    return this.http.post(`${ApiConstants.baseURl}/auth/login`, body);
   }
-  
+
   isLoggedIn(): BehaviorSubject<boolean> {
     return this.loggedIn;
   }

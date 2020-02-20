@@ -12,6 +12,7 @@
   background: #cdaa54;
   cursor: pointer;
   border-radius: 10px;
+  transition: 0.2s;
 }
 
 .menu-card:hover {

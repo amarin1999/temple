@@ -29,6 +29,26 @@
   height: 70px;
   line-height: 90px;
 }
+.boldAndBig:hover {
+  opacity: 0.7;
+  transition: 0.2s;
+}
+.boldAndBig {
+  vertical-align: middle;
+}
+.icon-close-noti {
+  animation: shake 1.5s;
+  vertical-align: middle;
+  font-size: 30px;
+}
+.close-text-noti {
+  vertical-align: middle;
+  font-size: 15px;
+}
+.wrap-close-noti:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
 
 @media only screen and (min-width: 640px) {
   .img-menu {
@@ -61,6 +81,7 @@ i {
 .boldAndBig {
   font-size: 1.2em;
   font: bold;
+  color: red;
 }
 .container-header {
   line-height: 1.22;
@@ -72,3 +93,12 @@ span {
 }
 
 
+@media screen and (max-width: 1024px) {
+  .boldAndBig {
+    font-size: 1em;
+    font: bold;
+  }
+  .close-text-noti {
+    display: none;
+  }
+}
