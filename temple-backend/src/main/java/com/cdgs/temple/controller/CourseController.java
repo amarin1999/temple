@@ -497,12 +497,12 @@ public class CourseController {
 
 				// ส่ง email ไปให้ผู้สอน
 				if (null != teacher.getEmail()) {
-					emailService.sendEmail(teacher.getEmail(), subject, text);
+					emailService.sendEmail(teacher.getEmail(), subject, bld.toString());
 				}
 
 				// ส่ง sms ให้ผู้สอน
 				if (null != teacher.getTel()) {
-					smsService.sendSms(teacher.getTel(), text);
+					smsService.sendSms(teacher.getTel(), bld.toString());
 				}
 			}
 
