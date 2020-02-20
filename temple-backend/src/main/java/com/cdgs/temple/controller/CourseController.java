@@ -486,11 +486,14 @@ public class CourseController {
 					courseOutTimeDto.getId(), spaDto.getStatus(), courseOutTimeDto.getName());
 
 			String subject = "รายงานการสมัครคอร์ส";
-			String text = "คอร์ส " + courseOutTimeDto.getName() + " ได้รับการอนุมัติแล้ว";
+			String text = "มีผู้สมัครคอร์ส " + courseOutTimeDto.getName();
+			StringBuilder bld;
 
 			for (Long teacherId : courseDto.getTeacher()) {
+				bld = new StringBuilder();
 
 				MemberDto teacher = memberService.getMember(teacherId);
+				bld.append("เรียน " + teacher.getTitleName() + teacher.getFname() + " " + teacher.getLname() + text);
 
 				// ส่ง email ไปให้ผู้สอน
 				if (null != teacher.getEmail()) {
