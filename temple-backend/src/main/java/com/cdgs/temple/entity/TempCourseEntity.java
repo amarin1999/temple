@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.validation.annotation.Validated;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -43,10 +44,10 @@ public class TempCourseEntity implements Serializable {
 	@Column(name = "course_name")
 	private String courseName;
 
-	@Column(name = "end_date")
+	@Column(name = "course_end_date")
 	private Date endDate;
 
-	@Column(name = "st_date")
+	@Column(name = "course_st_date")
 	private Date stDate;
 
 	@Column(name = "course_detail")

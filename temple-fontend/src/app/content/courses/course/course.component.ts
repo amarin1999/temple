@@ -424,7 +424,7 @@ export class CourseComponent implements OnInit, OnDestroy {
         for (let key in res.data) {
           this.memberIdList.push(res.data[key].memberId);
           this.totalMember = this.memberIdList.length;
-          this.manageUserService.getMemberById(res.data[key].memberId).subscribe(res => {
+          this.manageUserService.getUser(res.data[key].memberId).subscribe(res => {
 
             this.memberList.push(res);
           });

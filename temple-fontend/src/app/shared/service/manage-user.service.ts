@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ApiConstants } from '../constants/ApiConstants';
 import { AuthService } from './auth.service';
 import { HttpClientService } from './http-client.service';
@@ -9,7 +9,7 @@ import { Member } from '../interfaces/member';
 
 @Injectable()
 export class ManageUserService {
-  private user = new BehaviorSubject<any>('');
+  private user = new Subject<Member>();
 
   constructor(
     private http: HttpClient,
@@ -36,8 +36,6 @@ export class ManageUserService {
 
   }
 
-
-
   getUser(id) {
     return this.http.get(ApiConstants.baseURl + `/members/${id}`, {
       headers: {
@@ -48,14 +46,13 @@ export class ManageUserService {
         this.user.next(res['data'][0]);
         return {
           status: res['result'],
-          data: res['data'][0]
+          data: res['data'][0],
         };
       })
     );
   }
 
-
-  getUserOnline(): BehaviorSubject<any> {
+  getUserOnline(): Subject<Member> {
     return this.user;
   };
 
@@ -148,17 +145,4 @@ export class ManageUserService {
     );
   }
 
-  getMemberById(id) {
-    return this.http.get(ApiConstants.baseURl + `/members/${id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access-token')}`
-      }
-    }).pipe(
-      map(res => ({
-
-        status: res['result'],
-        data: res['data'][0]
-      })
-      ));
-  }
 }

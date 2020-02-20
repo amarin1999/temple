@@ -54,7 +54,8 @@ export class LoginComponent implements OnInit {
                 // access_token
                 if (res['result'] === 'Success') {
                     const accessToken = res['access_token'];
-                    localStorage.setItem('access-token', accessToken);                    
+                    localStorage.setItem('access-token', accessToken);   
+                    localStorage.setItem('userId', res['account_id']);                    
                     this.authService.isLoggedIn().next(true);
                     this.router.navigate(['/']);
                 }

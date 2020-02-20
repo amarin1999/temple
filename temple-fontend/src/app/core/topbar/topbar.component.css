@@ -26,47 +26,55 @@
   font-weight: bold;
 }
 
-.logout-menu{
-    width: 2em;
-    vertical-align: middle;
+.logout-menu {
+  width: 2em;
+  vertical-align: middle;
 }
-.user-img{
+.user-img {
   width: 2em;
   vertical-align: middle;
   border-radius: 50px;
 }
 
-
 .top-menu {
-    line-height: 80px;
-    margin: 0 0 0 auto;
-    cursor: pointer;
-    padding: 0 10px;
+  line-height: 80px;
+  margin: 0 0 0 auto;
+  cursor: pointer;
 }
 
-.top-menu:hover {
-    background-color: #d3a842
+.right-header-btn:hover span {
+ 
+  transform: scale(1.03, 1.03);
+  opacity: 0.8;
 }
+.right-header-btn {
+  padding: 20px;
+  border-radius: 15px;
+  word-wrap: break-word;
+}
+
+.logo-btn:hover {
+  transform: scale(1.08, 1.08);
+  transition: 0.2s;
+}
+
+/* จอกลาง */
 @media screen and (max-width: 1024px) {
-
-}
-
-@media screen and (max-width: 555px) {
   .top-bar .title span {
-    font-size: 15px;
-}
-}
-
-@media screen and (max-width: 520px) {
-  .top-bar {
-    height: 80px;
-  }
-
-  .top-bar .banner img {
-    height: 80px;
+    font-size: 17px;
   }
 
   .top-bar .title span {
+    display: none;
+  }
+}
+
+/* จอเล็ก */
+@media screen and (max-width: 640px) {
+  .top-bar .title span {
+    display: none;
+  }
+  .top-menu span #user-name {
     display: none;
   }
 }

@@ -1,18 +1,23 @@
 <div class="top-bar">
     <div class="banner">
-        <a routerLink="/"><img src="./assets/images/logo.png" /></a>
+        <a routerLink="/"><img class="logo-btn" src="./assets/images/logo.png" /></a>
     </div>
     <div class="title">
         <span style="color:whitesmoke;">ระบบรับสมัครอบรมธรรมะ วัดป่าโสมพนัส</span>
     </div>
-    <div class="top-menu" (click)="logout()" *ngIf="isLoggedIn">
-
+    <div  class="top-menu" *ngIf="isLoggedIn && userData">
         <span style="color:whitesmoke;">
-            <img class="user-img" src="data:image/png;base64,{{userData.img}}" *ngIf="userData.img">
-            <img class="user-img" src="./assets/images/no-img.png" *ngIf="!userData.img">
-            {{userData.fname ? userData.fname : ''}} {{userData.lname ? userData.lname : ''}}
-           
-            <img class="logout-menu" src="./assets/images/logout.png"> ออกจากระบบ
+            <span  [routerLink]="['/profile',userData?.id]" class="right-header-btn" id="user-name">
+                <img class="user-img logo-btn" src="data:image/png;base64,{{userData?.img}}" *ngIf="userData?.img" >
+                <img class="user-img logo-btn" src="./assets/images/no-img.png" *ngIf="!userData?.img">
+                &nbsp;
+                <span class="text-menu">{{userData?.titleName}}{{userData?.fname}} {{userData?.lname}}</span>
+            </span >
+
+            <span class="right-header-btn" (click)="logout()">
+                <img class=" logout-menu" src="./assets/images/logout.png" (click)="logout()">
+                <span class="text-menu">ออกจากระบบ</span>
+            </span>
         </span>
     </div>
 </div>

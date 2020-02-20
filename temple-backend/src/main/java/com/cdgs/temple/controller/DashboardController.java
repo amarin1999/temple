@@ -44,9 +44,9 @@ public class DashboardController {
 			List<DashboardDto> listDto = new ArrayList<>();
 			MemberDto member = memberService.getCurrentMember();
 			DashboardDto dashboardDto = null;
-			if (member.getRoleId() == Long.parseLong("2")) {
+			if (member.getRoleName().equals("monk")) {
 				dashboardDto = dashboardService.getReportDashboardMonkData();
-			} else if (member.getRoleId() == Long.parseLong("3")) {
+			} else if (member.getRoleName().equals("user")) {
 				dashboardDto = dashboardService.getReportDashboardUserData(member.getId());
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());

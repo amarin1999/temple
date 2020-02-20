@@ -2,8 +2,7 @@ package com.cdgs.temple.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +11,11 @@ import com.cdgs.temple.entity.DashboardEntity;
 import com.cdgs.temple.repository.DashboardRepository;
 import com.cdgs.temple.service.DashboardService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class DashboardServiceImpl implements DashboardService {
-
-	private static final Logger log = LoggerFactory.getLogger(DashboardServiceImpl.class);
-
 	private DashboardRepository dashboardRepository;
 
 	@Autowired
@@ -35,7 +34,6 @@ public class DashboardServiceImpl implements DashboardService {
 			}
 		} catch (Exception e) {
 			log.error("mapEntityToDto >>> ", e.getMessage());
-			e.printStackTrace();
 		}
 		return listDto;
 	}
@@ -50,6 +48,7 @@ public class DashboardServiceImpl implements DashboardService {
 				dto.setGenderNotspec(entity.getGenderOther());
 				dto.setTransport(entity.getTransSelf());
 				dto.setTranTemple(entity.getTransTemple());
+				dto.setCentral(entity.getCenter());
 				dto.setNorthEast(entity.getNortheast());
 				dto.setNorth(entity.getNorth());
 				dto.setEast(entity.getEast());
@@ -63,8 +62,7 @@ public class DashboardServiceImpl implements DashboardService {
 		} catch (
 
 		Exception e) {
-			log.error("mapEntityToDto >>> " + e.getMessage());
-			e.printStackTrace();
+			log.error("mapEntityToDto >>> ", e);
 		}
 		return dto;
 
@@ -76,8 +74,7 @@ public class DashboardServiceImpl implements DashboardService {
 		try {
 			dashboardEntity = dashboardRepository.getReportDashboardMonkData();
 		} catch (Exception e) {
-			log.error("getAllDataReport >>>> " + e.getMessage());
-			e.printStackTrace();
+			log.error("getReportDashboardMonkData >>>> ", e);
 		}
 		return mapEntityToDto(dashboardEntity);
 	}
@@ -88,8 +85,7 @@ public class DashboardServiceImpl implements DashboardService {
 		try {
 			dashboardEntity = dashboardRepository.getReportDashboardUserData(memberId);
 		} catch (Exception e) {
-			log.error("getAllDataReport >>>> " + e.getMessage());
-			e.printStackTrace();
+			log.error("getAllDataReport >>>> ", e);
 		}
 		return mapEntityToDto(dashboardEntity);
 	}
@@ -100,8 +96,7 @@ public class DashboardServiceImpl implements DashboardService {
 		try {
 			dashboardEntities = dashboardRepository.getProvinceDataByRegionId(regionId);
 		} catch (Exception e) {
-			log.error("getAllDataReport >>>> " + e.getMessage());
-			e.printStackTrace();
+			log.error("getAllDataReport >>>> ", e);
 		}
 		return mapListEntityToDto(dashboardEntities);
 	}
