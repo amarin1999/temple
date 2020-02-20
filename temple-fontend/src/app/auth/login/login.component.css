@@ -18,15 +18,12 @@ label {
 .text-danger {
   color: rgb(238, 12, 12);
 }
-
-/* #carder {
-  left: 50%;
-  top: 50%;
-  position: absolute;
-  -webkit-transform: translate3d(-50%, -50%, 0);
-  -moz-transform: translate3d(-50%, -50%, 0);
-  transform: translate3d(-50%, -50%, 0);
-} */
+.login-logo {
+  width:200px;
+  height: 200;
+  display: block;
+ margin: auto;
+}
 
 .login-header-text {
   margin-top: 20px;

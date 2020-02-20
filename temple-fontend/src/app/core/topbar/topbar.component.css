@@ -31,7 +31,8 @@
   vertical-align: middle;
 }
 .user-img {
-  width: 2em;
+  width: 2.5em;
+  height: 2.5em;
   vertical-align: middle;
   border-radius: 50px;
 }

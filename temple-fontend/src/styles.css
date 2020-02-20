@@ -145,6 +145,12 @@ p-panel,
 .animation-page {
   animation: fadeFromTop 0.4s;
 }
+.login-logo {
+  width:200px;
+  height: 200;
+  display: block;
+ margin: auto;
+}
 
 @keyframes fadeFromTop {
   0% {
