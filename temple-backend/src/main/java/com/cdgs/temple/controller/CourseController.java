@@ -493,7 +493,7 @@ public class CourseController {
 				bld = new StringBuilder();
 
 				MemberDto teacher = memberService.getMember(teacherId);
-				bld.append("เรียน " + teacher.getTitleName() + teacher.getFname() + " " + teacher.getLname() + text);
+				bld.append("เรียน " + teacher.getTitleName() + teacher.getFname() + " " + teacher.getLname() + " " + text);
 
 				// ส่ง email ไปให้ผู้สอน
 				if (null != teacher.getEmail()) {
