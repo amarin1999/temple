@@ -50,6 +50,7 @@ public class DashboardServiceImpl implements DashboardService {
 				dto.setGenderNotspec(entity.getGenderOther());
 				dto.setTransport(entity.getTransSelf());
 				dto.setTranTemple(entity.getTransTemple());
+				dto.setCentral(entity.getCenter());
 				dto.setNorthEast(entity.getNortheast());
 				dto.setNorth(entity.getNorth());
 				dto.setEast(entity.getEast());
