@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +12,11 @@ import com.cdgs.temple.entity.TitleNamesEntity;
 import com.cdgs.temple.repository.TitleNameRepository;
 import com.cdgs.temple.service.TitleNameService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class TitleNameServiceImpl implements TitleNameService {
-
-	private static final Logger log = LoggerFactory.getLogger(TitleNameServiceImpl.class);
-
 	@Autowired(required = true)
 	TitleNameRepository titleNameRepository;
 
@@ -86,7 +84,7 @@ public class TitleNameServiceImpl implements TitleNameService {
 				return true;
 			}
 		} catch (Exception e) {
-			log.error("getTitleName Error=>" + e.getMessage());
+			log.error("getTitleName Error=>", e);
 			return false;
 		}
 		return true;
@@ -102,7 +100,7 @@ public class TitleNameServiceImpl implements TitleNameService {
 
 	private TitleNamesEntity convOptionalToEntity(Optional<TitleNamesEntity> entity) {
 		TitleNamesEntity dto = new TitleNamesEntity();
-		if (entity != null) {
+		if (entity.isPresent()) {
 			dto.setTitleDisplay(entity.get().getTitleDisplay());
 			dto.setTitleId(entity.get().getTitleId());
 			dto.setTitleName(entity.get().getTitleName());
