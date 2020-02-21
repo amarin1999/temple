@@ -161,17 +161,17 @@ hr{
 
   @media only screen and (max-width: 640px) {
     .text-info {
-        text-align: left;
+        /* text-align: left; */
         padding-top: inherit;
     }
 
     .set-md-hd{
-      text-align: left;
+      /* text-align: left; */
       padding-top: inherit;
     }
 
     .set-md-dt{
-      text-align: center;
+      /* text-align: center; */
     }
 /* 
     #name{
