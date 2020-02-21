@@ -20,84 +20,88 @@
                                         class="img-info" alt="รูปโปรไฟล์" />
                                 </div>
                                 <div class="ui-g-12 ui-lg-7 ui-md-12 set-display">
-                                    <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
+                                    <div class="ui-g-5  text-info">
                                         <span>ชื่อ-นามสกุล</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-8 ui-md-4 ">
+                                    <div class="ui-g-7  ">
                                         <span>{{(userData) ? userData.titleName +''+ userData.fname+' '+userData.lname : ''}}</span>
                                     </div>
-                                    <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
+                                    <div class="ui-g-5  text-info">
                                         <span>อาชีพ</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-8 ui-md-4 ">
+                                    <div class="ui-g-7  ">
                                         <span>{{(userData?.job!=null) ? userData.job:'ไม่มีข้อมูล'}}</span>
                                     </div>
-                                    <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
+                                    <div class="ui-g-5 text-info">
                                         <span>ที่อยู่</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-8 ui-md-4">
+                                    <div class="ui-g-7">
                                         <span>{{(userData?.address!=null) ? userData.address:'ไม่มีข้อมูล'}}</span>
                                     </div>
-                                    <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
+                                    <div class="ui-g-5 text-info">
                                         <span>จังหวัด</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-8 ui-md-4">
+                                    <div class="ui-g-7 ">
                                         <span>{{userData?.provinceName}}</span>
                                     </div>
-                                    <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
+                                    <div class="ui-g-5 text-info">
                                         <span>อีเมล</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-8 ui-md-4 ">
+                                    <div class="ui-g-7">
                                         <span>{{(userData?.email!=null) ? userData.email:'ไม่มีข้อมูล'}}</span>
                                     </div>
-                                    <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
+                                    <div class="ui-g-5  text-info">
                                         <span>เบอร์โทรศัพท์</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-8 ui-md-4">
+                                    <div class="ui-g-7 ">
                                         <span>{{(userData?.tel!=null) ? userData.tel:'ไม่มีข้อมูล'}}</span>
                                     </div>
-                                    <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
-                                        <span>กรุ๊ปเลือด</span>
+                                    <div class="ui-g-12">
+                                        <div class="ui-g-5 text-info">
+                                            <span>กรุ๊ปเลือด</span>
+                                        </div>
+                                        <div class="ui-g-7  ">
+                                            <span>{{(userData?.blood!=null) ? userData.blood:'ไม่มีข้อมูล'}}</span>
+                                        </div>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-8 ui-md-4 ">
-                                        <span>{{(userData?.blood!=null) ? userData.blood:'ไม่มีข้อมูล'}}</span>
-                                    </div>
-                                    <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
+                                    <div class="ui-g-5  text-info">
                                         <span>อายุ</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-8 ui-md-4 ">
+                                    <div class="ui-g-7 ">
                                         <span>{{(userData?.age!=null) ? userData.age+' ปี':'ไม่มีข้อมูล'}}</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="ui-g">
-                                <div class="ui-g-12 ui-lg-5 ui-md-12 ">
-                                    <div class="ui-g-5 ui-lg-5 ui-md-2 text-info">
+                            <div class="ui-g"> 
+                                <div class="ui-g-12 ">
+                                    <div class="ui-g-5 ui-lg-3 text-info">
                                         <span>ยาที่แพ้</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-7 ui-md-4 ">
+                                    <div class="ui-g-7 ui-lg-3 ">
                                         <span>{{(userData?.allergyMedicine!=null) ? userData.allergyMedicine:'ไม่มีข้อมูล'}}</span>
                                     </div>
-                                    <div class="ui-g-5 ui-lg-5 ui-md-2 text-info">
+                                    <div class="ui-g-5 ui-lg-3 text-info">
                                         <span>โรคประจำตัว</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-7 ui-md-4 ">
+                                    <div class="ui-g-7 ui-lg-3 ">
                                         <span>{{(userData?.disease!=null) ? userData.disease:'ไม่มีข้อมูล'}}</span>
                                     </div>
                                 </div>
-                                <div class="ui-g-12 ui-lg-7 ui-md-12">
-                                    <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
+                                <div class="ui-g-12 ">
+                                    <div class="ui-g-5 ui-lg-3 text-info">
                                         <span>อาหารที่แพ้</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-8 ui-md-4 ">
+                                    <div class="ui-g-7 ui-lg-3 ">
                                         <span>{{(userData?.allergyFood!=null) ? userData.allergyFood:'ไม่มีข้อมูล'}}</span>
                                     </div>
-                                    <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
-                                        <span>หมายเหตุ</span>
-                                    </div>
-                                    <div class="ui-g-7 ui-lg-8 ui-md-4 ">
-                                        <span>{{(userData?.other!=null) ? userData.other:'ไม่มีข้อมูล'}}</span>
-                                    </div>
+                                    <!-- <div class="ui-g-6"> -->
+                                        <div class="ui-g-5 ui-lg-3  text-info">
+                                            <span>หมายเหตุ</span>
+                                        </div>
+                                        <div class="ui-g-7  ui-lg-3 ">
+                                            <span>{{(userData?.other!=null) ? userData.other:'ไม่มีข้อมูล'}}</span>
+                                        </div>
+                                    <!-- </div> -->
                                 </div>
                             </div>
                             <div class="ui-g">
@@ -105,25 +109,25 @@
                                 <div class="ui-g-12 ui-lg-12 ui-md-12 header-panel">
                                     <span>ผู้ติดต่อกรณีฉุกเฉิน</span>
                                 </div>
-                                <div class="ui-g-12 ui-lg-5 ui-md-5">
-                                    <div class="ui-g-5 ui-lg-5 ui-md-5 text-info">
+                                <div class="ui-g-12 ">
+                                    <div class="ui-g-5  text-info">
                                         <span>ชื่อ-นามสกุล</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-7 ui-md-7">
+                                    <div class="ui-g-7 ">
                                         <span>{{(userData?.emergencyName!=null) ? userData.emergencyName:'ไม่มีข้อมูล'}}</span>
                                     </div>
-                                    <div class="ui-g-5 ui-lg-5 ui-md-5 text-info">
+                                    <div class="ui-g-5  text-info">
                                         <span>เบอร์โทรศัพท์</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-7 ui-md-7 ">
+                                    <div class="ui-g-7  ">
                                         <span>{{(userData?.emergencyTel!=null) ? userData.emergencyTel :'ไม่มีข้อมูล'}}</span>
                                     </div>
                                 </div>
-                                <div class="ui-g-12 ui-lg-7 ui-md-7 ">
-                                    <div class="ui-g-5 ui-lg-4 ui-md-5 text-info">
+                                <div class="ui-g-12  ">
+                                    <div class="ui-g-5  text-info">
                                         <span>ความสัมพันธ์</span>
                                     </div>
-                                    <div class="ui-g-7 ui-lg-8 ui-md-7 ">
+                                    <div class="ui-g-7  ">
                                         <span>{{(userData?.emergencyRelationship!=null) ? userData.emergencyRelationship:'ไม่มีข้อมูล'}}</span>
                                     </div>
                                 </div>
