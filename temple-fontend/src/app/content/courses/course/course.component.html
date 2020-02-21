@@ -52,53 +52,64 @@
                             <span><b style="color: crimson">ไม่ถูกอนุมัติ</b></span></ng-container>
                         <ng-template #courseSatatus>
                             <ng-container *ngIf="course?.mhcStatus === '2'">
-                                    <b style="color: #007ad9">{{course.status}}</b>
+                                <b style="color: #007ad9">{{course.status}}</b>
                             </ng-container>
                             <ng-container *ngIf="course?.mhcStatus === '1'">
-                                    <b style="color: #28a745">{{course.status}}</b>
+                                <b style="color: #28a745">{{course.status}}</b>
                             </ng-container>
                             <ng-container *ngIf="course?.mhcStatus === null">
-                                    {{(course?.status)? course.status: '-'}}
+                                {{(course?.status)? course.status: '-'}}
                             </ng-container>
-                            
+
                         </ng-template>
                     </div>
                     <div class="ui-g-12 ui-lg-12 ui-md-12 " style="margin: 0 auto;">
-                        <div class="ui-g">
-                            <div class="ui-g-12 ui-lg-6 ui-md-6 btn-right"
-                                *ngIf="course?.saStatus !== '2' && course?.canRegister === 1 && course?.canRegister !== 0 && course?.saStatus !== '0';else elseTemplate">
-                                <div *ngIf="total >= course?.conditionMin">
-                                    <button pButton type="button" label="สมัคร"
-                                        (click)="rgCourse(course['id'])"></button>
+                        <ng-container
+                            *ngIf="course?.saStatus !== '2' && course?.canRegister === 1 && course?.canRegister !== 0 && course?.saStatus !== '0';else elseTemplate">
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-lg-6 ui-md-6 btn-right">
+                                    <div *ngIf="total >= course?.conditionMin">
+                                        <button pButton type="button" label="สมัคร"
+                                            (click)="rgCourse(course['id'])"></button>
+                                    </div>
+                                    <div *ngIf="total < course?.conditionMin">
+                                        <button pButton icon="pi pi-plus-circle" type="button" label="ขออนุมัติพิเศษ"
+                                            class="ui-button-warning" (click)="saCourse(course['id'])">
+                                        </button>
+                                    </div>
                                 </div>
-                                <div *ngIf="total < course?.conditionMin">
-                                    <button pButton type="button" label="ขออนุมัติพิเศษ" class="ui-button-warning"
-                                        (click)="saCourse(course['id'])">
+
+                                <div class="ui-g-12 ui-lg-6 ui-md-6 btn-right"
+                                    *ngIf="course?.saStatus === '2' && course?.canRegister === 0 && course?.no === 0">
+                                    <button pButton icon="pi pi-times-circle" type="button"
+                                        label="ยกเลิกการขออนุมัติพิเศษ" class="ui-button-warning"
+                                        (click)="cancelApprovalCourse(course['id'])">
+                                    </button>
+                                </div>
+                                <div class="ui-g-12 ui-lg-6 ui-md-6 btn-right"
+                                    *ngIf="course?.saStatus === '4' && course?.no !== 0">
+                                    <button pButton icon="pi pi-times-circle" type="button"
+                                        label="ยกเลิกการขออนุมัตินอกเวลา" class="ui-button-warning"
+                                        (click)="cancelApprovalCourse(course['id'])">
+                                    </button>
+                                </div>
+
+                                <div class="ui-g-12 ui-lg-6 ui-md-6 btn-left ">
+                                    <button icon="pi pi-angle-double-left" pButton type=" button" label="กลับ"
+                                        class="button-reject" (click)="getBack()">
                                     </button>
                                 </div>
                             </div>
-                            <ng-template #elseTemplate>
-                                <div class="ui-g-12 ui-lg-6 ui-md-6"></div>
-                            </ng-template>
-                            <div class="ui-g-12 ui-lg-6=7 ui-md-7 btn-right"
-                                *ngIf="course?.saStatus === '2' && course?.canRegister === 0 && course?.no === 0">
-                                <button pButton type="button" label="ยกเลิกการขออนุมัติพิเศษ" class="ui-button-warning"
-                                    (click)="cancelApprovalCourse(course['id'])">
-                                </button>
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                            <div class="ui-g set-button-center">
+                                <div class="ui-g-12">
+                                    <button icon="pi pi-angle-double-left" pButton type="button" label="กลับ"
+                                        class="button-reject" (click)="getBack()">
+                                    </button>
+                                </div>
                             </div>
-                            <div class="ui-g-12 ui-lg-6=7 ui-md-7 btn-right"
-                                *ngIf="course?.saStatus === '4' && course?.no !== 0">
-                                <button pButton type="button" label="ยกเลิกการขออนุมัตินอกเวลา"
-                                    class="ui-button-warning" (click)="cancelApprovalCourse(course['id'])">
-                                </button>
-                            </div>
-
-                            <div class="ui-g-12 ui-lg-5 ui-md-5 btn-left ">
-                                <button pButton type="button" label="กลับ" class="button-reject" (click)="getBack()">
-                                </button>
-                            </div>
-
-                        </div>
+                        </ng-template>
                     </div>
                 </div>
             </p-card>

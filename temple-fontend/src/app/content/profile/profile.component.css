@@ -6,10 +6,6 @@
   margin: 0 auto;
 }
 
-button {
-  width: 120px;
-}
-
 :host>>>.temple-button .ui-button {
   background-color: #FFBA01 !important;
   color: #111111;
