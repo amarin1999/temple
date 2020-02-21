@@ -93,6 +93,22 @@
 @media screen and (max-width: 640px) {
  
   .top-bar .title span {
+    font-size: 13px;
+  }
+  #icon-responsive{
+    font-size: 30px;
+    margin-top: 15px;
+  }
+  .logo-btn{
+    transform: scale(0.7,0.7);
+   
+  }
+
+}
+/* เล็กกว่านี้ไม่มีอีกแล้ว */
+@media screen and (max-width: 360px) {
+ 
+  .top-bar .title span {
     font-size: 10px;
   }
   #icon-responsive{
