@@ -123,71 +123,71 @@ export class RegisterComponent implements OnInit {
 
   public validationMessage = {
     username: {
-      detail: 'กรุณากรอก ชื่อผู้ใช้',
+      detail: { required: 'กรุณากรอก ชื่อผู้ใช้', minlength: 'ชื่อผู้ใช้ต้องมีความยาวเกิน 6 ตัวขึ้นไป' },
       required: 'ชื่อผู้ใช้*'
     },
     password: {
-      detail: 'กรุณากรอก รหัสผ่าน',
+      detail: { required: 'กรุณากรอก รหัสผ่าน', minlength: 'รหัสผ่านต้องมีความยาวเกิน 6 ตัวขึ้นไป' },
       required: 'รหัสผ่าน*'
     },
     repassword: {
-      detail: 'กรุณากรอก ยืนยันรหัสผ่าน',
+      detail: { required: 'กรุณากรอก รหัสผ่าน', minlength: 'รหัสผ่านต้องมีความยาวเกิน 6 ตัวขึ้นไป' },
       required: 'ยืนยันรหัสผ่าน*'
     },
     idCard: {
-      detail: 'กรุณากรอก เลขประจำตัวประชาชน',
+      detail: { required: 'กรุณากรอก เลขประจำตัวประชาชน' },
       required: 'เลขประจำตัวประชาชน*'
     },
     age: {
-      detail: 'กรุณากรอก อายุ',
+      detail: { required: 'กรุณากรอก อายุ' },
       required: 'อายุ*'
     },
     titleName: {
-      detail: 'กรุณาระบุ คำนำหน้า',
+      detail: { required: 'กรุณาระบุ คำนำหน้า' },
       required: 'คำนำหน้า*'
     },
     fname: {
-      detail: 'กรุณากรอก ชื่อ',
+      detail: { required: 'กรุณากรอก ชื่อ' },
       required: 'ชื่อ*'
     },
     lname: {
-      detail: 'กรุณากรอก นามสกุล',
+      detail: { required: 'กรุณากรอก นามสกุล' },
       required: 'นามสกุล*'
     },
     phone: {
-      detail: 'กรุณากรอก เบอร์โทร',
+      detail: { required: 'กรุณากรอก เบอร์โทร' },
       required: 'เบอร์โทรศัพท์*'
     },
     address: {
-      detail: 'กรุณากรอก ที่อยู่',
+      detail: { required: 'กรุณากรอก ที่อยู่' },
       required: 'ที่อยู่*'
     },
     province: {
-      detail: 'กรุณาระบุ จังหวัด',
+      detail: { required: 'กรุณาระบุ จังหวัด' },
       required: 'จังหวัด*'
     },
     postalCode: {
-      detail: 'กรุณากรอก รหัสไปรษณีย์',
+      detail: { required: 'กรุณากรอก รหัสไปรษณีย์', pattern: 'กรุณากรอก รหัสไปรษณีย์ให้ถูกต้อง 0-9 [5]' },
       required: 'รหัสไปรษณีย์*'
     },
     blood: {
-      detail: 'กรุณาระบุ กรุ๊ปเลือด',
+      detail: { required: 'กรุณาระบุ กรุ๊ปเลือด' },
       required: 'กรุ๊ปเลือด*'
     },
     fnameEmergency: {
-      detail: 'กรุณากรอก ชื่อผู้ติดต่อฉุกเฉิน',
+      detail: { required: 'กรุณากรอก ชื่อผู้ติดต่อฉุกเฉิน' },
       required: 'ชื่อผู้ติดต่อฉุกเฉิน*'
     },
     lnameEmergency: {
-      detail: 'กรุณากรอก นามสกุลผู้ติดต่อฉุกเฉิน',
+      detail: { required: 'กรุณากรอก นามสกุลผู้ติดต่อฉุกเฉิน' },
       required: 'นามสกุลผู้ติดต่อฉุกเฉิน*'
     },
     relationshipEmergency: {
-      detail: 'กรุณากรอก ความสัมพันธ์กับผู้ติดต่อฉุกเฉิน',
+      detail: { required: 'กรุณากรอก ความสัมพันธ์กับผู้ติดต่อฉุกเฉิน' },
       required: 'ความสัมพันธ์*'
     },
     phoneEmergency: {
-      detail: 'กรุณากรอก เบอร์ติดต่อฉุกเฉิน',
+      detail: { required: 'กรุณากรอก เบอร์ติดต่อฉุกเฉิน' },
       required: 'เบอร์ติดต่อฉุกเฉิน*'
     },
   };
@@ -474,7 +474,12 @@ export class RegisterComponent implements OnInit {
       ) {
         details = 'กรุณากรอกข้อมูลให้ครบถ้วน';
         // this.detailWarning[1] = details;
-        this.detailWarning.push(this.validationMessage[field].detail);
+        for (const fieldError of Object.keys(this.validationMessage[field].detail)) {
+          // console.log(fieldError);
+          if (control.hasError(fieldError)) {
+            this.detailWarning.push(this.validationMessage[field].detail[fieldError]);
+          }
+        }
         this.formError[field] = this.validationMessage[field].required;
       }
     }

@@ -132,11 +132,11 @@ export class RegisterFormComponent implements OnInit {
       required: 'ชื่อผู้ใช้*'
     },
     password: {
-      detail: { required: 'กรุณากรอก รหัสผ่าน' , minlength: 'รหัสผ่านต้องมีความยาวเกิน 6 ตัวขึ้นไป' },
+      detail: { required: 'กรุณากรอก รหัสผ่าน', minlength: 'รหัสผ่านต้องมีความยาวเกิน 6 ตัวขึ้นไป' },
       required: 'รหัสผ่าน*'
     },
     repassword: {
-      detail: { required: 'กรุณากรอก รหัสผ่าน' , minlength: 'รหัสผ่านต้องมีความยาวเกิน 6 ตัวขึ้นไป' },
+      detail: { required: 'กรุณากรอก รหัสผ่าน', minlength: 'รหัสผ่านต้องมีความยาวเกิน 6 ตัวขึ้นไป' },
       required: 'ยืนยันรหัสผ่าน*'
     },
     idCard: {
@@ -528,12 +528,8 @@ export class RegisterFormComponent implements OnInit {
         // }
         for (const fieldError of Object.keys(this.validationMessage[field].detail)) {
           // console.log(fieldError);
-          if (control.hasError(fieldError)){
-            
-            console.log(this.validationMessage[field].detail.fieldError);
-
+          if (control.hasError(fieldError)) {
             this.detailWarning.push(this.validationMessage[field].detail[fieldError]);
-            
           }
         }
         // console.log(this.detailWarning[0]);
