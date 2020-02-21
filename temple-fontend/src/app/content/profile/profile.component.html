@@ -9,7 +9,7 @@
                     <div class="ui-g-12 ui-lg-6 ui-md-12">
                         <p-panel styleClass="panelHeader">
                             <p-header>
-                                <div class="ui-g-6 ui-lg-6 ui-md-6 header-panel">
+                                <div class="ui-g-12 header-panel">
                                     <span>ข้อมูลส่วนตัว</span>
                                 </div>
                             </p-header>
@@ -17,7 +17,7 @@
                                 <div class="ui-g-12 ui-lg-5 ui-md-12 img-position">
                                     <div class="set-position"></div>
                                     <img src="{{(userData?.img) ? 'data:image/jpg;base64,'+ userData.img : './assets/images/no-img.png'}}"
-                                        class="img-info" />
+                                        class="img-info" alt="รูปโปรไฟล์" />
                                 </div>
                                 <div class="ui-g-12 ui-lg-7 ui-md-12 set-display">
                                     <div class="ui-g-5 ui-lg-4 ui-md-2 text-info">
@@ -132,11 +132,6 @@
                                 <p-button type="button" label="แก้ไข" (onClick)='goToEdit()'></p-button>
                             </div>
                         </p-panel>
-                        <!-- <div class="ui-g-12 ui-lg-12 ui-md-12">
-                                <div class="temple-button"  style="text-align: center">
-                                    <p-button type="button" label="กลับหน้าหลัก" ></p-button>
-                                </div>
-                        </div> -->
                     </div>
                 </ng-container>
                 <!--ปิด panel 1 ข้อมูลส่วนตัวของผู้ใช้-->
@@ -153,7 +148,7 @@
                                 <div class="ui-g-12 ui-lg-4 ui-md-12 img-position">
                                     <div class="set-position-monk"></div>
                                     <img src="{{(userData?.img) ? 'data:image/jpg;base64,'+ userData.img : './assets/images/no-img.png'}}"
-                                        class="img-info" />
+                                        class="img-info" alt="รูปโปรไฟล์" />
                                 </div>
                                 <div class="ui-g-12 ui-lg-8 ui-md-12 set-display">
                                     <div class="ui-g-12 ui-lg-12 ui-md-12">
@@ -307,14 +302,14 @@
                 <div class="ui-g-12 ui-lg-6 ui-md-12" *ngIf="showRole">
                     <p-panel styleClass="panelHeader">
                         <p-header>
-                            <div class="ui-g-11 ui-lg-11 ui-md-11 header-panel">
+                            <div class="ui-g-12 header-panel">
                                 <span>ตารางคอร์สที่ผ่านการอบรมแล้ว</span>
                             </div>
                         </p-header>
                         <div class="ui-g">
                             <div class="ui-g-2 ui-lg-1 ui-md-1">
                                 <div class="img-checked">
-                                    <img src="./assets/images/checked.png">
+                                    <img src="./assets/images/checked.png" alt="check">
                                 </div>
 
                             </div>
@@ -329,14 +324,14 @@
                                     [(selection)]="selectedCourse" [totalRecords]="totalGraduatedRecords">
                                     <ng-template pTemplate="header" let-columns>
                                         <tr>
-                                            <th pSortableColumn="stDate">
+                                            <th scope="col" pSortableColumn="stDate">
                                                 วันที่อบรม
                                                 <p-sortIcon field="stDate" ariaLabel="Activate to sort"
                                                     ariaLabelDesc="Activate to sort in descending order"
                                                     ariaLabelAsc="Activate to sort in ascending order">
                                                 </p-sortIcon>
                                             </th>
-                                            <th pSortableColumn="name">
+                                            <th scope="col" pSortableColumn="name">
                                                 ชื่อคอร์ส
                                                 <p-sortIcon field="name" ariaLabel="Activate to sort"
                                                     ariaLabelDesc="Activate to sort in descending order"
@@ -372,7 +367,7 @@
                 <div class="ui-g-12 ui-lg-6 ui-md-12" *ngIf="showRole">
                     <p-panel styleClass="panelHeader">
                         <p-header>
-                            <div class="ui-g-11 ui-lg-11 ui-md-11 header-panel">
+                            <div class="ui-g-12 header-panel">
                                 <span>ตารางคอร์สที่ผ่านการอบรมแล้ว (นอกเหนือจากการอบรมธรรมะของวัดป่าโสมพนัส)</span>
                             </div>
                         </p-header>
@@ -382,10 +377,10 @@
                                     [responsive]="true">
                                     <ng-template pTemplate="header" let-columns>
                                         <tr>
-                                            <th>
+                                            <th scope="col">
                                                 ชื่อคอร์ส
                                             </th>
-                                            <th>
+                                            <th scope="col">
                                                 สถานที่
                                             </th>
                                         </tr>
