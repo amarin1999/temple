@@ -17,6 +17,8 @@ body .ui-widget,
 button,
 pre {
   font-family: "Krub", sans-serif !important;
+  font-weight: bold;
+  font-size: larger;
   /* font-family: 'Trirong', sans-serif !important; */
 }
 
@@ -139,8 +141,9 @@ body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button
 
 p-table,
 p-panel,
-.word-wrap {
+.word-wrap,.ui-widget {
   word-wrap: break-word;
+  font-size:16px !important;
 }
 .animation-page {
   animation: fadeFromTop 0.4s;
