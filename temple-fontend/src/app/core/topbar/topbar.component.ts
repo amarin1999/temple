@@ -13,6 +13,7 @@ import { map, switchMap } from 'rxjs/operators';
 export class TopbarComponent implements OnInit {
     public isLoggedIn: boolean;
     public userData: Member;
+    public responsiveStatus: boolean;
 
 
     constructor(
@@ -35,6 +36,7 @@ export class TopbarComponent implements OnInit {
 
     logout() {
         this.authService.logout();
+        this.responsiveStatus = false;
         delete this.userData;
     }
 
