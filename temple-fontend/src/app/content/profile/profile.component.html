@@ -72,7 +72,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ui-g"> 
+                            <div class="ui-g">
                                 <div class="ui-g-12 ">
                                     <div class="ui-g-5 ui-lg-3 text-info">
                                         <span>ยาที่แพ้</span>
@@ -95,12 +95,12 @@
                                         <span>{{(userData?.allergyFood!=null) ? userData.allergyFood:'ไม่มีข้อมูล'}}</span>
                                     </div>
                                     <!-- <div class="ui-g-6"> -->
-                                        <div class="ui-g-5 ui-lg-3  text-info">
-                                            <span>หมายเหตุ</span>
-                                        </div>
-                                        <div class="ui-g-7  ui-lg-3 ">
-                                            <span>{{(userData?.other!=null) ? userData.other:'ไม่มีข้อมูล'}}</span>
-                                        </div>
+                                    <div class="ui-g-5 ui-lg-3  text-info">
+                                        <span>หมายเหตุ</span>
+                                    </div>
+                                    <div class="ui-g-7  ui-lg-3 ">
+                                        <span>{{(userData?.other!=null) ? userData.other:'ไม่มีข้อมูล'}}</span>
+                                    </div>
                                     <!-- </div> -->
                                 </div>
                             </div>
@@ -132,8 +132,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="center temple-button font-show ui-button-raised" style="text-align: center">
-                                <p-button type="button" label="แก้ไข" (onClick)='goToEdit()'></p-button>
+                            <div class="center temple-button font-show ui-button-raised bigButton"
+                                style="text-align: center">
+                                <button type="button" (click)='goToEdit()' class="bigButton"><i class="pi pi-pencil"></i><span>แก้ไข</span></button>
+                                <!-- <button pButton type="button" (click)='goToEdit()' class="bigButton" label="Click" ></button> -->
                             </div>
                         </p-panel>
                     </div>
