@@ -18,6 +18,28 @@
                 <img class=" logout-menu" src="./assets/images/logout.png" (click)="logout()">
                 <span class="text-menu">ออกจากระบบ</span>
             </span>
+            <span class="btn-responsive">
+                <i class="pi pi-bars" id="icon-responsive" (click)="responsiveStatus = true"> </i>
+
+            </span>
         </span>
     </div>
+
+    <p-sidebar [(visible)]="responsiveStatus" position="top">
+
+        <div [routerLink]="['/profile',userData?.id]" class="menu-responsive" (click)="responsiveStatus = false">
+            <img class="user-img " src="data:image/png;base64,{{userData?.img}}" *ngIf="userData?.img">
+            <img class="user-img " src="./assets/images/no-img.png" *ngIf="!userData?.img">
+            &nbsp;
+            {{userData?.titleName}}{{userData?.fname}} {{userData?.lname}}
+        </div>
+        <hr />
+        <div (click)="logout()" class="menu-responsive">
+            <img class="logout-menu" src="./assets/images/logout.png" (click)="logout()">
+            &nbsp;
+            <span class="text-menu">ออกจากระบบ</span>
+        </div>
+
+    </p-sidebar>
+
 </div>

@@ -11,7 +11,15 @@
   z-index: 9999;
   opacity: 1;
 }
+.btn-responsive {
+  display: none;
 
+}
+#icon-responsive{
+  font-size: 50px;
+
+  padding: 10px;
+}
 .top-bar .banner img {
   height: 80px;
   vertical-align: middle;
@@ -27,7 +35,7 @@
 }
 
 .logout-menu {
-  width: 2em;
+  width: 2.5em;
   vertical-align: middle;
 }
 .user-img {
@@ -44,8 +52,6 @@
 }
 
 .right-header-btn:hover span {
- 
-  transform: scale(1.03, 1.03);
   opacity: 0.8;
 }
 .right-header-btn {
@@ -58,24 +64,44 @@
   transform: scale(1.05, 1.05);
   transition: 0.2s;
 }
+.menu-responsive{
+  padding: 10px;cursor: pointer;
+}
+.menu-responsive:hover{
+  opacity: 0.7;
+  transition: 0.3s;
+}
 
 /* จอกลาง */
 @media screen and (max-width: 1024px) {
   .top-bar .title span {
     font-size: 17px;
   }
-
-  .top-bar .title span {
+  .btn-responsive {
+    display: block;
+  }
+  
+  .top-menu span #user-name {
+    display: none;
+  }
+  .right-header-btn{
     display: none;
   }
 }
 
 /* จอเล็ก */
 @media screen and (max-width: 640px) {
+ 
   .top-bar .title span {
-    display: none;
+    font-size: 10px;
   }
-  .top-menu span #user-name {
-    display: none;
+  #icon-responsive{
+    font-size: 30px;
+    margin-top: 15px;
   }
+  .logo-btn{
+    transform: scale(0.7,0.7);
+   
+  }
+
 }

@@ -18,12 +18,7 @@ label {
 .text-danger {
   color: rgb(238, 12, 12);
 }
-.login-logo {
-  width:200px;
-  height: 200;
-  display: block;
- margin: auto;
-}
+
 
 .login-header-text {
   margin-top: 20px;
