@@ -201,6 +201,10 @@ p-table, p-panel, .word-wrap, .ui-widget {
   }
 }
 
-button {
+button.ui-button {
   min-width: 120px;
+}
+
+button.ui-button-icon-only{
+  min-width: 0 !important;
 }
