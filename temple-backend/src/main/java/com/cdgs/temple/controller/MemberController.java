@@ -113,7 +113,7 @@ public class MemberController {
 		MemberDto member = memberService.getCurrentMember();
 		MemberDto member2;
 		try {
-			if (member.getRoleName().equals("user")) {
+			if (member.getRoleName().equals("user") || member.getRoleName().equals("monk")) {
 				member2 = memberService.getMember(member.getId());
 			} else {
 				member2 = memberService.getMember(id);
