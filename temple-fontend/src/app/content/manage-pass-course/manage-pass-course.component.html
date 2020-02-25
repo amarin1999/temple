@@ -31,7 +31,7 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr [pSelectableRow]="rowData">
+                <tr [pSelectableRow]="rowData"  >
                   <td *ngFor="let col of columns">
                     <div style="height: 10px"></div>
                     <div *ngIf="rowData[col.field] === rowData['name'] && col.field == 'name'">{{rowData['name']}}</div>
