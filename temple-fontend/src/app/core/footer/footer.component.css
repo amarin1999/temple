@@ -74,7 +74,7 @@ b{
 
 @media screen and (max-width: 520px) {
     b{
-        font-size: 10px;
+        font-size: 12px;
     }
     .img-footer{
         width: 10%;
@@ -89,7 +89,7 @@ b{
 
 @media screen and (max-width: 414px) {
     b{
-        font-size: 10px;
+        font-size: 12px;
     }
     .img-footer{
         width: 10%;

@@ -65,8 +65,8 @@
   }
 }
 
-.vertical-middle>*{
-  vertical-align: middle;
+.place-self{
+  place-self: center;
 }
 
 @media screen and (max-width: 768px) {
@@ -90,11 +90,7 @@ i {
 .container-header {
   line-height: 1.22;
 }
-span {
-  // display:inline-block;
-  vertical-align: top;
-  padding: 0 0 0 5px;
-}
+
 
 
 @media screen and (max-width: 1024px) {

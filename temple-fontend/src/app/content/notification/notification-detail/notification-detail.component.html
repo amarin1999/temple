@@ -118,23 +118,30 @@
                   <td>
                     <span> คอร์ส {{rowData?.detail}} </span>
                   </td>
-                  <td style="text-align: center">
+                  <td style="text-align: left">
                     <span>
                       <ng-container *ngIf="rowData.rejectComment === null ; else courseFail">
-                        <b style="color: #28a745;">ผ่านการอนุมัติ</b>
+                        <span class="padding-icon"> <b class="pi pi-check colorGreenTopassApproval"
+                            style="font-size: 1.5em;"></b> </span>
+                        &nbsp;
+                        <b class="colorGreenTopassApproval">ผ่านการอนุมัติ</b>
                       </ng-container>
                       <ng-template #courseFail>
-                        <b style="color: crimson;">ไม่ผ่านการอนุมัติ</b>
-                      </ng-template>
+                          <span class=" padding-icon"> <b class="pi pi-times colorRedToNotApproval"
+                            style="font-size: 1.5em;"></b>
                     </span>
-                  </td>
-                  <td style="text-align: center">
-                    <span>{{(rowData.rejectComment)? rowData.rejectComment : '-' }}</span>
-                  </td>
-                  <td style="text-align: center">
-                    <button pButton type="button" label="ดูรายละเอียดคอร์ส" (click)="getCourseDetail(rowData)"></button>
-                  </td>
-                </tr>
+                    &nbsp;
+                    <b class="colorRedToNotApproval">ไม่ผ่านการอนุมัติ</b>
+              </ng-template>
+              </span>
+              </td>
+              <td style="text-align: center">
+                <span>{{(rowData.rejectComment)? rowData.rejectComment : '-' }}</span>
+              </td>
+              <td style="text-align: center">
+                <button pButton type="button" label="ดูรายละเอียดคอร์ส" (click)="getCourseDetail(rowData)"></button>
+              </td>
+              </tr>
               </ng-template>
             </p-table>
           </p-tabPanel>

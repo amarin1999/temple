@@ -1,7 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Trirong|Krub:300,400&subset=thai");
-
-html,
-body {
+html, body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -15,11 +13,10 @@ body {
   padding-top: 95px;
 }
 
-body,
-body .ui-widget,
-button,
-pre {
+body, body .ui-widget, button, pre {
   font-family: "Krub", sans-serif !important;
+  font-weight: bold;
+  font-size: larger;
   /* font-family: 'Trirong', sans-serif !important; */
 }
 
@@ -56,6 +53,7 @@ body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button
   color: #000;
 
 } */
+
 .button-reject {
   background-color: #777676 !important;
   color: #fff;
@@ -65,15 +63,18 @@ body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button
   border-radius: 5px;
   font-size: 1em;
 }
+
 .button-reject:hover {
   background-color: #4e4e4e !important;
   border: #777676;
   border-radius: 5px;
 }
+
 .button-success {
   border-color: #007ad9 !important;
   background-color: #007ad9 !important;
 }
+
 .button-success:hover {
   border-color: #27408b !important;
   background-color: #27408b !important;
@@ -140,19 +141,20 @@ body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button
   }
 }
 
-p-table,
-p-panel,
-.word-wrap {
+p-table, p-panel, .word-wrap, .ui-widget {
   word-wrap: break-word;
+  font-size: 16px !important;
 }
+
 .animation-page {
   animation: fadeFromTop 0.4s;
 }
+
 .login-logo {
-  width:200px;
+  width: 200px;
   height: 200;
   display: block;
- margin: auto;
+  margin: auto;
 }
 
 @keyframes fadeFromTop {
@@ -200,4 +202,12 @@ p-panel,
   100% {
     transform: translate(-3px, 0px) rotate(1deg);
   }
+}
+
+button.ui-button {
+  min-width: 120px;
+}
+
+button.ui-button-icon-only{
+  min-width: 0 !important;
 }

@@ -402,8 +402,6 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.route.params.pipe(switchMap(param =>
       this.courseService.getCourseByid(param.id).toPromise()
         .then(res => {
-          console.log(res);
-          
           if (res.status === 'Success') {
             this.course = res['data'];
             this.status = this.course.mhcStatus;
