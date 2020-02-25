@@ -73,8 +73,8 @@ export class ManagePassCourseComponent implements OnInit {
   }
 
   private getTotalRecord() {
-    this.spinner.show();
-    this.managePassCourse.getTotalRecord().pipe(finalize(() => this.spinner.hide())).subscribe(res => {
+    // this.spinner.show();
+    this.managePassCourse.getTotalRecord().subscribe(res => {
       if (res['status'] === 'Success') {
         this.totalRecords = res['data'][0]['totalRecord'];
       }

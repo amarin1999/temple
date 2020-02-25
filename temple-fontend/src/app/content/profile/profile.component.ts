@@ -111,7 +111,6 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
-
   goToEdit() {
     const path = `/profile/${this.userId}/edit`;
     this.router.navigate([path]);
