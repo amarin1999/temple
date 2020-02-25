@@ -41,13 +41,13 @@ public class HistoryDharmaServiceImpl implements HistoryDharmaService {
 
 	@Override
 	public List<HistoryDharmaDto> getHistoryDhamaByMemberId(Long memberId) throws Exception {
-		List<HistoryDharmaEntity> HistoryDharmaEntity = new ArrayList<>();
+		List<HistoryDharmaEntity> historyDharmaEntity = new ArrayList<>();
 		try {
-			HistoryDharmaEntity = historyDharmaRepository.getHistoryDhamaByMemberId(memberId);
+			historyDharmaEntity = historyDharmaRepository.getHistoryDhamaByMemberId(memberId);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
-		return mapListEntityToDto(HistoryDharmaEntity);
+		return mapListEntityToDto(historyDharmaEntity);
 	}
 
 	@Override

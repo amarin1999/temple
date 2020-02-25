@@ -231,7 +231,7 @@ public class CourseController {
 		try {
 			// เปลี่ยนไปใช้ ApprovalCourses จากเดิม Course (TeacherGetCoursesApproval)
 			// เพิ่มจำนวนนักเรียนในแต่ละคอร์ส
-			dto = courseService.TeacherGetCoursesApprovalOutTime(member.getId(), offset, limit, query);
+			dto = courseService.teacherGetCoursesApprovalOutTime(member.getId(), offset, limit, query);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
@@ -254,7 +254,7 @@ public class CourseController {
 		int count;
 		MemberDto member = memberService.getCurrentMember();
 		try {
-			count = courseService.CountTeacherCoursesApproval(member.getId());
+			count = courseService.countTeacherCoursesApproval(member.getId());
 			dto.setTotalRecord(count);
 			listDto.add(dto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -279,7 +279,7 @@ public class CourseController {
 		int count;
 		MemberDto member = memberService.getCurrentMember();
 		try {
-			count = courseService.CountTeacherCoursesApprovalOutTime(member.getId());
+			count = courseService.countTeacherCoursesApprovalOutTime(member.getId());
 			dto.setTotalRecord(count);
 			listDto.add(dto);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());

@@ -9,10 +9,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdgs.temple.entity.CourseEntity;
+import com.cdgs.temple.entity.TempCourseEntity;
 
 public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 	CourseEntity findByCourseId(Long id);
-	
+
 	List<CourseEntity> findAll();
 
 	// count ข้อมูลของ admin
@@ -129,6 +130,11 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 			+ "SELECT c.course_id FROM courses c INNER JOIN courses_teacher ct ON c.course_id=ct.course_id INNER JOIN special_approve sa ON c.course_id=sa.course_id WHERE 1=1 AND ct.member_id=:memberId AND sa.spa_status='4' AND c.course_status='0' GROUP BY c.course_id) t1", nativeQuery = true)
 	Integer countCoursesTeacherApprovalAllOutTime(@Param("memberId") Long memberId);
 
+	@Query(value = "SELECT c.* " + "FROM members_has_courses mhc "
+			+ "LEFT JOIN courses c ON mhc.course_id = c.course_id "
+			+ "WHERE mhc.member_id = :memberId AND mhc.mhc_status = :status ORDER BY mhc.register_date DESC ", nativeQuery = true)
+	List<CourseEntity> findCoursesUser(@Param("memberId") Long memberId, @Param("status") String status);
+
 	@Modifying
 	@Transactional
 	@Query(value = "UPDATE courses as c   " + "set c.course_enable = '0'  "
@@ -140,11 +146,9 @@ public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 	@Query(value = "UPDATE courses as c   " + "set c.course_enable = 1  "
 			+ "WHERE c.course_id = :courseId", nativeQuery = true)
 	void updateCourseToEnable(@Param("courseId") Long id);
-	
-	@Query(value = "SELECT * FROM courses" + 
-			       " WHERE course_create_date < DATE_ADD(NOW() , INTERVAL +1 MONTH)" +
-			       " AND course_no = '0'"+
-			       " ORDER BY course_create_date DESC", nativeQuery = true)
+
+	@Query(value = "SELECT * FROM courses" + " WHERE course_create_date < DATE_ADD(NOW() , INTERVAL +1 MONTH)"
+			+ " AND course_no = '0'" + " ORDER BY course_create_date DESC", nativeQuery = true)
 	List<CourseEntity> getLastedCourses();
 
 }

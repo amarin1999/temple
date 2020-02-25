@@ -12,7 +12,7 @@ public interface CourseService {
 
 	List<CourseDto> getHistory(Long memberId);
 
-	List<CourseDto> TeacherGetCoursesApproval(Long memberId);
+	List<CourseDto> teacherGetCoursesApproval(Long memberId);
 
 	List<CourseDto> getCoursesUser(Long memberId, String status);
 
@@ -23,7 +23,7 @@ public interface CourseService {
 	CourseDto getCourseMonk(Long id);
 
 	CourseDto getCourseUser(Long memberId, Long courseId);
-
+	
 	CourseDto createCourse(CourseDto body);
 
 	CourseDto updateCourse(Long id, CourseDto body);
@@ -32,7 +32,7 @@ public interface CourseService {
 
 	Boolean deleteCourse(long id);
 
-	Integer CountTeacherCoursesApproval(Long memberId);
+	Integer countTeacherCoursesApproval(Long memberId);
 
 	Integer countCourses();
 
@@ -60,9 +60,9 @@ public interface CourseService {
 
 	CourseDto getCourseById(Long courseId);
 
-	List<CourseDto> TeacherGetCoursesApprovalOutTime(Long memberId, int offset, int limit, String query);
+	List<CourseDto> teacherGetCoursesApprovalOutTime(Long memberId, int offset, int limit, String query);
 
-	Integer CountTeacherCoursesApprovalOutTime(Long memberId);
+	Integer countTeacherCoursesApprovalOutTime(Long memberId);
 	
 	List <CourseDto> getLastedCourses();
 

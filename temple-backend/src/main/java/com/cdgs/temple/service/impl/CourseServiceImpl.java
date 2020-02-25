@@ -109,14 +109,8 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public List<CourseDto> getCoursesUser(Long memberId, String status) {
-		String enable = "";
-		if (status.equals("1")) {
-			enable = "*";
-		} else {
-			enable = "1";
-		}
-		List<TempCourseEntity> entity = tempCourseRepository.findCoursesUser(memberId, status, enable);
-		return mapListTempEntityToDto(entity);
+		List<CourseEntity> entity = courseRepository.findCoursesUser(memberId, status);
+		return mapListEntityToDto(entity);
 	}
 
 	@Override
@@ -209,7 +203,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseDto> TeacherGetCoursesApproval(Long memberId) {
+	public List<CourseDto> teacherGetCoursesApproval(Long memberId) {
 
 		List<CourseEntity> course = courseRepository.fetchCoursesTeacherApproval(memberId);
 		if (course != null) {
@@ -219,7 +213,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public Integer CountTeacherCoursesApproval(Long memberId) {
+	public Integer countTeacherCoursesApproval(Long memberId) {
 		Integer courses = courseRepository.countCoursesTeacherApprovalAll(memberId);
 		if (courses != null) {
 			return courses;
@@ -296,7 +290,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseDto> TeacherGetCoursesApprovalOutTime(Long memberId, int offset, int limit, String query) {
+	public List<CourseDto> teacherGetCoursesApprovalOutTime(Long memberId, int offset, int limit, String query) {
 
 		List<CourseEntity> course = courseRepository.fetchCoursesTeacherApprovalOutTime(memberId, offset, limit, query);
 		if (course != null) {
@@ -306,7 +300,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public Integer CountTeacherCoursesApprovalOutTime(Long memberId) {
+	public Integer countTeacherCoursesApprovalOutTime(Long memberId) {
 		Integer courses = courseRepository.countCoursesTeacherApprovalAllOutTime(memberId);
 		if (courses != null) {
 			return courses;
