@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { Location } from 'src/app/shared/interfaces/location';
+import { AuthService } from 'src/app/shared/service/auth.service';
+import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { Baggage } from '../../shared/interfaces/baggage';
 import { BaggageService } from '../../shared/service/baggage.service';
-import { MenuItem, ConfirmationService, MessageService } from 'primeng/api';
-import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
-import { AuthService } from 'src/app/shared/service/auth.service';
 import { LocationService } from '../location/location.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Location } from 'src/app/shared/interfaces/location';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize } from 'rxjs/internal/operators/finalize';
 
 @Component({
   selector: 'app-baggages',
