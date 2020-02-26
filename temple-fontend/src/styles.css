@@ -204,6 +204,42 @@ p-table, p-panel, .word-wrap, .ui-widget {
   }
 }
 
+@keyframes shake2 {
+  0% {
+    transform: translate(1px, 1px) rotate(10deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-10deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(10deg);
+  }
+  30% {
+    transform: translate(-3px, 0px) rotate(-10deg);
+  }
+  40% {
+    transform: translate(-3px, 0px) rotate(10deg);
+  }
+  50% {
+    transform: translate(-3px, 0px) rotate(-10deg);
+  }
+  60% {
+    transform: translate(-3px, 0px) rotate(10deg);
+  }
+  70% {
+    transform: translate(-3px, 0px) rotate(-10deg);
+  }
+  80% {
+    transform: translate(-3px, 0px) rotate(10deg);
+  }
+  90% {
+    transform: translate(-3px, 0px) rotate(-10deg);
+  }
+  100% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+}
+
 button.ui-button {
   min-width: 120px;
 }

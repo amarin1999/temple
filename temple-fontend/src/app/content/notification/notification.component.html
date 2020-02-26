@@ -2,33 +2,33 @@
 
   <ng-container *ngIf="notiDisable">
     <div class="animation-page">
-      <div class="wrapper-menu" >
-        <div class="ui-g ">
+      <div class="wrapper-menu">
+        <div class="ui-g">
           <div class=" ui-g-4 ui-lg-8 ui-md-10 ui-sm-12 set-high">
-          <a [routerLink]="[ '/notification']">
+            <a [routerLink]="[ '/notification']">
+              <span class='noti-text'>
+                <i class="pi pi-bell icon-noti"></i>
+
+                <span class="boldAndBig"> คุณมี {{numberOfNotice}} การแจ้งเตือน...( คลิกเพื่อดูเพิ่มเติม )</span>
+
+              </span>
+            </a>
+
+            &nbsp;
+
+          </div>
+
+          <div class="ui-g-4 ui-lg-4 ui-md-2 ui-sm-12 place-self" style="text-align: right;">
             <span>
-              <i class="pi pi-bell" style="color:#e91224;animation: shake 1.5s;vertical-align: middle;"></i>
-
-              <span class="boldAndBig"> คุณมี {{numberOfNotice}} การแจ้งเตือน...( คลิกเพื่อดูเพิ่มเติม )</span>
-
+              <span (click)="toggle()" class="wrap-close-noti">
+                <i class="pi pi-times icon-close-noti"></i>
+                <span class="close-text-noti">ปิดการแจ้งเตือน</span>
+              </span>
             </span>
-          </a>
 
-          &nbsp;
-
-        </div>
-
-        <div class="ui-g-4 ui-lg-4 ui-md-2 ui-sm-12 place-self" style="text-align: right;">
-          <span>
-            <span (click)="toggle()" class="wrap-close-noti">
-              <i class="pi pi-times icon-close-noti"></i>
-              <span class="close-text-noti">ปิดการแจ้งเตือน</span>
-            </span>
-          </span>
-
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </ng-container>
 </ng-container>
