@@ -18,7 +18,7 @@ export class ScheduleComponent implements OnInit {
   date: Date;
   newEndDate: any;
   newStartDate: any;
-
+  status: any;
   constructor(
     private scheduleService: ScheduleService,
     private breadCrumbService: BreadcrumbService,
@@ -62,6 +62,15 @@ export class ScheduleComponent implements OnInit {
             element.start = this.newStartDate;
           });
           this.events = res['data'];
+          /*เปล่ยนสี events ตาม การเรียนคอร์สนอกเวลา และ ในเวลาปกติ
+          */
+          this.events = this.events.map(data => {
+            if (data.courseStatus === '1') {
+              return { ...data, color: '#007ad9' };
+            } else {
+              return { ...data, color: '#e68a00' };
+            }
+          });
         }
       }).catch(err => {
         console.log('Error', err);
@@ -82,15 +91,31 @@ export class ScheduleComponent implements OnInit {
             this.newStartDate = new DatePipe('en-En').transform(element.start, 'yyyy-MM-dd');
             element.end = this.newEndDate;
             element.start = this.newStartDate;
+
           });
           this.events = res['data'];
+          /*เปล่ยนสี events ตาม การเรียนคอร์สนอกเวลา และ ในเวลาปกติ
+         */
+          this.events = this.events.map(data => {
+            if (data.courseStatus === '1') {
+              return { ...data, color: '#007ad9' };
+            } else if (data.courseStatus === '0') {
+              return { ...data, color: '#e68a00' };
+            }
+          });
+
+          console.log(this.status);
+
+
+          console.log(this.events);
         }
       }).catch(err => {
         console.log('Error', err);
       }).finally(() => this.spinner.hide());
   }
 
-  private setOption() {
+  public setOption() {
+    // if (this.status === '1') {
     this.options = {
       header: {
         left: 'prev,today,next',
@@ -107,9 +132,34 @@ export class ScheduleComponent implements OnInit {
         day: 'วัน',
         list: 'แผนงาน'
       },
+      // eventColor: '#378006',
       allDayText: 'ตลอดวัน',
       eventLimitText: 'เพิ่มเติม',
       noEventsMessage: 'ไม่มีกิจกรรมที่จะแสดง'
-    };
+      //   };
+      // } else if (this.status === '0') {
+      //   this.options = {
+      //     header: {
+      //       left: 'prev,today,next',
+      //       center: 'title',
+      //       right: 'month,agendaWeek'
+      //     },
+      //     locale: 'th',
+      //     buttonText: {
+      //       prev: 'ย้อน',
+      //       next: 'ถัดไป',
+      //       today: 'วันนี้',
+      //       month: 'เดือน',
+      //       week: 'สัปดาห์',
+      //       day: 'วัน',
+      //       list: 'แผนงาน'
+      //     },
+      //     eventColor: '#007ad9',
+      //     allDayText: 'ตลอดวัน',
+      //     eventLimitText: 'เพิ่มเติม',
+      //     noEventsMessage: 'ไม่มีกิจกรรมที่จะแสดง'
+      //   };
+    }
   }
+
 }
