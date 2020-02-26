@@ -769,15 +769,9 @@ export class EditFormComponent implements OnInit {
   showToast(key, detail, severity) {
     console.log(this.showRole);
 
-    if(this.showRole){
-      if (this.authService.getRole().getValue() === 'admin' && this.personalId === localStorage.getItem('userId')) {
-        this.manageUserService.changeUserdata(this.personalId, this.showRole).subscribe();
-      } 
+    if (this.personalId === localStorage.getItem('userId')) {
+      this.manageUserService.setUser(this.personalId).subscribe();
     }
-    else{
-      this.manageUserService.changeUserdata(this.personalId, this.showRole).subscribe();
-    }
-
     this.messageService.clear();
     this.messageService.add({
       severity: severity,
