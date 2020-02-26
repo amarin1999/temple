@@ -45,6 +45,7 @@ export class EditFormComponent implements OnInit {
   public onEdit: boolean;
   public pipe = new DatePipe('th-TH');
   public showRole: boolean;
+  public showUserRole: boolean;
   public roles: Role[];
   public msgs: Message[] = [];
   public urlback: string;
@@ -225,6 +226,7 @@ export class EditFormComponent implements OnInit {
     this.settingCalendarTH();
     this.showRole = this.roleService.getRoleStatus();
     this.roles = this.roleService.getRoles();
+    this.showUserRole = this.roleService.getUserRoleStatus();
     this.personalId = this.route.snapshot.paramMap.get('id');
     this.setBack();
     this.registerSuccess = false;
@@ -312,7 +314,7 @@ export class EditFormComponent implements OnInit {
     this.spinner.show();
     this.manageUserService.getUser(this.personalId).toPromise()
       .then(res => {
-        
+
         const titlename = {
           id: res['data']['titleId'],
           display: res['data']['titleDisplay'],
@@ -387,7 +389,7 @@ export class EditFormComponent implements OnInit {
         this.editForm.controls['postalCode'].patchValue(
           res['data']['postalCode']
         );
-        this.editForm.controls['province'].patchValue(province);        
+        this.editForm.controls['province'].patchValue(province);
       }
       ).catch(err => {
         console.log(err['error']['errorMessage']);
@@ -765,7 +767,9 @@ export class EditFormComponent implements OnInit {
   }
 
   showToast(key, detail, severity) {
-    if(!this.showRole){
+    console.log(this.showRole);
+
+    if (this.personalId === localStorage.getItem('userId')) {
       this.manageUserService.setUser(this.personalId).subscribe();
     }
     this.messageService.clear();
