@@ -312,6 +312,7 @@ export class EditFormComponent implements OnInit {
     this.spinner.show();
     this.manageUserService.getUser(this.personalId).toPromise()
       .then(res => {
+        
         const titlename = {
           id: res['data']['titleId'],
           display: res['data']['titleDisplay'],
@@ -386,7 +387,7 @@ export class EditFormComponent implements OnInit {
         this.editForm.controls['postalCode'].patchValue(
           res['data']['postalCode']
         );
-        this.editForm.controls['province'].patchValue(province);
+        this.editForm.controls['province'].patchValue(province);        
       }
       ).catch(err => {
         console.log(err['error']['errorMessage']);
@@ -764,6 +765,9 @@ export class EditFormComponent implements OnInit {
   }
 
   showToast(key, detail, severity) {
+    if(!this.showRole){
+      this.manageUserService.setUser(this.personalId).subscribe();
+    }
     this.messageService.clear();
     this.messageService.add({
       severity: severity,

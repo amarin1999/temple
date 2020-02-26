@@ -36,13 +36,13 @@ export class ManageUserService {
 
   }
 
-  getUser(id: String) {
+  getUser(id: string) {
     return this.http.get(`${ApiConstants.baseURl}/members/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('access-token')}`
       }
     }).pipe(
-      map((res) => {
+      map((res) => {           
         return {
           status: res['result'],
           data: res['data'][0],
@@ -51,7 +51,7 @@ export class ManageUserService {
     );
   }
 
-  setUser(id: String) {
+  setUser(id: string) {
     return this.http.get(`${ApiConstants.baseURl}/members/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('access-token')}`
