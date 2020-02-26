@@ -20,4 +20,5 @@ public class GraduatedCourseEntity implements Serializable {
 	private String courseName;
 	private Long countMember;
 	private String courseDetail;
+	private String courseStatus;
 }

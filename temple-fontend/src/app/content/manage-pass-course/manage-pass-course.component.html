@@ -25,21 +25,34 @@
               </ng-template>
               <ng-template pTemplate="header" let-columns>
                 <tr>
-                  <th *ngFor="let col of columns">
-                    {{col.header}}
+                  <th>
+                    ชื่อคอร์ส
+                  </th>
+                  <th>
+                    รายละเอียด
+                  </th>
+                  <th>
+                    จำนวนนักเรียน
+                  </th>
+                  <th >
+                    ประเภทคอร์ส
+                    
                   </th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr [pSelectableRow]="rowData"  >
-                  <td *ngFor="let col of columns">
-                    <div style="height: 10px"></div>
-                    <div *ngIf="rowData[col.field] === rowData['name'] && col.field == 'name'">{{rowData['name']}}</div>
-                    <div *ngIf="rowData[col.field] === rowData['detail'] && col.field == 'detail'">{{rowData['detail']}}
-                    </div>
-                    <div *ngIf="rowData[col.field] === rowData['numberOfMembers']" style="text-align: center">
-                      {{rowData['numberOfMembers']}}</div>
-                    <div style="height: 10px"></div>
+                <tr [pSelectableRow]="rowData">
+                  <td>
+                    {{(rowData?.name)? rowData.name : '-'}}
+                  </td>
+                  <td>
+                    {{(rowData?.detail)? rowData.detail : '-'}}
+                  </td>
+                  <td>
+                    {{(rowData?.numberOfMembers)? rowData.numberOfMembers : '-' }}
+                  </td>
+                  <td>
+                    {{(rowData?.courseStatus === '0')? 'คอร์สนอกเวลา' : 'คอร์สปกติ' }}
                   </td>
                 </tr>
               </ng-template>

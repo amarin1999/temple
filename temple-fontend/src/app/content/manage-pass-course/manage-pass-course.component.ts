@@ -51,6 +51,7 @@ export class ManagePassCourseComponent implements OnInit {
       { field: 'name', header: 'ชื่อคอร์ส' },
       { field: 'detail', header: 'รายละเอียด' },
       { field: 'numberOfMembers', header: 'จำนวนนักเรียน' },
+      // { field: 'courseStatus', header: 'ประเภทคอร์ส' }
     ];
   }
 
@@ -60,18 +61,18 @@ export class ManagePassCourseComponent implements OnInit {
 
   private getData(first = 0, rows = 5, query: string = '') {
     this.loading = true;
-    this.spinner.show();
+    // this.spinner.show();
     of([first, rows, query]).pipe(
       switchMap(([firstCon, rowsCon, queryCon]: [number, number, string]) =>
         this.managePassCourse.getAllCourse(firstCon, rowsCon, queryCon))
-    ).pipe(finalize(() => this.spinner.hide())).subscribe(res => {
+    ).subscribe(res => {
       if (res['status'] === 'Success') {
         this.courses = res['data'];
         this.loading = false;
       }
     });
   }
-
+  // .pipe(finalize(() => this.spinner.hide()))
   private getTotalRecord() {
     // this.spinner.show();
     this.managePassCourse.getTotalRecord().subscribe(res => {

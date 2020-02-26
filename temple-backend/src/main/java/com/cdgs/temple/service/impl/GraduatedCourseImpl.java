@@ -43,6 +43,7 @@ public class GraduatedCourseImpl implements GraduatedCourseService {
 		dto.setName(course.getCourseName());
 		dto.setDetail(course.getCourseDetail());
 		dto.setNumberOfMembers(course.getCountMember());
+		dto.setCourseStatus(course.getCourseStatus());
 		return dto;
 	}
 

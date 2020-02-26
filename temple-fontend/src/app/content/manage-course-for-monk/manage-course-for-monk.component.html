@@ -85,8 +85,8 @@
                                     <div *ngIf="rowData[col.field] == rowData['conditionMin'] && col.field == 'conditionMin'"
                                         style="text-align: center">ต้องผ่านอย่างน้อย {{rowData['conditionMin']}} คอร์ส
                                     </div>
-                                    <div *ngIf="rowData[col.field] == rowData['status'] && col.field == 'status'"
-                                        style="text-align: center">{{rowData['status']}}</div>
+                                    <!-- <div *ngIf="rowData[col.field] == rowData['status'] && col.field == 'status'"
+                                        style="text-align: center">{{rowData['status']}}</div> -->
                                 </td>
                                 <td style="text-align: center">
                                     {{(rowData?.status === '1')? 'คอร์สปกติ': 'คอร์สนอกเวลา' }}

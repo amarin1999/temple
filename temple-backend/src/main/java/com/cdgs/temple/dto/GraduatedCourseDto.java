@@ -15,4 +15,5 @@ public class GraduatedCourseDto implements Serializable {
 	private String name;
 	private String detail;
 	private Long numberOfMembers;
+	private String courseStatus;
 }

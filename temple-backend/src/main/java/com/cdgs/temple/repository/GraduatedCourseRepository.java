@@ -24,7 +24,7 @@ public interface GraduatedCourseRepository extends CrudRepository<GraduatedCours
 
 	@Query(value = "SELECT courses.course_id,courses.course_name,courses.course_detail, "
 		+ "(SELECT COUNT(mhc.members_has_course_id) FROM members_has_courses mhc "
-		+ "WHERE mhc.course_id = courses.course_id AND mhc.mhc_status = '2') as count_member " 
+		+ "WHERE mhc.course_id = courses.course_id AND mhc.mhc_status = '2') as count_member, course_status " 
 		+ "FROM courses INNER JOIN courses_teacher on  courses_teacher.course_id = courses.course_id " 
 		+ "WHERE course_enable = true AND courses_teacher.member_id = :monkId   "
 		+ "AND (SELECT COUNT(mhc.members_has_course_id) FROM members_has_courses mhc "
