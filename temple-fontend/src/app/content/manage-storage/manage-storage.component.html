@@ -18,9 +18,9 @@
                                             <ng-template pTemplate="caption" *ngIf="showEditButton('admin')">
                                                 <div class="ui-g">
                                                     <div class="ui-g-12 ui-md-4" style="text-align: left;">
-                                                        <button pButton type="button" (click)="showDialogToAdd()"
-                                                            label="เพิ่ม" class="ui-button-info"
-                                                            style="width: 50%"></button>
+                                                        <button pButton icon="pi pi-plus" type="button"
+                                                            (click)="showDialogToAdd()" label="เพิ่ม"
+                                                            class="ui-button-info" style="width: 50%"></button>
                                                     </div>
                                                     <div class="ui-g-12 ui-md-4 ui-md-offset-4 ui-inputgroup"
                                                         style="text-align: right;">
@@ -34,15 +34,16 @@
                                             </ng-template>
                                             <ng-template pTemplate="header" let-columns>
                                                 <tr>
-                                                    <th scope="colgroup" *ngFor="let col of columns" [pSortableColumn]="col.field"
-                                                        [ngStyle]="{'width': col.width}">
+                                                    <th scope="colgroup" *ngFor="let col of columns"
+                                                        [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
                                                         {{col.header}}
                                                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
                                                             ariaLabelDesc="Activate to sort in descending order"
                                                             ariaLabelAsc="Activate to sort in ascending order">
                                                         </p-sortIcon>
                                                     </th>
-                                                    <th scope="colgroup" *ngIf="showEditButton('admin')" style="width: '15%'"></th>
+                                                    <th scope="colgroup" *ngIf="showEditButton('admin')"
+                                                        style="width: '15%'"></th>
                                                 </tr>
                                             </ng-template>
                                             <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -82,9 +83,9 @@
                                                             <div style="margin: 0 auto;">
                                                                 <div class="ui-g">
                                                                     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 ">
-                                                                        <button pButton icon="pi pi-pencil" type="button"
-                                                                            (click)="showEdit(rowData)" label="แก้ไข"
-                                                                            class="ui-button-warning"
+                                                                        <button pButton icon="pi pi-pencil"
+                                                                            type="button" (click)="showEdit(rowData)"
+                                                                            label="แก้ไข" class="ui-button-warning"
                                                                             [disabled]="rowData.status==0"></button>
                                                                     </div>
                                                                 </div>
@@ -117,8 +118,8 @@
                                             </ng-template>
                                             <ng-template pTemplate="header" let-columns>
                                                 <tr>
-                                                    <th scope="colgroup" *ngFor="let col of columns" [pSortableColumn]="col.field"
-                                                        [ngStyle]="{'width': col.width}">
+                                                    <th scope="colgroup" *ngFor="let col of columns"
+                                                        [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
                                                         {{col.header}}
                                                         <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
                                                             ariaLabelDesc="Activate to sort in descending order"

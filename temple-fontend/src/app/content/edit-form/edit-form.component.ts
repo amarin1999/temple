@@ -292,9 +292,8 @@ export class EditFormComponent implements OnInit {
   }
 
   setBack() {
-    const route =
-      this.authService.getRole().value === 'admin' ? '' : this.personalId;
-    this.urlback = this.route.snapshot.data.urlback + route;
+    this.urlback = this.route.snapshot.data.urlback;
+    this.urlback += this.urlback === '/users' ? '' : this.personalId;
     this.messageback = this.route.snapshot.data.messageback;
   }
 
@@ -502,10 +501,10 @@ export class EditFormComponent implements OnInit {
     let temp = 0;
     this.courseHisList.forEach(e => {
       if (e.courseName === '' || e.courseName === null || e.location === '' || e.location === null) {
-        return temp = 1;
+        temp = 1;
       }
     });
-    if (!this.editForm.valid) {
+    if (this.editForm.invalid) {
       this.subscribeInputMessageWaring();
       this.showMessageWrongValidate();
     } else if (temp === 1) {
@@ -739,7 +738,7 @@ export class EditFormComponent implements OnInit {
               this.showToast(
                 'alertMessage',
                 'แก้ไขข้อมูลส่วนตัวสำเร็จ',
-                'success'
+                'success',
               );
             } else {
               this.showToast(
@@ -756,6 +755,7 @@ export class EditFormComponent implements OnInit {
                 'error'
               );
             }
+
           ).finally(() => this.spinner.hide());
         break;
       }

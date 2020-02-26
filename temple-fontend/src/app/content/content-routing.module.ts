@@ -189,10 +189,10 @@ const routes: Routes = [
       {
         path: 'report',
         component: ReportComponent
-      },{
+      }, {
         path: 'dashboard',
         component: DashboardComponent
-      },{
+      }, {
         path: 'notification',
         component: NotificationDetailComponent
       }
