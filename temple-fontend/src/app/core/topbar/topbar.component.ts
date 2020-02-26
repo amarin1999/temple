@@ -4,6 +4,7 @@ import { ManageUserService } from 'src/app/shared/service/manage-user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Member } from 'src/app/shared/interfaces/member';
 import { map, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, min } from 'rxjs/operators';
 
 @Component({
     selector: 'app-topbar',
@@ -23,9 +24,10 @@ export class TopbarComponent implements OnInit {
     }
 
     ngOnInit() {
+
         this.authService.isLoggedIn().subscribe(res => {
             this.isLoggedIn = res;
-            this.isLoggedIn ? this.manageUser.getUser(localStorage.getItem('userId')).subscribe() : undefined;           
+            this.isLoggedIn ? this.manageUser.setUser(localStorage.getItem('userId')).subscribe() : undefined;
         })
 
         this.manageUser.getUserOnline().subscribe(res => {
