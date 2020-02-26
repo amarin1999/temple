@@ -1,6 +1,6 @@
 <div class="top-bar">
     <div class="banner">
-        <a routerLink="/"><img class="logo-btn" src="./assets/images/logo.png" /></a>
+        <a routerLink="/"><img class="logo-btn" src="./assets/images/logo.png" alt="โลโก้วัด" /></a>
     </div>
     <div class="title">
         <span style="color:whitesmoke;">ระบบรับสมัครอบรมธรรมะ วัดป่าโสมพนัส</span>
@@ -8,18 +8,19 @@
     <div class="top-menu" *ngIf="isLoggedIn && userData">
         <span style="color:whitesmoke;">
             <span [routerLink]="['/profile',userData?.id]" class="right-header-btn" id="user-name">
-                <img class="user-img logo-btn" src="data:image/png;base64,{{userData?.img}}" *ngIf="userData?.img">
-                <img class="user-img logo-btn" src="./assets/images/no-img.png" *ngIf="!userData?.img">
+                <img class="user-img logo-btn" src="data:image/png;base64,{{userData?.img}}" alt="รูปโปรไฟล์"
+                    *ngIf="userData?.img">
+                <img class="user-img logo-btn" src="./assets/images/no-img.png" alt="รูปโปรไฟล์" *ngIf="!userData?.img">
                 &nbsp;
                 <span class="text-menu">{{userData?.titleName}}{{userData?.fname}} {{userData?.lname}}</span>
             </span>
 
             <span class="right-header-btn" (click)="logout()">
-                <img class=" logout-menu" src="./assets/images/logout.png" (click)="logout()">
+                <img class=" logout-menu" alt="ออกจากระบบ" src="./assets/images/logout.png" (click)="logout()">
                 <span class="text-menu">ออกจากระบบ</span>
             </span>
             <span class="btn-responsive">
-                <i class="pi pi-bars" id="icon-responsive" (click)="responsiveStatus = true"> </i>
+                <em class="pi pi-bars" id="icon-responsive" (click)="responsiveStatus = true"></em>
 
             </span>
         </span>
@@ -28,14 +29,14 @@
     <p-sidebar [(visible)]="responsiveStatus" position="top">
 
         <div [routerLink]="['/profile',userData?.id]" class="menu-responsive" (click)="responsiveStatus = false">
-            <img class="user-img " src="data:image/png;base64,{{userData?.img}}" *ngIf="userData?.img">
-            <img class="user-img " src="./assets/images/no-img.png" *ngIf="!userData?.img">
+            <img class="user-img " src="data:image/png;base64,{{userData?.img}}" alt="รูปโปรไฟล์" *ngIf="userData?.img">
+            <img class="user-img " src="./assets/images/no-img.png" alt="รูปโปรไฟล์" *ngIf="!userData?.img">
             &nbsp;
             {{userData?.titleName}}{{userData?.fname}} {{userData?.lname}}
         </div>
         <hr />
         <div (click)="logout()" class="menu-responsive">
-            <img class="logout-menu" src="./assets/images/logout.png" (click)="logout()">
+            <img class="logout-menu" src="./assets/images/logout.png" alt="ออกจากระบบ" (click)="logout()">
             &nbsp;
             <span class="text-menu">ออกจากระบบ</span>
         </div>
