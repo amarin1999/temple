@@ -42,13 +42,21 @@ export class ManageUserService {
         Authorization: `Bearer ${localStorage.getItem('access-token')}`
       }
     }).pipe(
-      map((res) => {           
+      map((res) => {
         return {
           status: res['result'],
           data: res['data'][0],
         };
       })
     );
+  }
+
+  changeUserdata(id: string, stat: boolean) {    
+    if (stat) {
+      return this.setAdmin(id);
+    } else {
+      return this.setUser(id);
+    }
   }
 
   setUser(id: string) {
@@ -62,6 +70,19 @@ export class ManageUserService {
       })
     );
   }
+
+  setAdmin(id: string) {
+    return this.http.get(`${ApiConstants.baseURl}/members/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access-token')}`
+      }
+    }).pipe(
+      map((res) => {
+        this.user.next(res['data'][0]);
+      })
+    );
+  }
+
 
   getUserOnline(): Subject<Member> {
     return this.user;
