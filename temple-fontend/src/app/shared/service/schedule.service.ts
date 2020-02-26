@@ -24,7 +24,8 @@ export class ScheduleService {
               title: data['course']['courseName'],
               start: data['course']['courseStDate'],
               end: data['course']['courseEndDate'],
-              url: `#/courses/${data['courseId']}`
+              url: `#/courses/${data['courseId']}`,
+              courseStatus: data['course']['courseStatus']
             }))
           };
         })
@@ -41,7 +42,8 @@ export class ScheduleService {
               title: data['course']['courseName'],
               start: data['courseScheduleDate'],
               end: data['course']['courseEndDate'],
-              url: `#/courses/${data['courseId']}`
+              url: `#/courses/${data['courseId']}`,
+              courseStatus: data['course']['courseStatus']
             }))
           };
         })
