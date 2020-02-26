@@ -13,18 +13,17 @@
               <button pButton type="button" routerLink="course/createCourse" label="เพิ่ม" class="ui-button-info"
                 style="width: 20%"></button>
             </div>
-            <!-- (click)="showDialogToAdd()" -->
           </ng-template>
           <ng-template pTemplate="header" let-columns>
             <tr>
-              <th pSortableColumn="name">
+              <th scope="colgroup" pSortableColumn="name">
                 สถานที่
                 <p-sortIcon field="name" ariaLabel="Activate to sort"
                   ariaLabelDesc="Activate to sort in descending order"
                   ariaLabelAsc="Activate to sort in ascending order">
                 </p-sortIcon>
               </th>
-              <th>
+              <th scope="colgroup">
               </th>
             </tr>
           </ng-template>
@@ -36,9 +35,8 @@
               </td>
               <td>
                 <div style="text-align:center">
-                  <button pButton type="button" (click)="showEdit(rowData['id'])" label="แก้ไข"
+                  <button pButton type="button" (click)="showEdit(rowData['id'])" icon="pi pi-pencil" label="แก้ไข"
                     class="ui-button-warning ui-button-raised" style="width: 40%;"></button>
-                  <!-- <button pButton type="button" (click)="delete(rowData['id'])" label="ลบ" class="ui-button-danger" style="width: 40%;margin-left: 5mm"></button> -->
                 </div>
               </td>
             </tr>
@@ -47,46 +45,3 @@
       </div>
     </div>
   </div>
-
-  <!-- <p-dialog header="course Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '300px'}">
-      <div class="ui-g ui-fluid" *ngIf="course">
-          <div class="ui-g-12">
-              <div class="ui-g-4">
-                  <label for="date">วันที่</label>
-              </div>
-              <div class="ui-g-8">
-                  <input pInputText id="date" [(ngModel)]="course.date" />
-              </div>
-          </div>
-          <div class="ui-g-12">
-              <div class="ui-g-4">
-                  <label for="name">ชื่อ</label>
-              </div>
-              <div class="ui-g-8">
-                  <input pInputText id="name" [(ngModel)]="course.name" />
-              </div>
-          </div>
-          <div class="ui-g-12">
-              <div class="ui-g-4">
-                  <label for="location">ชื่อสถานที่</label>
-              </div>
-              <div class="ui-g-8">
-                  <input pInputText id="location" [(ngModel)]="course.location" />
-              </div>
-          </div>
-          <div class="ui-g-12">
-              <div class="ui-g-4">
-                  <label for="annotation">หมายเหตุ</label>
-              </div>
-              <div class="ui-g-8">
-                  <input pInputText id="annotation" [(ngModel)]="course.annotation" />
-              </div>
-          </div>
-      </div>
-      <p-footer>
-          <div class="ui-dialog-buttonpane ui-helper-clearfix">
-              <button type="button" pButton (click)="clear()" label="Clear"></button>
-              <button type="button" pButton (click)="save()" label="Save"></button>
-          </div>
-      </p-footer>
-  </p-dialog> -->

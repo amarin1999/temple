@@ -21,28 +21,28 @@
                                 </ng-template>
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
-                                        <th pSortableColumn="fname">
+                                        <th scope="colgroup" pSortableColumn="fname">
                                             สมาชิก
                                             <p-sortIcon field="fname" ariaLabel="Activate to sort"
                                                 ariaLabelDesc="Activate to sort in descending order"
                                                 ariaLabelAsc="Activate to sort in ascending order">
                                             </p-sortIcon>
                                         </th>
-                                        <th pSortableColumn="rolename">
+                                        <th scope="colgroup" pSortableColumn="rolename">
                                             สิทธิการเข้าใช้งาน
                                             <p-sortIcon field="rolename" ariaLabel="Activate to sort"
                                                 ariaLabelDesc="Activate to sort in descending order"
                                                 ariaLabelAsc="Activate to sort in ascending order">
                                             </p-sortIcon>
                                         </th>
-                                        <th pSortableColumn="email">
+                                        <th scope="colgroup" pSortableColumn="email">
                                             ข้อมูลติดต่อ
                                             <p-sortIcon field="email" ariaLabel="Activate to sort"
                                                 ariaLabelDesc="Activate to sort in descending order"
                                                 ariaLabelAsc="Activate to sort in ascending order">
                                             </p-sortIcon>
                                         </th>
-                                        <th>
+                                        <th scope="colgroup">
                                         </th>
                                     </tr>
                                 </ng-template>
@@ -55,21 +55,19 @@
                                                 style="text-align: center">{{rowData.rolename}}</div>
                                             <div
                                                 *ngIf="rowData[col.field] == rowData['contact'] && col.field == 'contact'">
-                                                <span *ngIf="rowData?.email"><i class="pi pi-envelope"></i>
+                                                <span *ngIf="rowData?.email"><em class="pi pi-envelope"></em>
                                                     {{rowData.email}}</span>
                                             </div>
                                             <div
                                                 *ngIf="rowData[col.field] == rowData['contact'] && col.field == 'contact'">
-                                                <i class="pi pi-mobile"></i> {{rowData.tel}}</div>
+                                                <em class="pi pi-mobile"></em> {{rowData.tel}}</div>
                                         </td>
                                         <td>
                                             <div style="text-align:center">
                                                 <button pButton type="button"
                                                     [routerLink]="[ '/users',rowData.id,'edit']" label="แก้ไข"
-                                                    class="ui-button-warning ui-button-raised"
+                                                    class="ui-button-warning ui-button-raised" icon="pi pi-pencil"
                                                     style="width: 40%;"></button>
-                                                <!-- <button pButton type="button" (click)="deleteUser(rowData.id)" label="ลบ" class="ui-button-danger"
-                                                style="width: 40%;margin-left: 5mm"></button> -->
                                             </div>
                                         </td>
                                     </tr>

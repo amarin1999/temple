@@ -31,16 +31,16 @@
                                         </ng-template>
                                         <ng-template pTemplate="header" let-columns>
                                             <tr>
-                                                <th pSortableColumn='name'>
+                                                <th scope="colgroup" pSortableColumn='name'>
                                                     ประเภทการเดินทาง
                                                 </th>
-                                                <th pSortableColumn="timePickUp" style="width: 15%;">
+                                                <th scope="colgroup" pSortableColumn="timePickUp" style="width: 15%;">
                                                     เวลารับ
                                                 </th>
-                                                <th pSortableColumn="timeSend" style="width: 15%;">
+                                                <th scope="colgroup" pSortableColumn="timeSend" style="width: 15%;">
                                                     เวลาส่ง
                                                 </th>
-                                                <th>
+                                                <th scope="colgroup">
                                                     <!-- button edit and delete-->
                                                 </th>
                                             </tr>
@@ -64,7 +64,7 @@
                                                 </td>
                                                 <td>
                                                     <div style="text-align:center">
-                                                        <button pButton type="button" label="แก้ไข"
+                                                        <button pButton type="button" label="แก้ไข" icon="pi pi-pencil"
                                                             (click)="showEdit(rowData['id'])" class="ui-button-warning"
                                                             style="width: 40%;"></button>
                                                         <button pButton type="button" label="ลบ"
@@ -92,7 +92,6 @@
                         <div class="row">
                             <div class="ui-g">
                                 <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-                                    <!-- <p-messages [(value)]="msgs"></p-messages> -->
                                 </div>
                                 <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
                                     <p-table [columns]="cols" [value]="transport" [paginator]="true" [rows]="5"
@@ -106,21 +105,15 @@
                                                             style="width: 40%"></button>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12">
-                        <div class="ui-inputgroup">
-                          <fa-icon [icon]="['fas', 'search']" class="ui-inputgroup-addon"></fa-icon>
-                          <input type="text" pInputText placeholder="ค้นหา" id="input"
-                            (keyup)="searchData($event.target.value)">
-                        </div>
-                      </div> -->
                                             </div>
                                         </ng-template>
                                         <ng-template pTemplate="header" let-columns>
                                             <tr>
-                                                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                                                <th scope="colgroup" *ngFor="let col of columns"
+                                                    [pSortableColumn]="col.field">
                                                     {{ col.header }}
                                                 </th>
-                                                <th>
+                                                <th scope="colgroup">
                                                     <!-- button edit and delete-->
                                                 </th>
                                             </tr>
@@ -132,7 +125,7 @@
                                                 </td>
                                                 <td>
                                                     <div style="text-align:center">
-                                                        <button pButton type="button" label="แก้ไข"
+                                                        <button pButton icon="pi pi-pencil" type="button" label="แก้ไข"
                                                             (click)="showEdit(rowData['id'])" class="ui-button-warning"
                                                             style="width: 40%;"></button>
                                                         <button pButton type="button" label="ลบ"
@@ -190,7 +183,7 @@
           newTransportation === ''
         "></button>
             <button class="ui-button-warning" type="button" *ngIf="!displayTransportation" pButton (click)="update()"
-                label="แก้ไข" [disabled]="
+                label="แก้ไข" icon="pi pi-pencil" [disabled]="
           (tabIndex === 0 && (timePickUp === null || timeSend === null)) ||
           newTransportation === ''
         "></button>

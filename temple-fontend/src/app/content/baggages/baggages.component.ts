@@ -20,13 +20,13 @@ export class BaggagesComponent implements OnInit {
   items: any[];
   newBaggage: boolean;
   baggage: Baggage;
-  lockerId: String;
-  baggageNumber: String;
+  lockerId: string;
+  baggageNumber: string;
   cols: any[];
   location: Location;
-  locationName: String;
+  locationName: string;
   locations: any[];
-  number: Number;
+  number: number;
   public filteredLocation: any[];
   public role: string;
   public menu: MenuItem[];
@@ -143,7 +143,7 @@ export class BaggagesComponent implements OnInit {
         number: this.baggageNumber,
         locationId: this.location['id']
       };
-      
+
       // this.messageService.clear()
       this.baggageService.save(data).toPromise().then(res => {
         this.spinner.show();
@@ -157,13 +157,13 @@ export class BaggagesComponent implements OnInit {
           });
 
         }
-            this.spinner.hide();
+        this.spinner.hide();
       }).catch((e) => console.log(e['message']));
     } else {
       this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มไม่สำเร็จ : ตู้สัมภาระซ้ำ' });
     }
     this.clear();
-    
+
   }
 
   update() {
@@ -188,7 +188,7 @@ export class BaggagesComponent implements OnInit {
               detail: 'ดำเนินการแก้ไขไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด'
             });
           }
-        this.spinner.hide();
+          this.spinner.hide();
         },
           (e) => {
             console.log(e['message']);

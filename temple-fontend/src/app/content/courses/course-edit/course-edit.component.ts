@@ -140,7 +140,7 @@ export class CourseEditComponent implements OnInit {
   }
 
   private initNotice() {
-    this.noticearr.map(res => {
+    this.noticearr.forEach(res => {
       this.notice.push({ id: res });
     });
   }

@@ -31,49 +31,49 @@
                         </ng-template>
                         <ng-template pTemplate="header" let-columns>
                             <tr>
-                                <th pSortableColumn="createDate">
+                                <th scope="colgroup" pSortableColumn="createDate">
                                     วันที่สร้าง
                                     <p-sortIcon field="createDate" ariaLabel="Activate to sort"
                                         ariaLabelDesc="Activate to sort in descending order"
                                         ariaLabelAsc="Activate to sort in ascending order">
                                     </p-sortIcon>
                                 </th>
-                                <th pSortableColumn="lastUpdate">
+                                <th scope="colgroup" pSortableColumn="lastUpdate">
                                     วันที่แก้ไขล่าสุด
                                     <p-sortIcon field="lastUpdate" ariaLabel="Activate to sort"
                                         ariaLabelDesc="Activate to sort in descending order"
                                         ariaLabelAsc="Activate to sort in ascending order">
                                     </p-sortIcon>
                                 </th>
-                                <th pSortableColumn="name" class="ui-p-4">
+                                <th scope="colgroup" pSortableColumn="name" class="ui-p-4">
                                     ชื่อคอร์ส
                                     <p-sortIcon field="name" ariaLabel="Activate to sort"
                                         ariaLabelDesc="Activate to sort in descending order"
                                         ariaLabelAsc="Activate to sort in ascending order">
                                     </p-sortIcon>
                                 </th>
-                                <th pSortableColumn="locationName" class="ui-p-5">
+                                <th scope="colgroup" pSortableColumn="locationName" class="ui-p-5">
                                     สถานที่
                                     <p-sortIcon field="locationName" ariaLabel="Activate to sort"
                                         ariaLabelDesc="Activate to sort in descending order"
                                         ariaLabelAsc="Activate to sort in ascending order">
                                     </p-sortIcon>
                                 </th>
-                                <th pSortableColumn="transportTemple" class="ui-p-5">
+                                <th scope="colgroup" pSortableColumn="transportTemple" class="ui-p-5">
                                     การเดินทางของวัด
                                     <p-sortIcon field="transportTemple" ariaLabel="Activate to sort"
                                         ariaLabelDesc="Activate to sort in descending order"
                                         ariaLabelAsc="Activate to sort in ascending order">
                                     </p-sortIcon>
                                 </th>
-                                <th pSortableColumn="conditionMin" class="ui-p-6">
+                                <th scope="colgroup" pSortableColumn="conditionMin" class="ui-p-6">
                                     หมายเหตุ
                                     <p-sortIcon field="conditionMin" ariaLabel="Activate to sort"
                                         ariaLabelDesc="Activate to sort in descending order"
                                         ariaLabelAsc="Activate to sort in ascending order">
                                     </p-sortIcon>
                                 </th>
-                                <th>
+                                <th scope="colgroup">
 
                                 </th>
                             </tr>
@@ -109,7 +109,7 @@
                                 <td>
                                     <div class="ui-g" style="text-align: center">
                                         <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-                                            <button pButton type="button" label="แก้ไข"
+                                            <button pButton type="button" icon="pi pi-pencil" label="แก้ไข"
                                                 (click)="editCourse(rowData['id'])"
                                                 class="ui-button-warning ui-button-raised"></button>
                                         </div>
