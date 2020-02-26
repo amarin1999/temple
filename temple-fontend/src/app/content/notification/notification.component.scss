@@ -65,7 +65,7 @@
   }
 }
 
-.place-self{
+.place-self {
   place-self: center;
 }
 
@@ -91,7 +91,16 @@ i {
   line-height: 1.22;
 }
 
+.noti-text:hover .icon-noti {
+  animation: shake2 1s ease-out;
+}
 
+
+.icon-noti {
+  color: #e91224;
+  animation: shake 1.5s ;
+  vertical-align: middle;
+}
 
 @media screen and (max-width: 1024px) {
   .boldAndBig {
