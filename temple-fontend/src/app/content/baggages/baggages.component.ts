@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { Location } from 'src/app/shared/interfaces/location';
+import { AuthService } from 'src/app/shared/service/auth.service';
+import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
 import { Baggage } from '../../shared/interfaces/baggage';
 import { BaggageService } from '../../shared/service/baggage.service';
-import { MenuItem, ConfirmationService, MessageService } from 'primeng/api';
-import { BreadcrumbService } from 'src/app/shared/service/breadcrumb.service';
-import { AuthService } from 'src/app/shared/service/auth.service';
 import { LocationService } from '../location/location.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Location } from 'src/app/shared/interfaces/location';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize } from 'rxjs/internal/operators/finalize';
 
 @Component({
   selector: 'app-baggages',
@@ -20,13 +19,13 @@ export class BaggagesComponent implements OnInit {
   items: any[];
   newBaggage: boolean;
   baggage: Baggage;
-  lockerId: String;
-  baggageNumber: String;
+  lockerId: string;
+  baggageNumber: string;
   cols: any[];
   location: Location;
-  locationName: String;
+  locationName: string;
   locations: any[];
-  number: Number;
+  number: number;
   public filteredLocation: any[];
   public role: string;
   public menu: MenuItem[];
@@ -143,7 +142,7 @@ export class BaggagesComponent implements OnInit {
         number: this.baggageNumber,
         locationId: this.location['id']
       };
-      
+
       // this.messageService.clear()
       this.baggageService.save(data).toPromise().then(res => {
         this.spinner.show();
@@ -157,13 +156,13 @@ export class BaggagesComponent implements OnInit {
           });
 
         }
-            this.spinner.hide();
+        this.spinner.hide();
       }).catch((e) => console.log(e['message']));
     } else {
       this.messageService.add({ severity: 'error', summary: 'ข้อความจากระบบ', detail: 'ดำเนินการเพิ่มไม่สำเร็จ : ตู้สัมภาระซ้ำ' });
     }
     this.clear();
-    
+
   }
 
   update() {
@@ -188,7 +187,7 @@ export class BaggagesComponent implements OnInit {
               detail: 'ดำเนินการแก้ไขไม่สำเร็จ : เนื่องจากระบบมีข้อผิดพลาด'
             });
           }
-        this.spinner.hide();
+          this.spinner.hide();
         },
           (e) => {
             console.log(e['message']);

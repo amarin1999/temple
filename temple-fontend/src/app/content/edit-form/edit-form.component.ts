@@ -500,7 +500,7 @@ export class EditFormComponent implements OnInit {
 
   onSubmit(e) {
     let temp = 0;
-    this.courseHisList.filter(e => {
+    this.courseHisList.forEach(e => {
       if (e.courseName === '' || e.courseName === null || e.location === '' || e.location === null) {
         return temp = 1;
       }

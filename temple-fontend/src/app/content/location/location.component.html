@@ -1,6 +1,3 @@
-<!-- <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-    <p-breadcrumb [model]="menu" class="breadcrumb"></p-breadcrumb>
-</div> -->
 <ngx-spinner></ngx-spinner>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 <div class="animation-page">
@@ -15,7 +12,6 @@
         <div class="row">
           <div class="ui-g">
             <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-10">
-              <!-- <p-messages [value]="msgs"></p-messages> -->
               <p-table [columns]="cols" [value]="locations" [paginator]="true" [rows]="5" [responsive]="true">
                 <ng-template pTemplate="caption">
                   <div class="ui-g ui-fluid">
@@ -25,26 +21,18 @@
                           style="width: 40%"></button>
                       </div>
                     </div>
-                    <!-- <div class="ui-g-6 ui-lg-6 ui-md-12 ui-sm-12">
-                        <div class="ui-inputgroup">
-                          <fa-icon [icon]="['fas', 'search']" class="ui-inputgroup-addon"></fa-icon>
-                          <input type="text" pInputText placeholder="ค้นหา" id="input"
-                            (keyup)="searchData($event.target.value)">
-                        </div>
-                      </div> -->
                   </div>
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
                   <tr>
-                    <th pSortableColumn="name">
+                    <th scope="colgroup" pSortableColumn="name">
                       สถานที่
                       <p-sortIcon field="name" ariaLabel="Activate to sort"
                         ariaLabelDesc="Activate to sort in descending order"
                         ariaLabelAsc="Activate to sort in ascending order">
                       </p-sortIcon>
                     </th>
-                    <th>
-
+                    <th scope="colgroup">
                     </th>
                   </tr>
                 </ng-template>
@@ -55,8 +43,8 @@
                     </td>
                     <td>
                       <div style="text-align:center">
-                        <button pButton type="button" (click)="showEdit(rowData['id'])" label="แก้ไข"
-                          class="ui-button-warning" style="width: 40%;"></button>
+                        <button pButton type="button" icon="pi pi-pencil" (click)="showEdit(rowData['id'])"
+                          label="แก้ไข" class="ui-button-warning" style="width: 40%;"></button>
                         <button pButton type="button" (click)="delete(rowData['id'])" label="ลบ"
                           class="ui-button-danger" style="width: 40%;margin-left: 5mm"></button>
                       </div>
@@ -87,8 +75,8 @@
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
           <button *ngIf="newLocation" type="button" pButton (click)="save()" label="บันทึก"
             [disabled]="locationNameEdit?false:true"></button>
-          <button *ngIf="!newLocation" type="button" class="ui-button-warning" pButton (click)="update()" label="แก้ไข"
-            [disabled]="locationNameEdit?false:true"></button>
+          <button *ngIf="!newLocation" icon="pi pi-pencil" type="button" class="ui-button-warning" pButton
+            (click)="update()" label="แก้ไข" [disabled]="locationNameEdit?false:true"></button>
           <button type="button" class="ui-button-raised ui-button-secondary" pButton (click)="clear()"
             label="ยกเลิก"></button>
         </div>

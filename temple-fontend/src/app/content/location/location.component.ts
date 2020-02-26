@@ -19,7 +19,7 @@ export class LocationComponent implements OnInit {
   cols: any[];
   public menu: MenuItem[];
 
-  locationNameEdit: String;
+  locationNameEdit: string;
 
   constructor(
     private locationService: LocationService,

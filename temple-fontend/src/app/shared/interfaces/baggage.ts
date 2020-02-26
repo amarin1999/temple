@@ -1,10 +1,10 @@
 export interface Baggage {
-    baggageId?: String;
-    memberId?: String;
-    memberName?: String;
-    lockerNumber?: String;
+    baggageId?: string;
+    memberId?: string;
+    memberName?: string;
+    lockerNumber?: string;
     date?: Date;
-    locationName?: String;
-    locationId?: String;
+    locationName?: string;
+    locationId?: string;
     status?: string;
 }

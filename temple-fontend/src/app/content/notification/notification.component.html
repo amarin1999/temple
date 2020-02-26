@@ -8,20 +8,15 @@
             <a [routerLink]="[ '/notification']">
               <span class='noti-text'>
                 <i class="pi pi-bell icon-noti"></i>
-
                 <span class="boldAndBig"> คุณมี {{numberOfNotice}} การแจ้งเตือน...( คลิกเพื่อดูเพิ่มเติม )</span>
-
               </span>
             </a>
-
-            &nbsp;
-
           </div>
 
           <div class="ui-g-4 ui-lg-4 ui-md-2 ui-sm-12 place-self" style="text-align: right;">
             <span>
               <span (click)="toggle()" class="wrap-close-noti">
-                <i class="pi pi-times icon-close-noti"></i>
+                <em class="pi pi-times icon-close-noti"></em>
                 <span class="close-text-noti">ปิดการแจ้งเตือน</span>
               </span>
             </span>

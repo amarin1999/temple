@@ -52,7 +52,6 @@ export class ListCourseApproveComponent implements OnInit {
     this.getTotalRecordOutTime();
     this.setColumn();
     this.setBreadCrumb();
-    this.checkTotalRecord();
     this.setData();
 
   }
@@ -135,7 +134,7 @@ export class ListCourseApproveComponent implements OnInit {
         }
         this.loading = false;
         const data = [...res.data];
-        data.map(dataInTime => {
+        data.forEach(dataInTime => {
           this.dataInTimeReport = dataInTime.numberOfMembers;
         });
         this.reportNoData = this.dataInTimeReport === 0 ? '( ไม่มีข้อมูลคำขออนุมัติพิเศษ )' : '';
@@ -155,7 +154,7 @@ export class ListCourseApproveComponent implements OnInit {
         this.getTotalRecordOutTime();
         console.log(this.courses);
         
-        this.dataOutTimeReport = res['data'].length === 0 ? '( ไม่มีข้อมูลคำขออนุมัติพิเศษ )' : '';
+        this.dataOutTimeReport = res['data'].length === 0 ? '( ไม่มีข้อมูลคำขออนุมัตินอกเวลา )' : '';
       }
     });
   }
@@ -177,13 +176,4 @@ export class ListCourseApproveComponent implements OnInit {
       }
     });
   }
-
-  checkTotalRecord() {
-    if (this.url === 'approval') {
-        
-    } else {
-      
-    }
-  }
-
 }
