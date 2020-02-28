@@ -88,10 +88,10 @@
     <div class="ui-g">
       <div class="ui-g-12">
         <div class="content-center">
-          <p-button *ngIf="showWhenApproveForm()" label="ไม่อนุมัติ" styleClass="button-reject " (click)=sentData(0)>
+          <p-button *ngIf="showWhenApproveForm()" icon="pi pi-times"  label="ไม่อนุมัติ" styleClass="button-reject " (click)=sentData(0)>
           </p-button>
           &nbsp;
-          <p-button label="อนุมัติ" styleClass="button-success" (click)=sentData(1)></p-button>
+          <p-button icon="pi pi-check" label="อนุมัติ" styleClass="button-success" (click)=sentData(1)></p-button>
 
         </div>
       </div>

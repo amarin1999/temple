@@ -45,7 +45,7 @@
                       <div style="text-align:center">
                         <button pButton type="button" icon="pi pi-pencil" (click)="showEdit(rowData['id'])"
                           label="แก้ไข" class="ui-button-warning" style="width: 40%;"></button>
-                        <button pButton type="button" (click)="delete(rowData['id'])" label="ลบ"
+                        <button pButton type="button" icon="pi pi-trash" (click)="delete(rowData['id'])" label="ลบ"
                           class="ui-button-danger" style="width: 40%;margin-left: 5mm"></button>
                       </div>
 
@@ -73,11 +73,11 @@
       </div>
       <p-footer>
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button *ngIf="newLocation" type="button" pButton (click)="save()" label="บันทึก"
+          <button *ngIf="newLocation" type="button" pButton (click)="save()" icon="pi pi-download" label="บันทึก"
             [disabled]="locationNameEdit?false:true"></button>
           <button *ngIf="!newLocation" icon="pi pi-pencil" type="button" class="ui-button-warning" pButton
             (click)="update()" label="แก้ไข" [disabled]="locationNameEdit?false:true"></button>
-          <button type="button" class="ui-button-raised ui-button-secondary" pButton (click)="clear()"
+          <button type="button" class="ui-button-raised ui-button-secondary" icon="pi pi-times-circle" pButton (click)="clear()"
             label="ยกเลิก"></button>
         </div>
       </p-footer>
