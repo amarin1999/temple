@@ -2,7 +2,7 @@
 <p-toast [style]="{ marginTop: '80px' }"></p-toast>
 <div class="ui-g">
   <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-    <p-tabView (onChange)="closeMessage()">
+    <p-tabView headerStyle ="background-color:black" (onChange)="closeMessage()">
       <!-- แท็บที่ 1 คอร์สที่ยังไม่ได้ลงทะเบียน -->
       <p-tabPanel header="คอร์สทั้งหมด">
         <div style="text-align:center">
@@ -212,7 +212,7 @@
                   </td>
                   <td>
                     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 btn-center">
-                        <button pButton type="button" label="รายละเอียด" (click)="onSelectCourse(rowData['id'])"
+                        <button pButton type="button" icon="pi pi-align-center" style="background-color: #b8860b;"label="รายละเอียด"(click)="onSelectCourse(rowData['id'])"
                           class="ui-button-raised"></button>
                     </div>
                     <div style="height: 15px"></div>
