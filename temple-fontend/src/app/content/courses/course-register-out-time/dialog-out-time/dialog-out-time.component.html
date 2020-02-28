@@ -64,9 +64,9 @@
     <p-footer>
       <div class="ui-g-12 ">
         <div class="ui-g-12" style="text-align: right">
-          <button type="submit" pButton label="ยืนยัน" class="ui-button-raised ui-button-info"
+          <button type="submit" icon="pi pi-check-circle" pButton label="ยืนยัน" class="ui-button-raised ui-button-info"
             [disabled]="!formOutTime.valid"></button>
-          <button type="button" pButton (click)="displayDialog=false" label="ยกเลิก"
+          <button type="button" icon="pi pi-times-circle"  pButton (click)="displayDialog=false" label="ยกเลิก"
             class="ui-button-raised ui-button-secondary"></button>
         </div>
       </div>
@@ -75,8 +75,8 @@
 </p-dialog>
 <p-confirmDialog [style]="{width: '50vw'}" #cd acceptButtonStyleClass="button-submit">
   <p-footer>
-    <button type="button" pButton label="ยืนยัน" (click)="cd.accept()" class="ui-button-raised ui-button-info"></button>
-    <button type="button" pButton label="ยกเลิก" (click)="cd.reject()"
+    <button type="button" icon="pi pi-check-circle" pButton label="ยืนยัน" (click)="cd.accept()" class="ui-button-raised ui-button-info"></button>
+    <button type="button"icon="pi pi-times-circle"  pButton label="ยกเลิก" (click)="cd.reject()"
       class="ui-button-raised ui-button-secondary"></button>
   </p-footer>
 </p-confirmDialog>

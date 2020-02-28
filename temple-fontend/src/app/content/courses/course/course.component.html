@@ -69,7 +69,7 @@
                             <div class="ui-g">
                                 <div class="ui-g-12 ui-lg-6 ui-md-6 btn-right">
                                     <div *ngIf="total >= course?.conditionMin">
-                                        <button pButton  type="button" icon="pi pi-calendar-plus" label="สมัคร" icon=""
+                                        <button pButton  type="button" icon="pi pi-calendar-plus" label="สมัคร" 
                                             (click)="rgCourse(course['id'])"></button>
                                     </div>
                                     <div *ngIf="total < course?.conditionMin">
@@ -180,9 +180,9 @@
     </div>
     <p-confirmDialog [style]="{width: '50vw'}" #cd>
         <p-footer>
-            <button type="button" pButton pButton label="ยืนยัน" (click)="cd.accept()"
+            <button type="button" icon="pi pi-check-circle" pButton pButton label="ยืนยัน" (click)="cd.accept()"
                 class="ui-button-raised ui-button-info"></button>
-            <button type="button" pButton pButton label="ยกเลิก" (click)="cd.reject()"
+            <button type="button" icon="pi pi-times-circle"  pButton pButton label="ยกเลิก" (click)="cd.reject()"
                 class="ui-button-raised ui-button-secondary"></button>
         </p-footer>
     </p-confirmDialog>
@@ -242,9 +242,9 @@
         </div>
         <p-footer>
             <div>
-                <button type="button" pButton (click)="onSubmit('as')" label="ยืนยัน"
+                <button type="button" icon="pi pi-check-circle" pButton (click)="onSubmit('as')" label="ยืนยัน"
                     class="ui-button-raised ui-button-info"></button>
-                <button type="button" pButton (click)="onCancle('as')" label="ยกเลิก"
+                <button type="button" icon="pi pi-times-circle"  pButton (click)="onCancle('as')" label="ยกเลิก"
                     class="ui-button-raised ui-button-secondary"></button>
             </div>
         </p-footer>
