@@ -15,4 +15,4 @@ temple-backend/.sts4-cache
 RemoteSystemsTempFiles/
 temple-backend/bin
 temple-backend/TempleAPI.iml
-temple-fontend/src/environments/environment.prod.ts
+# temple-fontend/src/environments/environment.prod.ts
