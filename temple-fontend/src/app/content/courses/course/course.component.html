@@ -69,7 +69,7 @@
                             <div class="ui-g">
                                 <div class="ui-g-12 ui-lg-6 ui-md-6 btn-right">
                                     <div *ngIf="total >= course?.conditionMin">
-                                        <button pButton type="button" label="สมัคร"
+                                        <button pButton  type="button" icon="pi pi-calendar-plus" label="สมัคร" icon=""
                                             (click)="rgCourse(course['id'])"></button>
                                     </div>
                                     <div *ngIf="total < course?.conditionMin">
@@ -127,7 +127,7 @@
                 </div>
                 <div class="ui-g-12 ui-lg-12 ui-md-12" style="text-align: right">
                     <!--downloadFile('temple.xls')-->
-                    <button pButton type="button" label="พิมพ์รายชื่อ" (click)="createExcel();"
+                    <button pButton type="button" label="พิมพ์รายชื่อ" icon="pi pi-print" (click)="createExcel();"
                         class="ui-button-success ui-button-raised"></button>
                 </div>
                 <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">

@@ -67,7 +67,7 @@
                                                         <button pButton type="button" label="แก้ไข" icon="pi pi-pencil"
                                                             (click)="showEdit(rowData['id'])" class="ui-button-warning"
                                                             style="width: 40%;"></button>
-                                                        <button pButton type="button" label="ลบ"
+                                                        <button pButton type="button" label="ลบ" icon="pi pi-trash"
                                                             (click)="delete(rowData['id'])" class="ui-button-danger"
                                                             style="width: 40%;margin-left: 5mm"></button>
                                                     </div>
@@ -128,7 +128,7 @@
                                                         <button pButton icon="pi pi-pencil" type="button" label="แก้ไข"
                                                             (click)="showEdit(rowData['id'])" class="ui-button-warning"
                                                             style="width: 40%;"></button>
-                                                        <button pButton type="button" label="ลบ"
+                                                        <button pButton type="button" label="ลบ" icon="pi pi-trash"
                                                             (click)="delete(rowData['id'])" class="ui-button-danger"
                                                             style="width: 40%;margin-left: 5mm"></button>
                                                     </div>
@@ -177,17 +177,17 @@
     </div>
     <p-footer>
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
-            <button type="button" *ngIf="displayTransportation" pButton (click)="save()"
+            <button type="button" *ngIf="displayTransportation" pButton (click)="save()" icon="pi pi-download"
                 style="background-color: #007ad9" label="บันทึก" [disabled]="
           (tabIndex === 0 && (timePickUp === null || timeSend === null)) ||
           newTransportation === ''
         "></button>
-            <button class="ui-button-warning" type="button" *ngIf="!displayTransportation" pButton (click)="update()"
+            <button class="ui-button-warning" type="button" *ngIf="!displayTransportation" pButton (click)="update()" 
                 label="แก้ไข" icon="pi pi-pencil" [disabled]="
           (tabIndex === 0 && (timePickUp === null || timeSend === null)) ||
           newTransportation === ''
         "></button>
-            <button class="ui-button-raised ui-button-secondary" type="button" pButton (click)="clear()"
+            <button class="ui-button-raised ui-button-secondary" icon="pi pi-times-circle" type="button" pButton (click)="clear()"
                 label="ยกเลิก"></button>
         </div>
     </p-footer>
