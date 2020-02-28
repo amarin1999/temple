@@ -611,7 +611,7 @@ export class RegisterFormComponent implements OnInit {
   }
 
   // ---------------- Profile Picture Fuction => Start. --------------
-  profileSelect(event, field) {
+  profileSelect(event, field: number) {
     this.showNoProfile = true;
     this.showLoadingPicture = false;
     this.currentId = field;

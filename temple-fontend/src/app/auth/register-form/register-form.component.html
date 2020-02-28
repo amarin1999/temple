@@ -9,75 +9,87 @@
         <fieldset>
           <legend class="font-show">ข้อมูลสมัครสมาชิก</legend>
           <div class="ui-g">
+            <!-- left panel -->
             <div class="ui-g-12 ui-lg-6 ui-md-5 ">
               <!------- username ------->
-              <div class="ui-g-12 ui-lg-4 ui-md-4 ">
-                <div *ngIf="!formError.username" class="text-right">
-                  <span>ชื่อผู้ใช้<span class="star">*</span></span>
+              <div class="ui-g-12">
+                <div class="ui-g-4 ui-sm-12">
+                  <div *ngIf="!formError.username" class="text-right">
+                    <span>ชื่อผู้ใช้<span class="star">*</span></span>
+                  </div>
+                  <div *ngIf="formError.username" class="text-danger text-invalid text-right">
+                    {{ formError.username }}
+                  </div>
                 </div>
-                <div *ngIf="formError.username" class="text-danger text-invalid text-right">
-                  {{ formError.username }}
+                <div class="ui-g-8 ui-sm-12">
+                  <input type="text" pInputText placeholder="ชื่อผู้ใช้" formControlName="username" />
                 </div>
-              </div>
-              <div class="ui-g-12 ui-lg-8 ui-md-8 ">
-                <input type="text" pInputText placeholder="ชื่อผู้ใช้" formControlName="username" />
               </div>
               <!------- ID Card ------->
-              <div class="ui-g-12 ui-lg-4 ui-md-4  ">
-                <div *ngIf="!formError.idCard" class="text-right">
-                  <span>เลขประจำตัวประชาชน<span class="star">*</span></span>
+              <div class="ui-g-12">
+                <div class="ui-g-4 ui-sm-12">
+                  <div *ngIf="!formError.idCard" class="text-right">
+                    <span>เลขประจำตัวประชาชน<span class="star">*</span></span>
+                  </div>
+                  <div *ngIf="formError.idCard" class="text-danger text-invalid text-right">
+                    {{ formError.idCard }}
+                  </div>
                 </div>
-                <div *ngIf="formError.idCard" class="text-danger text-invalid text-right">
-                  {{ formError.idCard }}
+                <div class="ui-g-8 ui-sm-12">
+                  <p-inputMask mask="9-9999-99999-99-9" placeholder="9-9999-99999-99-9" formControlName="idCard">
+                  </p-inputMask>
                 </div>
-              </div>
-              <div class="ui-g-12 ui-lg-8 ui-md-8 ">
-                <p-inputMask mask="9-9999-99999-99-9" placeholder="9-9999-99999-99-9" formControlName="idCard">
-                </p-inputMask>
               </div>
               <!------- email ------->
-              <div class="ui-g-12 ui-lg-4 ui-md-4  ">
-                <div class="text-right">
-                  <span>อีเมล</span>
+              <div class="ui-g-12">
+                <div class="ui-g-12 ui-lg-4 ui-md-4  ">
+                  <div class="text-right">
+                    <span>อีเมล</span>
+                  </div>
+                  <div class="text-danger text-invalid text-right"></div>
                 </div>
-                <div class="text-danger text-invalid text-right"></div>
-              </div>
-              <div class="ui-g-12 ui-lg-8 ui-md-8 ">
-                <input type="email" pInputText placeholder="example@example.com" formControlName="email" />
+                <div class="ui-g-12 ui-lg-8 ui-md-8 ">
+                  <input type="email" pInputText placeholder="example@example.com" formControlName="email" />
+                </div>
               </div>
             </div>
+            <!-- right panel -->
             <div class="ui-g-12 ui-lg-6 ui-md-6 ">
               <!------- password ------->
-              <div class="ui-g-12 ui-lg-4 ui-md-6 ">
-                <div *ngIf="!formError.password" class="text-right">
-                  <span>รหัสผ่าน<span class="star">*</span></span>
+              <div class="ui-g-12">
+                <div class="ui-g-4 ui-sm-12">
+                  <div *ngIf="!formError.password" class="text-right">
+                    <span>รหัสผ่าน<span class="star">*</span></span>
+                  </div>
+                  <div *ngIf="formError.password" class="text-danger text-invalid text-right">
+                    {{ formError.password }}
+                  </div>
                 </div>
-                <div *ngIf="formError.password" class="text-danger text-invalid text-right">
-                  {{ formError.password }}
+                <div class="ui-g-8 ui-sm-12">
+                  <input type="password" pPassword placeholder="รหัสผ่าน" formControlName="password" autocomplete="off"
+                    promptLabel="กรุณากรอกรหัสผ่าน" />
                 </div>
-              </div>
-              <div class="ui-g-12 ui-lg-8 ui-md-6 ">
-                <input type="password" pPassword placeholder="Password" formControlName="password" autocomplete="off"
-                  promptLabel="กรุณายืนยันรหัสผ่าน" />
               </div>
               <!-------- re password --------->
-              <div class="ui-g-12 ui-lg-4 ui-md-6 ">
-                <div *ngIf="!formError.repassword" class="text-right">
-                  <span>ยืนยันรหัสผ่าน<span class="star">*</span></span>
+              <div class="ui-g-12">
+                <div class="ui-g-4 ui-sm-12">
+                  <div *ngIf="!formError.repassword" class="text-right">
+                    <span>ยืนยันรหัสผ่าน<span class="star">*</span></span>
+                  </div>
+                  <div *ngIf="formError.repassword" class="text-danger text-invalid text-right">
+                    {{ formError.repassword }}
+                  </div>
                 </div>
-                <div *ngIf="formError.repassword" class="text-danger text-invalid text-right">
-                  {{ formError.repassword }}
-                </div>
-              </div>
-              <div class="ui-g-12 ui-lg-8 ui-md-6 ">
-                <div>
-                  <input type="password" pPassword placeholder="ยืนยันรหัสผ่าน*" formControlName="repassword"
-                    promptLabel="กรุณายืนยันรหัสผ่าน" />
-                  <p-message *ngIf="
-                        registerForm.get('password').value !=
-                          registerForm.get('repassword').value &&
-                        registerForm.get('repassword').touched
-                      " severity="error" text="รหัสผ่านไม่ตรงกัน"></p-message>
+                <div class="ui-g-8 ui-sm-12">
+                  <div>
+                    <input type="password" pPassword placeholder="ยืนยันรหัสผ่าน" formControlName="repassword"
+                      promptLabel="กรุณายืนยันรหัสผ่าน" />
+                    <p-message *ngIf="
+                    registerForm.get('password').value !=
+                      registerForm.get('repassword').value &&
+                    registerForm.get('repassword').touched
+                  " severity="error" text="รหัสผ่านไม่ตรงกัน"></p-message>
+                  </div>
                 </div>
               </div>
             </div>
@@ -100,11 +112,10 @@
                   <span>รูปประจำตัว</span>
                 </div>
                 <div class="ui-g-12 ui-lg-8 ui-md-9">
-                  <!--<p-fileUpload name="myFile"  [showUploadButton]='true' accept="image/*" (onUpload)="profileSelect($event)"></p-fileUpload>-->
                   <img [src]="
                       previewImg ? previewImg : './assets/images/no-img.png'
-                    " class="img-info" *ngIf="showLoadingPicture" />
-                  <img src="./assets/images/spinner.gif" class="img-info" *ngIf="showNoProfile" />
+                    " class="img-info" alt="รูปโปรไฟล์" *ngIf="showLoadingPicture" />
+                  <img src="./assets/images/spinner.gif" class="img-info" alt="รูปโปรไฟล์" *ngIf="showNoProfile" />
                   <div class="btn-upload" style="text-align: center">
                     <label for="profile" pButton style="background-color:#b8860b;border:#b8860b;" label=" อัปโหลดรูปภาพ"
                       disabled=false></label>
@@ -555,9 +566,9 @@
     <div class="ui-g ui-fluid">
       <div class="ui-g-12">
         <button *ngIf="message.severity === 'success'" type="button" pButton [label]="messageback"
-            class="ui-button-success ui-button-raised" [routerLink]="urlback"></button>
-          <button *ngIf="message.severity !== 'success'" type=" button" pButton label="ปิด"
-            class="ui-button-success ui-button-raised" (click)="clearMessageService()"></button>
+          class="ui-button-success ui-button-raised" [routerLink]="urlback"></button>
+        <button *ngIf="message.severity !== 'success'" type=" button" pButton label="ปิด"
+          class="ui-button-success ui-button-raised" (click)="clearMessageService()"></button>
       </div>
     </div>
   </ng-template>
