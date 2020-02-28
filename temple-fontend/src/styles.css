@@ -244,6 +244,6 @@ button.ui-button {
   min-width: 120px;
 }
 
-button.ui-button-icon-only{
+button.ui-button-icon-only {
   min-width: 0 !important;
 }
