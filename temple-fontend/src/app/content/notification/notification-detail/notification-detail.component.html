@@ -56,7 +56,7 @@
                   </td>
                   <td style="text-align: center">
                     <!-- {{rowData.courseID}} -->
-                    <button pButton type="button" label="ดูรายละเอียด" (click)="openSpecailCourse(rowData)"></button>
+                    <button pButton type="button" icon="pi pi-eye" label="ดูรายละเอียด" (click)="openSpecailCourse(rowData)"></button>
                   </td>
                   <!-- <td>{{rowData}}</td> -->
                 </tr>
@@ -139,7 +139,7 @@
                 <span>{{(rowData.rejectComment)? rowData.rejectComment : '-' }}</span>
               </td>
               <td style="text-align: center">
-                <button pButton type="button" label="ดูรายละเอียดคอร์ส" (click)="getCourseDetail(rowData)"></button>
+                <button pButton type="button" icon="pi pi-list" label="ดูรายละเอียดคอร์ส" (click)="getCourseDetail(rowData)"></button>
               </td>
               </tr>
               </ng-template>
@@ -215,7 +215,7 @@
                     <!-- ต้องผ่านอย่างน้อย {{rowData?.conditionMin}} คอร์ส -->
                   </td>
                   <td class="text-center">
-                    <button pButton type="button" label="ดูรายละเอียด" (click)="getNewCourseDetail(rowData)"></button>
+                    <button pButton type="button" icon="pi pi-list" label="ดูรายละเอียด" (click)="getNewCourseDetail(rowData)"></button>
                   </td>
                 </tr>
               </ng-template>

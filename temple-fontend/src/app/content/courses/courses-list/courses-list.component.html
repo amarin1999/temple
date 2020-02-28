@@ -2,7 +2,7 @@
 <p-toast [style]="{ marginTop: '80px' }"></p-toast>
 <div class="ui-g">
   <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-    <p-tabView headerStyle ="background-color:black" (onChange)="closeMessage()">
+    <p-tabView (onChange)="closeMessage()">
       <!-- แท็บที่ 1 คอร์สที่ยังไม่ได้ลงทะเบียน -->
       <p-tabPanel header="คอร์สทั้งหมด">
         <div style="text-align:center">
@@ -116,7 +116,7 @@
                       ">
                       <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 btn-center"
                         *ngIf="total >= rowData['conditionMin']">
-                        <button pButton type="button" label="สมัคร" (click)="rgCourse(rowData['id'])"
+                        <button pButton type="button" icon="pi pi-calendar-plus"label="สมัคร" (click)="rgCourse(rowData['id'])"
                           class="ui-button-raised"></button>
                       </div>
                       <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 btn-center"
@@ -212,7 +212,11 @@
                   </td>
                   <td>
                     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 btn-center">
+<<<<<<< HEAD
                         <button pButton type="button" icon="pi pi-align-center" style="background-color: #b8860b;"label="รายละเอียด"(click)="onSelectCourse(rowData['id'])"
+=======
+                        <button pButton type="button" icon="pi pi-list" label="รายละเอียด" (click)="onSelectCourse(rowData['id'])"
+>>>>>>> 7018120352e78f4153d30a46a508018bf269022a
                           class="ui-button-raised"></button>
                     </div>
                     <div style="height: 15px"></div>
@@ -280,9 +284,9 @@
     </div>
     <p-footer>
       <div>
-        <button type="button" pButton (click)="onSubmitAssign('as')" label="ยืนยัน"
+        <button type="button" pButton (click)="onSubmitAssign('as')" icon="pi pi-check-circle" label="ยืนยัน"
           class="ui-button-raised ui-button-info"></button>
-        <button type="button" pButton (click)="onCancle('as')" label="ยกเลิก"
+        <button type="button" pButton (click)="onCancle('as')" icon="pi pi-times-circle" label="ยกเลิก"
           class="ui-button-raised ui-button-secondary"></button>
       </div>
     </p-footer>
