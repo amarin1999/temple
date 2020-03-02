@@ -19,13 +19,24 @@
   background: #b8860b;
   border-color: #b8860b;
   transform: scale(1.05, 1.05);
-  transition: 0.3s;
-  
+  transition: 0.3s;  
 }
+
+
+.menu-card:hover .text-center {
+  color:whitesmoke;
+  transition:0.3s;
+}
+/* 
+ .menu-card:hover .img-menu{
+  transform: scale(1.2,1.2);
+  transition: 0.4s;
+} */
 
 .img-menu {
   width: 5em;
-}
+} 
+
 
 
 

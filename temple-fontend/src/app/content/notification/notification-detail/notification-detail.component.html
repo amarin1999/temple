@@ -56,7 +56,8 @@
                   </td>
                   <td style="text-align: center">
                     <!-- {{rowData.courseID}} -->
-                    <button pButton type="button" icon="pi pi-eye" label="ดูรายละเอียด" (click)="openSpecailCourse(rowData)"></button>
+                    <button pButton type="button" icon="pi pi-align-center" class="ui-button-raised btn-color-info"
+                      label="ดูรายละเอียด" (click)="openSpecailCourse(rowData)"></button>
                   </td>
                   <!-- <td>{{rowData}}</td> -->
                 </tr>
@@ -127,21 +128,22 @@
                         <b class="colorGreenTopassApproval">ผ่านการอนุมัติ</b>
                       </ng-container>
                       <ng-template #courseFail>
-                          <span class=" padding-icon"> <b class="pi pi-times colorRedToNotApproval"
+                        <span class=" padding-icon"> <b class="pi pi-times colorRedToNotApproval"
                             style="font-size: 1.5em;"></b>
+                        </span>
+                        &nbsp;
+                        <b class="colorRedToNotApproval">ไม่ผ่านการอนุมัติ</b>
+                      </ng-template>
                     </span>
-                    &nbsp;
-                    <b class="colorRedToNotApproval">ไม่ผ่านการอนุมัติ</b>
-              </ng-template>
-              </span>
-              </td>
-              <td style="text-align: center">
-                <span>{{(rowData.rejectComment)? rowData.rejectComment : '-' }}</span>
-              </td>
-              <td style="text-align: center">
-                <button pButton type="button" icon="pi pi-list" label="ดูรายละเอียดคอร์ส" (click)="getCourseDetail(rowData)"></button>
-              </td>
-              </tr>
+                  </td>
+                  <td style="text-align: center">
+                    <span>{{(rowData.rejectComment)? rowData.rejectComment : '-' }}</span>
+                  </td>
+                  <td style="text-align: center">
+                    <button pButton type="button" icon="pi pi-align-center" class="ui-button-raised btn-color-info"
+                      label="ดูรายละเอียดคอร์ส" (click)="getCourseDetail(rowData)"></button>
+                  </td>
+                </tr>
               </ng-template>
             </p-table>
           </p-tabPanel>
@@ -215,7 +217,8 @@
                     <!-- ต้องผ่านอย่างน้อย {{rowData?.conditionMin}} คอร์ส -->
                   </td>
                   <td class="text-center">
-                    <button pButton type="button" icon="pi pi-list" label="ดูรายละเอียด" (click)="getNewCourseDetail(rowData)"></button>
+                    <button pButton type="button" icon="pi pi-align-center" class="ui-button-raised btn-color-info"
+                      label="ดูรายละเอียด" (click)="getNewCourseDetail(rowData)"></button>
                   </td>
                 </tr>
               </ng-template>

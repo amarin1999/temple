@@ -2,9 +2,9 @@
 <p-toast [style]="{ marginTop: '80px' }"></p-toast>
 <div class="ui-g">
   <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-    <p-tabView (onChange)="closeMessage()">
+    <p-tabView headerStyle="" (onChange)="closeMessage()">
       <!-- แท็บที่ 1 คอร์สที่ยังไม่ได้ลงทะเบียน -->
-      <p-tabPanel header="คอร์สทั้งหมด">
+      <p-tabPanel [headerStyleClass]="ui-tabview-selected" header="คอร์สทั้งหมด">
         <div style="text-align:center">
           <h1>ตารางคอร์ส</h1>
           <div *ngIf="totalRecords == 0">
@@ -116,13 +116,13 @@
                       ">
                       <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 btn-center"
                         *ngIf="total >= rowData['conditionMin']">
-                        <button pButton type="button" icon="pi pi-calendar-plus"label="สมัคร" (click)="rgCourse(rowData['id'])"
-                          class="ui-button-raised"></button>
+                        <button pButton type="button" icon="pi pi-calendar-plus" label="สมัคร"
+                          (click)="rgCourse(rowData['id'])" class="ui-button-raised btn-color-success"></button>
                       </div>
                       <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 btn-center"
                         *ngIf="total < rowData['conditionMin']">
-                        <button pButton type="button" label="ขออนุมัติพิเศษ" class="ui-button-warning raised"
-                          (click)="saCourse(rowData['id'])"></button>
+                        <button pButton type="button" icon="pi pi-plus-circle" label="ขออนุมัติพิเศษ"
+                          class="ui-button-warning raised btn-color-warning" (click)="saCourse(rowData['id'])"></button>
                       </div>
                     </div>
                     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 btn-center" *ngIf="
@@ -213,9 +213,8 @@
                   <td>
                     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12 btn-center">
 
-                        <button pButton type="button" icon="pi pi-align-center" style="background-color: #b8860b;"label="รายละเอียด"(click)="onSelectCourse(rowData['id'])"
-
-                          class="ui-button-raised"></button>
+                      <button pButton type="button" icon="pi pi-align-center"  label="รายละเอียด"
+                        (click)="onSelectCourse(rowData['id'])" class="ui-button-raised btn-color-info"></button>
                     </div>
                     <div style="height: 15px"></div>
                   </td>

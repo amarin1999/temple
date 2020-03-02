@@ -1,12 +1,49 @@
-:host>>>.fc .fc-event {
-    border-width: 5px !important;
+:host >>> .fc .fc-event {
+  border-width: 5px !important;
 }
 
-:host>>>.fc td.fc-today.fc-day {
-    background-color: #ffeab4 !important;
+:host >>> .fc td.fc-today.fc-day {
+  background-color: #ffeab4 !important;
 }
 
-:host>>>.fc td.fc-today.fc-day-top {
-    background: 0 0 !important;
+:host >>> .fc td.fc-today.fc-day-top {
+  background: 0 0 !important;
+}
+
+:host >>> .fc-prev-button {
+  background-color: #cd853f;
+}
+:host >>> .fc-today-button {
+  background-color: #f4a460;
+}
+:host >>> .fc-next-button {
+  background-color: #cd853f;
+}
+
+:host >>> .fc-month-button {
+  background-color: #cd853f;
+}
+:host >>> .fc-agendaWeek-button {
+  background-color: #f4a460;
+}
+
+:host >>> .fc-month-button:hover {
+  background-color: #f4a460 !important;
+}
+
+:host >>> .fc-agendaWeek-button:hover  {
+  background-color: #f4a460 !important;
+}
+
+:host >>> .fc-next-button:hover  {
+  background-color: #f4a460 !important;
+}
+
+:host >>> .fc-today-button:hover  {
+  background-color: #f4a460 !important;
+}
+
+:host >>> .fc-prev-button:hover  {
+  background-color: #f4a460 !important;
 }
 /* :host>>>.fc .fc-content { background-color: #000; } */
