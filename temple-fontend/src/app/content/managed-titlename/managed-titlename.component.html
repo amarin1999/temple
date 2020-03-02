@@ -122,8 +122,8 @@
     </p-dialog>
     <p-confirmDialog #cd [style]="{width: '50vw'}">
         <p-footer>
-            <button type="button" pButton label="ยืนยัน" (click)="cd.accept()"></button>
-            <button type="button" pButton label="ยกเลิก" (click)="cd.reject()"
+            <button type="button" pButton icon="pi pi-check-circle" label="ยืนยัน" (click)="cd.accept()"></button>
+            <button type="button" pButton label="ยกเลิก" icon="pi pi-times-circle" (click)="cd.reject()"
                 class="ui-button-secondary ui-button-raised"></button>
         </p-footer>
     </p-confirmDialog>

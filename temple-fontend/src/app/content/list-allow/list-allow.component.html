@@ -1,10 +1,10 @@
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 <div class="ui-g-11 ui-lg-11 ui-md-10 ui-sm-9  text-right">
-    <p-button *ngIf="showWhenApproveForm()" label="ไม่อนุมัติ" styleClass="button-reject" (click)=sentData(0)
+    <p-button *ngIf="showWhenApproveForm()" icon="pi pi-times" label="ไม่อนุมัติ" styleClass="button-reject" (click)=sentData(0)
         [disabled]="disbtn"></p-button>
 </div>
 <div class="ui-g-1 ui-lg-1 ui-md-2 ui-sm-3">
-    <button pButton label="อนุมัติ" styleClass="button-success" (click)=sentData(1) [disabled]="disbtn"></button>
+    <button pButton label="อนุมัติ" icon="pi pi-check" styleClass="button-success" (click)=sentData(1) [disabled]="disbtn"></button>
 </div>
 <ng-container *ngIf="option==2; else elseTemplate">
     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
