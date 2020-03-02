@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Trirong|Krub:300,400&subset=thai");
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -13,7 +14,10 @@ body {
   padding-top: 95px;
 }
 
-body, body .ui-widget, button, pre {
+body,
+body .ui-widget,
+button,
+pre {
   font-family: "Krub", sans-serif !important;
   font-weight: bold;
   font-size: larger;
@@ -141,7 +145,10 @@ body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button
   }
 }
 
-p-table, p-panel, .word-wrap, .ui-widget {
+p-table,
+p-panel,
+.word-wrap,
+.ui-widget {
   word-wrap: break-word;
   font-size: 16px !important;
 }
@@ -155,6 +162,25 @@ p-table, p-panel, .word-wrap, .ui-widget {
   height: 200;
   display: block;
   margin: auto;
+}
+.ui-button:hover {
+  transform: scale(1.05, 1.05);
+  transition: 0.15s;
+}
+
+.btn-color-info {
+  background-color: #cd853f !important;
+}
+.btn-color-success {
+  background-color: #228B22 !important;
+}
+.btn-color-warning {
+  background-color: #cd853f !important;
+  color: whitesmoke !important;
+}
+
+body .ui-tabview.ui-tabview-top .ui-tabview-nav li.ui-state-active {
+  background-color: #cd853f !important;
 }
 
 @keyframes fadeFromTop {

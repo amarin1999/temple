@@ -66,7 +66,7 @@ export class ScheduleComponent implements OnInit {
           */
           this.events = this.events.map(data => {
             if (data.courseStatus === '1') {
-              return { ...data, color: '#007ad9' };
+              return { ...data, color: '#2E8B57' };
             } else {
               return { ...data, color: '#e68a00' };
             }
@@ -98,7 +98,7 @@ export class ScheduleComponent implements OnInit {
          */
           this.events = this.events.map(data => {
             if (data.courseStatus === '1') {
-              return { ...data, color: '#007ad9' };
+              return { ...data, color: '#2E8B57' };
             } else if (data.courseStatus === '0') {
               return { ...data, color: '#e68a00' };
             }
@@ -123,6 +123,7 @@ export class ScheduleComponent implements OnInit {
         right: 'month,agendaWeek'
       },
       locale: 'th',
+
       buttonText: {
         prev: 'ย้อน',
         next: 'ถัดไป',
@@ -132,6 +133,7 @@ export class ScheduleComponent implements OnInit {
         day: 'วัน',
         list: 'แผนงาน'
       },
+
       // eventColor: '#378006',
       allDayText: 'ตลอดวัน',
       eventLimitText: 'เพิ่มเติม',
