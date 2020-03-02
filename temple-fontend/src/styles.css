@@ -172,7 +172,7 @@ p-panel,
   background-color: #cd853f !important;
 }
 .btn-color-success {
-  background-color: #228B22 !important;
+  background-color: #228b22 !important;
 }
 .btn-color-warning {
   background-color: #cd853f !important;
@@ -183,6 +183,15 @@ body .ui-tabview.ui-tabview-top .ui-tabview-nav li.ui-state-active {
   background-color: #cd853f !important;
 }
 
+/*เช็คบ๊อกซ์*/
+.ui-chkbox .ui-state-active {
+  background-color: #cd853f !important;
+}
+
+/*ปุ่มเพิ่ม*/
+body .ui-button.ui-state-default.ui-button-info, body .ui-buttonset.ui-button-info > .ui-button.ui-state-default {
+  background-color: #cd853f !important;
+}
 @keyframes fadeFromTop {
   0% {
     opacity: 0;
