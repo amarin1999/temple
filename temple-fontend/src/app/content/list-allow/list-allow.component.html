@@ -4,7 +4,7 @@
         [disabled]="disbtn"></p-button>
 </div>
 <div class="ui-g-1 ui-lg-1 ui-md-2 ui-sm-3">
-    <p-button label="อนุมัติ" styleClass="button-success" (click)=sentData(1) [disabled]="disbtn"></p-button>
+    <button pButton label="อนุมัติ" styleClass="button-success" (click)=sentData(1) [disabled]="disbtn"></button>
 </div>
 <ng-container *ngIf="option==2; else elseTemplate">
     <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
@@ -97,9 +97,7 @@
     <p-button *ngIf="showWhenApproveForm()" label="ไม่อนุมัติ" styleClass="button-reject " (click)=sentData(0)
         [disabled]="disbtn"></p-button>
 </div>
-<div class="ui-g-1 ui-lg-1 ui-md-2 ui-sm-3">
-    <p-button label="อนุมัติ" styleClass="button-success" (click)=sentData(1) [disabled]="disbtn"></p-button>
-</div>
+
 
 
 <p-toast position="center" key="alertMessage" [modal]="true" [baseZIndex]="5000">
