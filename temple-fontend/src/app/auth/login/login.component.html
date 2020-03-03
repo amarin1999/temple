@@ -43,16 +43,17 @@
                   <!-- link to forget-password page -->
                   <a routerLink="/auth/forget-password"> ลืมรหัสผ่าน</a>
                 </div>
-                <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
-                  <div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-6">
-                    <button pButton icon="pi pi-sign-in" type="submit" label="เข้าสู่ระบบ"
-                      class="ui-button-warning ui-button-raised"></button>
-                  </div>
-                  <div class="ui-g-6 ui-lg-6 ui-md-6 ui-sm-6">
-                    <button pButton icon="pi pi-user-plus" type="button" label="ลงทะเบียน"
-                      class="ui-button-secondary ui-button-raised" routerLink="/auth/register"></button>
-                  </div>
-                </div>
+
+
+                <button type="submit" class="btn-sign-in btn-color-warning btn-scale">
+                  <i class="pi pi-sign-in"></i><span style="vertical-align: top;"> เข้าสู่ระบบ</span>
+                </button>
+
+                <button type="button" class="btn-sign-up btn-scale" routerLink="/auth/register">
+                  <i class="pi pi-user-plus"></i><span style="vertical-align: top;"> สมัครสมาชิก</span>
+                </button>
+
+
               </form>
             </p-card>
           </div>

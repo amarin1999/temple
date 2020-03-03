@@ -49,6 +49,7 @@ export class ForgetPasswordComponent implements OnInit {
 
     onSubmit(e) {
         this.messageService.clear();
+        console.log(this.form.getRawValue())
         e.preventDefault();
         const idCard = this.form.get('idCard').value;
         const username = this.form.get('username').value;
@@ -133,9 +134,9 @@ export class ForgetPasswordComponent implements OnInit {
 
     private createForm() {
         this.form = this.formBuilder.group({
-            'idCard': ['', [Validators.required, Validators.minLength(17)]],
-            'username': ['', [Validators.required, Validators.minLength(6)]],
-            'phoneNumber': ['', [Validators.required, Validators.minLength(8)]],
+            'idCard': ['', [Validators.required, Validators.minLength(13)]],
+            'username': ['', [Validators.required, Validators.maxLength(45)]],
+            'phoneNumber': ['', [Validators.required, Validators.minLength(10)]],
         });
     }
 }

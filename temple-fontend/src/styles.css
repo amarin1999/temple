@@ -4,7 +4,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  /* background-image: url('https://wallpaperhd.wiki/wp-content/uploads/hd-yellow-backgrounds-colour-yellow-wallpaper-hd-desktop-LTNBDv.jpg');
+  /* background-image: url('https://images.pexels.com/photos/545313/pexels-photo-545313.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
   background-size: cover;
   background-attachment: fixed; */
 }
@@ -76,7 +76,7 @@ body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button
 
 .button-success {
   border-color: #007ad9 !important;
-  background-color: #007ad9 !important;
+  background-color: #cd853f !important;
 }
 
 .button-success:hover {
@@ -192,6 +192,12 @@ body .ui-tabview.ui-tabview-top .ui-tabview-nav li.ui-state-active {
 body .ui-button.ui-state-default.ui-button-info, body .ui-buttonset.ui-button-info > .ui-button.ui-state-default {
   background-color: #cd853f !important;
 }
+
+.btn-scale:hover {
+  transform: scale(1.03, 1.03);
+  transition: 0.3s;
+}
+
 @keyframes fadeFromTop {
   0% {
     opacity: 0;
