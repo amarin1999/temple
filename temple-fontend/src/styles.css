@@ -4,9 +4,9 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  /* background-image: url('https://images.pexels.com/photos/545313/pexels-photo-545313.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  background-image: url('https://images.pexels.com/photos/828531/pexels-photo-828531.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
   background-size: cover;
-  background-attachment: fixed; */
+  background-attachment: fixed;
 }
 
 body {
@@ -119,6 +119,28 @@ body .ui-button.ui-state-default.ui-button-warning, body .ui-buttonset.ui-button
 .container {
   width: 70%;
   margin: 0 auto;
+}
+.btn-sign-up {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  padding: 7px;
+  background-color: #dcdcdc;
+  border-radius: 5px;
+   color: #b8860b;
+  -webkit-box-shadow: -5px 9px 12px -14px rgba(0, 0, 0, 0.68);
+  -moz-box-shadow: -5px 9px 12px -14px rgba(0, 0, 0, 0.68);
+  box-shadow: -5px 9px 12px -14px rgba(0, 0, 0, 0.68);
+}
+.btn-sign-in {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  padding: 7px;
+  border-radius: 5px;
+  -webkit-box-shadow: -5px 9px 12px -14px rgba(0, 0, 0, 0.68);
+  -moz-box-shadow: -5px 9px 12px -14px rgba(0, 0, 0, 0.68);
+  box-shadow: -5px 9px 12px -14px rgba(0, 0, 0, 0.68);
 }
 
 @media screen and (max-width: 1024px) {
