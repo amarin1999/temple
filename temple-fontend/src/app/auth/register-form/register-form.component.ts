@@ -521,7 +521,7 @@ export class RegisterFormComponent implements OnInit {
 
         // const test = this.registerForm.get('username').errors;
         // const logg = this.registerForm.get('username').value;
-        // // console.log(test, 'test', logg);
+        //  console.log(test, 'test', logg);
         // if (test.invalid && test.length < 6) {
         //   console.log('test6');
 

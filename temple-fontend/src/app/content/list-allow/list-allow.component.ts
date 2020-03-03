@@ -117,7 +117,7 @@ export class ListAllowComponent implements OnInit {
       // อนุมัติพิเศษ
       // '1' = Approve '0' != ไม่Approve 
     } else if (this.option == '2') {
-      console.log(status);
+      // console.log(status);
 
       if (status == 0) {
         this.rejectDialog = true;
@@ -146,7 +146,7 @@ export class ListAllowComponent implements OnInit {
 
   sendDataReject(e: string) {
     let memberSent;
-    console.log(e);
+    // console.log(e);
 
     memberSent = this.member.filter((member) => member.checked === true).map(member => member[this.fieldId]);
     memberSent = {

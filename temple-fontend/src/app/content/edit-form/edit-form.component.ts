@@ -767,7 +767,7 @@ export class EditFormComponent implements OnInit {
   }
 
   showToast(key, detail, severity) {
-    console.log(this.showRole);
+    // console.log(this.showRole);
 
     if (this.personalId === localStorage.getItem('userId')) {
       this.manageUserService.setUser(this.personalId).subscribe();
