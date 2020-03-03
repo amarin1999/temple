@@ -31,19 +31,19 @@
   background-color: #f4a460 !important;
 }
 
-:host >>> .fc-agendaWeek-button:hover  {
+:host >>> .fc-agendaWeek-button:hover {
   background-color: #f4a460 !important;
 }
 
-:host >>> .fc-next-button:hover  {
+:host >>> .fc-next-button:hover {
   background-color: #f4a460 !important;
 }
 
-:host >>> .fc-today-button:hover  {
+:host >>> .fc-today-button:hover {
   background-color: #f4a460 !important;
 }
 
-:host >>> .fc-prev-button:hover  {
+:host >>> .fc-prev-button:hover {
   background-color: #f4a460 !important;
 }
 /* :host>>>.fc .fc-content { background-color: #000; } */

@@ -4,7 +4,7 @@
         (click)=sentData(0) [disabled]="disbtn"></p-button>
 </div>
 <div class="ui-g-1 ui-lg-1 ui-md-2 ui-sm-3">
-    <button pButton label="อนุมัติ" icon="pi pi-check" styleClass="button-success" (click)=sentData(1)
+    <button pButton label="อนุมัติ" icon="pi pi-check" class="btn-color-info" (click)=sentData(1)
         [disabled]="disbtn"></button>
 </div>
 <ng-container *ngIf="option==2; else elseTemplate">
