@@ -134,7 +134,7 @@ export class ForgetPasswordComponent implements OnInit {
     private createForm() {
         this.form = this.formBuilder.group({
             'idCard': ['', [Validators.required, Validators.minLength(17)]],
-            'username': ['', [Validators.required, Validators.minLength(6)]],
+            'username': ['', [Validators.required, Validators.maxLength(6)]],
             'phoneNumber': ['', [Validators.required, Validators.minLength(8)]],
         });
     }

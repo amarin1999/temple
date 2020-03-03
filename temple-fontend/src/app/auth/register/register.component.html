@@ -554,6 +554,7 @@
     <p-toast position="center" key="alertMessage" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
       <ng-template let-message pTemplate="message">
         <div style="text-align: center">
+          <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
           <h3>{{ message.summary }}</h3>
           <p>{{ message.detail }}</p>
         </div>
