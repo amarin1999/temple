@@ -78,6 +78,12 @@ export class LoginComponent implements OnInit {
                 this.form.setValue({ 'username': '', 'password': '' });
             }).finally(() => this.spinner.hide());
         } else {
+            this.messageService.add({
+                key: 'alert',
+                sticky: true,
+                severity: 'warn',
+                summary: 'กรุณากรอกข้อมูลให้ครบถ้วน'
+            });
             this.onValueChange();
         }
     }
