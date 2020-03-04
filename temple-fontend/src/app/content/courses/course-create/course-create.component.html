@@ -69,11 +69,11 @@
           </div>
 
           <div class="ui-g-12 ui-lg-9 ui-md-10 ui-sm-9 ">
-            <p-calendar cdgsThaiCalendar  dateFormat="dd/mm/yy" [monthNavigator]="true" [showIcon]="true"
+            <p-calendar cdgsThaiCalendar dateFormat="dd/mm/yy" [monthNavigator]="true" [showIcon]="true"
               formControlName="date" selectionMode="range" [readonlyInput]="true" [yearNavigator]="true"
               [yearRange]="yearRange">
             </p-calendar>
-           
+
           </div>
           <!-- ผู้สอน -->
           <div class="ui-g-12 ui-lg-3 ui-md-2 ui-sm-3 text-info" *ngIf="!formError.teachers">
@@ -113,9 +113,10 @@
   </form>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="submit" pButton icon ="pi pi-download"label="บันทึก" (click)="onSubmit()"></button>
-      <button type="button" pButton label="ยกเลิก"icon ="pi pi-times-circle" class="ui-button-raised ui-button-secondary"
-        (click)="onCancle($event)"></button>
+      <button type="submit" pButton icon="pi pi-download" label="บันทึก" class="btn-color-info"
+        (click)="onSubmit()"></button>
+      <button type="button" pButton label="ยกเลิก" icon="pi pi-times-circle"
+        class="ui-button-raised ui-button-secondary" (click)="onCancle($event)"></button>
     </div>
   </p-footer>
 </p-dialog>
