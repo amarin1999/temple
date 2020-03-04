@@ -191,7 +191,7 @@ export class DashboardComponent implements OnInit {
     // console.log(e);
     this.dashBoard.getNumberOfCounty(regionSelect._datasetIndex + 1).subscribe(res => {
       this.province = res;
-      console.log(this.province);
+      // console.log(this.province);
     }
     )
 

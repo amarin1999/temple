@@ -54,8 +54,8 @@ export class LoginComponent implements OnInit {
                 // access_token
                 if (res['result'] === 'Success') {
                     const accessToken = res['access_token'];
-                    localStorage.setItem('access-token', accessToken);   
-                    localStorage.setItem('userId', res['account_id']);                    
+                    localStorage.setItem('access-token', accessToken);
+                    localStorage.setItem('userId', res['account_id']);
                     this.authService.isLoggedIn().next(true);
                     this.router.navigate(['/']);
                 }
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
 
     private createForm() {
         this.form = this.formBuilder.group({
-            'username': ['',[Validators.required, Validators.maxLength(45)]],
+            'username': ['', [Validators.required, Validators.maxLength(45)]],
             'password': ['', [Validators.required, Validators.maxLength(100)]],
         });
 
@@ -113,15 +113,15 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        for (const field of Object.keys(this.formError)) {
+        Object.keys(this.formError).forEach(field => {
             this.formError[field] = '';
             const control = this.form.get(field);
             if (control && !control.valid && control.dirty) {
                 const messages = this.validationMassages[field];
-                for (const key of Object.keys(control.errors)) {
+                Object.keys(control.errors).forEach(key => {
                     this.formError[field] += messages[key] + ' ';
-                }
+                });
             }
-        }
+        })
     }
 }

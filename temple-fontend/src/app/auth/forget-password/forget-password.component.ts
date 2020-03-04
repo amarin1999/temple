@@ -49,7 +49,7 @@ export class ForgetPasswordComponent implements OnInit {
 
     onSubmit(e) {
         this.messageService.clear();
-        console.log(this.form.getRawValue())
+        
         e.preventDefault();
         const idCard = this.form.get('idCard').value;
         const username = this.form.get('username').value;

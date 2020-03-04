@@ -73,7 +73,7 @@ export class ApprovalFormComponent implements OnInit {
     if (this.courseType === 'OutTime') {
       this.approvalService.getMemberForApproveOutTime(+this.courseId)
         .subscribe(res => {
-          console.log(res['data']['0']);
+          // console.log(res['data']['0']);
 
           if (res['status'] === 'Success') {
             this.courseOutTime = res['data']['0'];
@@ -100,7 +100,7 @@ export class ApprovalFormComponent implements OnInit {
   }
 
   showDialog(e) {
-    console.log(e);
+    // console.log(e);
     // เขียน api ตอบรับ outTime ใหม่
     this.spinner.show();
     this.btnrej = true;
@@ -133,7 +133,7 @@ export class ApprovalFormComponent implements OnInit {
     this.spinner.hide();
   }
   showDialogOutTime(e) {
-    console.log(e);
+    // console.log(e);
     this.CloseReject = false;
     this.spinner.show();
     this.btnrej = true;
@@ -149,7 +149,7 @@ export class ApprovalFormComponent implements OnInit {
           .subscribe((res) => {
             if (res['status'] === 'Success') {
               this.spinner.hide();
-              console.log(res);
+              // console.log(res);
               this.messageServise.add({
                 severity: 'success',
                 key: 'ApproveAlertMessage',

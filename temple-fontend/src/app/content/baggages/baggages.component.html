@@ -3,7 +3,6 @@
 <div class="ui-g">
     <div class="ui-g-12 ui-lg-10 ui-md-10 aa">
         <div style="text-align: center">
-            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
             <h2>ตู้สัมภาระ</h2>
         </div>
         <p-table [columns]="cols" [value]="items" [paginator]="true" [rows]="5" [responsive]="true">
@@ -81,8 +80,8 @@
                 [disabled]="baggageNumber&&location?false:true"></button>
             <button *ngIf="!newBaggage" icon="pi pi-pencil" type="button" class="ui-button-warning" pButton
                 (click)="update()" label="แก้ไข" [disabled]="baggageNumber&&location?false:true"></button>
-            <button type="button" icon="pi pi-times-circle" class="ui-button-raised ui-button-secondary" icon="pi pi-times-circle" pButton
-                (click)="clear()" label="ยกเลิก"></button>
+            <button type="button" icon="pi pi-times-circle" class="ui-button-raised ui-button-secondary"
+                icon="pi pi-times-circle" pButton (click)="clear()" label="ยกเลิก"></button>
 
         </div>
     </p-footer>

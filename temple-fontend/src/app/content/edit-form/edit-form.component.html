@@ -349,7 +349,7 @@
                         <th scope="colgroup">สถานที่</th>
                         <th scope="colgroup" style="width:70px;">
                           <button pButton icon="pi pi-plus" (click)="addCourseHis()"
-                            style="background-color: #007ad9 !important;"></button>
+                           ></button>
                         </th>
                       </tr>
                     </ng-template>
@@ -486,11 +486,11 @@
     <div class="margin-top-bottom">
       <div class="center">
         <p-button type="button" icon="pi pi-replay" label="คืนค่า" (click)="showClearConfirm()"
-          class="clear-temple-btn ui-button-raised">
+          class="clear-temple-btn ui-button-raised" >
         </p-button>
-        <p-button type="submit" icon="pi pi-check-circle" label="ยืนยัน" (click)="onSubmit($event)"
-          class="confirm-temple-btn ui-button-raised">
-        </p-button>
+        <button pButton type="submit" icon="pi pi-check-circle" label="ยืนยัน" (click)="onSubmit($event)"
+          class="confirm-temple-btn ui-button-raised btn-color-info">
+        </button>
         <p-button type="button" icon="pi pi-times-circle" label="ยกเลิก" (click)="showCancelConfirm()"
           class="cancel-temple-btn ui-button-raised">
         </p-button>

@@ -127,7 +127,7 @@ export class ListCourseApproveComponent implements OnInit {
         if (res['status'] !== [] || res['status'] !== null) {
           this.courses = [...res['data']];
           this.getTotalRecord();
-          console.log(this.courses);
+          // console.log(this.courses);
 
         } else {
           this.courses = null;
@@ -152,7 +152,7 @@ export class ListCourseApproveComponent implements OnInit {
         this.courses = [...res['data']];
         this.loading = false;
         this.getTotalRecordOutTime();
-        console.log(this.courses);
+        // console.log(this.courses);
         
         this.dataOutTimeReport = res['data'].length === 0 ? '( ไม่มีข้อมูลคำขออนุมัตินอกเวลา )' : '';
       }
@@ -163,7 +163,7 @@ export class ListCourseApproveComponent implements OnInit {
     this.approvalService.getTotalRecord().subscribe(res => {
       if (res['status'] === 'Success') {
         this.totalRecords = res['data'][0]['totalRecord'];
-        console.log(this.totalRecords);
+        // console.log(this.totalRecords);
         
       }
     });

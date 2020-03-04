@@ -60,7 +60,7 @@ export class ApproveOutTimeComponent implements OnInit {
   }
   sentData(status = null) {
     // this.messageService.clear();
-    console.log(status);
+    // console.log(status);
 
     this.check = false;
     let detailSend;
@@ -76,7 +76,7 @@ export class ApproveOutTimeComponent implements OnInit {
         member: [...detailSend],
         courseId: this.courseId
       };
-      console.log(detailSend);
+      // console.log(detailSend);
 
 
       // อนุมัติพิเศษ
@@ -85,10 +85,10 @@ export class ApproveOutTimeComponent implements OnInit {
       if (status == 0) {
         this.rejectDialog = true;
       } else if (status == 1) {
-        console.log(this.detail);
+        // console.log(this.detail);
         const { specialApproveId, courseId } = this.detail;
         detailSend = { spaId: [specialApproveId], courseId, status };
-        console.log(detailSend);
+        // console.log(detailSend);
         if (detailSend) {
           this.listData.emit(detailSend);
         }
@@ -102,16 +102,16 @@ export class ApproveOutTimeComponent implements OnInit {
   }
 
   sendDataReject(e: string) {
-    console.log(e);
+    // console.log(e);
 
     let detailSend;
-    console.log(this.detail);
+    // console.log(this.detail);
     const { specialApproveId, courseId } = this.detail;
     detailSend = { spaId: [specialApproveId], courseId, status: 0, rejectComment: e };
-    console.log(detailSend);
+    // console.log(detailSend);
 
     if (detailSend) {
-      console.log(detailSend);
+      // console.log(detailSend);
 
       this.listData.emit(detailSend);
 

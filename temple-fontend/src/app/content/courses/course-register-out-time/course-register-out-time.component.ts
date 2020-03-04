@@ -70,7 +70,7 @@ export class CourseRegisterOutTimeComponent implements OnInit {
 
   showDisplay(id) {
     this.displayDialog = true;
-    console.log(this.displayDialog);
+    // console.log(this.displayDialog);
 
     this.courseId = id;
 

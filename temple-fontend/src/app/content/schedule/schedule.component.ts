@@ -104,10 +104,10 @@ export class ScheduleComponent implements OnInit {
             }
           });
 
-          console.log(this.status);
+          // console.log(this.status);
 
 
-          console.log(this.events);
+          // console.log(this.events);
         }
       }).catch(err => {
         console.log('Error', err);
