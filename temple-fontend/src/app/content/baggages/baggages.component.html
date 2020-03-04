@@ -1,6 +1,7 @@
 <ngx-spinner></ngx-spinner>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
-<div class="ui-g">
+
+<div class="ui-g animation-page">
     <div class="ui-g-12 ui-lg-10 ui-md-10 aa">
         <div style="text-align: center">
             <h2>ตู้สัมภาระ</h2>
@@ -91,7 +92,7 @@
 </p-dialog>
 <p-confirmDialog [style]="{width: '50vw'}" #cf>
     <p-footer>
-        <button type="button" icon="pi pi-check-circle" pButton label="ยืนยัน" style="background-color: #007ad9"
+        <button type="button" icon="pi pi-check-circle" pButton label="ยืนยัน" class="btn-color-info"
             (click)="cf.accept()"></button>
         <button type="button" icon="pi pi-times-circle" pButton label="ยกเลิก"
             class="ui-button-raised ui-button-secondary" (click)="cf.reject()"></button>
