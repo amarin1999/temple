@@ -227,6 +227,25 @@ body .ui-button.ui-state-default.ui-button-info, body .ui-buttonset.ui-button-in
   padding-right: 5px;
 }
 
+.ui-autocomplete-list-item:hover{
+  background-color: #cd853f !important;
+  transition: 0.2s;
+}
+.ui-state-highlight{
+  background-color: #cd853f !important;
+  transition: 0.2s;
+}
+.ui-dropdown-item::hover{
+  background-color: #cd853f !important;
+  transition: 0.2s;
+}
+.ui-button-text .ui-clickable{
+  background-color: #cd853f !important;
+}
+
+
+
+
 @keyframes fadeFromTop {
   0% {
     opacity: 0;
