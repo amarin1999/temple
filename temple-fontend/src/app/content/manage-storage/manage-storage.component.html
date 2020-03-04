@@ -203,7 +203,7 @@
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
                 <button *ngIf="newBaggage" type="button" pButton (click)="save()" icon="pi pi-download"label="บันทึก"
                     [disabled]="selectedMember&&selectedNumber?false:true" class="btn-color-info"></button>
-                <button *ngIf="!newBaggage" type="button" class="ui-button-warning" pButton (click)="update()"
+                <button *ngIf="!newBaggage" type="button" class="ui-button-warning" pButton (click)="update()" icon="pi pi-pencil"
                     label="แก้ไข"></button>
                 <button type="button" class="ui-button-raised ui-button-secondary"icon="pi pi-times-circle" pButton (click)="clear()"
                     label="ยกเลิก"></button>

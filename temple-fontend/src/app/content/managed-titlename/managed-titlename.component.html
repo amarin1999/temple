@@ -80,8 +80,8 @@
                 <div *ngIf="duplicateTitle" class="text-danger text-invalid" style="color: red">
                     คำนำหน้าชื่อมีอยู่แล้ว
                 </div>
-                <div class="ui-g-12">
-                    <div class="ui-g-4 " *ngIf="!formError.titleName" style="text-align: right;">
+                <div class="ui-g-14">
+                    <div class="ui-g-4" *ngIf="!formError.titleName" style="text-align: right;">
                         <label for="titleName">คำนำหน้า<span class="star">*</span></label>
                     </div>
                     <div class="ui-g-4 text-danger text-invalid" *ngIf="formError.titleName">
@@ -93,6 +93,8 @@
                             <label>{{formLengthError.titleName}}</label>
                         </div>
                     </div>
+                </div>
+                <div class="ui-g-14">
                     <div class="ui-g-4 " *ngIf="!formError.titleNameDisplay" style="text-align: right;">
                         <label for="titleNameDisplay">คำย่อ<span class="star">*</span></label>
                     </div>
