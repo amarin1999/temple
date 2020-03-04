@@ -220,6 +220,8 @@ body .ui-button.ui-state-default.ui-button-info, body .ui-buttonset.ui-button-in
   transition: 0.3s;
 }
 
+
+
 @keyframes fadeFromTop {
   0% {
     opacity: 0;

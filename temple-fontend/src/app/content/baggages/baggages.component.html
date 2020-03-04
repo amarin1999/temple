@@ -9,7 +9,7 @@
             <ng-template pTemplate="caption" *ngIf="showEditButton('admin')">
                 <div style="text-align:left">
                     <button pButton icon="pi pi-plus" type="button" (click)="showDialogToAdd()" label="เพิ่ม"
-                        class="ui-button"></button>
+                        class="ui-button btn-color-info"></button>
                 </div>
             </ng-template>
             <ng-template pTemplate="header" let-columns>
@@ -78,7 +78,7 @@
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
             <button *ngIf="newBaggage" type="submit" icon="pi pi-download" pButton (click)="save()" label="บันทึก"
                 [disabled]="baggageNumber&&location?false:true"></button>
-            <button *ngIf="!newBaggage" icon="pi pi-pencil" type="button" class="ui-button-warning" pButton
+            <button *ngIf="!newBaggage" icon="pi pi-pencil" type="button" class="ui-button-warning color-white" pButton
                 (click)="update()" label="แก้ไข" [disabled]="baggageNumber&&location?false:true"></button>
             <button type="button" icon="pi pi-times-circle" class="ui-button-raised ui-button-secondary"
                 icon="pi pi-times-circle" pButton (click)="clear()" label="ยกเลิก"></button>
