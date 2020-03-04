@@ -52,32 +52,35 @@
     showEffect="fade" [modal]="true" [contentStyle]="{ overflow: 'visible' }">
     <div class="ui-g" *ngIf="baggage">
         <div class="ui-g-12">
-            <div class="ui-g-4">
-                <label for="name">หมายเลขตู้<span class="star">*</span></label>
+
+            <div class="set-dialog-content"><label for="name" style="text-align: right;">หมายเลขตู้<span
+                        class="star">*</span></label>
             </div>
-            <div class="ui-g-8">
-                <input pInputText id="name" [(ngModel)]="baggageNumber" />
-            </div>
+
+            <input pInputText id="name" [(ngModel)]="baggageNumber" />
+
         </div>
     </div>
     <div class="ui-g">
-        <div class="ui-g-12">
-            <div class="ui-g-4" style="text-align: right;">
-                <label for="name">สถานที่<span class="star">*</span></label>
-            </div>
-            <div class="ui-g-8">
-                <p-autoComplete [(ngModel)]="location" [suggestions]="filteredLocation" value="id"
-                    (completeMethod)="filterLocationMultiple($event)" styleClass="wid100" [minLength]="1"
-                    placeholder="เลือกสถานที่" field="name" [dropdown]="true">
-                </p-autoComplete>
 
-            </div>
+        <div class="ui-g-12">
+        <div class="set-dialog-content">
+            <label for="name">สถานที่
+                <span class="star">*</span></label>
         </div>
+
+        <p-autoComplete [(ngModel)]="location" [suggestions]="filteredLocation" value="id"
+            (completeMethod)="filterLocationMultiple($event)" [minLength]="1" placeholder="เลือกสถานที่" field="name"
+            [dropdown]="true">
+        </p-autoComplete>
+    </div>
+
+
     </div>
     <p-footer>
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
             <button *ngIf="newBaggage" type="submit" icon="pi pi-download" pButton (click)="save()" label="บันทึก"
-                [disabled]="baggageNumber&&location?false:true"></button>
+                [disabled]="baggageNumber&&location?false:true" class="btn-color-info"></button>
             <button *ngIf="!newBaggage" icon="pi pi-pencil" type="button" class="ui-button-warning color-white" pButton
                 (click)="update()" label="แก้ไข" [disabled]="baggageNumber&&location?false:true"></button>
             <button type="button" icon="pi pi-times-circle" class="ui-button-raised ui-button-secondary"

@@ -220,7 +220,12 @@ body .ui-button.ui-state-default.ui-button-info, body .ui-buttonset.ui-button-in
   transition: 0.3s;
 }
 
-
+.set-dialog-content{  
+  width:100px;
+  display: inline-block;
+  text-align: right;
+  padding-right: 5px;
+}
 
 @keyframes fadeFromTop {
   0% {
