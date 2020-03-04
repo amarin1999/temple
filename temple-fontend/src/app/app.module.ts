@@ -13,6 +13,8 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment.prod';
 import { AngularFirestore,AngularFirestoreModule  } from '@angular/fire/firestore';
+import { ServiceWorkerModule } from '@angular/service-worker';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -25,7 +27,8 @@ import { AngularFirestore,AngularFirestoreModule  } from '@angular/fire/firestor
     AppRoutingModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy },AngularFirestore
