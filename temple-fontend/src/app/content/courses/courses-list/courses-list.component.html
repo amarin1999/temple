@@ -4,7 +4,7 @@
   <div class="ui-g-12 ui-lg-12 ui-md-12 ui-sm-12">
     <p-tabView headerStyle="" (onChange)="closeMessage()">
       <!-- แท็บที่ 1 คอร์สที่ยังไม่ได้ลงทะเบียน -->
-      <p-tabPanel [headerStyleClass]="ui-tabview-selected" header="คอร์สทั้งหมด">
+      <p-tabPanel [headerStyleClass]="'ui-tabview-selected'" header="คอร์สทั้งหมด">
         <div style="text-align:center">
           <h1>ตารางคอร์ส</h1>
           <div *ngIf="totalRecords == 0">
